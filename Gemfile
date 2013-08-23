@@ -46,8 +46,5 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-# Para que funcione rails s en Manjaro - Linux
-gem 'therubyracer'
-
 # Flexible authentication solution for Rails
 gem 'devise', '3.0.0'
