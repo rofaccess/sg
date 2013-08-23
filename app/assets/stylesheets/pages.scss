@@ -1,0 +1,33 @@
+@import 'variables.scss';
+// Custom nav style
+.navbar-custom{
+	background-color: $main-color;
+	border-color: $main-border-color;
+	.navbar-brand, .navbar-brand:hover{
+		color: #fff;
+	}
+	.navbar-nav{
+		&>.active>a, &>.active>a:hover, &>.open>a, &>.open>a:hover, &>.open>a:focus{
+			background-color: darken($main-color, 10) !important;
+			color: #fff !important;
+		}
+		&>li>a{
+			color: #dfdfdf;
+			&:hover{
+				color: #fff;
+			}
+		}
+	}
+}
+
+// Sign in for style
+.form-signin{
+	max-width: 350px;
+	margin: 30px auto;
+	.input-group{
+		margin-bottom: 10px;
+	}
+	.checkbox{
+		margin-top: 0;
+	}
+}

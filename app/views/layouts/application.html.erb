@@ -2,22 +2,15 @@
 <html>
 <head>
   <title>Sg</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-	        	
-    <% if not user_signed_in? %>				
-		<%- if controller_name != 'sessions' %>
-  			<%= link_to "Ingresar", new_user_session_path, :class => 'btn btn-small'  %>  						
-  		<% end -%>	
-  		<%- if devise_mapping.registerable? && controller_name != 'registrations' %>	
-			<%= link_to "Registrarse", new_user_registration_path, :class => 'btn btn-small'  %>
-		<% end -%>									
-	<% end %>		            
-           
-        
+	<% if user_signed_in? %>
+    	<%= render 'layouts/menu'%>
+    <% end %>
     <div class="container">
     	<% if notice %>
 			<div class="alert alert-info">
@@ -27,13 +20,13 @@
 		<% end %>
 		<% if alert %>
 			<div class="alert alert-error alert-warning">
-				<button data-dismiss="alert" class="close" type="button">×</button>	
+				<button data-dismiss="alert" class="close" type="button">×</button>
 				<%= alert %>
 			</div>
-		<% end %>    
-   	</div> 
-    			
-	<%= yield %>   
-	
+		<% end %>
+   	</div>
+
+	<%= yield %>
+
 </body>
 </html>
