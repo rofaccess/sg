@@ -22,6 +22,11 @@
 
 // Sign in for style
 .form-signin{
+	.panel{
+		h3{
+			margin-top: 0;
+		}
+	}
 	max-width: 350px;
 	margin: 30px auto;
 	.input-group{
