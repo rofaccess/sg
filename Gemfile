@@ -48,3 +48,6 @@ end
 
 # Flexible authentication solution for Rails
 gem 'devise', '3.0.0'
+
+# Adds foreign key helpers to migrations and correctly dumps foreign keys to schema.rb
+gem 'foreigner'
