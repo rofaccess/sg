@@ -1,4 +1,10 @@
 Sg::Application.routes.draw do
+
+  resources :providers, only: [:new, :create, :show, :edit, :update, :destroy] do
+    collection do
+      get 'index'
+    end
+  end
   devise_for :users
   get "pages/index"
   # The priority is based upon order of creation: first created -> highest priority.
