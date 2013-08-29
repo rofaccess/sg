@@ -1,23 +1,45 @@
 @import 'variables.scss';
+@import 'mixins.scss';
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
 // Custom nav style
 .navbar-custom{
-	background-color: $main-color;
-	border-color: $main-border-color;
-	.navbar-brand, .navbar-brand:hover{
-		color: #fff;
-	}
-	.navbar-nav{
-		&>.active>a, &>.active>a:hover, &>.open>a, &>.open>a:hover, &>.open>a:focus{
-			background-color: darken($main-color, 10) !important;
-			color: #fff !important;
-		}
-		&>li>a{
-			color: #dfdfdf;
-			&:hover{
-				color: #fff;
-			}
-		}
-	}
+  	background-color: $navbar-default-bg-color;
+  	@include gradient-vertical($navbar-default-bg-color, $navbar-default-bg-bottom);
+  	.navbar-header{
+  		width: 200px;
+  		text-align: center;
+  		border-right: 1px solid $navbar-link-border;
+  		.navbar-brand{
+  			color: #fff;
+  			float: none;
+  			line-height: 50px;
+  		}
+  	}
+  	.navbar-nav{
+  		margin: 9.5px;
+  		&>li{
+  			margin-left: 15px;
+  			&>a{
+  				color: #fff;
+  				padding: 5px 15px;
+  				background-color: $navbar-link-bg;
+  				border: 1px solid $navbar-link-border;
+  				@include rounded(4px);
+  				&:hover{
+  					color: #fff;
+  				}
+  			}
+  			&.active a{
+  				color: #fff;
+  				border: 1px solid $navbar-link-active-border;
+  				@include gradient-vertical($navbar-link-active-start, $navbar-link-active-end);
+  				&:hover{
+  					color: #fff;
+  				}
+  			}
+  		}
+  	}
 }
 
 // Sign in for style
