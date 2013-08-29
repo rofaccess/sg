@@ -18,20 +18,10 @@
   <div class="field">
     <%= f.label :mark%><br />
     <%= f.text_field :mark %>
-    <%#= f.collection_select :serie_id, Serie.all, :id, :nombre %>
   </div>
   <div class="field">
-    <%= f.label :sistema_operativo_id %><br />
-    <%#= f.number_field :sistema_operativo_id %>
-    <%= f.collection_select :sistema_operativo_id, SistemaOperativo.all, :id, :nombre %>
-  </div>
-  <div class="field">
-    <%= f.label :nombre %><br />
-    <%= f.text_field :nombre %>
-  </div>
-  <div class="field">
-    <%= f.label :fecha_lanzamiento %><br />
-    <%= f.date_select :fecha_lanzamiento %>
+    <%= f.label :unit_price %>
+    <%= f.number_field :unit_price%>
   </div>
   <div class="actions">
     <%= f.submit %>
