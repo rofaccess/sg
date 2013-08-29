@@ -1,4 +1,7 @@
 Sg::Application.routes.draw do
+  get "products/index"
+  get "products/new"
+  get "products/create"
   devise_for :users
   get "pages/index"
   # The priority is based upon order of creation: first created -> highest priority.
