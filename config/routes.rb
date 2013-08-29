@@ -1,12 +1,18 @@
 Sg::Application.routes.draw do
+  
+  devise_for :users
+  get "pages/index"
+
+  get "products/index"
+  get "products/new"
+  get "products/create"
 
   resources :providers, only: [:new, :create, :show, :edit, :update, :destroy] do
     collection do
       get 'index'
     end
   end
-  devise_for :users
-  get "pages/index"
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
