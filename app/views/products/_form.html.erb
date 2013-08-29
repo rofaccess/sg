@@ -23,6 +23,10 @@
     <%= f.label :unit_price %>
     <%= f.number_field :unit_price%>
   </div>
+  <div class="field">
+    <%= f.label :provider_id %><br />
+    <%= f.collection_select :provider_id, Provider.all, :id, :name %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
