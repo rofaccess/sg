@@ -1,0 +1,35 @@
+<%= search_form_for @search do |f| %>   
+<div class="col-lg-4">
+    <div class="input-group input-group-lg">
+      <%= f.text_field :name_cont, placeholder: 'Nombre del Producto', class: 'form-control input-lg'%>
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="submit">
+            <i class="icon-search"></i>
+        </button>
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+<% end %>
+
+<h1>Resultados</h1>
+<table id="products" class="table table-striped">
+  <tr>
+    <th><%= sort_link @search, :name, "Nombre del Producto" %></th>
+    <th><%= sort_link @search, :mark, "Marca" %></th>
+    <th><%= sort_link @search, :unit_price, "Precio Unitario" %></th>
+    <th><%= sort_link @search, :provider_id, "Proveedor" %></th>
+  </tr>
+<% @products.each do |product| %>
+  <tr>
+    <td><%= product.name %></td>
+    <td><%= product.mark %></td>
+    <td><%= product.unit_price %></td>
+    <% if product.provider.blank? %>
+    	<td>Sin proveedor</td>
+    <% else %>		
+    	<td><%= product.provider.name %></td>
+    <% end %>	
+  </tr>
+<% end %>
+</table>

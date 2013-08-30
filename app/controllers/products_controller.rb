@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController
+   before_filter :authenticate_user!
   def index
-  	@products = Product.all
+  	@search = Product.search(params[:q])
+    @products = @search.result
   end
 
   def new
