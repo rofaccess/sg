@@ -5,9 +5,9 @@
   .modal-body
     = FormBuilder::text_field(f, :name)
     = FormBuilder::text_field(f, :mark)
-    = FormBuilder::text_field(f, :unit_price)    
-    = f.collection_select :provider_id, Provider.all, :id, :name, :prompt => "Seleccione Proveedor"
-    
+    = FormBuilder::text_field(f, :unit_price)
+    = FormBuilder::collection_select(f, :provider_id, Provider.all, :id, :name, "Seleccione Proveedor")
+
   .modal-footer
     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
     = f.submit 'Aceptar', class: 'btn btn-primary'

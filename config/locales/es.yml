@@ -205,7 +205,6 @@ es:
         address: 'Dirección'
         phone: 'Teléfono'
         email: 'Email'
-    attributes:
       product:
         name: 'Nombre'
         mark: 'Marca'

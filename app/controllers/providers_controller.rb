@@ -4,7 +4,8 @@ class ProvidersController < ApplicationController
   respond_to :html, :js
 
   def index
-    @providers = Provider.all
+    @search = Provider.search(params[:q])
+    @providers = @search.result
   end
 
   def show

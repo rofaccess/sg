@@ -11,21 +11,22 @@
 	<% if user_signed_in? %>
     	<%= render 'layouts/menu'%>
     <% end %>
-    <div class="container">
-    	<% if notice %>
-			<div class="alert alert-info">
-				<button data-dismiss="alert" class="close" type="button">×</button>
-				<%= notice %>
-			</div>
-		<% end %>
-		<% if alert %>
-			<div class="alert alert-error alert-warning">
-				<button data-dismiss="alert" class="close" type="button">×</button>
-				<%= alert %>
-			</div>
-		<% end %>
-   	</div>
-	<div class="container">
+
+	<div id="wrapper" class="container">
+		<div class="container">
+	    	<% if notice %>
+				<div class="alert alert-info">
+					<button data-dismiss="alert" class="close" type="button">×</button>
+					<%= notice %>
+				</div>
+			<% end %>
+			<% if alert %>
+				<div class="alert alert-error alert-warning">
+					<button data-dismiss="alert" class="close" type="button">×</button>
+					<%= alert %>
+				</div>
+			<% end %>
+		</div>
 		<%= yield %>
 	</div>
 
