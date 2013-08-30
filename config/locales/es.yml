@@ -197,6 +197,7 @@ es:
   activerecord:
     models:
       provider: 'Proveedor'
+      product: 'Producto'
     attributes:
       provider:
         name: 'Nombre'
@@ -204,9 +205,19 @@ es:
         address: 'Dirección'
         phone: 'Teléfono'
         email: 'Email'
+    attributes:
+      product:
+        name: 'Nombre'
+        mark: 'Marca'
+        unit_price: 'Precio Unitario'
+        provider_id: 'Proveedor'
   messages:
     confirm_delete: 'Está seguro?'
     provider_saved: 'Se a guardado el proveedor.'
     provider_not_saved: 'No se ha podido guardar el proveedor.'
     provider_deleted: 'Se ha eliminado el proveedor.'
     provider_not_deleted: 'No se ha podido eliminar el proveedor.'
+    product_saved: 'El Producto se ha guardado con exito!.'
+    product_not_saved: 'No se ha podido guardar el producto.'
+    product_deleted: 'El Producto se ha eliminado con exito!.'
+    product_not_deleted: 'No se ha podido eliminar el producto.'
