@@ -1,0 +1,24 @@
+h1 Proveedores
+
+= link_to 'Agregar Proveedor', new_provider_path, class: 'btn btn-primary', remote: true
+
+table.table
+  thead
+	tr
+	  th Nombre
+	  th RUC
+	  th Direccion
+	  th Telefono
+	  th Email
+	  th
+  tbody
+	- @providers.each do |p|
+	  tr
+	    td = p.name
+		td = p.ruc
+		td = p.address
+		td = p.phone
+		td = p.email
+		td
+		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_provider_path(p), remote: true
+		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, provider_path(p), method: 'delete', confirm: t('messages.confirm_delete')
