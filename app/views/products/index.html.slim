@@ -9,10 +9,10 @@ div class="row"
 table.table
   thead
 	tr
-	  th Nombre
-	  th Marca
-	  th Precio Unitario
-	  th Proveedor	 
+	  th = sort_link(@search, :name)
+	  th = sort_link(@search, :mark)
+	  th = sort_link(@search, :unit_price)
+	  th = sort_link(@search, :provider_id)	 
 	  th
   tbody
 	- @products.each do |p|
