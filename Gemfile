@@ -53,3 +53,6 @@ gem 'devise', '3.0.0'
 
 # Adds foreign key helpers to migrations and correctly dumps foreign keys to schema.rb
 gem 'foreigner'
+
+# Object-based searching. The successor to MetaSearch.
+gem 'ransack'
