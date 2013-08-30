@@ -1,15 +1,19 @@
 h1 Proveedores
 
-= link_to 'Agregar Proveedor', new_provider_path, class: 'btn btn-primary', remote: true
+div class="row"
+  div class="col-lg-2"
+    = link_to 'Agregar Proveedor', new_provider_path, class: 'btn btn-primary', remote: true
+  div class="col-lg-4"
+  = render 'search'
 
 table.table
   thead
 	tr
-	  th Nombre
-	  th RUC
-	  th Direccion
-	  th Telefono
-	  th Email
+	  th = sort_link(@search, :name)
+	  th = sort_link(@search, :ruc)
+	  th = sort_link(@search, :address)
+	  th = sort_link(@search, :phone)
+	  th = sort_link(@search, :email)
 	  th
   tbody
 	- @providers.each do |p|
