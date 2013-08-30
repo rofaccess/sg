@@ -213,11 +213,13 @@ es:
         provider_id: 'Proveedor'
   messages:
     confirm_delete: 'Está seguro?'
-    provider_saved: 'Se a guardado el proveedor.'
+    provider_saved: 'El Proveedor se ha guardado con exito!.'
     provider_not_saved: 'No se ha podido guardar el proveedor.'
-    provider_deleted: 'Se ha eliminado el proveedor.'
+    provider_deleted: 'El Proveedor se ha eliminado con exito!.'
     provider_not_deleted: 'No se ha podido eliminar el proveedor.'
     product_saved: 'El Producto se ha guardado con exito!.'
     product_not_saved: 'No se ha podido guardar el producto.'
     product_deleted: 'El Producto se ha eliminado con exito!.'
     product_not_deleted: 'No se ha podido eliminar el producto.'
+    deleted: 'Se a eliminado este %{resource_name} con exito.'
+    confirmation_period_expired: ! "needs to be confirmed within %{resource_name}, please request a new one"
