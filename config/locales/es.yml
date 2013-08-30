@@ -195,5 +195,18 @@ es:
     errors:
       <<: *errors
   activerecord:
-    errors:
-      <<: *errors
+    models:
+      provider: 'Proveedor'
+    attributes:
+      provider:
+        name: 'Nombre'
+        ruc: 'RUC'
+        address: 'Dirección'
+        phone: 'Teléfono'
+        email: 'Email'
+  messages:
+    confirm_delete: 'Está seguro?'
+    provider_saved: 'Se a guardado el proveedor.'
+    provider_not_saved: 'No se ha podido guardar el proveedor.'
+    provider_deleted: 'Se ha eliminado el proveedor.'
+    provider_not_deleted: 'No se ha podido eliminar el proveedor.'
