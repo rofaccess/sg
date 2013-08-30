@@ -1,10 +1,13 @@
 class ProductsController < ApplicationController
-   before_filter :authenticate_user!
+  before_filter :authenticate_user!
+  before_action :set_product, only: [:show, :edit, :update, :destroy] 
+  respond_to :html, :js
   def index
   	@search = Product.search(params[:q])
     @products = @search.result
   end
-
+  def show
+  end
   def new
   	@product = Product.new
   end
@@ -12,30 +15,24 @@ class ProductsController < ApplicationController
   end
 
   def create
-  	@product = Product.new(product_params)
+    @product = Product.new(product_params)
 
-    respond_to do |format|
-      if @product.save
-        format.html { redirect_to @product, notice: 'El Producto fue Creado Satisfactoriamente.' }
-       # format.json { render action: 'show', status: :created, location: @product }
-      else
-        format.html { render action: 'new' }
-        #format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
+    if @product.save
+      redirect_to products_path, notice: t('messages.provider_saved')
+    else
+      redirect_to products_path, alert: t('messages.provider_not_saved')
     end
+
   end
 
   def update
-    respond_to do |format|
-      if @product.update(product_params)
-        format.html { redirect_to @product, notice: 'El Producto fue Actualizado Satisfactoriamente.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
+    if @product.update(product_params)
+      redirect_to products_path, notice: t('messages.provider_saved')
+    else
+      redirect_to products_path, alert: t('messages.provider_not_saved')
     end
   end
+  
   def destroy
     @product.destroy
     respond_to do |format|
@@ -43,7 +40,12 @@ class ProductsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def set_product
+    @product = Product.find(params[:id])
+  end  
+
   def product_params
-      params.require(:product).permit(:name, :mark, :unit_price)
+      params.require(:product).permit(:name, :mark, :unit_price, :provider_id)
   end
 end
