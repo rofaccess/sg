@@ -2,7 +2,7 @@ class CreateConfigurations < ActiveRecord::Migration
   def change
     create_table :configurations do |t|
       t.string :company_name
-      t.blob :image
+      t.string :image
 
       t.timestamps
     end
