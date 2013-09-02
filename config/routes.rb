@@ -1,4 +1,6 @@
 Sg::Application.routes.draw do
+  resources :configurations
+
   resources :products
   resources :providers
 
