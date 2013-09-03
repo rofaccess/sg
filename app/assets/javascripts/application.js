@@ -13,4 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
+//= require bootstrap
+//= require jquery.validationEngine
+//= require languages/jquery.validationEngine-es
+
+$(function(){
+	$('#add-modal').on('show.bs.modal', function(){
+		$(this).find('form').validationEngine({promptPosition: 'topRight'});
+	});
+});
