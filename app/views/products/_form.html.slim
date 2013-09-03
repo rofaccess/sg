@@ -3,10 +3,10 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     h4.modal-title Agregar Producto
   .modal-body
-    = FormBuilder::text_field(f, :name)
-    = FormBuilder::text_field(f, :mark)
-    = FormBuilder::text_field(f, :unit_price)
-    = FormBuilder::collection_select(f, :provider_id, Provider.all, :id, :name, "Seleccione Proveedor")
+    = FormBuilder::text_field(f, :name, nil, nil, 'validate[required]')
+    = FormBuilder::text_field(f, :mark, nil, nil, 'validate[required]')
+    = FormBuilder::text_field(f, :unit_price, nil, nil, 'validate[required]')
+    = FormBuilder::collection_select(f, :provider_id, Provider.all, :id, :name, "Seleccione Proveedor", nil, nil, 'validate[required]')
 
   .modal-footer
     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
