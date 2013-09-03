@@ -1,0 +1,29 @@
+<h1>Listing configurations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Company name</th>
+      <th>Image</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @configurations.each do |configuration| %>
+      <tr>
+        <td><%= configuration.company_name %></td>
+        <td><%= configuration.image %></td>
+        <td><%= link_to 'Show', configuration %></td>
+        <td><%= link_to 'Edit', edit_configuration_path(configuration) %></td>
+        <td><%= link_to 'Destroy', configuration, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Configuration', new_configuration_path %>
