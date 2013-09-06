@@ -1,0 +1,11 @@
+= form_for @configuracion, html: {class: 'form-horizontal'} do |f|
+  .modal-header
+    button.close [type="button" data-dismiss="modal" aria-hidden="true"] &times;
+    h4.modal-title Agregar Configuración
+  .modal-body
+    = FormBuilder::text_field(f, :nombre, nil, nil, 'validate[required]')
+    = FormBuilder::text_field(f, :direccion, nil, nil, 'validate[required]')
+    = FormBuilder::text_field(f, :imagen, nil, nil, 'validate[required]')
+  .modal-footer
+    button.btn.btn-default [type="button" data-dismiss="modal"] Cerrar
+    = f.submit 'Aceptar', class: 'btn btn-primary'

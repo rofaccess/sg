@@ -221,4 +221,8 @@ es:
     product_deleted: 'El Producto se ha eliminado con exito!.'
     product_not_deleted: 'No se ha podido eliminar el producto.'
     deleted: 'Se a eliminado este %{resource_name} con exito.'
+    configuracion_saved: 'La Configuracion se ha guardado con exito!'
+    configuracion_not_saved: 'No se ha podido guardar la configuracion!'
+    configuracion_deleted: 'La configuracion se ha eliminado con exito!'
+    configuracion_not_deleted: 'No se ha podido eliminar la configuracion!'
     confirmation_period_expired: ! "needs to be confirmed within %{resource_name}, please request a new one"
