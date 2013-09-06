@@ -4,7 +4,9 @@ class ConfiguracionesController < ApplicationController
   # GET /configuraciones
   # GET /configuraciones.json
   def index
-    @configuraciones = Configuracion.all
+    #@configuraciones = Configuracion.all
+    @search = Configuracion.search(params[:q])
+    @configuraciones = @search.result
   end
 
   # GET /configuraciones/1
@@ -26,28 +28,21 @@ class ConfiguracionesController < ApplicationController
   def create
     @configuracion = Configuracion.new(configuracion_params)
 
-    respond_to do |format|
-      if @configuracion.save
-        format.html { redirect_to @configuracion, notice: 'Configuracion was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @configuracion }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @configuracion.errors, status: :unprocessable_entity }
-      end
+    if @configuracion.save
+      redirect_to configuraciones_path, notice: t('messages.configuracion_saved')
+    else
+      redirect_to configuraciones_path, alert: t('messages.configuracion_not_saved')
     end
+
   end
 
   # PATCH/PUT /configuraciones/1
   # PATCH/PUT /configuraciones/1.json
   def update
-    respond_to do |format|
-      if @configuracion.update(configuracion_params)
-        format.html { redirect_to @configuracion, notice: 'Configuracion was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @configuracion.errors, status: :unprocessable_entity }
-      end
+    if @configuracion.update(configuracion_params)
+      redirect_to configuraciones_path, notice: t('messages.configuracion_saved')
+    else
+      redirect_to configuraciones_path, alert: t('messages.configuracion_not_saved')
     end
   end
 
