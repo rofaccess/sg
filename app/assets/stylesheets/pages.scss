@@ -64,6 +64,9 @@ body{
 	margin: 30px auto;
 	.input-group{
 		margin-bottom: 10px;
+    .input-group-addon{
+      min-width: 55px;
+    }
 	}
 	.checkbox{
 		margin-top: 0;

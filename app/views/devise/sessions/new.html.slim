@@ -1,0 +1,21 @@
+.form-signin
+	.panel.panel-primary
+    	.panel-body
+	  		h3.text-center Ingresar
+			= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {class: ''}) do |f|
+				.input-group.input-group-lg
+			    	span.input-group-addon
+			  	  		i.icon-user
+			  		= f.text_field :username, placeholder: 'Nombre de usuario', class: 'form-control input-lg'
+			  	.input-group.input-group-lg
+			    	span.input-group-addon
+				  		i.icon-key
+					= f.password_field :password, placeholder: 'Contraseña', class: 'form-control input-lg'
+
+			  	- if devise_mapping.rememberable?
+			    	label.checkbox.pull-left
+			     		= f.check_box :remember_me
+			      		| Recordarme
+			 	= link_to "Olvidó su contraseña?", new_password_path(resource_name), class: 'pull-right'
+			 	br
+			  	= f.submit "Ingresar", class: 'btn btn-lg btn-primary btn-block'
