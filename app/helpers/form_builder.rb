@@ -25,4 +25,19 @@ module FormBuilder
 
     html.html_safe
   end
+
+  def self.text_field_search(f, field, placeholder)
+    html = ""
+    html << "<div class='input-group'>"
+      html << f.text_field(field, class: 'form-control',autofocus: true, placeholder: placeholder)
+      html << "<span class='input-group-btn'>"
+        html << "<button class='btn btn-default' type='submit'>"
+          html << "<i class='icon-search'>"
+          html << "</i>"
+        html << "</button>"
+      html << "</span>" 
+    html << "</div>" 
+    
+    html.html_safe   
+  end
 end
