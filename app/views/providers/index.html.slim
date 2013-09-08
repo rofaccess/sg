@@ -1,9 +1,8 @@
-h1 Proveedores
+.row.row-page-title
+  h2 Proveedores
+  = link_to 'Agregar Proveedor', new_provider_path, class: 'btn btn-primary', remote: true
 
-div class="row"
-  div class="col-lg-2"
-    = link_to 'Agregar Proveedor', new_provider_path, class: 'btn btn-primary', remote: true
-  div class="col-lg-4"
+row
   = render 'search'
 
 table.table
@@ -26,3 +25,6 @@ table.table
 		td
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_provider_path(p), remote: true
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, provider_path(p), method: 'delete', confirm: t('messages.confirm_delete')
+
+#add-form.col-md-4
+  = render 'providers/form'

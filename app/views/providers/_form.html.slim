@@ -1,13 +1,13 @@
 = form_for @provider, html: {class: 'form-horizontal'} do |f|
-  .modal-header
-    button.close [type="button" data-dismiss="modal" aria-hidden="true"] &times;
-    h4.modal-title Agregar Proveedor
-  .modal-body
+
+    button.close.close-add-form [type="button" aria-hidden="true"] &times;
+    h3 Agregar Proveedor
+
     = FormBuilder::text_field(f, :name, nil, nil, 'validate[required]')
     = FormBuilder::text_field(f, :ruc, nil, nil, 'validate[required]')
     = FormBuilder::text_field(f, :address, nil, nil, 'validate[required]')
     = FormBuilder::text_field(f, :phone, nil, nil, 'validate[required]')
     = FormBuilder::text_field(f, :email, nil, nil, 'validate[required,custom[email]]')
-  .modal-footer
-    button.btn.btn-default [type="button" data-dismiss="modal"] Cerrar
-    = f.submit 'Aceptar', class: 'btn btn-primary'
+
+    button.btn.btn-default.close-add-form [type="button"] Cancelar
+    = f.submit 'Guardar', class: 'btn btn-primary'

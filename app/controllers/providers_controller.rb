@@ -1,10 +1,16 @@
 class ProvidersController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_provider, only: [:show, :edit, :update, :destroy]
+  before_action :set_sidemenu, only: [:index]
   respond_to :html, :js
+
+  def set_sidemenu
+    @sidebar_layout = 'layouts/compras_sidemenu'
+  end
 
   def index
     @search = Provider.search(params[:q])
+    @provider = Provider.new
     @providers = @search.result
   end
 

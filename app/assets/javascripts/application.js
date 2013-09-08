@@ -12,13 +12,31 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.all
 //= require turbolinks
 //= require bootstrap
 //= require jquery.validationEngine
 //= require languages/jquery.validationEngine-es
 
-$(function(){
-	$('#add-modal').on('show.bs.modal', function(){
-		$(this).find('form').validationEngine({promptPosition: 'topRight'});
-	});
-});
+$.rails.allowAction = function(link) {
+  if (!link.attr('data-confirm')) {
+    return true;
+  }
+  $.rails.showConfirmDialog(link);
+  return false;
+};
+
+$.rails.confirmed = function(link) {
+  link.removeAttr('data-confirm');
+  return link.trigger('click.rails');
+};
+
+$.rails.showConfirmDialog = function(link) {
+  var html, message;
+  message = link.attr('data-confirm');
+  html = "<div class=\"modal\" id=\"confirmationDialog\">\n <div class=\"modal-dialog\">\n <div class=\"modal-content\">\n  <div class=\"modal-body\">\n    <p>" + message + "</p>\n  </div>\n  <div class=\"modal-footer\">\n    <a data-dismiss=\"modal\" class=\"btn\">Cancel</a>\n    <a data-dismiss=\"modal\" class=\"btn btn-primary confirm\">OK</a>\n  </div>\n</div>\n</div>\n</div>";
+  $(html).modal();
+  return $('#confirmationDialog .confirm').on('click', function() {
+    return $.rails.confirmed(link);
+  });
+};
