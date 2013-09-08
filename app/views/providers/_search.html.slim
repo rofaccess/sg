@@ -1,9 +1,4 @@
-= search_form_for @search do |f|  
-  div class="input-group"      
-    = f.text_field :name_cont, placeholder: 'Buscar Proveedor', class: 'form-control', :autofocus => true
-    span class="input-group-btn" 
-      button class="btn btn-default" type="submit"
-        i class="icon-search"
-  
+= search_form_for @search do |f| 
+  = FormBuilder::text_field_search(f, :name_cont, "Buscar Producto")
 
 
