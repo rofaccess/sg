@@ -5,26 +5,8 @@
 row
   = render 'search'
 
-table.table
-  thead
-	tr
-	  th = sort_link(@search, :name)
-	  th = sort_link(@search, :ruc)
-	  th = sort_link(@search, :address)
-	  th = sort_link(@search, :phone)
-	  th = sort_link(@search, :email)
-	  th
-  tbody
-	- @providers.each do |p|
-	  tr
-	    td = p.name
-		td = p.ruc
-		td = p.address
-		td = p.phone
-		td = p.email
-		td
-		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_provider_path(p), remote: true
-		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, provider_path(p), method: 'delete', confirm: t('messages.confirm_delete')
+div id="providers-list"
+  = render 'providers_list'
 
 #add-form.col-md-4
   = render 'providers/form'
