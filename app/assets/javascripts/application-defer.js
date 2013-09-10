@@ -38,3 +38,12 @@ var SideFormUI = (function(){
 		}
 	};
 }());
+
+$('form:first').keyup(function () { 
+  $('form[data-remote]').submit();
+});
+
+//Lo siguiente aun no esta funcionando
+$(function(){
+	$('#q_name_or_ruc_or_address_or_phone_or_email_cont').searchInput();
+});
