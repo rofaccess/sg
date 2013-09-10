@@ -13,7 +13,7 @@ html
       - unless @sidebar_layout.nil?
         aside#sidebar-menu
     		  = render @sidebar_layout
-        #content-wrapper
+        #content-wrapper.has-sidebar
     		  = yield
       - else
         #content-wrapper.container

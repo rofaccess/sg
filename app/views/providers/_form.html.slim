@@ -2,7 +2,8 @@
 
     button.close.close-add-form [type="button" aria-hidden="true"] &times;
     h3 Agregar Proveedor
-
+    = link_to 'Asignar Categorias', '#', class: 'btn btn-default btn-block'
+    p
     = FormBuilder::text_field(f, :name, nil, nil, 'validate[required]')
     = FormBuilder::text_field(f, :ruc, nil, nil, 'validate[required]')
     = FormBuilder::text_field(f, :address, nil, nil, 'validate[required]')

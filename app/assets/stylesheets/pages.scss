@@ -28,6 +28,7 @@
   				background-color: $navbar-link-bg;
   				border: 1px solid $navbar-link-border;
   				@include rounded(4px);
+          transition: 0.5s;
   				&:hover{
   					color: #fff;
   				}
@@ -51,6 +52,36 @@ body{
 #container{
   margin-top: 50px;
 }
+/*-----------Index menu-----------*/
+.index-options{
+  list-style: none;
+  li{
+    text-align: right;
+    margin-top: 20px;
+    a{
+      height: 150px;
+      background-color: $main-color;
+      color: #fff;
+      display: block;
+      font-size: 40px;
+      position: relative;
+      transition: 0.5s;
+      span{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 10px;
+        transition: 0.5s;
+      }
+      &:hover{
+        background-color: $navbar-link-active-start;
+        span{
+          right: 20px;
+        }
+      }
+    }
+  }
+}
 
 /**********************************/
 /*-------Sidebar menu style-------*/
@@ -72,26 +103,27 @@ body{
         display: block;
         padding: 10px 15px;
         border-right: 5px solid $sidebar-bg;
+        transition: 0.5s;
         i{
           float: right;
           line-height: 20px;
         }
-        &.active{
+        &.active, &:hover{
           border-right: 5px solid $main-color;
           background-color: $active-menu-bg;
-        }
-        &:hover{
           text-decoration: none;
         }
       }
     }
   }
 }
+.has-sidebar{
+  margin-left: 200px;
+}
 
 // Content wrapper style
 
 #content-wrapper{
-  margin-left: 200px;
   background: #fff;
   padding: 0 15px;
   &>.row{
