@@ -14,6 +14,18 @@ module FormBuilder
   	html.html_safe
   end
 
+  def self.file_field(f, field, label_class = nil, field_class = nil, input_class = '')
+    html = ""
+    html << "<div class='form-group '>"
+      html << f.label(field, class: "control-label #{label_class.nil? ? 'col-md-2' : label_class}")
+      html << "<div class='#{field_class.nil? ? 'col-md-10' : field_class}'>"
+        html << f.file_field(field, class: 'form-control file_input ' + input_class)
+      html << "</div>"
+    html << "</div>"
+
+    html.html_safe
+  end
+
   def self.collection_select(f, field, collection, value, text, prompt, label_class = nil, field_class = nil, input_class = '')
     html = ""
     html << "<div class='form-group'>"
