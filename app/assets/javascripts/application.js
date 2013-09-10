@@ -40,3 +40,4 @@ $.rails.showConfirmDialog = function(link) {
     return $.rails.confirmed(link);
   });
 };
+
