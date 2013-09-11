@@ -16,7 +16,7 @@ table.table
 	  tr
 	    td = p.nombre
 		td = p.direccion
-		td = p.imagen
+		td = image_tag p.imagen.url(:thumb)
     	td
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_configuracion_path(p), remote: true
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, configuracion_path(p), method: 'delete', confirm: t('messages.confirm_delete')
