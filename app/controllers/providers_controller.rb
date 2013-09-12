@@ -11,7 +11,11 @@ class ProvidersController < ApplicationController
   def index
     @search = Provider.search(params[:q])
     @provider = Provider.new
-    @providers = @search.result
+    if @search.sorts.empty?
+      @providers = @search.result.order('name')
+    else
+      @providers = @search.result
+    end
   end
 
   def show
@@ -25,11 +29,16 @@ class ProvidersController < ApplicationController
     @provider = Provider.new(provider_params)
 
     if @provider.save
-      redirect_to providers_path, notice: t('messages.provider_saved')
+      update_list
     else
       redirect_to providers_path, alert: t('messages.provider_not_saved')
     end
 
+  end
+
+  def update_list
+    index
+    render partial: 'update_list', format: 'js'
   end
 
   def edit
@@ -55,6 +64,14 @@ class ProvidersController < ApplicationController
     else
       redirect_to providers_path, alert: t('messages.provider_not_deleted')
     end
+  end
+
+  def load_test_data
+    @provider = Provider.new(  name: Faker::Company.name,
+            ruc: Faker::Number.number(9),
+            address: Faker::Address.street_address,
+            phone: Faker::PhoneNumber.phone_number,
+            email: Faker::Internet.email)
   end
 
   def set_provider
