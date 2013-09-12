@@ -38,12 +38,13 @@ var SideFormUI = (function(){
 		}
 	};
 }());
-
-$('form:first').keyup(function () { 
-  $('form[data-remote]').submit();
-});
+// Esto es para ke actualize la tabla a medida ke se tipea la buskeda
+// Causan muchos problemas
+//$('form:first').keyup(function () { 
+//  $('form[data-remote]').submit();
+//});
 
 //Lo siguiente aun no esta funcionando
-$(function(){
-	$('#q_name_or_ruc_or_address_or_phone_or_email_cont').searchInput();
-});
+//$(function(){
+//	$('#q_name_or_ruc_or_address_or_phone_or_email_cont').searchInput();
+//});
