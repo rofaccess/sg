@@ -8,6 +8,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.singular /^(ox)en/i, '\1'
 #   inflect.irregular 'person', 'people'
   inflect.irregular 'configuracion', 'configuraciones'
+  inflect.irregular 'componente_categoria', 'componentes_categorias'
   inflect.uncountable %w( fish sheep )
 end
 

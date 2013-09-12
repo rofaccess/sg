@@ -1,4 +1,10 @@
 Sg::Application.routes.draw do
+  resources :componentes
+
+  resources :marcas
+
+  resources :componentes_categorias
+
   resources :configuraciones
 
   resources :products
