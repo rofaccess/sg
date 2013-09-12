@@ -11,6 +11,9 @@ gem 'mysql2', '0.3.13'
 
 gem 'thin', '1.5.1'
 
+# Gema utilizada para el manejo de imagenes.
+gem 'paperclip'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 

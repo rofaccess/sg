@@ -4,9 +4,11 @@ class ConfiguracionesController < ApplicationController
   # GET /configuraciones
   # GET /configuraciones.json
   def index
+    @configuracion= Configuracion.first
+    redirect_to edit_configuracion_path(@configuracion.id)
     #@configuraciones = Configuracion.all
-    @search = Configuracion.search(params[:q])
-    @configuraciones = @search.result
+    #@search = Configuracion.search(params[:q])
+    #@configuraciones = @search.result
   end
 
   # GET /configuraciones/1
@@ -21,6 +23,7 @@ class ConfiguracionesController < ApplicationController
 
   # GET /configuraciones/1/edit
   def edit
+    #@configuracion= Configuracion.first
   end
 
   # POST /configuraciones
