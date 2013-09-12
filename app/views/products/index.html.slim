@@ -12,19 +12,19 @@ table.table
 	  th = sort_link(@search, :name)
 	  th = sort_link(@search, :mark)
 	  th = sort_link(@search, :unit_price)
-	  th = sort_link(@search, :provider_id)	 
+	  th = sort_link(@search, :provider_id)
 	  th
   tbody
 	- @products.each do |p|
 	  tr
 	    td = p.name
 		td = p.mark
-		td = p.unit_price			
+		td = p.unit_price
     	- if p.provider.blank?
-    		td =     		
-    	- else	
+    		td =
+    	- else
     		td = p.provider.name
-    
+
 		td
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_product_path(p), remote: true
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, product_path(p), method: 'delete', confirm: t('messages.confirm_delete')
