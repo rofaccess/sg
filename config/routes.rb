@@ -2,10 +2,14 @@ Sg::Application.routes.draw do
   resources :configuraciones
 
   resources :products
-  resources :providers
+  resources :providers do
+    collection do
+      post 'load_test_data'
+    end
+  end
 
   devise_for :users
-  get "pages/index"  
+  get "pages/index"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

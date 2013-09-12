@@ -64,3 +64,6 @@ gem 'foreigner'
 
 # Object-based searching. The successor to MetaSearch.
 gem 'ransack'
+
+# A Scope & Engine based, clean, powerful, customizable and sophisticated paginator for Rails
+gem 'kaminari'

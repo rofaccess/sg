@@ -8,5 +8,8 @@ row
 div id="providers-list"
   = render 'providers_list'
 
+div id="paginator"
+  = paginate @providers, remote: true
+
 #add-form.col-md-4
   = render 'providers/form'
