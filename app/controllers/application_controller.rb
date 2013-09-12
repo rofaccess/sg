@@ -5,12 +5,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def set_configuraciones
-     @configuraciones = Configuracion.all
-
-     @configuraciones.each do |p|
-	    @nombre = p.nombre
-		@direccion = p.direccion
-	    @imagen = p.imagen.url(:thumb)
-	 end
+     @config = Configuracion.all.first
   end
 end

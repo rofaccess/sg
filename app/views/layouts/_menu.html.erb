@@ -7,8 +7,8 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="#"><%= @nombre %></a>
-    <img src="<%= @imagen %>">
+    <a class="navbar-brand" href="#"><%= @config.nombre %></a>
+    <img src="<%= @config.imagen.url(:thumb) %>">
   </div>
 
   <!-- Collect the nav links, forms, and other content for toggling -->
