@@ -157,19 +157,19 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
   devise (= 3.0.0)
-  faker
-  foreigner
+  faker (= 1.2.0)
+  foreigner (= 1.4.2)
   jbuilder (~> 1.2)
-  jquery-rails
-  jquery-ui-rails
-  kaminari
+  jquery-rails (= 3.0.4)
+  jquery-ui-rails (= 4.0.4)
+  kaminari (= 0.14.1)
   mysql2 (= 0.3.13)
-  paperclip
+  paperclip (= 3.5.1)
   rails (= 4.0.0)
-  ransack
+  ransack (= 1.0.0)
   sass-rails (~> 4.0.0)
   sdoc
-  slim
+  slim (= 2.0.1)
   thin (= 1.5.1)
   turbolinks
   uglifier (>= 1.3.0)

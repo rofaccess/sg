@@ -1,0 +1,4 @@
+ul.localidades-lista
+  - @estados.each do |e|
+    a [href="#" class="reload-column" data-tipo="ciudad" data-id="#{e.id}"]
+      li = e.nombre

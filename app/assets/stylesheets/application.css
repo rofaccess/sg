@@ -12,5 +12,6 @@
  *= require bootstrap
  *= require font-awesome
  *= require pages
+ *= require localidades
  *= require validationEngine.jquery
  */

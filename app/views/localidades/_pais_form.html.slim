@@ -1,0 +1,7 @@
+.row.localidad-form
+  = form_for @pais, url: crear_localidad_localidades_path, html: {class: 'add-form'}, remote: true do |f|
+    = FormBuilder::text_field(f, :nombre, '', '', 'validate[required]')
+    = FormBuilder::text_field(f, :abreviatura, '', '', 'validate[required]')
+    = hidden_field_tag 'tipo_localidad', 'pais'
+    //button.btn.btn-default.close-add-form [type="button"] Cancelar
+    = f.submit 'Guardar', class: 'btn btn-primary'

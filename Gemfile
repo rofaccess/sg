@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'faker'
+# Gema para generar datos falsos aleatorios
+gem 'faker', '1.2.0'
 
 #gem 'pg'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -12,7 +13,7 @@ gem 'mysql2', '0.3.13'
 gem 'thin', '1.5.1'
 
 # Gema utilizada para el manejo de imagenes.
-gem 'paperclip'
+gem 'paperclip', '3.5.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -27,9 +28,9 @@ gem 'coffee-rails', '~> 4.0.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+gem 'jquery-rails', '3.0.4'
 
-gem 'jquery-ui-rails'
+gem 'jquery-ui-rails', '4.0.4'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -37,7 +38,7 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-gem 'slim'
+gem 'slim', '2.0.1'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -60,10 +61,10 @@ end
 gem 'devise', '3.0.0'
 
 # Adds foreign key helpers to migrations and correctly dumps foreign keys to schema.rb
-gem 'foreigner'
+gem 'foreigner', '1.4.2'
 
 # Object-based searching. The successor to MetaSearch.
-gem 'ransack'
+gem 'ransack', '1.0.0'
 
 # A Scope & Engine based, clean, powerful, customizable and sophisticated paginator for Rails
-gem 'kaminari'
+gem 'kaminari', '0.14.1'
