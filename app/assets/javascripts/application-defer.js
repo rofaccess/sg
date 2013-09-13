@@ -9,6 +9,8 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
+//= require jquery.spin.min
+//= require localidadesUI
 //
 $(function(){
 	$('#add-modal').on('show.bs.modal', function(){
@@ -17,13 +19,13 @@ $(function(){
 
 	$('#add-form').find('form').validationEngine({promptPosition: 'topLeft'});
 
-
-
+	$('.add-form').validationEngine({promptPosition: 'topRight'});
 	$('body').on('click', '.close-add-form', function(e){
-		console.log('ee');
 		SideFormUI.closeForm();
 		e.preventDefault();
 	});
+
+	//showSpinner('#paises-lista');
 
 });
 var SideFormUI = (function(){
@@ -40,7 +42,7 @@ var SideFormUI = (function(){
 }());
 // Esto es para ke actualize la tabla a medida ke se tipea la buskeda
 // Causan muchos problemas
-//$('form:first').keyup(function () { 
+//$('form:first').keyup(function () {
 //  $('form[data-remote]').submit();
 //});
 
