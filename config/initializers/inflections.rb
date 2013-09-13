@@ -9,6 +9,8 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.irregular 'person', 'people'
   inflect.irregular 'configuracion', 'configuraciones'
   inflect.irregular 'componente_categoria', 'componentes_categorias'
+  inflect.irregular 'pedido_compra', 'pedidos_compra'
+  inflect.irregular 'pedido_compra_detalle', 'pedidos_compra_detalle'
   inflect.uncountable %w( fish sheep )
 end
 
