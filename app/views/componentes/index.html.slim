@@ -1,0 +1,15 @@
+.row.row-page-title
+  h2 Componentes
+  = link_to 'Agregar Componentes', new_componente_path, class: 'btn btn-primary', remote: true
+
+row
+  = render 'search'
+
+div id="componentes-list"
+  = render 'componentes_list'
+
+div id="paginator"
+  = paginate @componentes, remote: true
+
+#add-form.col-md-4
+  = render 'componentes/form'
