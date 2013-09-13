@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  numero: 1
+  fecha: 2013-09-12 22:30:44
+  pendiente: false
+
+two:
+  numero: 1
+  fecha: 2013-09-12 22:30:44
+  pendiente: false
