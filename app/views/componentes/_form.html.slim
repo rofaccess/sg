@@ -1,0 +1,15 @@
+= form_for @componente, html: {class: 'form-horizontal'} do |f|
+  bootton.close.close-add-form [type="button" aria-hidden="true"] &times;
+  h3 Agregar Componentes
+
+  .row
+    .col-md-12
+      p
+      = FormBuilder::text_field(f, :nombre, nil, nil, 'validate[required]')
+      = FormBuilder::text_field(f, :numero_serie, nil, nil, 'validate[required]')
+      = FormBuilder::text_field(f, :costo, nil, nil, 'validate[required]')
+      = FormBuilder::collection_select(f, :marca_id, Marca.all, :id, :name, "Seleccione Marca", nil, nil, 'validate[required]')
+      = FormBuilder::collection_select(f, :componente_categoria_id, ComponenteCategoria.all, :id, :name, "Seleccione Categoria del Componente", nil, nil, 'validate[required]')
+
+      button.btn.btn-default.close-add-form [type="button"] Cancelar
+      = f.submit 'Guardar', class: 'btn btn-primary'

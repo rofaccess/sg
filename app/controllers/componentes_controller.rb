@@ -1,10 +1,18 @@
 class ComponentesController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_componente, only: [:show, :edit, :update, :destroy]
+  respond_to :html, :js
 
   # GET /componentes
   # GET /componentes.json
   def index
-    @componentes = Componente.all
+    @search = Componente.search(params[:q])
+    @componente = Componente.new
+    if @search.sorts.empty?
+      @componentes = @search.result.order('nombre').page(params[:page]).per(8)
+    else
+      @componentes = @search.result.page(params[:page]).per(8)
+    end
   end
 
   # GET /componentes/1
@@ -26,39 +34,41 @@ class ComponentesController < ApplicationController
   def create
     @componente = Componente.new(componente_params)
 
-    respond_to do |format|
       if @componente.save
-        format.html { redirect_to @componente, notice: 'Componente was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @componente }
+        update_list
       else
-        format.html { render action: 'new' }
-        format.json { render json: @componente.errors, status: :unprocessable_entity }
+        redirect_to componentes_path, alert: t('messages.provider_not_saved')
       end
-    end
+  end
+
+  def update_list
+    index
+    render partial: 'update_list', format: 'js'
   end
 
   # PATCH/PUT /componentes/1
   # PATCH/PUT /componentes/1.json
   def update
-    respond_to do |format|
-      if @componente.update(componente_params)
-        format.html { redirect_to @componente, notice: 'Componente was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @componente.errors, status: :unprocessable_entity }
-      end
+
+    if @componente.update(componente_params)
+      redirect_to componentes_path, notice: t('messages.provider_saved')
+    else
+        redirect_to componentes_path, alert: t('messages.provider_not_saved')
     end
   end
 
   # DELETE /componentes/1
   # DELETE /componentes/1.json
   def destroy
-    @componente.destroy
-    respond_to do |format|
-      format.html { redirect_to componentes_url }
-      format.json { head :no_content }
+    if @componente.destroy
+      redirect_to componentes_path, notice: t('messages.provider_deleted')
+    else
+      redirect_to componentes_path, alert: t('messages.provider_not_deleted')
     end
+  end
+
+  def load_test_data
+
   end
 
   private
