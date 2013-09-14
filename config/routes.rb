@@ -1,8 +1,6 @@
 Sg::Application.routes.draw do
-  get "pedidos_compra/index"
-  #get "pedidos_compra/show/:id"
-  get "pedidos_compra/update"
-  get 'pedido_compra/:id/show' => 'pedidos_compra#show', as: :pedido_compra_show
+  resources :pedidos_compra
+
   resources :componentes
 
   resources :marcas

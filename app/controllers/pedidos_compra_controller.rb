@@ -2,6 +2,7 @@ class PedidosCompraController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_pedido_compra, only: [:show, :update]
   before_action :set_sidemenu, only: [:index]
+  respond_to :html, :js
 
   def set_sidemenu
     @sidebar_layout = 'layouts/compras_sidemenu'
@@ -17,6 +18,7 @@ class PedidosCompraController < ApplicationController
   end
 
   def show
+    @pedido_compra = PedidoCompra.find(params[:id])
   end
 
   def update
@@ -25,6 +27,6 @@ class PedidosCompraController < ApplicationController
     @pedido_compra = PedidoCompra.find(params[:id])
   end
   def pedido_compra_params
-      params.require(:pedido_compra).permit(:id, :numero, :fecha, :pendiente)
+      params.require(:pedido_compra).permit(:numero, :fecha, :estado)
   end
 end

@@ -1,8 +1,8 @@
 .row.row-page-title
   h2 Pedidos de Compra
 
-row
-  = render 'search'
+//row
+// = render 'search'
 
 div id="list"
   = render 'list'
@@ -11,4 +11,4 @@ div id="paginator"
   = paginate @pedidos_compra, remote: true
 
 #add-form.col-md-4
-  = render 'pedidos_compra/form'
+  = render 'pedidos_compra/show'
