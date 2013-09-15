@@ -1,0 +1,20 @@
+- if not @pedido_compra.blank?
+  = form_for @pedido_compra, html: {class: 'form-horizontal'}, remote: true do |f|
+
+    button.close.close-add-form [type="button" aria-hidden="true"] &times;
+    h2 Pedido de Compra
+    .row
+      table.table
+  	    tbody
+	      tr.success
+		    td = @pedido_compra.numero
+		    td = @pedido_compra.estado
+		    td = @pedido_compra.created_at
+
+    h2 Detalle
+    .row
+      .col-md-12
+
+        button.btn.btn-default.close-add-form [type="button"] Cancelar
+        - if @pedido_compra.estado == 'Pendiente'
+          = f.submit 'Generar Pedido de Cotizacion', class: 'btn btn-primary'

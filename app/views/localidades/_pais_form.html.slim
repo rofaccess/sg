@@ -1,0 +1,13 @@
+.row.localidad-form
+  - url_form = @pais.id.nil? ? crear_localidades_path : actualizar_localidad_path
+  = form_for @pais, url: url_form, html: {class: 'add-form'}, remote: true do |f|
+    .row.row-form
+      .col-md-8
+        = FormBuilder::text_field(f, :nombre, '', '', 'validate[required]')
+      .col-md-4
+        = FormBuilder::text_field(f, :abreviatura, '', '', 'validate[required]')
+    = hidden_field_tag 'tipo_localidad', 'pais'
+    .col-md-12.text-right
+      - unless @pais.id.nil?
+        button.btn.btn-default.cancelar-edicion.pull-left [type="button"] Cancelar
+      = f.submit 'Guardar', class: 'btn btn-primary'

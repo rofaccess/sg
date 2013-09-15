@@ -9,28 +9,30 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
+//= require jquery.spin.min
 //
 $(function(){
 	$('#add-modal').on('show.bs.modal', function(){
-		$(this).find('form').validationEngine({promptPosition: 'topRight'});
+		//$(this).find('form').validationEngine({promptPosition: 'topRight'});
 	});
 
-	$('#add-form').find('form').validationEngine({promptPosition: 'topLeft'});
+	//$('#add-form').find('form').validationEngine({promptPosition: 'topLeft'});
 
-
-
+	//$('.add-form').validationEngine({promptPosition: 'bottomLeft'});
 	$('body').on('click', '.close-add-form', function(e){
-		console.log('ee');
 		SideFormUI.closeForm();
 		e.preventDefault();
 	});
-
 });
 var SideFormUI = (function(){
 	return{
 		showForm: function(){
 			$('#add-form').addClass('side-form-show', 500, 'swing');
-			$('#add-form').find('form').validationEngine({promptPosition: 'topLeft'});
+			$('#add-form').find('form').validate();
+			//$('#add-form').find('form').validationEngine({promptPosition: 'bottomLeft',
+              //  prettySelect: true,
+               // usePrefix: 's2id_'
+           // });
 		},
 		closeForm: function(){
 		$('#add-form').removeClass('side-form-show', 500, 'swing');
@@ -38,11 +40,30 @@ var SideFormUI = (function(){
 		}
 	};
 }());
+
 // Esto es para ke actualize la tabla a medida ke se tipea la buskeda
 // Causan muchos problemas
-//$('form:first').keyup(function () { 
-//  $('form[data-remote]').submit();
-//});
+$('.buscador:first').keyup(function () {
+	delay(function(){
+		$('.buscador').submit();
+	}, 500);
+});
+
+var delay = (function(){
+  var timer = 0;
+  return function(callback, ms){
+    clearTimeout (timer);
+    timer = setTimeout(callback, ms);
+  };
+})();
+
+function recargarSelect(map, target){
+	var options = [];
+	$.each(map, function(i, val){
+		options.push('<option value="'+val[0]+'">'+val[1]+'</option>');
+	});
+	target.html(options.join(''));
+}
 
 //Lo siguiente aun no esta funcionando
 //$(function(){

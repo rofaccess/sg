@@ -17,4 +17,4 @@ table.table
 		td = p.email
 		td
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_provider_path(p), remote: true
-		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, provider_path(p), method: 'delete', confirm: t('messages.confirm_delete')
+		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, provider_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}

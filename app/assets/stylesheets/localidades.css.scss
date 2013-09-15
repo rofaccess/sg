@@ -1,0 +1,45 @@
+// Place all the styles related to the Localidades controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#localidades-config{
+	margin-left: -15px !important;
+	margin-right: -15px !important;
+	.column-localidades{
+		//padding-right: 30px;
+		border-right: 1px solid #ccc;
+		.localidad-form{
+			padding: 10px 0;
+			border-bottom: 1px solid #ccc;
+			border-top: 1px solid #ccc;
+			.row-form{
+				margin: 0;
+			}
+		}
+		ul.localidades-lista{
+			list-style: none;
+			padding-left: 0;
+			margin-left: -15px;
+			margin-right: -15px;
+			li{
+				.reload-column{
+					cursor: pointer;
+				}
+				.localidad-item{
+					padding: 15px;
+					display: block;
+				}
+				.localidad-form{
+					margin: 0;
+					background: #ddd;
+				}
+				.actions{
+					float: right;
+				}
+				&:hover{
+					background: #ddd;
+				}
+			}
+		}
+	}
+}

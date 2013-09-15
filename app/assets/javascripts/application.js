@@ -16,7 +16,15 @@
 //= require turbolinks
 //= require bootstrap
 //= require jquery.validationEngine
+//= require jquery.validate.min
 //= require languages/jquery.validationEngine-es
+//= require noty/jquery.noty
+//= require noty/layouts/topRight
+//= require noty/themes/default
+//= require jquery.tools.min
+//= require select2.min
+//= require localidadesUI
+//
 
 $.rails.allowAction = function(link) {
   if (!link.attr('data-confirm')) {
@@ -34,10 +42,61 @@ $.rails.confirmed = function(link) {
 $.rails.showConfirmDialog = function(link) {
   var html, message;
   message = link.attr('data-confirm');
-  html = "<div class=\"modal\" id=\"confirmationDialog\">\n <div class=\"modal-dialog\">\n <div class=\"modal-content\">\n  <div class=\"modal-body\">\n    <p>" + message + "</p>\n  </div>\n  <div class=\"modal-footer\">\n    <a data-dismiss=\"modal\" class=\"btn\">Cancel</a>\n    <a data-dismiss=\"modal\" class=\"btn btn-primary confirm\">OK</a>\n  </div>\n</div>\n</div>\n</div>";
+  html = "<div class=\"modal\" id=\"confirmationDialog\">\n <div class=\"modal-dialog delete-modal\">\n <div class=\"modal-content\">\n  <div class=\"modal-body\">\n    <p>" + message + "</p>\n  </div>\n  <div class=\"modal-footer\">\n    <a data-dismiss=\"modal\" class=\"btn\">Cancelar</a>\n    <a data-dismiss=\"modal\" class=\"btn btn-primary confirm\">Eliminar</a>\n  </div>\n</div>\n</div>\n</div>";
   $(html).modal();
   return $('#confirmationDialog .confirm').on('click', function() {
     return $.rails.confirmed(link);
   });
 };
+
+$.noty.defaults = {
+    layout: 'topRight',
+    theme: 'defaultTheme',
+    type: 'alert',
+    text: '',
+    dismissQueue: true, // If you want to use queue feature set this true
+    template: '<div class="noty_message"><span class="noty_text"></span><div class="noty_close"></div></div>',
+    animation: {
+        open: {height: 'toggle'},
+        close: {height: 'toggle'},
+        easing: 'swing',
+        speed: 500 // opening & closing animation speed
+    },
+    timeout: false, // delay for closing event. Set false for sticky notifications
+    force: false, // adds notification to the beginning of queue when set to true
+    modal: false,
+    maxVisible: 5, // you can set max visible notification for dismissQueue true option
+    closeWith: ['click'], // ['click', 'button', 'hover']
+    callback: {
+        onShow: function() {},
+        afterShow: function() {},
+        onClose: function() {},
+        afterClose: function() {}
+    },
+    buttons: false // an array of buttons
+};
+
+function showSpinner(target){
+  var opts = {
+    lines: 13, // The number of lines to draw
+    length: 20, // The length of each line
+    width: 10, // The line thickness
+    radius: 30, // The radius of the inner circle
+    corners: 1, // Corner roundness (0..1)
+    rotate: 0, // The rotation offset
+    direction: 1, // 1: clockwise, -1: counterclockwise
+    color: '#000', // #rgb or #rrggbb or array of colors
+    speed: 1, // Rounds per second
+    trail: 60, // Afterglow percentage
+    shadow: false, // Whether to render a shadow
+    hwaccel: false, // Whether to use hardware acceleration
+    className: 'spinner', // The CSS class to assign to the spinner
+    zIndex: 2e9, // The z-index (defaults to 2000000000)
+    top: '100', // Top position relative to parent in px
+    left: 'auto' // Left position relative to parent in px
+  };
+  var target_ = document.getElementById(target);
+  var spinner = new Spinner(opts).spin(target_);
+  return spinner;
+}
 

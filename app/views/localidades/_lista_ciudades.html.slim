@@ -1,0 +1,8 @@
+ul.localidades-lista
+  - @ciudades.each do |c|
+    li.localidad-wrap [id="item-ciudad-#{c.id}"]
+      div [class="localidad-item" data-tipo="estado" data-id="#{c.id}"]
+      	span = c.nombre
+      	.actions
+      	  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, "#", data: {id: c.id, tipo: 'ciudad'}, remote: true, class: 'editar-localidad'
+		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, "#{localidades_path}/#{c.id}/eliminar?tipo_localidad=ciudad", remote: true, method: 'delete', confirm: t('messages.confirm_delete')

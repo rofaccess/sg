@@ -1,0 +1,16 @@
+#localidades-config.row
+  .col-md-4.column-localidades
+    h4 Paises
+    = render 'pais_form'
+    #paises-lista
+	  = render 'lista_paises'
+  .col-md-4.column-localidades
+    h4 Estados
+    = render 'estado_form'
+    #estados-lista
+      = render 'lista_estados'
+  .col-md-4.column-localidades
+    h4 Ciudades
+    = render 'ciudad_form'
+    #ciudades-lista
+      = render 'lista_ciudades'

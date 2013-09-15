@@ -1,4 +1,10 @@
 Sg::Application.routes.draw do
+  resources :pedidos_compra do
+    collection do
+      get 'create_test_data'
+    end
+  end
+
   resources :componentes
 
   resources :marcas
@@ -6,6 +12,24 @@ Sg::Application.routes.draw do
   resources :componentes_categorias
 
   resources :configuraciones
+
+  resources :localidades, only: [:index] do
+    collection do
+      post 'crear'
+      post 'buscar_ciudades'
+    end
+
+    member do
+      post 'editar'
+      patch 'actualizar'
+      delete 'eliminar'
+      post 'get_estados'
+      post 'get_paises'
+      post 'get_ciudades'
+    end
+  end
+
+  #post 'localidades/get_estados/:id', to: 'localidades#get_estados', as: 'get_estados_localidades'
 
   resources :products
   resources :providers do

@@ -205,6 +205,7 @@ es:
         address: 'Dirección'
         phone: 'Teléfono'
         email: 'Email'
+        componente_categoria_ids: 'Categorias'
       product:
         name: 'Nombre'
         mark: 'Marca'
@@ -226,3 +227,6 @@ es:
     configuracion_deleted: 'La configuracion se ha eliminado con exito!'
     configuracion_not_deleted: 'No se ha podido eliminar la configuracion!'
     confirmation_period_expired: ! "needs to be confirmed within %{resource_name}, please request a new one"
+    pedido_compra_not_saved: 'No se ha podido guardar el Pedido de Compra.'
+    pedido_compra_deleted: 'El Pedido de Compra se ha eliminado con exito!.'
+    pedido_compra_not_deleted: 'No se ha podido eliminar el pedido de compra.'
