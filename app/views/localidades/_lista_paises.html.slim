@@ -1,8 +1,8 @@
 ul.localidades-lista
   - @paises.each do |p|
-    a [href="#" class="reload-column" data-tipo="estado" data-id="#{p.id}"]
-      li
-      	= p.nombre
+    li.localidad-wrap [id="item-pais-#{p.id}"]
+      div [class="reload-column localidad-item" data-tipo="estado" data-id="#{p.id}"]
+      	span = p.nombre
       	.actions
-      	  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, "#{localidades_path}/#{p.id}/editar_localidad", remote: true
-		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, "#{localidades_path}/#{p.id}/eliminar_localidad", method: 'delete', confirm: t('messages.confirm_delete')
+      	  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, "#",data: {id: p.id, tipo: 'pais'}, remote: true, class: 'editar-localidad'
+		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, "#{localidades_path}/#{p.id}/eliminar?tipo_localidad=pais", remote: true, method: 'delete', confirm: t('messages.confirm_delete')

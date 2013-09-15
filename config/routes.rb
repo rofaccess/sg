@@ -13,13 +13,14 @@ Sg::Application.routes.draw do
 
   resources :localidades, only: [:index] do
     collection do
-      post 'crear_localidad'
+      post 'crear'
+      post 'buscar_ciudades'
     end
 
     member do
-
-      post 'editar_localidad'
-      post 'eliminar_localidad'
+      post 'editar'
+      patch 'actualizar'
+      delete 'eliminar'
       post 'get_estados'
       post 'get_paises'
       post 'get_ciudades'

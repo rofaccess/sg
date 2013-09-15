@@ -1,8 +1,8 @@
 class LocalidadesController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_localidad, only: [:update, :destroy]
+  before_action :set_localidad, only: [:editar, :actualizar, :eliminar]
   before_action :set_sidemenu, only: [:index]
-  before_action :nueva_localidad, only: [:crear_localidad]
+  before_action :nueva_localidad, only: [:crear]
   respond_to :html, :js
 
   def set_sidemenu
@@ -18,7 +18,12 @@ class LocalidadesController < ApplicationController
   	@ciudades = Ciudad.all.order('nombre ASC')
   end
 
-  def crear_localidad
+  def buscar_ciudades
+    @ciudades = Ciudad.where('nombre LIKE ?', "%#{params[:term]}%")
+    render json: @ciudades, include: :estado
+  end
+
+  def crear
   	if @localidad.save
   	  flash.notice = "Se ha creado exitosamente la localidad #{@localidad.nombre}"
   	else
@@ -26,20 +31,47 @@ class LocalidadesController < ApplicationController
   	end
   end
 
-  def update
+  def editar
+    if @tipo_localidad == 'pais'
+ 	    @pais = @localidad
+ 	    render partial: 'pais_form'
+    elsif @tipo_localidad == 'estado'
+      @paises = Pais.all.order('nombre ASC')
+ 	    @estado = @localidad
+ 	    render partial: 'estado_form'
+ 	  elsif @tipo_localidad == 'ciudad'
+      @paises = Pais.all.order('nombre ASC')
+      @estados = Estado.all.order('nombre ASC')
+ 	    @ciudad = @localidad
+ 	    render partial: 'ciudad_form'
+    end
+  end
+
+  def actualizar
   	if @localidad.update(localidad_params)
-
+  	  flash.notice = "Se ha actualizado exitosamente la localidad #{@localidad.nombre}"
   	else
-
+  	  flash.alert = "No ha podido actualizar la localidad #{@localidad.nombre}"
   	end
   end
 
-  def destroy
+  def eliminar
+  	if @localidad.destroy
+  	  flash.notice = "Se ha eliminado exitosamente la localidad #{@localidad.nombre}"
+  	else
+  	  flash.alert = "No ha podido eliminar la localidad #{@localidad.nombre}"
+  	end
   end
 
   def get_paises
-  	@paises = Pais.all.order('nombre ASC')
-  	render partial: 'lista_paises'
+    @paises = Pais.all.order('nombre ASC')
+
+    unless params[:json] == 'true'
+      render partial: 'lista_paises'
+    else
+      render json: @paises
+    end
+
   end
 
   def get_estados
@@ -49,7 +81,12 @@ class LocalidadesController < ApplicationController
   		pais = Pais.find(params[:id])
   		@estados = pais.estados.order('nombre ASC')
   	end
-  	render partial: 'lista_estados'
+
+    unless params[:json]
+      render partial: 'lista_estados'
+    else
+      render json: @estados.map { |e| [e.id, e.nombre] }
+    end
   end
 
   def get_ciudades
