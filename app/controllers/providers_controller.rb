@@ -15,7 +15,7 @@ class ProvidersController < ApplicationController
       @providers = @search.result.order('name').page(params[:page]).per(8)
     else
       @providers = @search.result.page(params[:page]).per(8)
-    end    
+    end
   end
 
   def show
@@ -79,6 +79,6 @@ class ProvidersController < ApplicationController
   end
 
   def provider_params
-      params.require(:provider).permit(:name, :ruc, :address, :phone, :email)
+      params.require(:provider).permit(:name, :ruc, :address, :phone, :email, :ciudad_id)
   end
 end

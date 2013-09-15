@@ -7,13 +7,26 @@
         = link_to 'Test Data', load_test_data_providers_url, class: 'btn btn-success', method: 'post', remote: true
     .row
       .col-md-12
-        = link_to 'Asignar Categorias', '#', class: 'btn btn-default btn-block'
         p
-        = FormBuilder::text_field(f, :name, nil, nil, 'validate[required]')
-        = FormBuilder::text_field(f, :ruc, nil, nil, 'validate[required]')
-        = FormBuilder::text_field(f, :address, nil, nil, 'validate[required]')
-        = FormBuilder::text_field(f, :phone, nil, nil, 'validate[required]')
-        = FormBuilder::text_field(f, :email, nil, nil, 'validate[required,custom[email]]')
+        = FormBuilder::collection_select(nil, :categorias, ComponenteCategoria.all, :id, :nombre, nil, nil, nil, '', nil, true)
+        = FormBuilder::text_field(f, :name, nil, nil, 'required')
+        = FormBuilder::text_field(f, :ruc, nil, nil, 'required')
+        = FormBuilder::text_field(f, :ciudad_id, nil, nil, 'required')
+        //.form-group
+         // label.control-label.col-md-2 Localidad
+          //.col-md-10
+            //= select_tag(:provider_pais, options_from_collection_for_select(Pais.all, :id, :nombre, @provider.ciudad.nil? ? nil : @provider.ciudad.estado.pais_id), { prompt: 'Seleccione un pais', class: 'form-control recargar-estados'})
+            //= select_tag(:ciudad_estado_id, options_from_collection_for_select({}, :id, :nombre, @provider.ciudad.nil? ? nil : @provider.ciudad.estado.pais_id), { prompt: 'Seleccione un pais', class: 'form-control'})
+            //= f.collection_select(:ciudad_id, @provider.ciudad.nil? ? {} : @provider.ciudad.estado.ciudades, :id, :nombre, {prompt: 'Seleccione una ciudad'}, {class: 'form-control'})
+
+        = FormBuilder::text_field(f, :address, nil, nil, 'required')
+        = FormBuilder::text_field(f, :phone, nil, nil, 'required')
+        = FormBuilder::text_field(f, :email, nil, nil, 'required email')
 
         button.btn.btn-default.close-add-form [type="button"] Cancelar
         = f.submit 'Guardar', class: 'btn btn-primary'
+
+        javascript:
+            $('#categorias').select2({placeholder: 'Seleccione las categorias...'});
+            localidadesUI.initCiudadSelect();
+            $('#s2id_provider_ciudad_id').find('.select2-chosen').text('#{@provider.ciudad.nil? ? '' : @provider.ciudad.nombre}');

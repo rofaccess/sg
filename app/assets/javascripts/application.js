@@ -16,10 +16,15 @@
 //= require turbolinks
 //= require bootstrap
 //= require jquery.validationEngine
+//= require jquery.validate.min
 //= require languages/jquery.validationEngine-es
 //= require noty/jquery.noty
 //= require noty/layouts/topRight
 //= require noty/themes/default
+//= require jquery.tools.min
+//= require select2.min
+//= require localidadesUI
+//
 
 $.rails.allowAction = function(link) {
   if (!link.attr('data-confirm')) {
@@ -37,7 +42,7 @@ $.rails.confirmed = function(link) {
 $.rails.showConfirmDialog = function(link) {
   var html, message;
   message = link.attr('data-confirm');
-  html = "<div class=\"modal\" id=\"confirmationDialog\">\n <div class=\"modal-dialog\">\n <div class=\"modal-content\">\n  <div class=\"modal-body\">\n    <p>" + message + "</p>\n  </div>\n  <div class=\"modal-footer\">\n    <a data-dismiss=\"modal\" class=\"btn\">Cancel</a>\n    <a data-dismiss=\"modal\" class=\"btn btn-primary confirm\">OK</a>\n  </div>\n</div>\n</div>\n</div>";
+  html = "<div class=\"modal\" id=\"confirmationDialog\">\n <div class=\"modal-dialog delete-modal\">\n <div class=\"modal-content\">\n  <div class=\"modal-body\">\n    <p>" + message + "</p>\n  </div>\n  <div class=\"modal-footer\">\n    <a data-dismiss=\"modal\" class=\"btn\">Cancelar</a>\n    <a data-dismiss=\"modal\" class=\"btn btn-primary confirm\">Eliminar</a>\n  </div>\n</div>\n</div>\n</div>";
   $(html).modal();
   return $('#confirmationDialog .confirm').on('click', function() {
     return $.rails.confirmed(link);

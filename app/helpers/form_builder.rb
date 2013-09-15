@@ -1,5 +1,6 @@
 include ActionView::Helpers::FormTagHelper
 include ActionView::Helpers::FormHelper
+include ActionView::Helpers::FormOptionsHelper
 module FormBuilder
 
   def self.text_field(f, field, label_class = nil, field_class = nil, input_class = '')
@@ -26,12 +27,20 @@ module FormBuilder
     html.html_safe
   end
 
-  def self.collection_select(f, field, collection, value, text, prompt, label_class = nil, field_class = nil, input_class = '')
+  def self.collection_select(f, field, collection, value, text, prompt, label_class = nil, field_class = nil, input_class = '', selected = nil, multiple = false)
     html = ""
     html << "<div class='form-group'>"
-      html << f.label(field, class: "control-label #{label_class.nil? ? 'col-md-2' : label_class}")
+      if f.nil?
+        html << label_tag(field, nil, class: "control-label #{label_class.nil? ? 'col-md-2' : label_class}")
+      else
+        html << f.label(field, class: "control-label #{label_class.nil? ? 'col-md-2' : label_class}")
+      end
       html << "<div class='#{field_class.nil? ? 'col-md-10' : field_class}'>"
-        html << f.collection_select(field, collection, value, text, {prompt: prompt}, {class: 'form-control ' + input_class})
+        if f.nil?
+          html << select_tag(field, options_from_collection_for_select(collection, value, text, selected), { multiple: multiple, prompt: prompt, class: 'form-control ' + input_class})
+        else
+          html << f.collection_select(field, collection, value, text, {prompt: prompt}, {class: 'form-control ' + input_class})
+        end
       html << "</div>"
     html << "</div>"
 
@@ -47,9 +56,9 @@ module FormBuilder
           html << "<i class='icon-search'>"
           html << "</i>"
         html << "</button>"
-      html << "</span>" 
-    html << "</div>" 
-    
-    html.html_safe   
+      html << "</span>"
+    html << "</div>"
+
+    html.html_safe
   end
 end

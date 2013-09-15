@@ -176,3 +176,18 @@ body{
 		margin-top: 0;
 	}
 }
+
+// Delete modal
+.delete-modal{
+  width: 260px;
+}
+
+// Select2 style
+.select2-container{
+  padding: 0;
+  border: none;
+  .select2-choice{
+    height: 34px;
+    line-height: 34px;
+  }
+}
