@@ -3,7 +3,7 @@ table.table
 	tr
 	  th = sort_link(@search, :numero, "Numero", {}, method: :get, remote: true)
 	  th = sort_link(@search, :estado, "Estado", {}, method: :get, remote: true)
-	  th = sort_link(@search, :fecha, "Fecha", {}, method: :get, remote: true)
+	  th = sort_link(@search, :created_at, "Fecha", {}, method: :get, remote: true)
 	  th
   tbody
 	- @pedidos_compra.each do |p|
@@ -11,14 +11,16 @@ table.table
 	    tr.success
 		  td = p.numero
 		  td = p.estado
-		  td = p.fecha
+		  td = p.created_at
 		  td
 		    = link_to '<i class="icon-list icon-large"></i> '.html_safe, pedido_compra_path(p), remote: true
 		    = link_to '<i class="icon-ok icon-large"></i>'.html_safe
+		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
 	  - else
 	    tr
 		  td = p.numero
 		  td = p.estado
-		  td = p.fecha
+		  td = p.created_at
 		  td
 		    = link_to '<i class="icon-list icon-large"></i> '.html_safe, pedido_compra_path(p), remote: true
+		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}

@@ -1,5 +1,9 @@
 Sg::Application.routes.draw do
-  resources :pedidos_compra
+  resources :pedidos_compra do
+    collection do
+      get 'create_test_data'
+    end
+  end
 
   resources :componentes
 

@@ -9,12 +9,12 @@
 	      tr.success
 		    td = @pedido_compra.numero
 		    td = @pedido_compra.estado
-		    td = @pedido_compra.fecha
+		    td = @pedido_compra.created_at
 
     h2 Detalle
     .row
       .col-md-12
 
-
         button.btn.btn-default.close-add-form [type="button"] Cancelar
-        = f.submit 'Generar Pedido de Cotizacion', class: 'btn btn-primary'
+        - if @pedido_compra.estado == 'Pendiente'
+          = f.submit 'Generar Pedido de Cotizacion', class: 'btn btn-primary'

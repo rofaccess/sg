@@ -1,8 +1,8 @@
 .row.row-page-title
   h2 Pedidos de Compra
 
-//row
-// = render 'search'
+row
+  = link_to 'Test Data', create_test_data_pedidos_compra_url, class: 'btn btn-success', method: 'get', remote: true
 
 div id="list"
   = render 'list'
