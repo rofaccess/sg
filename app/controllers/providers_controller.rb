@@ -27,7 +27,9 @@ class ProvidersController < ApplicationController
 
   def create
     @provider = Provider.new(provider_params)
-
+    params[:provider][:componente_categoria_ids].each do |v,k|
+      @provider.componente_categorias << ComponenteCategoria.find(v) unless v.empty?
+    end
     if @provider.save
       update_list
     else
@@ -47,10 +49,19 @@ class ProvidersController < ApplicationController
   end
 
   def update
-    #@provider = Provider.find(params[:id])
+    old_cat = @provider.componente_categoria_ids
+    new_cat = params[:provider][:componente_categoria_ids]
+
+    old_cat.each do |o|
+      @provider.componente_categorias.destroy(ComponenteCategoria.find(o)) unless new_cat.include?(o)
+    end
+
+    new_cat.each do |n|
+      @provider.componente_categorias << ComponenteCategoria.find(n) unless n.empty? || old_cat.include?(n)
+    end
 
     if @provider.update(provider_params)
-      redirect_to providers_path, notice: t('messages.provider_saved')
+      update_list
     else
       redirect_to providers_path, alert: t('messages.provider_not_saved')
     end
