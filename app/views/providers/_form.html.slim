@@ -8,7 +8,7 @@
     .row
       .col-md-12
         p
-        = FormBuilder::collection_select(nil, :categorias, ComponenteCategoria.all, :id, :nombre, nil, nil, nil, '', nil, true)
+        = FormBuilder::collection_select(f, :componente_categoria_ids, ComponenteCategoria.all, :id, :nombre, nil, nil, nil, '', nil, true)
         = FormBuilder::text_field(f, :name, nil, nil, 'required')
         = FormBuilder::text_field(f, :ruc, nil, nil, 'required')
         = FormBuilder::text_field(f, :ciudad_id, nil, nil, 'required')
@@ -27,6 +27,6 @@
         = f.submit 'Guardar', class: 'btn btn-primary'
 
         javascript:
-            $('#categorias').select2({placeholder: 'Seleccione las categorias...'});
+            $('#provider_componente_categoria_ids').select2({placeholder: 'Seleccione las categorias...'});
             localidadesUI.initCiudadSelect();
             $('#s2id_provider_ciudad_id').find('.select2-chosen').text('#{@provider.ciudad.nil? ? '' : @provider.ciudad.nombre}');

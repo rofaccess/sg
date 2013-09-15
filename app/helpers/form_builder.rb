@@ -39,7 +39,7 @@ module FormBuilder
         if f.nil?
           html << select_tag(field, options_from_collection_for_select(collection, value, text, selected), { multiple: multiple, prompt: prompt, class: 'form-control ' + input_class})
         else
-          html << f.collection_select(field, collection, value, text, {prompt: prompt}, {class: 'form-control ' + input_class})
+          html << f.collection_select(field, collection, value, text, {prompt: prompt}, {multiple: multiple, class: 'form-control ' + input_class})
         end
       html << "</div>"
     html << "</div>"
