@@ -15,7 +15,7 @@ class ProvidersController < ApplicationController
       @providers = @search.result.order('name').page(params[:page]).per(8)
     else
       @providers = @search.result.page(params[:page]).per(8)
-    end    
+    end
   end
 
   def show
