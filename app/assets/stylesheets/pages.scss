@@ -191,3 +191,16 @@ body{
     line-height: 34px;
   }
 }
+//Scroll para tablas
+.table-scroll{
+  overflow:auto;
+  height:350px;
+}
+tbody{
+  .scrollContent {
+    display: block;
+    height: 262px;
+    overflow: auto;
+    width: 100%;
+  }
+}

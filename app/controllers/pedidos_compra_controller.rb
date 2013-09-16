@@ -19,7 +19,8 @@ class PedidosCompraController < ApplicationController
   end
 
   def show
-
+    @pedido_compra = PedidoCompra.find(params[:id])
+    @pedidos_compra_detalle = PedidoCompraDetalle.where('pedido_compra_id=?', @pedido_compra)
   end
 
   def new
@@ -28,11 +29,24 @@ class PedidosCompraController < ApplicationController
 
   def create_test_data
     estados = %w{ Pendiente Cotizado}
-    estado = estados[rand(estados.length)]
+    @pedido_compra = PedidoCompra.new( numero: rand(10000), estado: estados[rand(estados.length)])
+    @pedido_compra.save
 
-    @pedido_compra = PedidoCompra.new( numero: rand(10000), estado: estado)
+    #componentes_categorias = %w{ Placa HDD Notebook}
+    #@componente_categoria = ComponenteCategoria.new(nombre: componentes_categorias[rand(componentes_categorias.length)])
+    #@componente_categoria.save
 
-    if @pedido_compra.save
+    #componentes = %w{ ATX-32MC AS-818 dv4-1234lt satellite-pro-5231}
+    @componente = Componente.new( nombre: "ATX-32MC")
+    @componente.save
+
+    10.times do |num|
+      @pedido_compra_detalle = PedidoCompraDetalle.new(pedido_compra_id: @pedido_compra.id,
+                                                     componente_id: @componente.id,
+                                                     cantidad: rand(10))
+      @pedido_compra_detalle.save
+    end
+    if @pedido_compra_detalle.save
       update_list
     else
       redirect_to pedidos_compra_path, alert: t('messages.pedido_compra_not_saved')

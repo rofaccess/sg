@@ -6,15 +6,33 @@
     .row
       table.table
   	    tbody
-	      tr.success
-		    td = @pedido_compra.numero
-		    td = @pedido_compra.estado
-		    td = @pedido_compra.created_at
-
-    h2 Detalle
-    .row
-      .col-md-12
-
+	      - if @pedido_compra.estado == 'Pendiente'
+          tr.danger
+  		      td = @pedido_compra.numero
+  		      td = @pedido_compra.estado
+  		      td = @pedido_compra.created_at
+        - else
+          tr.success
+            td = @pedido_compra.numero
+            td = @pedido_compra.estado
+            td = @pedido_compra.created_at
+    .col-md-12
         button.btn.btn-default.close-add-form [type="button"] Cancelar
         - if @pedido_compra.estado == 'Pendiente'
           = f.submit 'Generar Pedido de Cotizacion', class: 'btn btn-primary'
+
+    h2 Componentes
+    .row.table-scroll
+      table.table
+        thead
+         tr
+          th Nombre
+          th Cantidad
+          th Categoria
+        tbody
+          - if not @pedidos_compra_detalle.blank?
+            - @pedidos_compra_detalle.each do |p|
+              tr
+                td = p.componente.nombre
+                td = p.cantidad
+                td Todas
