@@ -8,7 +8,7 @@ table.table
   tbody
 	- @pedidos_compra.each do |p|
 	  - if p.estado == 'Pendiente'
-	    tr.danger
+	    tr.success
 		  td = p.numero
 		  td = p.estado
 		  td = p.created_at
@@ -17,7 +17,7 @@ table.table
 		    = link_to '<i class="icon-ok icon-large"></i>'.html_safe
 		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
 	  - else
-	    tr.success
+	    tr
 		  td = p.numero
 		  td = p.estado
 		  td = p.created_at

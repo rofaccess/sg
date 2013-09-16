@@ -1,38 +1,41 @@
-- if not @pedido_compra.blank?
-  = form_for @pedido_compra, html: {class: 'form-horizontal'}, remote: true do |f|
-
-    button.close.close-add-form [type="button" aria-hidden="true"] &times;
-    h2 Pedido de Compra
-    .row
-      table.table
-  	    tbody
-	      - if @pedido_compra.estado == 'Pendiente'
-          tr.danger
-  		      td = @pedido_compra.numero
-  		      td = @pedido_compra.estado
-  		      td = @pedido_compra.created_at
-        - else
-          tr.success
-            td = @pedido_compra.numero
-            td = @pedido_compra.estado
-            td = @pedido_compra.created_at
+button.close.close-add-form [type="button" aria-hidden="true"] &times;
+.panel.panel-info
+  .panel-heading
+    h4.panel-title Pedido de Compra
+  .panel-body
+    table.table
+      tbody
+        tr
+          td = @pedido_compra.numero
+          td = @pedido_compra.estado
+          td = @pedido_compra.created_at
     .col-md-12
-        button.btn.btn-default.close-add-form [type="button"] Cancelar
-        - if @pedido_compra.estado == 'Pendiente'
-          = f.submit 'Generar Pedido de Cotizacion', class: 'btn btn-primary'
+      button.btn.btn-default.close-add-form [type="button"] Cancelar
+      - if @pedido_compra.estado == 'Pendiente'
+        = link_to '<button class="btn btn-primary pull-right">Generar Pedido de Cotizacion</button> '.html_safe, edit_provider_path(@pedido_compra.id)
 
-    h2 Componentes
-    .row.table-scroll
-      table.table
-        thead
-         tr
-          th Nombre
-          th Cantidad
-          th Categoria
-        tbody
-          - if not @pedidos_compra_detalle.blank?
+- if not @pedidos_compra_detalle.blank?
+  .panel.panel-info
+    .panel-heading
+      .row
+        h4.panel-title.col-lg-11 Registros de Componentes:
+        .col-lg-1 = @pedidos_compra_detalle.length
+    .panel-body
+      .row.table-scroll
+        table.table
+          thead
+            tr
+              th Nombre
+              th Cantidad
+              th Marca
+              th Categoria
+          tbody
             - @pedidos_compra_detalle.each do |p|
               tr
                 td = p.componente.nombre
                 td = p.cantidad
-                td Todas
+                td Todavia no anda
+                td Todavia no anda
+
+
+
