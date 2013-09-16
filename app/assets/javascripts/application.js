@@ -23,7 +23,6 @@
 //= require noty/themes/default
 //= require jquery.tools.min
 //= require select2.min
-//= require localidadesUI
 //
 
 $.rails.allowAction = function(link) {

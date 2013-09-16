@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //= require jquery.spin.min
+//= require localidadesUI
 //
 $(function(){
 	$('#add-modal').on('show.bs.modal', function(){
