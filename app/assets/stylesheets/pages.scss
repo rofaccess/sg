@@ -186,11 +186,32 @@ body{
 .select2-container{
   padding: 0;
   border: none;
+  height: 100%;
   .select2-choice{
     height: 34px;
     line-height: 34px;
   }
 }
+
+.select2-result-label{
+  //border-bottom: 1px solid #ccc;
+  .ciudad-result{
+    span{
+      font-size: smaller;
+      font-style: italic;
+      color: #555;
+    }
+  }
+}
+
+.select2-result{
+  &.select2-highlighted{
+    span{
+      color: #fff;
+    }
+  }
+}
+
 //Scroll para tablas
 .table-scroll{
   overflow:auto;

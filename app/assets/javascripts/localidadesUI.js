@@ -3,7 +3,7 @@ var localidadesUI = (function(){
 	function formatResults(c){
 		var markup = ['<li class="ciudad-result">'];
 		markup.push(c.nombre);
-		markup.push('</br>'+c.estado.nombre);
+		markup.push('</br><span>'+c.estado.nombre+', '+c.estado.pais.nombre+'</span>');
 		markup.push('</li>');
 		return markup.join('');
 	}
@@ -78,7 +78,7 @@ var localidadesUI = (function(){
 
 		initCiudadSelect: function(){
 			$('#provider_ciudad_id').select2({
-				placeholder: 'busque la ciudad',
+				placeholder: 'Busque la ciudad',
 				minimumInputLength: 2,
 				ajax: {
 					url: '/localidades/buscar_ciudades',
@@ -95,6 +95,15 @@ var localidadesUI = (function(){
 				},
 				formatResult: formatResults,
 				formatSelection: formatSelectionClient,
+				formatInputTooShort: function(term, minLenght){
+					return 'Ingrese por lo menos 2 caracteres';
+				},
+				formatSearching: function(){
+					return 'Buscando...';
+				},
+				formatNoMatches: function(){
+					return 'No se encontraron resultados...';
+				},
 				escapeMarkup: function(c) { return c; }
 			});
 		},

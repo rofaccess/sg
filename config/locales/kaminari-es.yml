@@ -3,8 +3,8 @@ es:
     pagination:
       first: "&laquo; Primero"
       last: "Ultimo &raquo;"
-      previous: "&lsaquo; Anterior"
-      next: "Siguiente &rsaquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
       truncate: "&hellip;"
   helpers:
     page_entries_info:

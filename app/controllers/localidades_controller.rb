@@ -20,7 +20,7 @@ class LocalidadesController < ApplicationController
 
   def buscar_ciudades
     @ciudades = Ciudad.where('nombre LIKE ?', "%#{params[:term]}%")
-    render json: @ciudades, include: :estado
+    render json: @ciudades, only: [:nombre, :id] ,include: [estado:  {only: [:nombre], include: [pais: {only: [:nombre]}]}]
   end
 
   def crear

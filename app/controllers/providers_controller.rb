@@ -12,9 +12,9 @@ class ProvidersController < ApplicationController
     @search = Provider.search(params[:q])
     @provider = Provider.new
     if @search.sorts.empty?
-      @providers = @search.result.order('name').page(params[:page]).per(8)
+      @providers = @search.result.order('name').page(params[:page]).per(10)
     else
-      @providers = @search.result.page(params[:page]).per(8)
+      @providers = @search.result.page(params[:page]).per(10)
     end
   end
 

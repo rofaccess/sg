@@ -1,7 +1,12 @@
 class ComponentesController < ApplicationController
   before_filter :authenticate_user!
+  before_action :set_sidemenu, only: [:index]
   before_action :set_componente, only: [:show, :edit, :update, :destroy]
   respond_to :html, :js
+
+  def set_sidemenu
+    @sidebar_layout = 'layouts/compras_sidemenu'
+  end
 
   # GET /componentes
   # GET /componentes.json
