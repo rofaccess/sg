@@ -3,13 +3,16 @@ include ActionView::Helpers::FormHelper
 include ActionView::Helpers::FormOptionsHelper
 module FormBuilder
 
-  def self.text_field(f, field, label_class = nil, field_class = nil, input_class = '')
+  def self.text_field(f, field, label_class = nil, field_class = nil, input_class = '', btn = [false, ''])
   	html = ""
   	html << "<div class='form-group'>"
   	  html << f.label(field, class: "control-label #{label_class.nil? ? 'col-md-2' : label_class}")
   	  html << "<div class='#{field_class.nil? ? 'col-md-10' : field_class}'>"
   	  	html << f.text_field(field, class: 'form-control ' + input_class)
   	  html << "</div>"
+      if btn[0]
+        html << "<div class='col-md-2'><a href='#' data-remote='true' data-url='#{btn[1]}' class='btn btn-default btn-block recargar-modal'><i class='icon-plus'></i></a></div>"
+      end
   	html << "</div>"
 
   	html.html_safe
@@ -27,7 +30,7 @@ module FormBuilder
     html.html_safe
   end
 
-  def self.collection_select(f, field, collection, value, text, prompt, label_class = nil, field_class = nil, input_class = '', selected = nil, multiple = false)
+  def self.collection_select(f, field, collection, value, text, prompt, label_class = nil, field_class = nil, input_class = '', selected = nil, multiple = false, btn = [false, ''])
     html = ""
     html << "<div class='form-group'>"
       if f.nil?
@@ -42,6 +45,9 @@ module FormBuilder
           html << f.collection_select(field, collection, value, text, {prompt: prompt}, {multiple: multiple, class: 'form-control ' + input_class})
         end
       html << "</div>"
+      if btn[0]
+        html << "<div class='col-md-2'><a href='#' data-remote='true' data-url='#{btn[1]}' class='btn btn-default btn-block recargar-modal'><i class='icon-plus'></i></a></div>"
+      end
     html << "</div>"
 
     html.html_safe

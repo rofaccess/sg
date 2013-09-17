@@ -15,6 +15,9 @@ class ComponentesCategoriasController < ApplicationController
   # GET /componentes_categorias/new
   def new
     @componente_categoria = ComponenteCategoria.new
+    if request.xhr?
+      render partial: 'form'
+    end
   end
 
   # GET /componentes_categorias/1/edit
