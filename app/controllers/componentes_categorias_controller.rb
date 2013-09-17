@@ -29,7 +29,7 @@ class ComponentesCategoriasController < ApplicationController
     respond_to do |format|
       if @componente_categoria.save
         format.html { redirect_to @componente_categoria, notice: 'Componente categoria was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @componente_categoria }
+        #format.json { render action: 'show', status: :created, location: @componente_categoria }
       else
         format.html { render action: 'new' }
         format.json { render json: @componente_categoria.errors, status: :unprocessable_entity }

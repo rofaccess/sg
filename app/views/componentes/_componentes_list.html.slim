@@ -2,7 +2,6 @@ table.table
   thead
 	tr
 	  th = sort_link(@search, :nombre, {}, method: :get, remote: true)
-	  th = sort_link(@search, :numero_serie, 'N° Serie', {}, method: :get, remote: true)
 	  th = sort_link(@search, :marca_id, {}, method: :get, remote: true)
 	  th = sort_link(@search, :componente_categoria_id, 'Categoria', {}, method: :get, remote: true)
 	  th = sort_link(@search, :costo, {}, method: :get, remote: true)
@@ -11,7 +10,6 @@ table.table
 	- @componentes.each do |p|
 	  tr
 	    td = p.nombre
-		td = p.numero_serie
 		td = p.marca_id
 		td = p.componente_categoria_id
 		td = p.costo

@@ -1,0 +1,8 @@
+= form_for @marca, html: {class: 'form-horizontal', multipart: true} do |f|
+  .modal-header
+    h4.modal-title Marcas
+  .modal-body
+    = FormBuilder::text_field(f, :nombre, nil, nil, 'validate[required]')
+  .modal-footer
+    = link_to 'Cancelar',new_componente_path, class: 'btn btn-info'
+    = f.submit 'Guardar', class: 'btn btn-primary'

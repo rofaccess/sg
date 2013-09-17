@@ -1,5 +1,7 @@
 class MarcasController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_marca, only: [:show, :edit, :update, :destroy]
+  respond_to :html, :js
 
   # GET /marcas
   # GET /marcas.json
@@ -26,15 +28,11 @@ class MarcasController < ApplicationController
   def create
     @marca = Marca.new(marca_params)
 
-    respond_to do |format|
       if @marca.save
-        format.html { redirect_to @marca, notice: 'Marca was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @marca }
+        redirect_to new_componente_path
       else
-        format.html { render action: 'new' }
-        format.json { render json: @marca.errors, status: :unprocessable_entity }
+        redirect_to new_componente_path, alert: t('messages.provider_not_saved')
       end
-    end
   end
 
   # PATCH/PUT /marcas/1
