@@ -1,0 +1,8 @@
+table.table.table-striped.table-condensed
+  tbody
+	- @marcas.each do |p|
+	  tr
+	    td = p.nombre
+		td
+		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_marca_path(p), remote: true
+		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, marca_path(p), method: 'delete', confirm: t('messages.confirm_delete')

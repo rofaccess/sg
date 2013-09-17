@@ -1,10 +1,22 @@
 class ComponentesCategoriasController < ApplicationController
+  before_filter :authenticate_user!
+  before_action :set_sidemenu, only: [:index]
   before_action :set_componente_categoria, only: [:show, :edit, :update, :destroy]
+  respond_to :html, :js
 
+  def set_sidemenu
+    @sidebar_layout = 'layouts/stock_sidemenu'
+  end
   # GET /componentes_categorias
   # GET /componentes_categorias.json
   def index
-    @componentes_categorias = ComponenteCategoria.all
+    @search = ComponenteCategoria.search(params[:q])
+    @componentes_categorias = ComponenteCategoria.new
+    if @search.sorts.empty?
+      @componentes_categorias = @search.result.order('nombre').page(params[:page]).per(15)
+    else
+      @componentes_categorias = @search.result.page(params[:page]).per(15)
+    end
   end
 
   # GET /componentes_categorias/1
@@ -26,28 +38,25 @@ class ComponentesCategoriasController < ApplicationController
   def create
     @componente_categoria = ComponenteCategoria.new(componente_categoria_params)
 
-    respond_to do |format|
-      if @componente_categoria.save
-        format.html { redirect_to @componente_categoria, notice: 'Componente categoria was successfully created.' }
-        #format.json { render action: 'show', status: :created, location: @componente_categoria }
+    if @componente_categoria.save
+        update_list
       else
-        format.html { render action: 'new' }
-        format.json { render json: @componente_categoria.errors, status: :unprocessable_entity }
+        redirect_to componentes_categorias_path, alert: t('messages.componente_categoria_not_saved')
       end
-    end
+  end
+
+  def update_list
+    index
+    render partial: 'update_list', format: 'js'
   end
 
   # PATCH/PUT /componentes_categorias/1
   # PATCH/PUT /componentes_categorias/1.json
   def update
-    respond_to do |format|
-      if @componente_categoria.update(componente_categoria_params)
-        format.html { redirect_to @componente_categoria, notice: 'Componente categoria was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @componente_categoria.errors, status: :unprocessable_entity }
-      end
+    if @componente_categoria.update(componente_categoria_params)
+      update_list
+    else
+      redirect_to componentes_categorias_path, alert: t('messages.componente_categoria_not_update')
     end
   end
 

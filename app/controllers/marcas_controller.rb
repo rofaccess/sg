@@ -1,12 +1,22 @@
 class MarcasController < ApplicationController
   before_filter :authenticate_user!
+  before_action :set_sidemenu, only: [:index]
   before_action :set_marca, only: [:show, :edit, :update, :destroy]
   respond_to :html, :js
 
+  def set_sidemenu
+    @sidebar_layout = 'layouts/stock_sidemenu'
+  end
   # GET /marcas
   # GET /marcas.json
   def index
-    @marcas = Marca.all
+    @search = Marca.search(params[:q])
+    @marca = Marca.new
+    if @search.sorts.empty?
+      @marcas = @search.result.order('nombre').page(params[:page]).per(15)
+    else
+      @marcas = @search.result.page(params[:page]).per(15)
+    end
   end
 
   # GET /marcas/1
@@ -28,24 +38,25 @@ class MarcasController < ApplicationController
   def create
     @marca = Marca.new(marca_params)
 
-      if @marca.save
-        redirect_to new_componente_path
+    if @marca.save
+        update_list
       else
-        redirect_to new_componente_path, alert: t('messages.provider_not_saved')
+        redirect_to componentes_path, alert: t('messages.marca_not_saved')
       end
+  end
+
+  def update_list
+    index
+    render partial: 'update_list', format: 'js'
   end
 
   # PATCH/PUT /marcas/1
   # PATCH/PUT /marcas/1.json
   def update
-    respond_to do |format|
-      if @marca.update(marca_params)
-        format.html { redirect_to @marca, notice: 'Marca was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @marca.errors, status: :unprocessable_entity }
-      end
+    if @marca.update(marca_params)
+      update_list
+    else
+      redirect_to componentes_path, alert: t('messages.marca_not_updated')
     end
   end
 

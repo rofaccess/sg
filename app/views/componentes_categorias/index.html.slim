@@ -1,0 +1,17 @@
+.row.row-page-title
+  h2 Categorias
+  = link_to 'Agregar Categoria', new_componente_categoria_path, class: 'btn btn-primary', remote: true
+
+.col-md-6
+	row
+	  = render 'search'
+
+	div id="list"
+	  = render 'list'
+
+	div id="paginator"
+	  = paginate @componentes_categorias, remote: true
+
+#add-form.col-md-4
+  = render 'componentes_categorias/form'
+
