@@ -12,11 +12,11 @@ table.table
 	    td = p.nombre
 	    - if p.marca.blank?
 	    	td Sin Marca
-	    -else
+	    - else
 			td = p.marca.nombre
 		- if p.componente_categoria.blank?
 			td Sin Categoria
-		-else
+		- else
 		  	td = p.componente_categoria.nombre
 		td = p.costo
 		td
