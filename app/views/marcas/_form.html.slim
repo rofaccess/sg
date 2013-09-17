@@ -1,0 +1,11 @@
+= form_for @marca, html: {class: 'form-horizontal'}, remote: true do |f|
+  bootton.close.close-add-form [type="button" aria-hidden="true"] &times;
+  h3 Agregar Marca
+
+  .row
+    .col-md-12
+      p
+      = FormBuilder::text_field(f, :nombre, nil, nil, 'validate[required]')
+
+      button.btn.btn-default.close-add-form [type="button"] Cancelar
+      = f.submit 'Guardar', class: 'btn btn-primary'

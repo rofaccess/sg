@@ -1,0 +1,17 @@
+.row.row-page-title
+  h2 Marcas
+  = link_to 'Agregar Marca', new_marca_path, class: 'btn btn-primary', remote: true
+
+.col-md-6
+	row
+	  = render 'search'
+
+	div id="list"
+	  = render 'list'
+
+	div id="paginator"
+	  = paginate @marcas, remote: true
+
+#add-form.col-md-4
+  = render 'marcas/form'
+

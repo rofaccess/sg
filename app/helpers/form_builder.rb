@@ -53,6 +53,26 @@ module FormBuilder
     html.html_safe
   end
 
+  def self.collection_select2(f, field, label_nombre, collection, value, text, prompt, label_class = nil, field_class = nil, input_class = '', selected = nil, multiple = false)
+    html = ""
+    html << "<div class='form-group'>"
+      if f.nil?
+        html << label_tag(field, nil, class: "control-label #{label_class.nil? ? 'col-md-2' : label_class}")
+      else
+        html << f.label(label_nombre, class: "control-label #{label_class.nil? ? 'col-md-2' : label_class}")
+      end
+      html << "<div class='#{field_class.nil? ? 'col-md-10' : field_class}'>"
+        if f.nil?
+          html << select_tag(field, options_from_collection_for_select(collection, value, text, selected), { multiple: multiple, prompt: prompt, class: 'form-control ' + input_class})
+        else
+          html << f.collection_select(field, collection, value, text, {prompt: prompt}, {multiple: multiple, class: 'form-control ' + input_class})
+        end
+      html << "</div>"
+    html << "</div>"
+
+    html.html_safe
+  end
+
   def self.text_field_search(f, field, placeholder)
     html = ""
     html << "<div class='input-group'>"

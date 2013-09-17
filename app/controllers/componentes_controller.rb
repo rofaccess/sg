@@ -5,7 +5,7 @@ class ComponentesController < ApplicationController
   respond_to :html, :js
 
   def set_sidemenu
-    @sidebar_layout = 'layouts/compras_sidemenu'
+    @sidebar_layout = 'layouts/stock_sidemenu'
   end
 
   # GET /componentes
@@ -14,9 +14,9 @@ class ComponentesController < ApplicationController
     @search = Componente.search(params[:q])
     @componente = Componente.new
     if @search.sorts.empty?
-      @componentes = @search.result.order('nombre').page(params[:page]).per(8)
+      @componentes = @search.result.order('nombre').page(params[:page]).per(10)
     else
-      @componentes = @search.result.page(params[:page]).per(8)
+      @componentes = @search.result.page(params[:page]).per(10)
     end
   end
 
@@ -56,7 +56,7 @@ class ComponentesController < ApplicationController
   def update
 
     if @componente.update(componente_params)
-      redirect_to componentes_path, notice: t('messages.provider_saved')
+      update_list
     else
         redirect_to componentes_path, alert: t('messages.provider_not_saved')
     end
@@ -84,6 +84,6 @@ class ComponentesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def componente_params
-      params.require(:componente).permit(:nombre, :numero_serie, :costo, :marca_id, :componente_categoria_id)
+      params.require(:componente).permit(:nombre, :costo, :marca_id, :componente_categoria_id)
     end
 end
