@@ -27,9 +27,6 @@ class ComponentesCategoriasController < ApplicationController
   # GET /componentes_categorias/new
   def new
     @componente_categoria = ComponenteCategoria.new
-    if request.xhr?
-      render partial: 'form'
-    end
   end
 
   # GET /componentes_categorias/1/edit
@@ -43,9 +40,9 @@ class ComponentesCategoriasController < ApplicationController
 
     if @componente_categoria.save
         update_list
-      else
+    else
         redirect_to componentes_categorias_path, alert: t('messages.componente_categoria_not_saved')
-      end
+    end
   end
 
   def update_list

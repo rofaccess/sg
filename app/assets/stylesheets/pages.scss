@@ -148,6 +148,11 @@ body{
     }
   }
 }
+  #add-modal{
+    input[type="submit"]{
+      float: right;
+    }
+  }
 
 .row-page-title{
   line-height: 70px;
@@ -210,6 +215,11 @@ body{
       color: #fff;
     }
   }
+}
+
+// Forms style
+.with-btn{
+  padding-right: 0;
 }
 
 //Scroll para tablas

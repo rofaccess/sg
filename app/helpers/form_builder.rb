@@ -11,7 +11,7 @@ module FormBuilder
   	  	html << f.text_field(field, class: 'form-control ' + input_class)
   	  html << "</div>"
       if btn[0]
-        html << "<div class='col-md-2'><a href='#' data-remote='true' data-url='#{btn[1]}' class='btn btn-default btn-block recargar-modal'><i class='icon-plus'></i></a></div>"
+        html << "<div class='col-md-2'><a href='#{btn[1]}' data-remote='true' data-url='' class='btn btn-default btn-block'><i class='icon-plus'></i></a></div>"
       end
   	html << "</div>"
 
@@ -46,7 +46,7 @@ module FormBuilder
         end
       html << "</div>"
       if btn[0]
-        html << "<div class='col-md-2'><a href='#' data-remote='true' data-url='#{btn[1]}' class='btn btn-default btn-block recargar-modal'><i class='icon-plus'></i></a></div>"
+        html << "<div class='col-md-2'><a href='#{btn[1]}' data-remote='true' class='btn btn-default btn-block'><i class='icon-plus'></i></a></div>"
       end
     html << "</div>"
 

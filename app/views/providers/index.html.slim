@@ -2,13 +2,13 @@
   h2 Proveedores
   = link_to 'Agregar Proveedor', new_provider_path, class: 'btn btn-primary', remote: true
 
-row
+.row
   = render 'search'
 
-div id="providers-list"
+#providers-list
   = render 'providers_list'
 
-div id="paginator"
+#paginator
   = paginate @providers, remote: true
 
 #add-form.col-md-4

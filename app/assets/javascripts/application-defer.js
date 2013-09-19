@@ -24,16 +24,14 @@ $(function(){
 		SideFormUI.closeForm();
 		e.preventDefault();
 	});
+
 });
+
 var SideFormUI = (function(){
 	return{
 		showForm: function(){
 			$('#add-form').addClass('side-form-show', 500, 'swing');
 			$('#add-form').find('form').validate();
-			//$('#add-form').find('form').validationEngine({promptPosition: 'bottomLeft',
-              //  prettySelect: true,
-               // usePrefix: 's2id_'
-           // });
 		},
 		closeForm: function(){
 		$('#add-form').removeClass('side-form-show', 500, 'swing');
@@ -65,8 +63,3 @@ function recargarSelect(map, target){
 	});
 	target.html(options.join(''));
 }
-
-//Lo siguiente aun no esta funcionando
-//$(function(){
-//	$('#q_name_or_ruc_or_address_or_phone_or_email_cont').searchInput();
-//});

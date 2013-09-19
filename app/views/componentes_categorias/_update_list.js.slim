@@ -1,1 +1,8 @@
-| $("#list").html("#{escape_javascript(render partial: 'list', format: 'html')}");
+- unless params[:select_categoria].nil?
+  | var options = $('#provider_componente_categoria_ids').val();
+  | if(options == null){options = ['#{@componente_categoria.id}']}else{options.push('#{@componente_categoria.id}')};
+  | $('#provider_componente_categoria_ids').html("#{escape_javascript(render partial: 'compartido/recargar_select', locals: {model: ComponenteCategoria.all.order('nombre')})}");
+  | $('#provider_componente_categoria_ids').select2().val(options).trigger('change');
+  | $('#add-modal').modal('hide');
+- else
+  | $("#list").html("#{escape_javascript(render partial: 'list', format: 'html')}");

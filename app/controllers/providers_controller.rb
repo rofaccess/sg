@@ -77,6 +77,16 @@ class ProvidersController < ApplicationController
     end
   end
 
+  def nueva_ciudad
+    @ciudad = Ciudad.new
+    @paises = Pais.all
+    @estados = Estado.all
+  end
+
+  def nueva_categoria
+    @componente_categoria = ComponenteCategoria.new
+  end
+
   def load_test_data
     @provider = Provider.new(  name: Faker::Company.name,
             ruc: Faker::Number.number(9),

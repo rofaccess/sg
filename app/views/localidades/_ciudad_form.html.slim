@@ -8,6 +8,8 @@
     .col-md-12
       = FormBuilder::collection_select(f, :estado_id, @estados, :id, :nombre, "Seleccione Estado", '', '', 'validate[required]')
     = hidden_field_tag 'tipo_localidad', 'ciudad'
+    - if defined? provider_abm
+      = hidden_field_tag 'select_ciudad', 'true'
     .col-md-12.text-right
       - unless @ciudad.id.nil?
         button.btn.btn-default.cancelar-edicion.pull-left [type="button"] Cancelar
