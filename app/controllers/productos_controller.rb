@@ -1,7 +1,12 @@
 class ProductosController < ApplicationController
   before_filter :authenticate_user!
+  before_action :set_sidemenu, only: [:index]
   before_action :set_producto, only: [:show, :edit, :update, :destroy]
   respond_to :html, :js
+  def set_sidemenu
+    @sidebar_layout = 'layouts/stock_sidemenu'
+  end
+
   def index
   	@search = Producto.search(params[:q])
     @productos = @search.result
