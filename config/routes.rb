@@ -32,7 +32,7 @@ Sg::Application.routes.draw do
 
   #post 'localidades/get_estados/:id', to: 'localidades#get_estados', as: 'get_estados_localidades'
 
-  resources :products
+  resources :productos
   resources :providers do
     collection do
       post 'load_test_data'

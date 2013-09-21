@@ -1,9 +1,9 @@
-class CreateProducts < ActiveRecord::Migration
+class CreateProductos < ActiveRecord::Migration
   def change
-    create_table :products do |t|
-      t.string :name
-      t.string :mark
-      t.decimal :unit_price
+    create_table :productos do |t|
+      t.string :nombre
+      t.string :marca
+      t.decimal :precio_unitario
 
       t.timestamps
     end

@@ -1,11 +1,6 @@
-class CreateProviders < ActiveRecord::Migration
+class CreateProveedores < ActiveRecord::Migration
   def change
-    create_table :providers do |t|
-      t.string :name
-      t.string :ruc
-      t.string :adress
-      t.string :phone
-      t.string :email
+    create_table :proveedores do |t|
 
       t.timestamps
     end

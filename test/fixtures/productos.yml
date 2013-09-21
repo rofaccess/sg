@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  codigo: MyString
+  nombre: MyString
+  descripcion: MyString
+  costo_unitario: 9.99
+
+two:
+  codigo: MyString
+  nombre: MyString
+  descripcion: MyString
+  costo_unitario: 9.99
