@@ -1,4 +1,5 @@
 Sg::Application.routes.draw do
+  resources :proveedores
   resources :pedidos_compra do
     collection do
       get 'create_test_data'
