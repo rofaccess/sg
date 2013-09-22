@@ -3,8 +3,8 @@ Sg::Application.routes.draw do
   resources :proveedores do
     collection do
       post 'load_test_data'
-      #get 'nueva_ciudad'
-      #get 'nueva_categoria'
+      get 'nueva_ciudad'
+      get 'nueva_categoria'
     end
   end
   resources :pedidos_compra do
