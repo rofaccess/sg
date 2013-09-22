@@ -21,9 +21,9 @@ class ProveedoresController < ApplicationController
 
   def create
   	@proveedor = Proveedor.new
-    # params[:proveedor][:componente_categoria_ids].each do |v,k|
-    #   @proveedor.componente_categorias << ComponenteCategoria.find(v) unless v.empty?
-    # end
+     params[:proveedor][:componente_categoria_ids].each do |v,k|
+       @proveedor.componente_categorias << ComponenteCategoria.find(v) unless v.empty?
+     end
   	@proveedor.persona = Persona.new(persona_params)
   	if @proveedor.save
   		update_list
@@ -39,16 +39,16 @@ class ProveedoresController < ApplicationController
   end
 
   def update
-    # old_cat = @proveedor.componente_categoria_ids
-    # new_cat = params[:proveedor][:componente_categoria_ids]
+    old_cat = @proveedor.componente_categoria_ids
+    new_cat = params[:proveedor][:componente_categoria_ids]
 
-    # old_cat.each do |o|
-    #   @proveedor.componente_categorias.destroy(ComponenteCategoria.find(o)) unless new_cat.include?(o)
-    # end
+    old_cat.each do |o|
+      @proveedor.componente_categorias.destroy(ComponenteCategoria.find(o)) unless new_cat.include?(o)
+    end
 
-    # new_cat.each do |n|
-    #   @proveedor.componente_categorias << ComponenteCategoria.find(n) unless n.empty? || old_cat.include?(n)
-    # end
+    new_cat.each do |n|
+      @proveedor.componente_categorias << ComponenteCategoria.find(n) unless n.empty? || old_cat.include?(n)
+    end
    	if @proveedor.persona.update(persona_params)
        update_list
     else
@@ -77,9 +77,9 @@ class ProveedoresController < ApplicationController
     @estados = Estado.all
   end
 
-  # def nueva_categoria
-  #   @componente_categoria = ComponenteCategoria.new
-  # end
+   def nueva_categoria
+     @componente_categoria = ComponenteCategoria.new
+   end
 
   def set_proveedor
     @proveedor = Proveedor.find(params[:id])

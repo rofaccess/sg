@@ -198,7 +198,10 @@ es:
     models:
       provider: 'Proveedor'
       product: 'Producto'
+      proveedor: 'Proveedor'
     attributes:
+      proveedor:
+        componente_categoria_ids: 'Categorias'
       provider:
         name: 'Nombre'
         ruc: 'RUC'
