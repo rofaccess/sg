@@ -15,22 +15,59 @@ class ProveedoresController < ApplicationController
   end
 
   def new
+  	@proveedor = Proveedor.new
+  	@proveedor.persona = Persona.new
+  end
+
+  def create
+  	@proveedor = Proveedor.new
+  	@proveedor.persona = Persona.new(persona_params)
+  	if @proveedor.save
+  		update_list
+  	end
+  end
+
+  def update_list
+    index
+    render partial: 'update_list', format: 'js'
   end
 
   def show
   end
 
   def update
+   	if @proveedor.update && @persona.update(persona_params)
+       update_list
+    else
+      redirect_to proveedores_path, alert: t('messages.provider_not_saved')
+    end
   end
 
   def destroy
+  	if @proveedor.destroy && @persona.destroy
+      redirect_to proveedores_path, notice: t('messages.provider_deleted')
+    else
+      redirect_to proveedores_path, alert: t('messages.provider_not_deleted')
+    end
+  end
+
+  def load_test_data
+    @persona = Persona.new(  nombre: Faker::Company.name,
+            ruc: Faker::Number.number(9),
+            direccion: Faker::Address.street_address,
+            email: Faker::Internet.email)
   end
 
   def set_proveedor
     @proveedor = Proveedor.find(params[:id])
+    @persona = @proveedor.persona
   end
 
   def proveedor_params
       params.require(:proveedor).permit(:persona_id)
+  end
+
+  def persona_params
+      params.require(:persona).permit(:nombre, :ruc, :direccion, :email)
   end
 end
