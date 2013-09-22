@@ -36,7 +36,7 @@ class ProveedoresController < ApplicationController
   end
 
   def update
-   	if @proveedor.update && @persona.update(persona_params)
+   	if @proveedor.persona.update(persona_params)
        update_list
     else
       redirect_to proveedores_path, alert: t('messages.provider_not_saved')
@@ -44,7 +44,7 @@ class ProveedoresController < ApplicationController
   end
 
   def destroy
-  	if @proveedor.destroy && @persona.destroy
+  	if @proveedor.persona.destroy
       redirect_to proveedores_path, notice: t('messages.provider_deleted')
     else
       redirect_to proveedores_path, alert: t('messages.provider_not_deleted')
@@ -60,7 +60,7 @@ class ProveedoresController < ApplicationController
 
   def set_proveedor
     @proveedor = Proveedor.find(params[:id])
-    @persona = @proveedor.persona
+    #@persona = Persona.find(@proveedor.persona_id)
   end
 
   def proveedor_params

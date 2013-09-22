@@ -1,4 +1,4 @@
-= form_for @proveedor, html: {class: 'form-horizontal'},url: proveedores_path, remote: true do |f|
+= form_for @proveedor, html: {class: 'form-horizontal'}, remote: true do |f|
 
     button.close.close-add-form [type="button" aria-hidden="true"] &times;
     h3 = @proveedor.id.nil? ? 'Agregar Proveedor' : 'Editar Proveedor'
