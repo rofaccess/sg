@@ -1,4 +1,12 @@
 Sg::Application.routes.draw do
+  resources :personas
+  resources :proveedores do
+    collection do
+      post 'load_test_data'
+      get 'nueva_ciudad'
+      get 'nueva_categoria'
+    end
+  end
   resources :pedidos_compra do
     collection do
       get 'create_test_data'
@@ -38,7 +46,7 @@ Sg::Application.routes.draw do
 
   #post 'localidades/get_estados/:id', to: 'localidades#get_estados', as: 'get_estados_localidades'
 
-  resources :products
+  resources :productos
   resources :providers do
     collection do
       post 'load_test_data'

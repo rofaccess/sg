@@ -1,0 +1,28 @@
+h1 Productos
+
+div class="row"
+  div class="col-lg-2"
+    = link_to 'Agregar Producto', new_producto_path, class: 'btn btn-primary', remote: true
+  div class="col-lg-4"
+  = render 'search'
+
+table.table
+  thead
+	tr
+	  th = sort_link(@search, :codigo)
+	  th = sort_link(@search, :nombre)
+	  th = sort_link(@search, :descripcion)
+	  th = sort_link(@search, :costo_unitario)
+	  th
+  tbody
+	- @productos.each do |p|
+	  tr
+	    td = p.codigo
+		td = p.nombre
+		td = p.descripcion
+    	td = p.costo_unitario
+		td
+		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_producto_path(p), remote: true
+		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, producto_path(p), method: 'delete', confirm: t('messages.confirm_delete')
+
+

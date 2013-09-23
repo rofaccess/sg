@@ -1,0 +1,14 @@
+.row.row-page-title
+  h2 Proveedores
+  = link_to 'Agregar Proveedor', new_proveedor_path, class: 'btn btn-primary', remote: true
+
+/.row
+/  = render 'search'
+
+#list
+  = render 'list'
+
+/#paginator
+/ = paginate @proveedores, remote: true
+
+#add-form.col-md-4
