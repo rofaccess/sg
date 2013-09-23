@@ -3,5 +3,7 @@
   | $('#add-modal').modal('hide');
   | $('#provider_ciudad_id').val(#{@localidad.id});
   | $('#s2id_provider_ciudad_id').find('.select2-chosen').text('#{@localidad.nombre}');
+  | $('#proveedor_ciudad_id').val(#{@localidad.id});
+  | $('#s2id_proveedor_ciudad_id').find('.select2-chosen').text('#{@localidad.nombre}');
 - else
   | localidadesUI.recargarLista('#{@tipo_localidad}', '/localidades/0');

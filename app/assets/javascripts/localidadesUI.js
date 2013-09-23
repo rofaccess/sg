@@ -109,7 +109,7 @@ var localidadesUI = (function(){
 		},
 
 		initCiudadSelect2: function(){
-			$('#persona_ciudad_id').select2({
+			$('#proveedor_ciudad_id').select2({
 				placeholder: 'Busque la ciudad',
 				minimumInputLength: 2,
 				ajax: {

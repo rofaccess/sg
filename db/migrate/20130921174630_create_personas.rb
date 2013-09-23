@@ -11,6 +11,7 @@ class CreatePersonas < ActiveRecord::Migration
       t.datetime :fecha_nacimiento,       null: true
       t.integer  :documento_identidad_id, null: true
       t.integer  :ciudad_id,              null: true
+      t.string   :type,                   null: false,  limit: 10
 
       t.timestamps
     end

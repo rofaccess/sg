@@ -1,5 +1,4 @@
 Sg::Application.routes.draw do
-  resources :personas
   resources :proveedores do
     collection do
       post 'load_test_data'

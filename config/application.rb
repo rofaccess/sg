@@ -25,5 +25,9 @@ module Sg
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.load_path += Dir[Rails.root.join('locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :es
+
+    # Ubicacion de todos los modelos STI
+    config.autoload_paths += %W(#{config.root}/app/models/personas)
+
   end
 end
