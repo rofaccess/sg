@@ -72,6 +72,16 @@ class ComponentesController < ApplicationController
     end
   end
 
+  def nueva_marca
+
+    @marca = Marca.new
+
+  end
+
+  def nueva_categoria
+    @componente_categoria = ComponenteCategoria.new
+  end
+
   def load_test_data
 
   end

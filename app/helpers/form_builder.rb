@@ -53,7 +53,7 @@ module FormBuilder
     html.html_safe
   end
 
-  def self.collection_select2(f, field, label_nombre, collection, value, text, prompt, label_class = nil, field_class = nil, input_class = '', selected = nil, multiple = false)
+  def self.collection_select2(f, field, label_nombre, collection, value, text, prompt, label_class = nil, field_class = nil, input_class = '', selected = nil, multiple = false, btn= [false, ''])
     html = ""
     html << "<div class='form-group'>"
       if f.nil?
@@ -68,6 +68,9 @@ module FormBuilder
           html << f.collection_select(field, collection, value, text, {prompt: prompt}, {multiple: multiple, class: 'form-control ' + input_class})
         end
       html << "</div>"
+      if btn[0]
+        html << "<div class='col-md-2'><a href='#{btn[1]}' data-remote='true' class='btn btn-default btn-block'><i class='icon-plus'></i></a></div>"
+      end
     html << "</div>"
 
     html.html_safe

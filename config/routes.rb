@@ -5,7 +5,13 @@ Sg::Application.routes.draw do
     end
   end
 
-  resources :componentes
+  resources :componentes do
+
+    collection do
+      get 'nueva_marca'
+      get 'nueva_categoria'
+    end
+  end
 
   resources :marcas
 
