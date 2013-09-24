@@ -7,10 +7,17 @@ class FacturasCompraController < ApplicationController
     @sidebar_layout = 'layouts/compras_sidemenu'
   end
   def index
-    @facturas_compra = FacturaCompra.all
+    @search = FacturaCompra.search(params[:q])
+    @factura_compra = FacturaCompra.new
+    if @search.sorts.empty?
+      @facturas_compra = @search.result.order('estado').page(params[:page]).per(10)
+    else
+      @facturas_compra = @search.result.page(params[:page]).per(10)
+    end
   end
 
   def new
+    @factura_compra = FacturaCompra.new
   end
 
   def create
@@ -20,6 +27,10 @@ class FacturasCompraController < ApplicationController
   end
 
   def edit
+  end
+
+  def set_factura_compra
+    @factura_compra = FacturaCompra.find(params[:id])
   end
 
   def factura_compra_params
