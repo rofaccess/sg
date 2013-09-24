@@ -16,6 +16,11 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'pedido_compra', 'pedidos_compra'
   inflect.irregular 'pedido_compra_detalle', 'pedidos_compra_detalle'
   inflect.irregular 'proveedor', 'proveedores'
+  inflect.irregular 'condicion_pago', 'condiciones_pago'
+  inflect.irregular 'plazo_pago', 'plazos_pago'
+  inflect.irregular 'plazo_pago_detalle', 'plazos_pago_detalle'
+  inflect.irregular 'factura_compra', 'facturas_compra'
+  inflect.irregular 'factura_compra_detalle', 'facturas_compra_detalle'
   inflect.uncountable %w( fish sheep )
 end
 
