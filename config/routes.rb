@@ -1,4 +1,5 @@
 Sg::Application.routes.draw do
+  resources :facturas_compra
   resources :proveedores do
     collection do
       post 'load_test_data'
