@@ -1,8 +1,6 @@
 | var n = noty({text: '#{notice}', type: 'success'});
 - unless params[:select_ciudad].nil?
   | $('#add-modal').modal('hide');
-  | $('#provider_ciudad_id').val(#{@localidad.id});
-  | $('#s2id_provider_ciudad_id').find('.select2-chosen').text('#{@localidad.nombre}');
   | $('#proveedor_ciudad_id').val(#{@localidad.id});
   | $('#s2id_proveedor_ciudad_id').find('.select2-chosen').text('#{@localidad.nombre}');
 - else

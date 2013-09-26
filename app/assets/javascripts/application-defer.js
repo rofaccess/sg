@@ -25,6 +25,10 @@ $(function(){
 		e.preventDefault();
 	});
 
+	$('body').tooltip({
+      selector: '[data-toggle=tooltip]'
+    });
+
 });
 
 var SideFormUI = (function(){

@@ -50,15 +50,15 @@ class ProveedoresController < ApplicationController
    	if @proveedor.update(proveedor_params)
        update_list
     else
-      redirect_to proveedores_path, alert: t('messages.provider_not_saved')
+      redirect_to proveedores_path, alert: t('messages.proveedor_not_saved')
     end
   end
 
   def destroy
   	if @proveedor.destroy
-      redirect_to proveedores_path, notice: t('messages.provider_deleted')
+      redirect_to proveedores_path, notice: t('messages.proveedor_deleted')
     else
-      redirect_to proveedores_path, alert: t('messages.provider_not_deleted')
+      redirect_to proveedores_path, alert: t('messages.proveedor_not_deleted')
     end
   end
 

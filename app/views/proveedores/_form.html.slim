@@ -1,5 +1,4 @@
 = form_for @proveedor, html: {class: 'form-horizontal'}, remote: true do |f|
-
     button.close.close-add-form [type="button" aria-hidden="true"] &times;
     h3 = @proveedor.id.nil? ? 'Agregar Proveedor' : 'Editar Proveedor'
     .row
@@ -24,5 +23,5 @@
                 formatNoMatches: function(){
                     return 'No se encontraron resultados...';
                 }});
-        	localidadesUI.initCiudadSelect2();
+        	localidadesUI.initCiudadSelect();
             $('#s2id_proveedor_ciudad_id').find('.select2-chosen').text('#{@proveedor.ciudad.nil? ? '' : @proveedor.ciudad.nombre}');

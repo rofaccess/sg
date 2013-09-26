@@ -12,7 +12,7 @@ button.close.close-add-form [type="button" aria-hidden="true"] &times;
     .col-md-12
       button.btn.btn-default.close-add-form [type="button"] Cancelar
       - if @pedido_compra.estado == 'Pendiente'
-        = link_to '<button class="btn btn-primary pull-right">Generar Pedido de Cotizacion</button> '.html_safe, edit_provider_path(@pedido_compra.id)
+        = link_to '<button class="btn btn-primary pull-right">Generar Pedido de Cotizacion</button> '.html_safe, edit_proveedor_path(@pedido_compra.id)
 
 - if not @pedidos_compra_detalle.blank?
   .panel.panel-info

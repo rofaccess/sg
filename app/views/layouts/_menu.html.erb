@@ -16,7 +16,7 @@
     <ul class="nav navbar-nav">
       <li class="<%= current_menu([pages_index_path]) %>"><%= link_to 'Inicio', pages_index_path %></li>
       <li class=""><%= link_to 'Ventas', '#' %></li>
-      <li class="<%= current_menu([providers_path, pedidos_compra_path, proveedores_path, facturas_compra_path]) %>"><%= link_to 'Compras', providers_path %></li>
+      <li class="<%= current_menu([proveedores_path, pedidos_compra_path, facturas_compra_path]) %>"><%= link_to 'Compras', proveedores_path %></li>
       <li class="<%= current_menu([componentes_path, marcas_path, productos_path]) %>"><%= link_to 'Stock', componentes_path %></li>
       <li class="<%= current_menu([configuraciones_path, localidades_path]) %>"><%= link_to 'Configuración', configuraciones_path %></li>
     </ul>
