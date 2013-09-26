@@ -42,7 +42,7 @@ class ComponentesController < ApplicationController
       if @componente.save
         update_list
       else
-        redirect_to componentes_path, alert: t('messages.provider_not_saved')
+        redirect_to componentes_path, alert: t('messages.proveedor_not_saved')
       end
   end
 
@@ -58,7 +58,7 @@ class ComponentesController < ApplicationController
     if @componente.update(componente_params)
       update_list
     else
-        redirect_to componentes_path, alert: t('messages.provider_not_saved')
+        redirect_to componentes_path, alert: t('messages.proveedor_not_saved')
     end
   end
 
@@ -66,9 +66,9 @@ class ComponentesController < ApplicationController
   # DELETE /componentes/1.json
   def destroy
     if @componente.destroy
-      redirect_to componentes_path, notice: t('messages.provider_deleted')
+      redirect_to componentes_path, notice: t('messages.proveedor_deleted')
     else
-      redirect_to componentes_path, alert: t('messages.provider_not_deleted')
+      redirect_to componentes_path, alert: t('messages.proveedor_not_deleted')
     end
   end
 

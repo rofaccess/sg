@@ -4,15 +4,17 @@ table.table
 	  th Nombre
 	  th Ruc
 	  th Direccion
+	  th Ciudad
 	  th Email
 	  th
   tbody
 	- @proveedores.each do |p|
 	  tr
-	    td = p.persona.nombre
-		td = p.persona.ruc
-		td = p.persona.direccion
-		td = p.persona.email
+	    td = p.nombre
+		td = p.ruc
+		td = p.direccion
+		td = p.ciudad.nombre
+		td = p.email
 		td
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_proveedor_path(p), remote: true
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, proveedor_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}

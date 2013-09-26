@@ -77,39 +77,7 @@ var localidadesUI = (function(){
 		},
 
 		initCiudadSelect: function(){
-			$('#provider_ciudad_id').select2({
-				placeholder: 'Busque la ciudad',
-				minimumInputLength: 2,
-				ajax: {
-					url: '/localidades/buscar_ciudades',
-					type: 'post',
-					datatype: 'jsonp',
-					data: function(term,page){
-						return {
-							term: term
-						};
-					},
-					results: function(data,page){
-						return { results: data };
-					}
-				},
-				formatResult: formatResults,
-				formatSelection: formatSelectionClient,
-				formatInputTooShort: function(term, minLenght){
-					return 'Ingrese por lo menos 2 caracteres';
-				},
-				formatSearching: function(){
-					return 'Buscando...';
-				},
-				formatNoMatches: function(){
-					return 'No se encontraron resultados...';
-				},
-				escapeMarkup: function(c) { return c; }
-			});
-		},
-
-		initCiudadSelect2: function(){
-			$('#persona_ciudad_id').select2({
+			$('#proveedor_ciudad_id').select2({
 				placeholder: 'Busque la ciudad',
 				minimumInputLength: 2,
 				ajax: {
