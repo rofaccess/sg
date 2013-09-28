@@ -11,6 +11,7 @@
 // about supported directives.
 //= require jquery.spin.min
 //= require localidadesUI
+//= require pedidosCotizacionUI
 //
 $(function(){
 	$('#add-modal').on('show.bs.modal', function(){

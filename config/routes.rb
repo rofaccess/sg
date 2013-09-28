@@ -1,5 +1,10 @@
 Sg::Application.routes.draw do
-  resources :pedidos_cotizacion
+
+  resources :pedidos_cotizacion do
+    collection do
+      post 'get_pedido_compra'
+    end
+  end
 
   resources :facturas_compra
   resources :proveedores do
