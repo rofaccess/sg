@@ -1,5 +1,6 @@
 class PedidoCompra < ActiveRecord::Base
   has_many :pedido_compra_detalles
+  has_many :pedido_cotizacions
 
   # Este metodo retorna todas las categorias que hay en los detalles de un pedido de compra
   def get_componente_categorias
@@ -9,5 +10,9 @@ class PedidoCompra < ActiveRecord::Base
       	categorias.push(d.componente.componente_categoria_id) unless categorias.include?(d.componente.componente_categoria_id)
       end
     categorias
+  end
+
+  def self.cotizados
+    PedidoCompra.where(estado: PedidosEstados::COTIZADO)
   end
 end

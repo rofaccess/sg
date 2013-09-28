@@ -3,23 +3,29 @@ table.table
     tr
       th Numero
       th Proveedor
-      th Estado
+      - unless defined? short_view
+        th Estado
       th Fecha creacion
-      th Fecha cotizado
+      - unless defined? short_view
+        th Fecha cotizado
       th Usuario
       th Pedido compra
-      th
+      - unless defined? short_view
+        th
 
   tbody
     - @pedidos_cotizacion.each do |pedido_cotizacion|
       tr
         td = pedido_cotizacion.numero
-        td = pedido_cotizacion.proveedor_id
-        td = pedido_cotizacion.estado
-        td = pedido_cotizacion.fecha_creacion
-        td = pedido_cotizacion.fecha_cotizado
+        td = pedido_cotizacion.proveedor.nombre
+        - unless defined? short_view
+          td = pedido_cotizacion.estado
+        td = Formatter.format_date(pedido_cotizacion.fecha_creacion)
+        - unless defined? short_view
+          td = pedido_cotizacion.fecha_cotizado
         td = pedido_cotizacion.user_id
-        td = pedido_cotizacion.pedido_compra_id
-        td
-          = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_pedido_cotizacion_path(pedido_cotizacion), remote: true
-          = link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_cotizacion, method: 'delete', data: {confirm: t('messages.confirm_delete')}
+        td = pedido_cotizacion.pedido_compra.numero
+        - unless defined? short_view
+          td
+            = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_pedido_cotizacion_path(pedido_cotizacion), remote: true
+            = link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_cotizacion, method: 'delete', data: {confirm: t('messages.confirm_delete')}

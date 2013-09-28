@@ -3,8 +3,8 @@
   h4.modal-title Generar Pedido de Cotizacion
 .modal-body
   .row
-    = form_for @pedido_cotizacion, html: {class: 'form-horizontal'} do |f|
+    = form_for @pedido_cotizacion, html: {class: 'form-horizontal'}, remote: true do |f|
       .col-md-12
-        = FormBuilder::collection_select(f, :pedido_compra_id, @pedidos_compra, :id, :numero, 'Seleccione un peido de compra...', nil, 'col-md-8', '')
+        = FormBuilder::collection_select(f, :pedido_compra_id, @pedidos_compra, :id, :numero, 'Seleccione un pedido de compra...', nil, 'col-md-8', '')
       .col-md-12
         .detalles-pedido-compra

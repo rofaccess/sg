@@ -68,3 +68,6 @@ gem 'ransack', '1.0.0'
 
 # A Scope & Engine based, clean, powerful, customizable and sophisticated paginator for Rails
 gem 'kaminari', '0.14.1'
+
+
+gem 'protokoll', git: 'git://github.com/celsodantas/protokoll.git', branch: 'rails4'

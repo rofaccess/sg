@@ -11,7 +11,7 @@ class PedidosCotizacionController < ApplicationController
   # GET /pedido_cotizacions
   # GET /pedido_cotizacions.json
   def index
-    @pedidos_cotizacion = PedidoCotizacion.all
+    @pedidos_cotizacion = PedidoCotizacion.order(:fecha_creacion).page(params[:page])
   end
 
   # GET /pedido_cotizacions/1
@@ -37,23 +37,27 @@ class PedidosCotizacionController < ApplicationController
   # POST /pedido_cotizacions
   # POST /pedido_cotizacions.json
   def create
-    pedido_compra = PedidoCompra.find(params[:pedido_cotizacion][:pedido_compra_id])
-    categorias = pedido_compra.get_componente_categorias
+    @pedido_compra = PedidoCompra.find(params[:pedido_cotizacion][:pedido_compra_id])
+    categorias = @pedido_compra.get_componente_categorias
     proveedores = ComponenteCategoria.get_proveedores(categorias)
 
     # Se genera un pedido de cotizacion para cada proveedor
     proveedores.each do |p|
       proveedor = Proveedor.find(p)
-      pedido_cotizacion = PedidoCotizacion.new(proveedor_id: p, pedido_compra_id: pedido_compra.id, numero: '33', estado: 'Pendiente', user_id: current_user.id)
+      pedido_cotizacion = PedidoCotizacion.new( proveedor_id: p,
+                                                pedido_compra_id: @pedido_compra.id,
+                                                fecha_creacion: DateTime.now,
+                                                estado: PedidosEstados::PENDIENTE,
+                                                user_id: current_user.id)
 
-      pedido_compra.pedido_compra_detalles.each do |d|
+      @pedido_compra.pedido_compra_detalles.each do |d|
         pedido_cotizacion.pedido_cotizacion_detalles.build(componente_id: d.componente_id, cantidad_requerida: d.cantidad) if proveedor.componente_categorias.exists?(d.componente.componente_categoria_id)
       end
 
       pedido_cotizacion.save
     end
 
-    redirect_to pedidos_cotizacion_path
+    @pedido_compra.update(estado: PedidosEstados::COTIZADO)
 
   end
 

@@ -182,10 +182,17 @@ body{
 	}
 }
 
-// Delete modal
+// Modals
 .delete-modal{
   width: 260px;
 }
+
+#main-modal{
+  .modal-dialog{
+    width: 900px;
+  }
+}
+
 
 // Select2 style
 .select2-container{

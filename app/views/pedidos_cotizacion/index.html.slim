@@ -1,7 +1,12 @@
 .row.row-page-title
-  h2 Pedidos de contizaciones
+  h2 Pedidos de cotizaciones
   = link_to 'Generar Pedido de Cotización', new_pedido_cotizacion_path, class: 'btn btn-primary', remote: true
-
+#filtros
+  .row.form-horizontal
+    .col-md-5.pull-right
+      = FormBuilder::collection_select(nil, :pedido_compra_id, PedidoCompra.cotizados, :id, :numero, 'Filtrar por pedido de compra', 'hide', 'col-md-10 pull-right')
 #list
   = render 'list'
+#paginator
+  = paginate @pedidos_cotizacion, remote: true
 
