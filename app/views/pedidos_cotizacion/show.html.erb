@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Numero:</strong>
+  <%= @pedido_cotizacion.numero %>
+</p>
+
+<p>
+  <strong>Proveedor:</strong>
+  <%= @pedido_cotizacion.proveedor_id %>
+</p>
+
+<p>
+  <strong>Estado:</strong>
+  <%= @pedido_cotizacion.estado %>
+</p>
+
+<p>
+  <strong>Fecha creacion:</strong>
+  <%= @pedido_cotizacion.fecha_creacion %>
+</p>
+
+<p>
+  <strong>Fecha cotizado:</strong>
+  <%= @pedido_cotizacion.fecha_cotizado %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @pedido_cotizacion.user_id %>
+</p>
+
+<p>
+  <strong>Pedido compra:</strong>
+  <%= @pedido_cotizacion.pedido_compra_id %>
+</p>
+
+<%= link_to 'Edit', edit_pedido_cotizacion_path(@pedido_cotizacion) %> |
+<%= link_to 'Back', pedido_cotizacions_path %>

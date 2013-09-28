@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  numero: MyString
+  proveedor_id: 1
+  estado: MyString
+  fecha_creacion: 2013-09-26 22:58:21
+  fecha_cotizado: 2013-09-26 22:58:21
+  user_id: 1
+  pedido_compra_id: 1
+
+two:
+  numero: MyString
+  proveedor_id: 1
+  estado: MyString
+  fecha_creacion: 2013-09-26 22:58:21
+  fecha_cotizado: 2013-09-26 22:58:21
+  user_id: 1
+  pedido_compra_id: 1

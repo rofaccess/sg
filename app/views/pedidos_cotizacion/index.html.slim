@@ -1,0 +1,7 @@
+.row.row-page-title
+  h2 Pedidos de contizaciones
+  = link_to 'Generar Pedido de Cotización', new_pedido_cotizacion_path, class: 'btn btn-primary', remote: true
+
+#list
+  = render 'list'
+

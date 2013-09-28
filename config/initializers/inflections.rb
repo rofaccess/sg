@@ -21,6 +21,8 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'plazo_pago_detalle', 'plazos_pago_detalle'
   inflect.irregular 'factura_compra', 'facturas_compra'
   inflect.irregular 'factura_compra_detalle', 'facturas_compra_detalle'
+  inflect.irregular 'pedido_cotizacion', 'pedidos_cotizacion'
+  inflect.irregular 'pedido_cotizacion_detalle', 'pedidos_cotizacion_detalle'
   inflect.uncountable %w( fish sheep )
 end
 

@@ -1,0 +1,7 @@
+.modal-header
+  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+  h4.modal-title Generar Pedido de Cotizacion
+.modal-body
+  .row
+    = form_for(@pedido_cotizacion) do |f|
+      = FormBuilder::collection_select(f, :pedido_compra_id, @pedidos_compra, :id, :numero, nil, nil, 'col-md-8', '')

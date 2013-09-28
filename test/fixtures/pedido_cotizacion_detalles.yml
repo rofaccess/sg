@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  pedido_cotizacion_id: 1
+  componente_id: 1
+  cantidad_requerida: 1
+  cantidad_cotizada: 1
+  costo_unitario: 9.99
+
+two:
+  pedido_cotizacion_id: 1
+  componente_id: 1
+  cantidad_requerida: 1
+  cantidad_cotizada: 1
+  costo_unitario: 9.99
