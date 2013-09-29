@@ -15,7 +15,7 @@ table.table
 
   tbody
     - @pedidos_cotizacion.each do |pedido_cotizacion|
-      tr
+      tr.show-pedido [data-url="#{pedido_cotizacion_path(pedido_cotizacion)}"]
         td = pedido_cotizacion.numero
         td = pedido_cotizacion.proveedor.nombre
         - unless defined? short_view

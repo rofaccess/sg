@@ -1,0 +1,20 @@
+.modal-body
+  .well
+    h3 Pedido de cotizacion N° #{@pedido_cotizacion.numero}
+    h4 Proveedor: #{@pedido_cotizacion.proveedor.nombre}
+  table.table
+    thead
+      tr
+        th Componente
+        th Cantidad
+        th Cantidad Cotizada
+        th Costo Unitario
+    tbody
+      - @pedido_cotizacion.pedido_cotizacion_detalles.each do |p|
+        tr
+          td = p.componente.nombre
+          td = p.cantidad_requerida
+          td
+            input [type="text"]
+          td
+            input [type="text"]
