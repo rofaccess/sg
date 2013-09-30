@@ -10,4 +10,5 @@ class User < ActiveRecord::Base
   end
 
   has_many :facturas_compra
+  has_many :ordenes_compras
 end

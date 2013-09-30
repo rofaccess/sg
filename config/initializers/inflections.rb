@@ -23,6 +23,8 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'factura_compra_detalle', 'facturas_compra_detalle'
   inflect.irregular 'pedido_cotizacion', 'pedidos_cotizacion'
   inflect.irregular 'pedido_cotizacion_detalle', 'pedidos_cotizacion_detalle'
+  inflect.irregular 'orden_compra', 'ordenes_compras'
+  inflect.irregular 'orden_compra_detalle', 'ordenes_compra_detalle'
   inflect.uncountable %w( fish sheep )
 end
 

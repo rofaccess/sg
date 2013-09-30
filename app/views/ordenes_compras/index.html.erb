@@ -1,0 +1,39 @@
+<h1>Listing ordenes_compras</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Numero</th>
+      <th>Fecha</th>
+      <th>Costo total</th>
+      <th>Estado</th>
+      <th>User</th>
+      <th>Proveedor</th>
+      <th>Pedido cotizacion</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ordenes_compras.each do |orden_compra| %>
+      <tr>
+        <td><%= orden_compra.numero %></td>
+        <td><%= orden_compra.fecha %></td>
+        <td><%= orden_compra.costo_total %></td>
+        <td><%= orden_compra.estado %></td>
+        <td><%= orden_compra.user_id %></td>
+        <td><%= orden_compra.proveedor_id %></td>
+        <td><%= orden_compra.pedido_cotizacion_id %></td>
+        <td><%= link_to 'Show', orden_compra %></td>
+        <td><%= link_to 'Edit', edit_orden_compra_path(orden_compra) %></td>
+        <td><%= link_to 'Destroy', orden_compra, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Orden compra', new_orden_compra_path %>

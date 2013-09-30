@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  orden_compra_id: 1
+  componente_id: 1
+  costo_unitario: 9.99
+  cantidad_requerida: 1
+  cantidad: 
+
+two:
+  orden_compra_id: 1
+  componente_id: 1
+  costo_unitario: 9.99
+  cantidad_requerida: 1
+  cantidad: 
