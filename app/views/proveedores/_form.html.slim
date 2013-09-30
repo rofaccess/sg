@@ -13,6 +13,9 @@
 	    = FormBuilder::text_field(f, :ciudad_id, nil, 'col-md-8 with-btn', 'required', [true, nueva_ciudad_proveedores_path])
 	    = FormBuilder::text_field(f, :direccion, nil, nil, 'required')
 	    = FormBuilder::text_field(f, :email, nil, nil, 'required email')
+        /= f.fields_for :telefonos do |builder|
+        /    = render 'telefono_form', :f => builder
+        /= link_to_add_fields "Agregar Tel.", f, :telefonos
 
         button.btn.btn-default.close-add-form [type="button"] Cancelar
         = f.submit 'Guardar', class: 'btn btn-primary'
@@ -25,3 +28,5 @@
                 }});
         	localidadesUI.initCiudadSelect();
             $('#s2id_proveedor_ciudad_id').find('.select2-chosen').text('#{@proveedor.ciudad.nil? ? '' : @proveedor.ciudad.nombre}');
+
+
