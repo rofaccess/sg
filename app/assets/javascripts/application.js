@@ -17,6 +17,7 @@
 //= require bootstrap
 //= require jquery.validationEngine
 //= require jquery.validate.min
+//= require languages/jquery.validate.messages_es
 //= require languages/jquery.validationEngine-es
 //= require noty/jquery.noty
 //= require noty/layouts/topRight

@@ -3,7 +3,7 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     h4.modal-title Agregar Producto
   .modal-body
-    = FormBuilder::text_field(f, :codigo, nil, nil, 'validate[required]')
+    = FormBuilder::text_field(f, :codigo, nil, nil, 'validate[required')
     = FormBuilder::text_field(f, :nombre, nil, nil, 'validate[required]')
     = FormBuilder::text_field(f, :descripcion, nil, nil, 'validate[required]')
     = FormBuilder::text_field(f, :costo_unitario, nil, nil, 'validate[required]')
