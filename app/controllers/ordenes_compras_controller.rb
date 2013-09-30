@@ -1,15 +1,31 @@
 class OrdenesComprasController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_orden_compra, only: [:show, :edit, :update, :destroy]
+  before_action :set_sidemenu, only: [:index]
+  respond_to :html, :js
 
   # GET /ordenes_compras
   # GET /ordenes_compras.json
+  def set_sidemenu
+    @sidebar_layout = 'layouts/compras_sidemenu'
+  end
+
+
   def index
-    @ordenes_compras = OrdenCompra.all
+    @search = OrdenCompra.search(params[:q])
+    @orden_compra = OrdenCompra.new
+    if @search.sorts.empty?
+      @ordenes_compras = @search.result.order('estado').page(params[:page]).per(8)
+    else
+      @ordenes_compras = @search.result.page(params[:page]).per(8)
+    end
   end
 
   # GET /ordenes_compras/1
   # GET /ordenes_compras/1.json
   def show
+    @orden_compra = OrdenCompra.find(params[:id])
+    @ordenes_compra_detalle = OrdenCompraDetalle.where('orden_compra_id=?', @orden_compra)
   end
 
   # GET /ordenes_compras/new
@@ -53,12 +69,19 @@ class OrdenesComprasController < ApplicationController
 
   # DELETE /ordenes_compras/1
   # DELETE /ordenes_compras/1.json
+
+
   def destroy
-    @orden_compra.destroy
-    respond_to do |format|
-      format.html { redirect_to ordenes_compras_url }
-      format.json { head :no_content }
+    if @orden_compra.destroy
+      redirect_to ordenes_compras_path, notice: t('messages.pedido_compra_deleted')
+    else
+      redirect_to ordenes_compras_path, alert: t('messages.pedido_compra_not_deleted')
     end
+  end
+
+  def update_list
+    index
+    render partial: 'update_list', format: 'js'
   end
 
   private
