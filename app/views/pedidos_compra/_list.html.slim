@@ -14,7 +14,7 @@ table.table
 		  td = p.created_at
 		  td
 		    = link_to '<i class="icon-list icon-large"></i> '.html_safe, pedido_compra_path(p), remote: true
-		    = link_to '<i class="icon-ok icon-large"></i>'.html_safe
+		    = link_to '<i class="icon-ok icon-large"></i>'.html_safe, create_pedido_cotizacion_pedido_compra_path(p), remote: true, data: {confirm: t('messages.confirm_generar_pedido_cotizacion')}
 		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
 	  - else
 	    tr
@@ -23,4 +23,3 @@ table.table
 		  td = p.created_at
 		  td
 		    = link_to '<i class="icon-list icon-large"></i> '.html_safe, pedido_compra_path(p), remote: true
-		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}

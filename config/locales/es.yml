@@ -225,3 +225,4 @@ es:
     pedido_compra_not_saved: 'No se ha podido guardar el Pedido de Compra.'
     pedido_compra_deleted: 'El Pedido de Compra se ha eliminado con exito!.'
     pedido_compra_not_deleted: 'No se ha podido eliminar el pedido de compra.'
+    confirm_generar_pedido_cotizacion: 'Desea generar el Pedido de Cotizacion?'

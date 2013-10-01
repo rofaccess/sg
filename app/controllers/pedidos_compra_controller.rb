@@ -12,7 +12,7 @@ class PedidosCompraController < ApplicationController
   	@search = PedidoCompra.search(params[:q])
     @pedido_compra = PedidoCompra.new
   	if @search.sorts.empty?
-      @pedidos_compra = @search.result.order('estado').page(params[:page]).per(8)
+      @pedidos_compra = @search.result.order('estado desc').page(params[:page]).per(8)
     else
       @pedidos_compra = @search.result.page(params[:page]).per(8)
     end
@@ -24,7 +24,33 @@ class PedidosCompraController < ApplicationController
   end
 
   def new
-    @pedido_compra = PedidoCompra.new
+  end
+
+  def create_pedido_cotizacion
+    @pedido_compra = PedidoCompra.find(params[:id])
+    categorias = @pedido_compra.get_componente_categorias
+    proveedores = ComponenteCategoria.get_proveedores(categorias)
+
+    # Se genera un pedido de cotizacion para cada proveedor
+    proveedores.each do |p|
+      proveedor = Proveedor.find(p)
+      pedido_cotizacion = PedidoCotizacion.new( proveedor_id: p,
+                                                pedido_compra_id: @pedido_compra.id,
+                                                fecha_creacion: DateTime.now,
+                                                estado: PedidosEstados::PENDIENTE,
+                                                user_id: current_user.id)
+
+      @pedido_compra.pedido_compra_detalles.each do |d|
+        pedido_cotizacion.pedido_cotizacion_detalles.build(componente_id: d.componente_id, cantidad_requerida: d.cantidad) if proveedor.componente_categorias.exists?(d.componente.componente_categoria_id)
+      end
+
+      pedido_cotizacion.save
+    end
+    @pedido_compra.update(estado: PedidosEstados::COTIZADO)
+    #if @pedido_compra.update(estado: PedidosEstados::COTIZADO)
+    #  update_list
+    #end
+
   end
 
   def create_test_data
@@ -53,9 +79,6 @@ class PedidosCompraController < ApplicationController
     render partial: 'update_list', format: 'js'
   end
 
-  def update
-
-  end
   def destroy
     if @pedido_compra.destroy
       redirect_to pedidos_compra_path, notice: t('messages.pedido_compra_deleted')

@@ -20,6 +20,9 @@ Sg::Application.routes.draw do
     collection do
       get 'create_test_data'
     end
+    member do
+      get 'create_pedido_cotizacion'
+    end
   end
 
   resources :componentes do

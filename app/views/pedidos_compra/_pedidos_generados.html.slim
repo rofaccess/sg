@@ -1,0 +1,6 @@
+.panel.panel-default
+  .panel-heading
+    h3.panel-title Se ha generado #{@pedido_compra.pedido_cotizacions.size} pedidos de cotizaciones para el pedido de compra N° #{@pedido_compra.numero}
+  .panel-body
+    - @pedidos_cotizacion = @pedido_compra.pedido_cotizacions
+    = render partial: 'list_recien_generados', locals: {short_view: true}
