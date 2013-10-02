@@ -1,3 +1,25 @@
 // Place all the styles related to the facturas_compra controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.show-orden{
+	cursor: pointer;
+}
+
+.orden-detalles{
+	h3{
+		margin-top: 10px;
+	}
+	h5.extra{
+
+	}
+
+	.cantidad-field{
+		width: 50px;
+		text-align: right;
+	}
+
+	.monto-field{
+		text-align: right;
+
+	}
+}

@@ -9,6 +9,6 @@ class User < ActiveRecord::Base
   	false
   end
 
-  has_many :facturas_compra
+  has_many :factura_compras
   has_many :ordenes_compras
 end

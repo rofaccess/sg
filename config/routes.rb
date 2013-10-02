@@ -9,7 +9,12 @@ Sg::Application.routes.draw do
     end
   end
 
-  resources :facturas_compra
+  resources :facturas_compra do
+    collection do
+      post 'get_orden_compra'
+    end
+  end
+
   resources :proveedores do
     collection do
       post 'load_test_data'

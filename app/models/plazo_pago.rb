@@ -1,3 +1,3 @@
 class PlazoPago < ActiveRecord::Base
-	has_many :facturas_compra
+	has_many :factura_compras
 end

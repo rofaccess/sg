@@ -12,6 +12,7 @@
 //= require jquery.spin.min
 //= require localidadesUI
 //= require pedidosCotizacionUI
+//= require facturasCompraUI
 //
 $(function(){
 	$('#add-modal').on('show.bs.modal', function(){

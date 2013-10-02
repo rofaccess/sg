@@ -17,7 +17,14 @@ class FacturasCompraController < ApplicationController
   end
 
   def new
+    @ordenes_compra = OrdenCompra.where(estado: 'Pendiente')
     @factura_compra = FacturaCompra.new
+  end
+
+  def get_orden_compra
+    @orden_compra = OrdenCompra.find(params[:id])
+    #@orden_compra.
+    render partial: 'get_orden_compra', formats: 'html'
   end
 
   def create

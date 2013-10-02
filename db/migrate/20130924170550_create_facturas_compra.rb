@@ -16,7 +16,7 @@ class CreateFacturasCompra < ActiveRecord::Migration
       t.timestamps
     end
 
-  #add_foreign_key(:facturas_compra, :ordenes_pago, column: 'orden_pago_id', options: 'ON DELETE RESTRICT')
+  #add_foreign_key(:facturas_compra, :ordenes_compras, column: 'orden_compra_id', options: 'ON DELETE RESTRICT')
   add_foreign_key(:facturas_compra, :personas, column: 'proveedor_id', options: 'ON DELETE RESTRICT')
   add_foreign_key(:facturas_compra, :condiciones_pago, column: 'condicion_pago_id', options: 'ON DELETE RESTRICT')
 	add_foreign_key(:facturas_compra, :plazos_pago, column: 'plazo_pago_id', options: 'ON DELETE RESTRICT')

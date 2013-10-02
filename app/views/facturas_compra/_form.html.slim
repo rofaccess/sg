@@ -1,31 +1,10 @@
-= form_for @factura_compra, html: {class: 'form-horizontal'} do |f|
-  .modal-header
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    h4 = @factura_compra.id.nil? ? 'Nueva Factura' : 'Editar Factura'
-
-  .modal-body
-    h5 Encabezado
-    .row
-      .row
-        .col-md-4
-          h5 Numero
-        .col-md-4
-          h5 Condicion de Venta
-        .col-md-4
-          h5 Proveedor
-      .row
-        .col-md-4
-          h5 000203200-23
-        .col-md-4
-          h5 Contado
-        .col-md-4
-          h5 Desconocido
-
-    /= FormBuilder::text_field(f, :codigo, nil, nil, 'validate[required]')
-    /= FormBuilder::text_field(f, :nombre, nil, nil, 'validate[required]')
-    /= FormBuilder::text_field(f, :descripcion, nil, nil, 'validate[required]')
-    /= FormBuilder::text_field(f, :costo_unitario, nil, nil, 'validate[required]')
-    h5 Detalles
-  .modal-footer
-    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-    = f.submit 'Aceptar', class: 'btn btn-primary'
+.modal-header
+  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+  h4.modal-title Generar Factura
+.modal-body
+  .row
+    = form_for @factura_compra, html: {class: 'form-horizontal'}, remote: true do |f|
+      .col-md-12
+        = FormBuilder::collection_select(f, :orden_compra_id, @ordenes_compra, :id, :numero, 'Seleccione una orden de compra...', nil, 'col-md-8', '')
+      .col-md-12
+        .detalles-orden-compra
