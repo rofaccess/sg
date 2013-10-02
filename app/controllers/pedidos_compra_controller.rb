@@ -12,7 +12,7 @@ class PedidosCompraController < ApplicationController
   	@search = PedidoCompra.search(params[:q])
     @pedido_compra = PedidoCompra.new
   	if @search.sorts.empty?
-      @pedidos_compra = @search.result.order('estado desc').page(params[:page]).per(8)
+      @pedidos_compra = @search.result.order('estado').page(params[:page]).per(8)
     else
       @pedidos_compra = @search.result.page(params[:page]).per(8)
     end
@@ -46,25 +46,20 @@ class PedidosCompraController < ApplicationController
 
       pedido_cotizacion.save
     end
-    @pedido_compra.update(estado: PedidosEstados::COTIZADO)
-    #if @pedido_compra.update(estado: PedidosEstados::COTIZADO)
-    #  update_list
-    #end
-
+    @pedido_compra.update(estado: PedidosEstados::PROCESADO)
   end
 
   def create_test_data
-    estados = %w{ Pendiente Cotizado}
-    @pedido_compra = PedidoCompra.new( numero: rand(10000), estado: estados[rand(estados.length)])
+    @pedido_compra = PedidoCompra.new( numero: rand(10000), estado: "Pendiente")
     @pedido_compra.save
 
     @componentes = Componente.all
 
-    10.times do |num|
+    rand(1..10).times do |num|
       @componente = @componentes[rand(@componentes.length)]
       @pedido_compra_detalle = PedidoCompraDetalle.new(pedido_compra_id: @pedido_compra.id,
                                                      componente_id: @componente.id,
-                                                     cantidad: rand(10))
+                                                     cantidad: rand(1..10))
       @pedido_compra_detalle.save
     end
     if @pedido_compra_detalle.save

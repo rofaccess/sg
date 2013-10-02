@@ -1,5 +1,11 @@
+// Seteando variables
+- if @pedido_compra.estado == PedidosEstados::PENDIENTE
+  - estado_label = 'label-danger'
+- elsif @pedido_compra.estado == PedidosEstados::PROCESADO
+  - estado_label = 'label-warning'
 .modal-header
-  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+  /button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+  span[class="label #{estado_label} pull-right"] #{@pedido_compra.estado}
   h4.modal-title Pedido de compra N° #{@pedido_compra.numero}
 .modal-body
   .row
@@ -8,8 +14,8 @@
         .panel.panel-default
           .panel-heading
             .row
-              h3.panel-title.col-lg-7 #{@pedido_compra.pedido_compra_detalles.length} componetes registrados
-              span.fecha.col-lg-5 Generado el #{@pedido_compra.created_at}
+              h3.panel-title.col-lg-7 #{@pedido_compra.pedido_compra_detalles.length} registros
+              span.fecha.col-lg-5 Generado el: #{Formatter.format_datetime(@pedido_compra.created_at)}
           .panel-body
             .row.table-scroll
               table.table
@@ -34,5 +40,5 @@
                         td = p.componente.componente_categoria.nombre
           .panel-footer
             button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
-            - if @pedido_compra.estado == 'Pendiente'
+            - if @pedido_compra.estado == PedidosEstados::PENDIENTE
               = link_to '<button class="btn btn-primary pull-right">Generar Pedido de Cotizacion</button> '.html_safe, create_pedido_cotizacion_pedido_compra_path(@pedido_compra.id), remote: true
