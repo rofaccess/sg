@@ -1,20 +1,30 @@
-.modal-body
+.modal-body.pedido-detalles
   .well
     h3 Pedido de cotizacion N° #{@pedido_cotizacion.numero}
     h4 Proveedor: #{@pedido_cotizacion.proveedor.nombre}
-  table.table
-    thead
-      tr
-        th Componente
-        th Cantidad
-        th Cantidad Cotizada
-        th Costo Unitario
-    tbody
-      - @pedido_cotizacion.pedido_cotizacion_detalles.each do |p|
+    h5.extra Creado el: #{Formatter.format_date(@pedido_cotizacion.fecha_creacion)}
+  = form_for @pedido_cotizacion, url: cotizar_pedidos_cotizacion_path, remote: true do |f|
+    = f.hidden_field :id
+    table.table
+      thead
         tr
-          td = p.componente.nombre
-          td = p.cantidad_requerida
-          td
-            input [type="text"]
-          td
-            input [type="text"]
+          th Componente
+          th Cantidad
+          th.text-right Cantidad Cotizada
+          th.text-right Costo Unitario
+      tbody
+        - @pedido_cotizacion.pedido_cotizacion_detalles.each do |p|
+          tr
+            td = p.componente.nombre
+            td = p.cantidad_requerida
+            = f.fields_for :pedido_cotizacion_detalles, p do |d|
+              td
+                = d.text_field :cantidad_cotizada, class: 'cantidad-field pull-right'
+              td
+                = d.text_field :costo_unitario, class: 'monto-field pull-right'
+    .row
+      .col-md-12
+        = f.submit 'Cotizar', class: 'btn btn-primary pull-right'
+
+javascript:
+  $('.monto-field, .cantidad-field').maskMoney({thousands: '.', defaultZero: false, precision: 0});

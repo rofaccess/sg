@@ -7,4 +7,6 @@ class PedidoCotizacion < ActiveRecord::Base
   belongs_to :pedido_compra
   belongs_to :proveedor
 
+  accepts_nested_attributes_for :pedido_cotizacion_detalles
+
 end
