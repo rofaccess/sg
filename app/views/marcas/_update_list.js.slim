@@ -1,8 +1,6 @@
-- unless params[:select_categoria].nil?
-  | var options = $('#componente_marca_id').val();
-  | if(options == null){options = ['#{@marca.id}']}else{options.push('#{@marca.id}')};
+- unless params[:select_marca].nil?
   | $('#componente_marca_id').html("#{escape_javascript(render partial: 'compartido/recargar_select', locals: {model: Marca.all.order('nombre')})}");
-  | $('#componente_marca_id').select2().val(options).trigger('change');
+  | $('#componente_marca_id').select2().val('#{@marca.id}').trigger('change');
 
   | $('#add-modal').modal('hide');
 - else
