@@ -1,0 +1,8 @@
+.row.row-page-title
+  h2 Ordenes de Compra
+
+div id="list"
+  = render 'list'
+
+div id="paginator"
+  = paginate @ordenes_compras, remote: true
