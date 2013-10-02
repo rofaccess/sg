@@ -4,4 +4,5 @@ class Componente < ActiveRecord::Base
 	has_many :pedidos_compra_detalle
 	has_many :facturas_compra_detalle
 	has_many :pedidos_cotizacion_detalles
+	has_many :ordenes_compra_detalle
 end

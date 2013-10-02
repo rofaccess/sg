@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  numero: 1
+  fecha: 2013-09-30
+  costo_total: 9.99
+  estado: MyString
+  user_id: 1
+  proveedor_id: 1
+  pedido_cotizacion_id: 1
+
+two:
+  numero: 1
+  fecha: 2013-09-30
+  costo_total: 9.99
+  estado: MyString
+  user_id: 1
+  proveedor_id: 1
+  pedido_cotizacion_id: 1

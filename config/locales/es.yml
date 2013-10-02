@@ -196,26 +196,26 @@ es:
       <<: *errors
   activerecord:
     models:
-      product: 'Producto'
+      producto: 'producto'
       proveedor: 'Proveedor'
     attributes:
       proveedor:
         componente_categoria_ids: 'Categorias'
-      product:
+      producto:
         name: 'Nombre'
         mark: 'Marca'
         unit_price: 'Precio Unitario'
-        provider_id: 'Proveedor'
+        proveedor_id: 'Proveedor'
   messages:
     confirm_delete: 'Está seguro?'
-    provider_saved: 'El Proveedor se ha guardado con exito!.'
-    provider_not_saved: 'No se ha podido guardar el proveedor.'
-    provider_deleted: 'El Proveedor se ha eliminado con exito!.'
-    provider_not_deleted: 'No se ha podido eliminar el proveedor.'
-    product_saved: 'El Producto se ha guardado con exito!.'
-    product_not_saved: 'No se ha podido guardar el producto.'
-    product_deleted: 'El Producto se ha eliminado con exito!.'
-    product_not_deleted: 'No se ha podido eliminar el producto.'
+    proveedor_saved: 'El Proveedor se ha guardado con exito!.'
+    proveedor_not_saved: 'No se ha podido guardar el proveedor.'
+    proveedor_deleted: 'El Proveedor se ha eliminado con exito!.'
+    proveedor_not_deleted: 'No se ha podido eliminar el proveedor.'
+    producto_saved: 'El producto se ha guardado con exito!.'
+    producto_not_saved: 'No se ha podido guardar el productoo.'
+    producto_deleted: 'El producto se ha eliminado con exito!.'
+    producto_not_deleted: 'No se ha podido eliminar el productoo.'
     deleted: 'Se a eliminado este %{resource_name} con exito.'
     configuracion_saved: 'La Configuracion se ha guardado con exito!'
     configuracion_not_saved: 'No se ha podido guardar la configuracion!'
@@ -225,3 +225,4 @@ es:
     pedido_compra_not_saved: 'No se ha podido guardar el Pedido de Compra.'
     pedido_compra_deleted: 'El Pedido de Compra se ha eliminado con exito!.'
     pedido_compra_not_deleted: 'No se ha podido eliminar el pedido de compra.'
+    confirm_generar_pedido_cotizacion: 'Desea generar el Pedido de Cotizacion?'

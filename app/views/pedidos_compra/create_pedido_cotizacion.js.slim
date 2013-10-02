@@ -1,0 +1,3 @@
+| $('#main-modal .modal-content').html('#{escape_javascript(render 'pedidos_generados', formats: 'html')}');
+| $.get('#{pedidos_compra_path}', {}, function(){}, 'script');
+| $('#main-modal').modal('show');

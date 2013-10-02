@@ -1,2 +1,2 @@
-| $('#add-form').html("#{escape_javascript(render partial:'show', format: 'html')}");
-| SideFormUI.showForm();
+| $('#main-modal .modal-content').html('#{escape_javascript(render 'show', formats: 'html')}');
+| $('#main-modal').modal('show');

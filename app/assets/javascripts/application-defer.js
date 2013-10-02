@@ -37,6 +37,7 @@ var SideFormUI = (function(){
 		showForm: function(){
 			$('#add-form').addClass('side-form-show', 500, 'swing');
 			$('#add-form').find('form').validate();
+			//$('#add-form').find('form').validationEngine({promptPosition: 'topRight'});
 		},
 		closeForm: function(){
 		$('#add-form').removeClass('side-form-show', 500, 'swing');
@@ -45,8 +46,7 @@ var SideFormUI = (function(){
 	};
 }());
 
-// Esto es para ke actualize la tabla a medida ke se tipea la buskeda
-// Causan muchos problemas
+// Para que el formulario de busqueda actualize a medida que se tipea
 $('.buscador:first').keyup(function () {
 	delay(function(){
 		$('.buscador').submit();

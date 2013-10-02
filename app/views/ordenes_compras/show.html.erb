@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Numero:</strong>
+  <%= @orden_compra.numero %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @orden_compra.fecha %>
+</p>
+
+<p>
+  <strong>Costo total:</strong>
+  <%= @orden_compra.costo_total %>
+</p>
+
+<p>
+  <strong>Estado:</strong>
+  <%= @orden_compra.estado %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @orden_compra.user_id %>
+</p>
+
+<p>
+  <strong>Proveedor:</strong>
+  <%= @orden_compra.proveedor_id %>
+</p>
+
+<p>
+  <strong>Pedido cotizacion:</strong>
+  <%= @orden_compra.pedido_cotizacion_id %>
+</p>
+
+<%= link_to 'Edit', edit_orden_compra_path(@orden_compra) %> |
+<%= link_to 'Back', ordenes_compras_path %>

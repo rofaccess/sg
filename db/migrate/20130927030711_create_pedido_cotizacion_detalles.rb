@@ -11,6 +11,7 @@ class CreatePedidoCotizacionDetalles < ActiveRecord::Migration
     end
 
     add_foreign_key(:pedidos_cotizacion_detalle, :pedidos_cotizacion, column: 'pedido_cotizacion_id', options: 'ON DELETE RESTRICT')
+    # El anterior debe ser ON DELETE CASCADE
     add_foreign_key(:pedidos_cotizacion_detalle, :componentes, column: 'componente_id', options: 'ON DELETE RESTRICT')
   end
 end

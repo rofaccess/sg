@@ -1,47 +1,38 @@
-button.close.close-add-form [type="button" aria-hidden="true"] &times;
-.panel.panel-info
-  .panel-heading
-    h4.panel-title Pedido de Compra
-  .panel-body
-    table.table
-      tbody
-        tr
-          td = @pedido_compra.numero
-          td = @pedido_compra.estado
-          td = @pedido_compra.created_at
+.modal-header
+  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+  h4.modal-title Pedido de compra N° #{@pedido_compra.numero}
+.modal-body
+  .row
     .col-md-12
-      button.btn.btn-default.close-add-form [type="button"] Cancelar
-      - if @pedido_compra.estado == 'Pendiente'
-        = link_to '<button class="btn btn-primary pull-right">Generar Pedido de Cotizacion</button> '.html_safe, edit_proveedor_path(@pedido_compra.id)
-
-- if not @pedidos_compra_detalle.blank?
-  .panel.panel-info
-    .panel-heading
-      .row
-        h4.panel-title.col-lg-11 Registros de Componentes:
-        .col-lg-1 = @pedidos_compra_detalle.length
-    .panel-body
-      .row.table-scroll
-        table.table
-          thead
-            tr
-              th Nombre
-              th Cantidad
-              th Marca
-              th Categoria
-          tbody
-            - @pedidos_compra_detalle.each do |p|
-              tr
-                td = p.componente.nombre
-                td = p.cantidad
-                - if p.componente.marca.blank?
-                  td Sin Marca
-                - else
-                  td = p.componente.marca.nombre
-                - if p.componente.componente_categoria.blank?
-                  td Sin Categoria
-                - else
-                  td = p.componente.componente_categoria.nombre
-
-
-
+      .detalles-pedido-compra
+        .panel.panel-default
+          .panel-heading
+            .row
+              h3.panel-title.col-lg-7 #{@pedido_compra.pedido_compra_detalles.length} componetes registrados
+              span.fecha.col-lg-5 Generado el #{@pedido_compra.created_at}
+          .panel-body
+            .row.table-scroll
+              table.table
+                thead
+                  tr
+                    th Nombre
+                    th Cantidad
+                    th Marca
+                    th Categoria
+                tbody
+                  - @pedido_compra.pedido_compra_detalles.each do |p|
+                    tr
+                      td = p.componente.nombre
+                      td = p.cantidad
+                      - if p.componente.marca.blank?
+                        td Sin Marca
+                      - else
+                        td = p.componente.marca.nombre
+                      - if p.componente.componente_categoria.blank?
+                        td Sin Categoria
+                      - else
+                        td = p.componente.componente_categoria.nombre
+          .panel-footer
+            button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
+            - if @pedido_compra.estado == 'Pendiente'
+              = link_to '<button class="btn btn-primary pull-right">Generar Pedido de Cotizacion</button> '.html_safe, create_pedido_cotizacion_pedido_compra_path(@pedido_compra.id), remote: true
