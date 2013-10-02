@@ -11,7 +11,6 @@ class MarcasController < ApplicationController
   # GET /marcas.json
   def index
     @search = Marca.search(params[:q])
-    @marca = Marca.new
     if @search.sorts.empty?
       @marcas = @search.result.order('nombre').page(params[:page]).per(15)
     else
