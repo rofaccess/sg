@@ -5,3 +5,22 @@
 .show-pedido{
 	cursor: pointer;
 }
+
+.pedido-detalles{
+	h3{
+		margin-top: 10px;
+	}
+	h5.extra{
+
+	}
+
+	.cantidad-field{
+		width: 50px;
+		text-align: right;
+	}
+
+	.monto-field{
+		text-align: right;
+
+	}
+}

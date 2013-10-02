@@ -23,6 +23,7 @@
 //= require noty/layouts/topRight
 //= require noty/themes/default
 //= require jquery.tools.min
+//= require jquery.maskMoney
 //= require select2.min
 //
 

@@ -93,6 +93,7 @@ class PedidosCotizacionController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pedido_cotizacion_params
-      params.require(:pedido_cotizacion).permit(:numero, :proveedor_id, :estado, :fecha_creacion, :fecha_cotizado, :user_id, :pedido_compra_id)
+      params.require(:pedido_cotizacion).permit(:numero, :proveedor_id, :estado, :fecha_creacion, :fecha_cotizado, :user_id, :pedido_compra_id,
+        pedido_cotizacion_detalles_attributes: [:id, :cantidad_cotizada, :costo_unitario])
     end
 end
