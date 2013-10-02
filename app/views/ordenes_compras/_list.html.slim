@@ -1,0 +1,26 @@
+table.table
+  thead
+	tr
+	  th = sort_link(@search, :numero, "Numero", {}, method: :get, remote: true)
+	  th = sort_link(@search, :estado, "Estado", {}, method: :get, remote: true)
+	  th = sort_link(@search, :created_at, "Fecha", {}, method: :get, remote: true)
+	  th = sort_link(@search, :costo_total, "Importe", {}, method: :get, remote: true)
+	  th = sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
+	  th
+  tbody
+	- @ordenes_compras.each do |p|
+	  - if p.estado == 'Pendiente'
+	    tr.success
+		  td = p.numero
+		  td = p.estado
+		  td = p.created_at
+		  td
+		    = link_to '<i class="icon-list icon-large"></i> '.html_safe, orden_compra_path(p), remote: true
+		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, orden_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
+	  - else
+	    tr
+		  td = p.numero
+		  td = p.estado
+		  td = p.created_at
+		  td
+		    = link_to '<i class="icon-list icon-large"></i> '.html_safe, orden_compra_path(p), remote: true
