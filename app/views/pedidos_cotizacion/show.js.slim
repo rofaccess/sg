@@ -1,2 +1,4 @@
+- unless notice.nil?
+	| var n = noty({text: '#{notice}', type: 'success'});
 | $('#main-modal .modal-content').html('#{escape_javascript(render partial: 'show_pedido')}');
 | $('#main-modal').modal('show');

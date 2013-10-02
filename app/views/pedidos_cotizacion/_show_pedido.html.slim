@@ -1,10 +1,20 @@
+// Seteando variables
+- if @pedido_cotizacion.estado == PedidosEstados::PENDIENTE
+  - estado_label = 'label-danger'
+  - submit_text = 'Cotizar'
+- elsif @pedido_cotizacion.estado == PedidosEstados::COTIZADO
+  - estado_label = 'label-warning'
+  - submit_text = 'Actualizar datos'
 .modal-body.pedido-detalles
   .well
+    // Cabecera del pedido de cotizacion
+    span[class="label #{estado_label} pull-right"] #{@pedido_cotizacion.estado}
     h3 Pedido de cotizacion N° #{@pedido_cotizacion.numero}
     h4 Proveedor: #{@pedido_cotizacion.proveedor.nombre}
     h5.extra Creado el: #{Formatter.format_date(@pedido_cotizacion.fecha_creacion)}
-  = form_for @pedido_cotizacion, url: cotizar_pedidos_cotizacion_path, remote: true do |f|
-    = f.hidden_field :id
+  // Tabla para mostrar los detalles del pedido con la opcion de actualizar los datos
+  = form_for @pedido_cotizacion, remote: true do |pedido_form|
+    = pedido_form.hidden_field :id
     table.table
       thead
         tr
@@ -13,18 +23,31 @@
           th.text-right Cantidad Cotizada
           th.text-right Costo Unitario
       tbody
-        - @pedido_cotizacion.pedido_cotizacion_detalles.each do |p|
+        - @pedido_cotizacion.pedido_cotizacion_detalles.each do |pedido_detalle|
           tr
-            td = p.componente.nombre
-            td = p.cantidad_requerida
-            = f.fields_for :pedido_cotizacion_detalles, p do |d|
+            td = pedido_detalle.componente.nombre
+            td = pedido_detalle.cantidad_requerida
+            = pedido_form.fields_for :pedido_cotizacion_detalles, pedido_detalle do |detalle_form|
+              - pedido_detalle.cantidad_cotizada = pedido_detalle.cantidad_requerida if pedido_detalle.cantidad_cotizada.nil?
               td
-                = d.text_field :cantidad_cotizada, class: 'cantidad-field pull-right'
+                = detalle_form.text_field :cantidad_cotizada, class: 'cantidad-field pull-right'
               td
-                = d.text_field :costo_unitario, class: 'monto-field pull-right'
+                = detalle_form.text_field :costo_unitario, class: 'monto-field pull-right'
     .row
       .col-md-12
-        = f.submit 'Cotizar', class: 'btn btn-primary pull-right'
+        = pedido_form.submit submit_text, class: 'btn btn-primary pull-right'
 
 javascript:
+  // Enmascarar los campos numericos
   $('.monto-field, .cantidad-field').maskMoney({thousands: '.', defaultZero: false, precision: 0});
+  $('.monto-field, .cantidad-field').maskMoney('mask');
+  // Quitar los '.' de los numeros antes de enviar el formulario
+  $('input[type="submit"]').click(function(e){
+    // Se eliminan todos los '.' de los campos
+    $('.monto-field, .cantidad-field').each(function(){
+      $(this).val($(this).val().replace(/\./g, ''));
+    });
+    // Y se envia el formulario
+    $(this).parents('form').submit();
+    e.preventDefault();
+  });

@@ -64,14 +64,12 @@ class PedidosCotizacionController < ApplicationController
   # PATCH/PUT /pedido_cotizacions/1
   # PATCH/PUT /pedido_cotizacions/1.json
   def update
-    respond_to do |format|
-      if @pedido_cotizacion.update(pedido_cotizacion_params)
-        format.html { redirect_to @pedido_cotizacion, notice: 'Pedido cotizacion was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @pedido_cotizacion.errors, status: :unprocessable_entity }
-      end
+    @pedido_cotizacion.estado = PedidosEstados::COTIZADO
+    if @pedido_cotizacion.update(pedido_cotizacion_params)
+      flash.notice = "Se ha actualizado los datos del pedido de cotizacion."
+      render template: 'pedidos_cotizacion/show', formats: 'js'
+    else
+      flash.alert = "No se ha actualizado los datos del pedido de cotizacion."
     end
   end
 

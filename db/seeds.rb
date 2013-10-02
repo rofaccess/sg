@@ -40,7 +40,7 @@ for i in 1..20
 	Proveedor.create(	nombre: Faker::Company.name,
 						ruc: Faker::Number.number(9),
 						direccion: Faker::Address.street_address,
-						telefono: Faker::PhoneNumber.phone_number,
+						#telefono: Faker::PhoneNumber.phone_number,
 						ciudad_id: ciudad.id,
 						email: Faker::Internet.email)
 end
