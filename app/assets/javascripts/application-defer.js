@@ -69,3 +69,8 @@ function recargarSelect(map, target){
 	});
 	target.html(options.join(''));
 }
+
+$(function() {
+  $('#factura_compra_fecha_compra').datepicker();
+});
+

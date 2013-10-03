@@ -8,7 +8,7 @@
       = FormBuilder::text_field(f, :nombre, nil, nil, 'validate[required]')
       = FormBuilder::text_field(f, :costo, nil, nil, 'validate[required]')
       = FormBuilder::collection_select(f, :marca_id, Marca.all, :id, :nombre, '',nil, 'col-md-8 with-btn', '', nil, false, [true, nueva_marca_componentes_path])
-      = FormBuilder::collection_select2(f, :componente_categoria_id, 'Categoria', ComponenteCategoria.all, :id, :nombre, '', nil, 'col-md-8 with-btn', '', nil, false, [true, nueva_categoria_componentes_path])
+      = FormBuilder::collection_select(f, :componente_categoria_id, ComponenteCategoria.all, :id, :nombre, '', nil, 'col-md-8 with-btn', '', nil, false, [true, nueva_categoria_componentes_path])
 
       button.btn.btn-default.close-add-form [type="button"] Cancelar
       = f.submit 'Guardar', class: 'btn btn-primary'

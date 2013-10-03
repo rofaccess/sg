@@ -3,4 +3,5 @@ module PedidosEstados
 	COTIZADO  = 'Cotizado'
 	ENTREGADO = 'Entregado'
 	PROCESADO = 'Procesado'
+	SEMIPROCESADO = 'Semiprocesado'
 end

@@ -1,10 +1,10 @@
 .modal-header
   button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
-  h4.modal-title Generar Factura
-.modal-body
   .row
-    = form_for @factura_compra, html: {class: 'form-horizontal'}, remote: true do |f|
-      .col-md-12
-        = FormBuilder::collection_select(f, :orden_compra_id, @ordenes_compra, :id, :numero, 'Seleccione una orden de compra...', nil, 'col-md-8', '')
-      .col-md-12
-        .detalles-orden-compra
+	.col-md-3
+	  h4 Generar Factura
+	.col-md-8
+	  = FormBuilder::collection_select(nil, :orden_compra_id, @ordenes_compra, :id, :numero, 'Seleccione una orden de compra...', 'hide', 'col-md-8', '')
+.modal-body
+  .col-md-12
+	.detalles-orden-compra

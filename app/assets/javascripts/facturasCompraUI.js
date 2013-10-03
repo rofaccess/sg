@@ -13,7 +13,7 @@ var facturasCompraUI = (function(){
 		},
 
 		init: function(){
-			$('body').on('change', '#factura_compra_orden_compra_id', function(e){
+			$('body').on('change', '#orden_compra_id', function(e){
 				facturasCompraUI.cargarOrdenesDetalles($(this).val());
 			});
 

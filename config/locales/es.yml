@@ -198,6 +198,7 @@ es:
     models:
       producto: 'producto'
       proveedor: 'Proveedor'
+      componete: 'Componente'
     attributes:
       proveedor:
         componente_categoria_ids: 'Categorias'
@@ -206,6 +207,8 @@ es:
         mark: 'Marca'
         unit_price: 'Precio Unitario'
         proveedor_id: 'Proveedor'
+      componente:
+        componente_categoria_id: 'Categorias'
   messages:
     confirm_delete: 'Está seguro?'
     proveedor_saved: 'El Proveedor se ha guardado con exito!.'
