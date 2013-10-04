@@ -70,9 +70,9 @@ module FormBuilder
     html = ""
     html << "<div class='form-group'>"
       if f.nil?
-        html << label_tag(field)
+        html << label_tag(field, class: label_class)
       else
-        html << f.label(field)
+        html << f.label(field, class: label_class)
       end
       if f.nil?
         html << select_tag(field, options_from_collection_for_select(collection, value, text, selected), { multiple: multiple, prompt: prompt, class: 'form-control ' + input_class})
