@@ -4,16 +4,17 @@
 @import "bootstrap/mixins";
 // Custom nav style
 .navbar-custom{
-  	background-color: $navbar-default-bg-color;
+  	background-color: $navbar-custom-bg-color;
     margin-bottom: 0;
     border: none;
-  	@include gradient-vertical($navbar-default-bg-color, $navbar-default-bg-bottom);
+    border-bottom: 1px solid #aaa;
+  	@include gradient-vertical($navbar-custom-bg-color, $navbar-custom-bg-bottom);
   	.navbar-header{
   		width: 200px;
   		text-align: center;
-  		border-right: 1px solid $navbar-link-border;
+  		border-right: 1px solid #aaa;
   		.navbar-brand{
-  			color: #fff;
+  			color: $nav-links;
   			float: none;
   			line-height: 50px;
   		}
@@ -23,14 +24,14 @@
   		&>li{
   			margin-left: 15px;
   			&>a{
-  				color: #fff;
+  				color: $nav-links;
   				padding: 5px 15px;
   				background-color: $navbar-link-bg;
   				border: 1px solid $navbar-link-border;
   				@include rounded(4px);
           transition: 0.5s;
   				&:hover{
-  					color: #fff;
+  					color: #000;
   				}
   			}
   			&.active a{
@@ -45,6 +46,16 @@
   	}
 }
 
+// Sobreescribir el btn-primary
+
+.btn-primary{
+  background-color: darken($navbar-link-active-start, 10);
+  border-color: $navbar-link-active-end;
+  &:hover{
+    background-color: darken($navbar-link-active-start, 20);
+    border-color: darken($navbar-link-active-end, 10);
+  }
+}
 //Wrapper
 body{
   //background-color: #f7f7f7;
@@ -96,21 +107,21 @@ body{
     list-style: none;
     padding:0;
     li{
-      border-top: 1px solid #414141;
-      border-bottom: 1px solid #2e2e2e;
+      border-bottom: 1px solid #c0c0c0;
       a{
-        color: #fff;
+        color: $nav-links;
         display: block;
         padding: 10px 15px;
         border-right: 5px solid $sidebar-bg;
         transition: 0.5s;
+        @include nav-gradient();
         i{
           float: right;
           line-height: 20px;
         }
         &.active, &:hover{
           border-right: 5px solid $main-color;
-          background-color: $active-menu-bg;
+          @include nav-gradient(true);
           text-decoration: none;
         }
       }
