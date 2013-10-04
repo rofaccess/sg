@@ -1,2 +1,3 @@
 | $("#list").html("#{escape_javascript(render partial: 'list', format: 'html')}");
-| $('#paginator').html("#{escape_javascript(paginate(@pedidos_compra, remote: true)) }");
+| $('#main-modal').modal('hide');
+| $('#paginator').html("#{escape_javascript(paginate(@facturas_compra, remote: true)) }");

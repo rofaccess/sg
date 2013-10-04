@@ -209,6 +209,9 @@ es:
         proveedor_id: 'Proveedor'
       componente:
         componente_categoria_id: 'Categorias'
+      factura_compra:
+        total_iva: "Iva"
+        total_factura: "Total"
   messages:
     confirm_delete: 'Está seguro?'
     proveedor_saved: 'El Proveedor se ha guardado con exito!.'

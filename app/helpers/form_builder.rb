@@ -3,12 +3,12 @@ include ActionView::Helpers::FormHelper
 include ActionView::Helpers::FormOptionsHelper
 module FormBuilder
 
-  def self.text_field(f, field, label_class = nil, field_class = nil, input_class = '', btn = [false, ''])
+  def self.text_field(f, field, label_class = nil, field_class = nil, input_class = '', btn = [false, ''], input_value = '')
   	html = ""
   	html << "<div class='form-group'>"
   	  html << f.label(field, class: "control-label #{label_class.nil? ? 'col-md-2' : label_class}")
   	  html << "<div class='#{field_class.nil? ? 'col-md-10' : field_class}'>"
-  	  	html << f.text_field(field, class: 'form-control ' + input_class)
+  	  	html << f.text_field(field, class: 'form-control ' + input_class, value: input_value)
   	  html << "</div>"
       if btn[0]
         html << "<div class='col-md-2'><a href='#{btn[1]}' data-remote='true' data-url='' class='btn btn-default btn-block'><i class='icon-plus'></i></a></div>"
@@ -70,9 +70,9 @@ module FormBuilder
     html = ""
     html << "<div class='form-group'>"
       if f.nil?
-        html << label_tag(field)
+        html << label_tag(field, class: label_class)
       else
-        html << f.label(field)
+        html << f.label(field, class: label_class)
       end
       if f.nil?
         html << select_tag(field, options_from_collection_for_select(collection, value, text, selected), { multiple: multiple, prompt: prompt, class: 'form-control ' + input_class})
