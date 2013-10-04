@@ -9,6 +9,7 @@
       = FormBuilder::text_field(f, :costo, nil, nil, 'validate[required]')
       = FormBuilder::collection_select(f, :marca_id, Marca.all, :id, :nombre, '',nil, 'col-md-8 with-btn', '', nil, false, [true, nueva_marca_componentes_path])
       = FormBuilder::collection_select(f, :componente_categoria_id, ComponenteCategoria.all, :id, :nombre, '', nil, 'col-md-8 with-btn', '', nil, false, [true, nueva_categoria_componentes_path])
+      = FormBuilder::collection_select(f, :iva_id, Iva.all, :id, :abreviatura, '', nil, 'col-md-8 with-btn', '', nil, false)
 
       button.btn.btn-default.close-add-form [type="button"] Cancelar
       = f.submit 'Guardar', class: 'btn btn-primary'
@@ -22,6 +23,12 @@
 
             $('#componente_marca_id').select2({
                 placeholder: 'Seleccione una marca...',
+                formatNoMatches: function(){
+                    return 'No se encontraron resultados...';
+                }});
+
+            $('#componente_iva_id').select2({
+                placeholder: 'Seleccione un valor de iva...',
                 formatNoMatches: function(){
                     return 'No se encontraron resultados...';
                 }});

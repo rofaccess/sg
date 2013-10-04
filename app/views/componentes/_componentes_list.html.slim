@@ -5,6 +5,7 @@ table.table
 	  th = sort_link(@search, :marca_id, {}, method: :get, remote: true)
 	  th = sort_link(@search, :componente_categoria_id, 'Categoria', {}, method: :get, remote: true)
 	  th = sort_link(@search, :costo, {}, method: :get, remote: true)
+	  th = sort_link(@search, :iva, {}, method: :get, remote: true)
 	  th
   tbody
 	- @componentes.each do |p|
@@ -19,6 +20,10 @@ table.table
 		- else
 		  	td = p.componente_categoria.nombre
 		td = p.costo
+		- if p.iva.blank?
+			td Sin Iva
+		- else
+		  	td = p.iva.abreviatura
 		td
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_componente_path(p), remote: true
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, componente_path(p), method: 'delete', confirm: t('messages.confirm_delete')

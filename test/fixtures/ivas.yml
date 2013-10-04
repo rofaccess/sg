@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  abreviatura: MyString
+  porcentaje: MyString
+  descripcion: MyString
+
+two:
+  abreviatura: MyString
+  porcentaje: MyString
+  descripcion: MyString
