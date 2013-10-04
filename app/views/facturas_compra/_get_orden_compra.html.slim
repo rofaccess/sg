@@ -7,7 +7,7 @@
     .col-md-3.col-sm-offset-1
       = FormBuilder::collection_select2(f, :condicion_pago_id, CondicionPago.all, :id, :nombre, '',nil, nil, '', nil, false)
     .col-md-4.col-md-offset-1
-      = FormBuilder::text_field2(f, :proveedor_id, nil, nil, 'validate[required]',[],true, @factura_compra.proveedor.nombre)
+      = FormBuilder::text_field2(f, :proveedor_id, nil, nil, 'validate[required]',[],true, @orden_compra.proveedor.nombre)
       = f.hidden_field(:proveedor_id,value:"#{@orden_compra.proveedor_id}")
       = f.hidden_field(:user_id, value: "#{current_user.id}")
       = f.hidden_field(:estado, value: "Pendiente")
@@ -25,18 +25,22 @@
           th Componente
           th Cantidad
           th Precio
+          th Iva 10%
           th Total
       tbody
         - @orden_compra.orden_compra_detalles.each do |o|
           - cantidad = o.cantidad_requerida - o.cantidad_recibida
           - total_item = o.cantidad_requerida * o.costo_unitario
           - total = total + total_item
+          - iva = o.costo_unitario * 0.1
           = f.fields_for :factura_compra_detalles do |d|
             tr
-              td = text_field(d, :componente_id, class: 'form-control', value: o.componente.nombre, readonly: "readonly")
-              td = text_field(d, :cantidad, class: 'form-control cantidad-field', value: "#{cantidad}")
-              td = text_field(d, :costo_unitario, class: 'form-control monto-field', value: o.costo_unitario)
-              td = text_field(d, :total, class: 'form-control monto-field', value: "#{total_item}")
+              td = d.text_field(:componente_id, class: 'form-control', value: o.componente.nombre, disabled: "disabled")
+              = d.hidden_field(:componente_id, value: o.componente_id)
+              td = d.text_field(:cantidad, class: 'form-control cantidad-field', value: "#{cantidad}")
+              td = d.text_field(:costo_unitario, class: 'form-control monto-field', value: o.costo_unitario)
+              td = d.text_field(:iva_unitario, class: 'form-control monto-field', value: "#{iva}")
+              td = d.text_field(:total, class: 'form-control monto-field', value: "#{total_item}",disabled: "disabled")
   .row
     .col-md-4.pull-right
       = FormBuilder::text_field(f, :total_iva, nil, nil, 'monto-field validate[required]',[],"#{total * 0.1}")

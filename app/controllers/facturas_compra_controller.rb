@@ -22,7 +22,10 @@ class FacturasCompraController < ApplicationController
 
   def get_orden_compra
     @orden_compra = OrdenCompra.find(params[:id])
-    @factura_compra = FacturaCompra.new(proveedor_id: @orden_compra.proveedor_id)
+    @factura_compra = FacturaCompra.new
+    #@orden_compra.orden_compra_detalles.each do
+    @factura_compra.factura_compra_detalles.build
+    #end
     render partial: 'get_orden_compra', formats: 'html'
   end
 
@@ -49,6 +52,7 @@ class FacturasCompraController < ApplicationController
   end
 
   def factura_compra_params
-      params.require(:factura_compra).permit(:numero, :fecha_compra,:fecha_vencimiento, :total_iva, :total_factura, :proveedor_id, :condicion_pago_id, :user_id, :estado, :orden_compra_id)
+      params.require(:factura_compra).permit(:numero, :fecha_compra,:fecha_vencimiento, :total_iva, :total_factura, :proveedor_id, :condicion_pago_id, :user_id, :estado, :orden_compra_id,
+          factura_compra_detalles_attributes: [:componente_id, :cantidad, :costo_unitario, :iva_unitario, :total])
   end
 end
