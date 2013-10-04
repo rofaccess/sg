@@ -1,6 +1,5 @@
+- total = 0
 = form_for @factura_compra, html: {class: 'form-horizontal'}, remote: true  do |f|
-  /.panel.panel-default
-  /  .panel-heading
   label.text-success Encabezado
   .row
     .col-md-2
@@ -9,13 +8,15 @@
       = FormBuilder::collection_select2(f, :condicion_pago_id, CondicionPago.all, :id, :nombre, '',nil, nil, '', nil, false)
     .col-md-4.col-md-offset-1
       = FormBuilder::text_field2(f, :proveedor_id, nil, nil, 'validate[required]',[],true, @factura_compra.proveedor.nombre)
-      = hidden_field(f,:proveedor_id)
+      = f.hidden_field(:proveedor_id,value:"#{@orden_compra.proveedor_id}")
+      = f.hidden_field(:user_id, value: "#{current_user.id}")
+      = f.hidden_field(:estado, value: "Pendiente")
+      = f.hidden_field(:orden_compra_id, value: "#{@orden_compra.id}")
   .row
     .col-md-2
       = FormBuilder::text_field2(f, :fecha_compra, nil, nil, 'datepicker validate[required]')
     .col-md-2.col-md-offset-1
       = FormBuilder::text_field2(f, :fecha_vencimiento, nil, nil, 'datepicker')
-  /  .panel-body
   label.text-success Detalles
   .row.table-scroll
     table.table
@@ -26,17 +27,43 @@
           th Precio
           th Total
       tbody
-        - if not @factura_compra.factura_compra_detalles.blank?
-          - @factura_compra.factura_compra_detalles.each do |p|
+        - @orden_compra.orden_compra_detalles.each do |o|
+          - cantidad = o.cantidad_requerida - o.cantidad_recibida
+          - total_item = o.cantidad_requerida * o.costo_unitario
+          - total = total + total_item
+          = f.fields_for :factura_compra_detalles do |d|
             tr
-              td = FormBuilder::text_field2(p, :componente_id, nil, nil, 'validate[required]')
-              td = FormBuilder::text_field2(p, :cantidad, nil, nil, 'validate[required]')
-              td = FormBuilder::text_field2(p, :costo_unitario, nil, nil, 'validate[required]')
-              td
-  /  .panel-footer
+              td = text_field(d, :componente_id, class: 'form-control', value: o.componente.nombre, readonly: "readonly")
+              td = text_field(d, :cantidad, class: 'form-control cantidad-field', value: "#{cantidad}")
+              td = text_field(d, :costo_unitario, class: 'form-control monto-field', value: o.costo_unitario)
+              td = text_field(d, :total, class: 'form-control monto-field', value: "#{total_item}")
+  .row
+    .col-md-4.pull-right
+      = FormBuilder::text_field(f, :total_iva, nil, nil, 'monto-field validate[required]',[],"#{total * 0.1}")
+      = FormBuilder::text_field(f, :total_factura, nil, nil, 'monto-field validate[required]',[],"#{total}")
   button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
   = submit_tag 'Guardar Factura', class: 'btn btn-success pull-right'
-  javascript:
-    $(function() {
-      $('.datepicker').datepicker();
+
+javascript:
+  // Enmascarar los campos numericos
+  $('.monto-field, .cantidad-field').maskMoney({thousands: '.', defaultZero: false, precision: 0});
+  $('.monto-field, .cantidad-field').maskMoney('mask');
+  //Input a solo lectura
+  $('.monto-field').attr("readonly","readonly");
+  // Quitar los '.' de los numeros antes de enviar el formulario
+  $('input[type="submit"]').click(function(e){
+    //Se elimina el readonly para que se pueda quitarle el punto
+    $('.monto-field').attr("readonly","");
+    // Se eliminan todos los '.' de los campos
+    $('.monto-field, .cantidad-field').each(function(){
+      $(this).val($(this).val().replace(/\./g, ''));
     });
+
+    // Y se envia el formulario
+    $(this).parents('form').submit();
+    e.preventDefault();
+  });
+  $(function() {
+    $('.datepicker').datepicker();
+  });
+
