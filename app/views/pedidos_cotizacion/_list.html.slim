@@ -15,16 +15,16 @@ table.table
 
   tbody
     - @pedidos_cotizacion.each do |pedido_cotizacion|
-      tr.show-pedido [data-url="#{pedido_cotizacion_path(pedido_cotizacion)}"]
-        td = pedido_cotizacion.numero
-        td = pedido_cotizacion.proveedor.nombre
+      tr [data-url="#{pedido_cotizacion_path(pedido_cotizacion)}"]
+        td.show-pedido = pedido_cotizacion.numero
+        td.show-pedido = pedido_cotizacion.proveedor.nombre
         - unless defined? short_view
-          td = pedido_cotizacion.estado
-        td = Formatter.format_date(pedido_cotizacion.fecha_creacion)
+          td.show-pedido = pedido_cotizacion.estado
+        td.show-pedido = Formatter.format_date(pedido_cotizacion.fecha_creacion)
         - unless defined? short_view
-          td = pedido_cotizacion.fecha_cotizado
-        td = pedido_cotizacion.user_id
-        td = pedido_cotizacion.pedido_compra.numero
+          td.show-pedido = pedido_cotizacion.fecha_cotizado
+        td.show-pedido = pedido_cotizacion.user_id
+        td.show-pedido = pedido_cotizacion.pedido_compra.numero
         - unless defined? short_view
           td
             = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_pedido_cotizacion_path(pedido_cotizacion), remote: true

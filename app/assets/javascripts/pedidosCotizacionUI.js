@@ -18,7 +18,7 @@ var pedidosCotizacionUI = (function(){
 			});
 
 			$('body').on('click', '.show-pedido', function(e){
-				$.get($(this).data('url'), {}, function(){}, 'script');
+				$.get($(this).parents('tr').data('url'), {}, function(){}, 'script');
 			});
 		}
 	};
