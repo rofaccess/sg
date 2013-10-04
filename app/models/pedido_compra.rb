@@ -12,7 +12,7 @@ class PedidoCompra < ActiveRecord::Base
     categorias
   end
 
-  def self.cotizados
-    PedidoCompra.where(estado: PedidosEstados::COTIZADO)
+  def self.procesados
+    PedidoCompra.where(estado: PedidosEstados::PROCESADO)
   end
 end

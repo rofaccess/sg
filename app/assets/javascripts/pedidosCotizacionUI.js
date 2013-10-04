@@ -17,6 +17,18 @@ var pedidosCotizacionUI = (function(){
 				pedidosCotizacionUI.cargarPedidosDetalles($(this).val());
 			});
 
+			$('body').on('change', '#pedido_compra_id', function(e){
+				$.ajax({
+					url: 'pedidos_cotizacion',
+					type: 'get',
+					dataType: 'script',
+					data: {pedido_compra_id: $(this).val()},
+					success: function(response) {
+						// body...
+					}
+				});
+			});
+
 			$('body').on('click', '.show-pedido', function(e){
 				$.get($(this).parents('tr').data('url'), {}, function(){}, 'script');
 			});

@@ -11,7 +11,7 @@ class PedidosCotizacionController < ApplicationController
   # GET /pedido_cotizacions
   # GET /pedido_cotizacions.json
   def index
-    @pedidos_cotizacion = PedidoCotizacion.order(:fecha_creacion).page(params[:page])
+    @pedidos_cotizacion = PedidoCotizacion.filtrar(params[:pedido_compra_id]).page(params[:page])
   end
 
   # GET /pedido_cotizacions/1
@@ -57,7 +57,7 @@ class PedidosCotizacionController < ApplicationController
       pedido_cotizacion.save
     end
 
-    @pedido_compra.update(estado: PedidosEstados::COTIZADO)
+    @pedido_compra.update(estado: PedidosEstados::PROCESADO)
 
   end
 
@@ -65,6 +65,7 @@ class PedidosCotizacionController < ApplicationController
   # PATCH/PUT /pedido_cotizacions/1.json
   def update
     @pedido_cotizacion.estado = PedidosEstados::COTIZADO
+    @pedido_cotizacion.fecha_cotizado = DateTime.now
     if @pedido_cotizacion.update(pedido_cotizacion_params)
       flash.notice = "Se ha actualizado los datos del pedido de cotizacion."
       render template: 'pedidos_cotizacion/show', formats: 'js'

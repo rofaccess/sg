@@ -4,7 +4,7 @@
 #filtros
   .row.form-horizontal
     .col-md-5.pull-right
-      = FormBuilder::collection_select(nil, :pedido_compra_id, PedidoCompra.cotizados, :id, :numero, 'Filtrar por pedido de compra', 'hide', 'col-md-10 pull-right')
+      = FormBuilder::collection_select(nil, :pedido_compra_id, PedidoCompra.procesados, :id, :numero, 'Filtrar por pedido de compra', 'hide', 'col-md-10 pull-right')
 #list
   = render 'list'
 #paginator

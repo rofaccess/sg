@@ -10,4 +10,8 @@ class PedidoCotizacion < ActiveRecord::Base
 
   accepts_nested_attributes_for :pedido_cotizacion_detalles
 
+  def self.filtrar(pedido_compra_id = nil)
+  	pedido_compra_id.nil? ? PedidoCotizacion.all : PedidoCotizacion.where(pedido_compra_id: pedido_compra_id)
+  end
+
 end
