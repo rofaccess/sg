@@ -58,3 +58,18 @@ ComponenteCategoria.all.each do |c|
 		Componente.create(nombre: componente, componente_categoria_id: c.id) if Componente.where(nombre: componente).empty?
 	end
 end
+
+# Crear la dos condiciones de pago
+CondicionPago.create([{ nombre: 'Contado' }, { nombre: 'Credito' }])
+
+# Crear ivas
+Iva.create([{ abreviatura: '10%', porcentaje: 0.1 }, { abreviatura: '5%',porcentaje: 0.005 }])
+
+# Crear plazos de pago
+PlazoPago.create([{ nombre: '30/60/90', cuotas: '3' }, { nombre: '30/60/90/120',cuotas: '4' }])
+dias = ['30','60','90','120']
+PlazoPago.all.each do |p|
+	p.cuotas.to_i.times do |c|
+		PlazoPagoDetalle.create(plazo_pago_id: p.id, dias_vencimiento: dias[c])
+	end
+end

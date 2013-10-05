@@ -44,25 +44,23 @@ class PedidosCompraController < ApplicationController
         pedido_cotizacion.pedido_cotizacion_detalles.build(componente_id: d.componente_id, cantidad_requerida: d.cantidad) if proveedor.componente_categorias.exists?(d.componente.componente_categoria_id)
       end
 
-      pedido_cotizacion.save
+      if pedido_cotizacion.save
+        @pedido_compra.update(estado: PedidosEstados::PROCESADO)
+      end
     end
-    @pedido_compra.update(estado: PedidosEstados::PROCESADO)
   end
 
   def create_test_data
-    @pedido_compra = PedidoCompra.new( numero: rand(10000), estado: "Pendiente")
-    @pedido_compra.save
+    pedido_compra = PedidoCompra.new(estado: "Pendiente")
 
-    @componentes = Componente.all
-
-    rand(1..10).times do |num|
-      @componente = @componentes[rand(@componentes.length)]
-      @pedido_compra_detalle = PedidoCompraDetalle.new(pedido_compra_id: @pedido_compra.id,
-                                                     componente_id: @componente.id,
-                                                     cantidad: rand(1..10))
-      @pedido_compra_detalle.save
+    Componente.all.each do |c|
+      # por cada componente hay 10% de posibilidad de guardar un detalle
+      if rand(100) < 10
+        pedido_compra.pedido_compra_detalles.build(componente_id: c.id,
+                                                   cantidad: rand(1..10))
+      end
     end
-    if @pedido_compra_detalle.save
+    if  pedido_compra.save
       update_list
     else
       redirect_to pedidos_compra_path, alert: t('messages.pedido_compra_not_saved')
