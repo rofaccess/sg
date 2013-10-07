@@ -2,23 +2,19 @@
 = form_for @factura_compra, html: {class: 'form-horizontal'}, remote: true  do |f|
   label.text-success Encabezado
   .row
-    .col-md-2
-      = FormBuilder::text_field2(f, :numero, nil, nil, 'validate[required]')
-    .col-md-3.col-sm-offset-1
-      = FormBuilder::collection_select2(f, :condicion_pago_id, CondicionPago.all, :id, :nombre, '',nil, nil, '', nil, false)
-    .col-md-3.col-sm-offset-1
-      = FormBuilder::collection_select2(f, :plazo_pago_id, PlazoPago.all, :id, :nombre, '','esconder', nil, '', nil, false)
-      = f.hidden_field(:proveedor_id,value:"#{@orden_compra.proveedor_id}")
-      = f.hidden_field(:user_id, value: "#{current_user.id}")
-      = f.hidden_field(:estado, value: "Pendiente")
-      = f.hidden_field(:orden_compra_id, value: "#{@orden_compra.id}")
+    /.col-md-2
+      /= FormBuilder::text_field2(f, :numero, nil, nil, 'validate[required]')
+    = FormBuilder::input_ver(f, :numero, {col_class: 'col-md-3', placeholder: 'Numero'})
+    = FormBuilder::input_ver(f, :fecha_compra, {col_class: 'col-md-3', placeholder: 'Fecha de Compra',input_class: 'datepicker'})
+    = FormBuilder::input_ver(f, :proveedor_id, {col_class: 'col-md-3', input_value: @orden_compra.proveedor.nombre})
+    = f.hidden_field(:proveedor_id,value:"#{@orden_compra.proveedor_id}")
+    = f.hidden_field(:user_id, value: "#{current_user.id}")
+    = f.hidden_field(:estado, value: "Pendiente")
+    = f.hidden_field(:orden_compra_id, value: "#{@orden_compra.id}")
   .row
-    .col-md-2
-      = FormBuilder::text_field2(f, :fecha_compra, nil, nil, 'datepicker validate[required]')
-    .col-md-2.col-md-offset-1
-      = FormBuilder::text_field2(f, :fecha_vencimiento, nil, nil, 'datepicker')
-    .col-md-4.col-md-offset-1
-      = FormBuilder::text_field2(f, :proveedor_id, nil, nil, 'validate[required]',[],true, @orden_compra.proveedor.nombre)
+    = FormBuilder::select_ver(f, :condicion_pago_id, CondicionPago.all, :id, :nombre,{col_class: 'col-md-3'})
+    = FormBuilder::select_ver(f, :plazo_pago_id, PlazoPago.all, :id, :nombre,{col_class: 'col-md-3 to-hide'})
+    = FormBuilder::input_ver(f, :fecha_vencimiento, {col_class: 'col-md-3 to-hide', placeholder: 'Fecha de Vencimiento',input_class: 'datepicker'})
   label.text-success Detalles
   .row.table-scroll
     table.table
@@ -78,12 +74,13 @@ javascript:
   });
   //Muestra y esconde el input de plazos de pago
   //$("#factura_compra_condicion_pago_id option[value="+1+"]").attr("selected",true);
+  $('.to-hide').hide();
   $("#factura_compra_condicion_pago_id option:selected").remove();
-  $('#factura_compra_plazo_pago_id, .esconder').hide();
+  $("#factura_compra_plazo_pago_id option:selected").remove();
   $('#factura_compra_condicion_pago_id').change(function(){
     if ($(this).find(':selected').val() == '2') {
-      $('#factura_compra_plazo_pago_id, .esconder').show();
+      $('.to-hide').show();
     } else {
-      $('#factura_compra_plazo_pago_id, .esconder').hide();
+      $('.to-hide').hide();
     }
   });

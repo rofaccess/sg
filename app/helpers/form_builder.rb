@@ -34,6 +34,17 @@ module FormBuilder
 
     html.html_safe
   end
+  # Opciones admisibles del hash option :col_class, :label_class, :input_class, :input_value, :placeholder
+  def self.input_ver(f, field, option)
+    html = ""
+    html << "<div class='#{option.key?(:col_class) ? option[:col_class] : ''}'>"
+      html << f.label(field, class: "control-label #{option.key?(:label_class) ? option[:label_class] : ''}")
+      html << f.text_field(field, class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}",
+                                  value: "#{option.key?(:input_value) ? option[:input_value] : ''}",
+                                  placeholder: "#{option.key?(:placeholder) ? option[:placeholder] : ''}")
+    html << "</div>"
+    html.html_safe
+  end
 
   def self.file_field(f, field, label_class = nil, field_class = nil, input_class = '')
     html = ""
@@ -64,6 +75,30 @@ module FormBuilder
       html << "</div>"
       if btn[0]
         html << "<div class='col-md-2'><a href='#{btn[1]}' data-remote='true' class='btn btn-default btn-block'><i class='icon-plus'></i></a></div>"
+      end
+    html << "</div>"
+
+    html.html_safe
+  end
+  #= FormBuilder::collection_select2(f, :condicion_pago_id, CondicionPago.all, :id, :nombre, '',nil, nil, '', nil, false)
+  def self.select_ver(f, field, collection, value, text,option)
+    html = ""
+    html << "<div class='#{option.key?(:col_class) ? option[:col_class] : ''}'>"
+      if f.nil?
+        html << label_tag(field, nil, class: "control-label #{option.key?(:label_class) ? option[:label_class] : ''}")
+        select_tag(field, options_from_collection_for_select(collection, value, text, option.key?(:selected) ? option[:selected] : nil),
+                          {multiple: option.key?(:multiple) ? option[:multiple] : false,
+                           prompt: option.key?(:prompt) ? option[:prompt] : '',
+                           class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}"})
+      else
+        html << f.label(field, class: "control-label #{option.key?(:label_class) ? option[:label_class] : ''}")
+        html << f.collection_select(field, collection, value, text,
+                                    {prompt: option.key?(:prompt) ? option[:prompt] : ''},
+                                    {multiple: option.key?(:multiple) ? option[:multiple] : false,
+                                     class: "form-control #{option.key?(:select_class) ? option[:select_class] : ''}"})
+      end
+      if option.key?(:btn)
+        html << "<div class='col-md-2'><a href='#{option[:btn]}' data-remote='true' class='btn btn-default btn-block'><i class='icon-plus'></i></a></div>"
       end
     html << "</div>"
 
