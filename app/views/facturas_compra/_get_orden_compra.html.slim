@@ -1,67 +1,74 @@
-- total = 0
 = form_for @factura_compra, html: {class: 'form-horizontal'}, remote: true  do |f|
   label.text-success Encabezado
   .row
-    /.col-md-2
-      /= FormBuilder::text_field2(f, :numero, nil, nil, 'validate[required]')
-    = FormBuilder::input_ver(f, :numero, {col_class: 'col-md-3', placeholder: 'Numero'})
-    = FormBuilder::input_ver(f, :fecha_compra, {col_class: 'col-md-3', placeholder: 'Fecha de Compra',input_class: 'datepicker'})
-    = FormBuilder::input_ver(f, :proveedor_id, {col_class: 'col-md-3', input_value: @orden_compra.proveedor.nombre})
-    = f.hidden_field(:proveedor_id,value:"#{@orden_compra.proveedor_id}")
-    = f.hidden_field(:user_id, value: "#{current_user.id}")
-    = f.hidden_field(:estado, value: "Pendiente")
-    = f.hidden_field(:orden_compra_id, value: "#{@orden_compra.id}")
+    = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3'})
+    = FormBuilder::text_field_v(f, :fecha_compra, {col_class: 'col-md-3', label_text: 'Fecha',input_class: 'datepicker'})
+    = FormBuilder::text_field_v(f, :proveedor_id, {col_class: 'col-md-4', input_value: @orden_compra.proveedor.nombre, disabled: true})
   .row
-    = FormBuilder::select_ver(f, :condicion_pago_id, CondicionPago.all, :id, :nombre,{col_class: 'col-md-3'})
-    = FormBuilder::select_ver(f, :plazo_pago_id, PlazoPago.all, :id, :nombre,{col_class: 'col-md-3 to-hide'})
-    = FormBuilder::input_ver(f, :fecha_vencimiento, {col_class: 'col-md-3 to-hide', placeholder: 'Fecha de Vencimiento',input_class: 'datepicker'})
+    = FormBuilder::collection_select_v(f, :condicion_pago_id, CondicionPago.all, :id, :nombre,{col_class: 'col-md-3', label_text: 'Condicion de Pago'})
+    = FormBuilder::collection_select_v(f, :plazo_pago_id, PlazoPago.all, :id, :nombre,{col_class: 'col-md-3 to-hide', label_text: 'Plazo de Pago'})
+
+  / Formularios Ocultos
+  = f.hidden_field(:proveedor_id,value:"#{@orden_compra.proveedor_id}")
+  = f.hidden_field(:user_id, value: "#{current_user.id}")
+  = f.hidden_field(:estado)
+  = f.hidden_field(:orden_compra_id, value: "#{@orden_compra.id}")
+
   label.text-success Detalles
   .row.table-scroll
     table.table
       thead
         tr
-          th Componente
-          th Cantidad
+          th.col-md-4 Componente
+          th.col-md-1 Cantidad
           th Precio
-          th Iva 10%
+          th Iva
+          th.col-md-1 % Iva
           th Total
       tbody
+        - total_factura = 0
+        - total_iva = 0
         - @orden_compra.orden_compra_detalles.each do |o|
           - cantidad = o.cantidad_requerida - o.cantidad_recibida
-          - total_item = o.cantidad_requerida * o.costo_unitario
-          - total = total + total_item
-          - iva = o.costo_unitario * 0.1
+          - total_item = cantidad * o.costo_unitario
+          - total_factura = total_factura + total_item
+          - iva = (total_item * o.componente.iva.porcentaje).round(0)
+          - total_iva = total_iva + iva
           = f.fields_for :factura_compra_detalles do |d|
             tr
-              td = d.text_field(:componente_id, class: 'form-control', value: o.componente.nombre, disabled: "disabled")
+              td = d.text_field(:componente_id, class: 'form-control', value: o.componente.nombre, disabled: true)
+              td = d.text_field(:cantidad, class: 'form-control text-right', value: "#{cantidad}")
+              td = d.text_field(:costo_unitario, class: 'form-control integer text-right', value: o.costo_unitario)
+              td = d.text_field(:iva_unitario, class: 'decimal form-control text-right', value: "#{iva}")
+              td = d.text_field(:iva_porcentaje, class: 'form-control text-center', value:"#{o.componente.iva.abreviatura}", readonly: true)
+              td = d.text_field(:total, class: 'form-control integer text-right to-disable', value: "#{total_item}")
               = d.hidden_field(:componente_id, value: o.componente_id)
-              td = d.text_field(:cantidad, class: 'form-control cantidad-field', value: "#{cantidad}")
-              td = d.text_field(:costo_unitario, class: 'form-control monto-field', value: o.costo_unitario)
-              td = d.text_field(:iva_unitario, class: 'decimal-field form-control', value: "#{iva}")
-              td = d.text_field(:total, class: 'form-control monto-field', value: "#{total_item}",disabled: "disabled")
   .row
-    .col-md-4.pull-right
-      = FormBuilder::text_field(f, :total_iva, nil, nil, 'decimal-field validate[required]',[],"#{total * 0.1}")
-      = FormBuilder::text_field(f, :total_factura, nil, nil, 'monto-field validate[required]',[],"#{total}")
-  button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
-  = submit_tag 'Guardar Factura', class: 'btn btn-success pull-right'
+    = FormBuilder::text_field_v(f, :total_factura, {col_class: 'col-md-2 pull-right', label_text: "Total", input_value: "#{total_factura}", input_class: "text-right integer"})
+    = FormBuilder::text_field_v(f, :total_iva, {col_class: 'col-md-2 pull-right', label_text: "I.V.A.", input_value: "#{total_iva}", input_class: "text-right decimal"})
+    = FormBuilder::text_field_v(f, :subtotal, {col_class: 'col-md-2 pull-right', label_text: "Subtotales", input_value: "#{total_factura - total_iva}", input_class: "text-right decimal to-disabled"})
+
+  .modal-footer
+    button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
+    = submit_tag 'Guardar Factura', class: 'btn btn-success pull-right'
 
 javascript:
   // Enmascarar los campos numericos
-  $('.decimal-field').maskMoney({thousands: '.', defaultZero: false, precision: 1, decimal: ','})
-  $('.monto-field, .cantidad-field').maskMoney({thousands: '.', defaultZero: false, precision: 0});
-  $('.monto-field, .cantidad-field, .decimal-field').maskMoney('mask');
+  $('.integer').maskMoney({thousands: '.', defaultZero: false, precision: 0});
+  $('.decimal').maskMoney({thousands: '.', defaultZero: false, precision: 1, decimal: ','});
+  $('.integer, .decimal').maskMoney('mask');
   //Input a solo lectura
-  $('.monto-field, .decimal-field').attr("readonly","readonly");
-  //Quitar los '.' de los numeros antes de enviar el formulario
+  $('.integer, .decimal').attr("readonly",true);
+  $('.to-disable').attr("disabled",true);
+  //Hacer esto antes de enviar el formulario
   $('input[type="submit"]').click(function(e){
-    //Se elimina el readonly para que se pueda quitarle el punto
-    $('.monto-field, .decimal-field').attr("readonly","");
-    // Se eliminan todos los '.' de los campos
-    $('.monto-field, .cantidad-field, .decimal-field').each(function(){
+    //Se hace modificable al input
+    $('.integer').attr("readonly",false);
+    // Se eliminan todos los '.' de los input
+    $('.integer, .decimal').each(function(){
       $(this).val($(this).val().replace(/\./g, ''));
     });
-    $('.decimal-field').each(function(){
+    $('.decimal').each(function(){
       $(this).val($(this).val().replace(/\,/g, '.'));
     });
 
@@ -69,18 +76,26 @@ javascript:
     $(this).parents('form').submit();
     e.preventDefault();
   });
+
+  //Un plugin para los input de fecha
   $(function() {
     $('.datepicker').datepicker();
   });
-  //Muestra y esconde el input de plazos de pago
-  //$("#factura_compra_condicion_pago_id option[value="+1+"]").attr("selected",true);
+
+  //Esconde el plazo de pago
   $('.to-hide').hide();
+  //Desactiva el select de plazos de pago
+  $('#factura_compra_plazo_pago_id').attr("disabled",true);
+  //Remueve opciones vacias
   $("#factura_compra_condicion_pago_id option:selected").remove();
   $("#factura_compra_plazo_pago_id option:selected").remove();
+  //Controla los cambios en las opciones de condicion de pago
   $('#factura_compra_condicion_pago_id').change(function(){
     if ($(this).find(':selected').val() == '2') {
       $('.to-hide').show();
+      $('#factura_compra_plazo_pago_id').attr("disabled",false);
     } else {
       $('.to-hide').hide();
+      $('#factura_compra_plazo_pago_id').attr("disabled",true);
     }
   });

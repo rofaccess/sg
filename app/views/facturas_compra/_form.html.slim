@@ -4,7 +4,7 @@
 	.col-md-3
 	  h4 Generar Factura
 	.col-md-8
-	  = FormBuilder::collection_select(nil, :orden_compra_id, @ordenes_compra, :id, :numero, 'Seleccione una orden de compra...', 'hide', 'col-md-8', '')
+	  = FormBuilder::collection_select_v(nil, :orden_compra_id, @ordenes_compra, :id, :numero,{col_class: 'col-md-8', label_class: 'hide', prompt: 'Seleccione una orden de compra...'})
 .modal-body
   .col-md-12
 	.detalles-orden-compra
