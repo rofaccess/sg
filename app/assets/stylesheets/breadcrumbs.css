@@ -1,0 +1,42 @@
+.delicious li.scope a, .delicious li.scope a:before, .delicious li.scope a:after {
+    background: none repeat scroll 0% 0% rgb(50, 116, 208);
+}
+.delicious li:first-child a {
+    font-weight: 900;
+    padding-left: 10px;
+    background: none repeat scroll 0% 0% rgb(108, 108, 108);
+}
+.delicious li a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    padding: 0px 10px 0px 15px;
+    background: none repeat scroll 0% 0% rgb(142, 142, 142);
+    display: block;
+    float: left;
+}
+:focus {
+    outline: 0px none;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0px;
+    padding: 0px;
+    border: 0px none;
+    outline: 0px none;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: none repeat scroll 0% 0% transparent;
+}
+.delicious li {
+    line-height: 20px;
+}
+.delicious {
+    list-style: none outside none;
+    color: white;
+    font: 11px arial,Helvetica,clean,sans-serif;
+}
+ol, ul {
+    list-style: none outside none;
+}
+body {
+    line-height: 1;
+}

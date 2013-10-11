@@ -13,6 +13,7 @@
 //= require localidadesUI
 //= require pedidosCotizacionUI
 //= require facturasCompraUI
+//= require pedidosCompraUI
 //
 $(function(){
 	$('#add-modal').on('show.bs.modal', function(){

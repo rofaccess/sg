@@ -9,20 +9,20 @@ table.table
   tbody
 	- @pedidos_compra.each do |p|
 	  - if p.estado == 'Pendiente'
-	    tr.success
-		  td = p.numero
-		  td = p.estado
-		  td = Formatter.format_datetime(p.created_at)
-		  td Sin Procesar
+	    tr.success [data-url="#{pedido_compra_path(p)}"]
+		  td.show-ped-comp = p.numero
+		  td.show-ped-comp = p.estado
+		  td.show-ped-comp = Formatter.format_datetime(p.created_at)
+		  td.show-ped-comp Sin Procesar
 		  td
 		    = link_to '<i class="icon-list icon-large"></i> '.html_safe, pedido_compra_path(p), remote: true
 		    = link_to '<i class="icon-ok icon-large"></i>'.html_safe, create_pedido_cotizacion_pedido_compra_path(p), remote: true, data: {confirm: t('messages.confirm_generar_pedido_cotizacion')}
 		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
 	  - else
-	    tr
-		  td = p.numero
-		  td = p.estado
-		  td = Formatter.format_datetime(p.created_at)
-		  td = Formatter.format_datetime(p.updated_at)
+	    tr [data-url="#{pedido_compra_path(p)}"]
+		  td.show-ped-comp = p.numero
+		  td.show-ped-comp = p.estado
+		  td.show-ped-comp = Formatter.format_datetime(p.created_at)
+		  td.show-ped-comp = Formatter.format_datetime(p.updated_at)
 		  td
 		    = link_to '<i class="icon-list icon-large"></i> '.html_safe, pedido_compra_path(p), remote: true

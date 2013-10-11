@@ -4,10 +4,21 @@
 - elsif @pedido_compra.estado == PedidosEstados::PROCESADO
   - estado_label = 'label-warning'
 .modal-header
+  .header
+    span class="glyphicon glyphicon-star" Pendiente
+
   /button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
   span[class="label #{estado_label} pull-right"] #{@pedido_compra.estado}
   h4.modal-title Pedido de compra N° #{@pedido_compra.numero}
 .modal-body
+  ul class="nav nav-tabs"
+      li class="active"
+        a href="#" Home
+      li
+        a href="#" Help
+      li class="dropdown"
+        a class="dropdown-toggle" data-toggle="dropdown" href="#" Dropdown
+        ul class="dropdown-menu"
   .row
     .col-md-12
       .detalles-pedido-compra
@@ -42,3 +53,5 @@
             button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
             - if @pedido_compra.estado == PedidosEstados::PENDIENTE
               = link_to '<button class="btn btn-primary pull-right">Generar Pedido de Cotizacion</button> '.html_safe, create_pedido_cotizacion_pedido_compra_path(@pedido_compra.id), remote: true
+
+
