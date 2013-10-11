@@ -1,5 +1,6 @@
 .row.row-page-title
   h2 Ordenes de Compra
+  = link_to 'Generar Orden de Compra', new_orden_compra_path, class: 'btn btn-primary', remote: true
 
 div id="list"
   = render 'list'
