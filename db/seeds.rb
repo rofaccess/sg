@@ -34,8 +34,8 @@ Estado.all.each do |e|
 	end
 end
 
-# Crear 10 proveedores
-for i in 1..10
+# Crear 5 proveedores
+for i in 1..5
 	ciudad = Ciudad.offset(rand(Ciudad.count)).first
 	Proveedor.create(	nombre: Faker::Company.name,
 						ruc: Faker::Number.number(9),
@@ -61,6 +61,11 @@ ComponenteCategoria.all.each do |c|
 		costo = rand(1000)
 		Componente.create(nombre: componente, costo: costo, iva_id: rand(1..2), componente_categoria_id: c.id) if Componente.where(nombre: componente).empty?
 	end
+end
+
+# Establecer una categoria para cada proveedor
+for i in 1..5
+	ComponenteCategoriaProveedor.create(componente_categoria_id: i, proveedor_id: i)
 end
 
 # Crear la dos condiciones de pago
