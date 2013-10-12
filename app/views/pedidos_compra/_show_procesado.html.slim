@@ -1,0 +1,55 @@
+.modal-body
+  /Cabecera del Pedido de compra
+  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+  p.lead.text-muted
+    strong Pedido de Compra  #{@pedido_compra.numero}
+    i.text-muted
+      .row
+        dl.col-md-3
+          dt Generado
+          dd #{Formatter.format_datetime(@pedido_compra.created_at)}
+        dl.col-md-3
+          dt Estado
+          dd = @pedido_compra.estado
+        dl.col-md-3
+          dt Procesado
+          dd #{Formatter.format_datetime(@pedido_compra.updated_at)}
+
+  /Detalles del Pedido de compra
+  /Tabs
+  ul id="myTab" class="nav nav-tabs"
+    /Tab Detalle Pedido de compra
+    li class="active"
+      a href="#ped_com" data-toggle="tab" Detalles
+    /Tab lista de pedidos de cotizacion
+    li class=""
+      a href="#ped_cot" data-toggle="tab" Pedidos de Cotizacion
+    /Tab detalle de cada pedido de cotizacion
+    li class="dropdown"
+      a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown"
+        /| Numero
+        span class="caret"
+      ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1"
+        - cont = 0
+        /Crea un dropdown para mostrar detalles de cada pedido de cotizacion
+        - @pedidos_cotizacion.each do |p|
+          - cont += 1
+          li class=""
+            a href="#dropdown#{cont}" tabindex="-1" data-toggle="tab" #{p.numero}  [#{p.proveedor.nombre}]  #{p.estado}
+  br
+  /Tabs Content
+  div id="myTabContent" class="tab-content"
+    /Tab Content Detalle Pedido de compra
+    div class="tab-pane fade active in" id="ped_com"
+      = render 'list_pedido_compra_detalles'
+
+    /Tab content lista de pedidos de cotizacion
+    div class="tab-pane fade" id="ped_cot"
+      = render 'list_pedidos_cotizacion'
+
+    /Tab contet lista de pedidos de cotizacion
+    = render 'list_pedido_cotizacion_detalles'
+
+/Botones
+/.panel-footer
+/  button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar

@@ -1,39 +1,49 @@
 - drop_cont = 0
-- contador = 1
-- if not @pedidos_cotizacion.blank?
-  - @pedidos_cotizacion.each do |p|
-    - drop_cont = drop_cont + 1
-    div class="tab-pane fade" id="dropdown#{drop_cont}"
-      .table-scroll
-        table.table
-          thead
+- @pedidos_cotizacion.each do |p|
+  - drop_cont += 1
+  div class="tab-pane fade" id="dropdown#{drop_cont}"
+    .table-scroll
+      table.table
+        thead
+          tr
+            th #
+            th Componente
+            th Categoria
+            th Cantidad Requerida
+            th Cantidad Cotizada
+            th Cos/Unit Cotizado
+            th Cos/Unit Anterior
+        tbody
+          - total_c = 0
+          - cont = 1
+          - p.pedido_cotizacion_detalles.each do |det|
             tr
-              th
-              th Componente
-              th Cantidad Requerida
-              th Cantidad Cotizada
-              th Categoria
-              th Costo Unitario
-          tbody
-            - total = 0
-            - p.pedido_cotizacion_detalles.each do |det|
-              tr
-                td = contador
-                td = det.componente.nombre
-                td.text-center = det.cantidad_requerida
-                td.text-center = det.cantidad_cotizada
+              td = cont
+              td = det.componente.nombre
 
-                - if det.componente.componente_categoria.blank?
-                  td Sin Categoria
-                - else
-                  td = det.componente.componente_categoria.nombre
+              - if det.componente.componente_categoria.blank?
+                td Sin Categoria
+              - else
+                td = det.componente.componente_categoria.nombre
 
-                - if det.componente.costo.blank?
-                  td Sin Costo
-                - else
-                  td.text-right = det.componente.costo
-                  - total = total + det.componente.costo
-                - contador = contador + 1
-      i
-        strong.pull-right.text-muted  Total: #{total}
-        br
+              td.text-center = det.cantidad_requerida
+              td.text-center = det.cantidad_cotizada
+
+              - if det.costo_unitario.blank?
+                td Sin Cotizar
+              - else
+                td.text-center.integer = det.costo_unitario
+                - if not det.cantidad_cotizada == nil
+                  - total_c += (det.costo_unitario * det.cantidad_cotizada)
+
+              - if det.componente.costo.blank?
+                td Sin Costo
+              - else
+                td.text-center.integer = det.componente.costo
+            - cont += 1
+          - cont = 1
+    br
+    i
+      strong.pull-right.text-muted.integer  Total Cotizado: #{total_c}
+      br
+

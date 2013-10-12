@@ -11,4 +11,5 @@ class User < ActiveRecord::Base
 
   has_many :factura_compras
   has_many :ordenes_compras
+  has_many :pedido_cotizacions
 end

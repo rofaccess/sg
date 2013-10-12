@@ -34,8 +34,8 @@ Estado.all.each do |e|
 	end
 end
 
-# Crear 20 proveedores
-for i in 1..20
+# Crear 10 proveedores
+for i in 1..10
 	ciudad = Ciudad.offset(rand(Ciudad.count)).first
 	Proveedor.create(	nombre: Faker::Company.name,
 						ruc: Faker::Number.number(9),
@@ -45,25 +45,26 @@ for i in 1..20
 						email: Faker::Internet.email)
 end
 
-# Crear 10 categorias de componentes
-for i in 1..10
+# Crear ivas
+Iva.create([{ abreviatura: '10%', porcentaje: 0.1 }, { abreviatura: '5%',porcentaje: 0.005 }])
+
+# Crear 5 categorias de componentes
+for i in 1..5
 	categoria = Faker::Commerce.department
 	ComponenteCategoria.create(nombre: categoria) if ComponenteCategoria.where(nombre: categoria).empty?
 end
 
 # Crear 10 componentes para cada categoria
 ComponenteCategoria.all.each do |c|
-	for i in 1..10
+	for i in 1..5
 		componente = Faker::Commerce.product_name
-		Componente.create(nombre: componente, componente_categoria_id: c.id) if Componente.where(nombre: componente).empty?
+		costo = rand(1000)
+		Componente.create(nombre: componente, costo: costo, iva_id: rand(1..2), componente_categoria_id: c.id) if Componente.where(nombre: componente).empty?
 	end
 end
 
 # Crear la dos condiciones de pago
 CondicionPago.create([{ nombre: 'Contado' }, { nombre: 'Credito' }])
-
-# Crear ivas
-Iva.create([{ abreviatura: '10%', porcentaje: 0.1 }, { abreviatura: '5%',porcentaje: 0.005 }])
 
 # Crear plazos de pago
 PlazoPago.create([{ nombre: '30/60/90', cuotas: '3' }, { nombre: '30/60/90/120',cuotas: '4' }])

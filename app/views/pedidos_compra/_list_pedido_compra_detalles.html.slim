@@ -1,9 +1,8 @@
-- contador = 1
 .table-scroll
   table.table
     thead
       tr
-        th
+        th #
         th Componente
         th Cantidad
         th Marca
@@ -11,9 +10,10 @@
         th Costo Unitario
     tbody
       - total = 0
+      - cont = 1
       - @pedido_compra.pedido_compra_detalles.each do |p|
         tr
-          td = contador
+          td = cont
           td = p.componente.nombre
           td.text-center = p.cantidad
 
@@ -31,8 +31,10 @@
             td Sin Costo
           - else
             td.text-right = p.componente.costo
-            - total = total + p.componente.costo
-          - contador = contador + 1
+            - total += (p.componente.costo * p.cantidad)
+          - cont += 1
+/Muestra el total del pedido
+br
 i
-  strong.pull-right.text-muted  Total: #{total}
-  br
+  strong.pull-right.text-muted Total Estimado: #{total}
+br

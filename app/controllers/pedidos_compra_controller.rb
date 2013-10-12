@@ -20,6 +20,10 @@ class PedidosCompraController < ApplicationController
 
   def show
     @pedido_compra = PedidoCompra.find(params[:id])
+
+    if @pedido_compra.estado == PedidosEstados::PROCESADO
+      @pedidos_cotizacion = PedidoCotizacion.where(pedido_compra_id: @pedido_compra.id)
+    end
   end
 
   def new
@@ -45,6 +49,7 @@ class PedidosCompraController < ApplicationController
 
       if pedido_cotizacion.save
         @pedido_compra.update(estado: PedidosEstados::PROCESADO)
+        @pedidos_cotizacion = PedidoCotizacion.where(pedido_compra_id: @pedido_compra.id)
       end
     end
   end
@@ -53,8 +58,8 @@ class PedidosCompraController < ApplicationController
     pedido_compra = PedidoCompra.new(estado: "Pendiente")
 
     Componente.all.each do |c|
-      # por cada componente hay 10% de posibilidad de guardar un detalle
-      if rand(100) < 10
+      # por cada componente hay 30% de posibilidad de guardar un detalle
+      if rand(100) < 30
         pedido_compra.pedido_compra_detalles.build(componente_id: c.id,
                                                    cantidad: rand(1..10))
       end
