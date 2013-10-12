@@ -27,8 +27,9 @@
           /| Numero
           span class="caret"
         ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1"
-          - contador = 1
+          - contador = 0
           - @pedidos_cotizacion.each do |p|
+            - contador = contador + 1
             li class=""
               a href="#dropdown#{contador}" tabindex="-1" data-toggle="tab" #{p.numero}
   br

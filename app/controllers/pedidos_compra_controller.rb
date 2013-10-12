@@ -12,7 +12,7 @@ class PedidosCompraController < ApplicationController
   	@search = PedidoCompra.search(params[:q])
     @pedido_compra = PedidoCompra.new
   	if @search.sorts.empty?
-      @pedidos_compra = @search.result.order('estado').page(params[:page]).per(8)
+      @pedidos_compra = @search.result.order('created_at').order('estado').page(params[:page]).per(8)
     else
       @pedidos_compra = @search.result.page(params[:page]).per(8)
     end
