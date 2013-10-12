@@ -1,0 +1,38 @@
+- contador = 1
+.table-scroll
+  table.table
+    thead
+      tr
+        th
+        th Componente
+        th Cantidad
+        th Marca
+        th Categoria
+        th Costo Unitario
+    tbody
+      - total = 0
+      - @pedido_compra.pedido_compra_detalles.each do |p|
+        tr
+          td = contador
+          td = p.componente.nombre
+          td.text-center = p.cantidad
+
+          - if p.componente.marca.blank?
+            td Sin Marca
+          - else
+            td = p.componente.marca.nombre
+
+          - if p.componente.componente_categoria.blank?
+            td Sin Categoria
+          - else
+            td = p.componente.componente_categoria.nombre
+
+          - if p.componente.costo.blank?
+            td Sin Costo
+          - else
+            td.text-right = p.componente.costo
+            - total = total + p.componente.costo
+          - contador = contador + 1
+i
+  strong.pull-right.text-muted  Total: #{total}
+  br

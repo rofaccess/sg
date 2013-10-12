@@ -20,7 +20,6 @@ class PedidosCompraController < ApplicationController
 
   def show
     @pedido_compra = PedidoCompra.find(params[:id])
-    @pedidos_compra_detalle = PedidoCompraDetalle.where('pedido_compra_id=?', @pedido_compra)
   end
 
   def new
@@ -84,6 +83,6 @@ class PedidosCompraController < ApplicationController
     @pedido_compra = PedidoCompra.find(params[:id])
   end
   def pedido_compra_params
-      params.require(:pedido_compra).permit(:numero, :created_at, :estado)
+      params.require(:pedido_compra).permit(:numero, :created_at, :estado, :user_id)
   end
 end

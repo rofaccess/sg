@@ -1,0 +1,29 @@
+.table-scroll
+  table.table
+    thead
+      tr
+        th
+        th Numero
+        th Proveedor
+        - unless defined? short_view
+          th Estado
+        th Fecha creacion
+        - unless defined? short_view
+          th Fecha cotizado
+        th Usuario
+
+    tbody
+      - contador = 1
+      - if not @pedidos_cotizacion.blank?
+        - @pedidos_cotizacion.each do |pedido_cotizacion|
+          tr
+            td = contador
+            td = pedido_cotizacion.numero
+            td = pedido_cotizacion.proveedor.nombre
+            - unless defined? short_view
+              td = pedido_cotizacion.estado
+            td = Formatter.format_date(pedido_cotizacion.fecha_creacion)
+            - unless defined? short_view
+              td = pedido_cotizacion.fecha_cotizado
+            td = pedido_cotizacion.user_id
+            - contador = contador + 1
