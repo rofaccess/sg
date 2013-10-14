@@ -30,11 +30,11 @@ class OrdenesComprasController < ApplicationController
 
   # GET /ordenes_compras/new
   def new
-    @pedidos_cotizacion = PedidoCotizacion.where(estado: 'Pendiente')
+    @pedidos_compra = PedidoCompra.where(estado: 'Pendiente')
     @orden_compra = OrdenCompra.new
   end
 
-  def get_pedido_cotizacion
+  def get_pedido_compra
     @pedido_cotizacion = PedidoCotizacion.find(params[:id])
     render partial: 'get_pedido_cotizacion', formats: 'html'
   end
