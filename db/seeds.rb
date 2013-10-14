@@ -63,10 +63,14 @@ ComponenteCategoria.all.each do |c|
 	end
 end
 
-# Establecer una categoria para cada proveedor
-for i in 1..5
-	ComponenteCategoriaProveedor.create(componente_categoria_id: i, proveedor_id: i)
+# Agregar todas las categorias a 5 proveedores
+
+Proveedor.limit(5).each do |p|
+	ComponenteCategoria.all.each do |c|
+		p.componente_categorias << c
+	end
 end
+
 
 # Crear la dos condiciones de pago
 CondicionPago.create([{ nombre: 'Contado' }, { nombre: 'Credito' }])
