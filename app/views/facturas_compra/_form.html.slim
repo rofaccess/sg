@@ -3,8 +3,12 @@
   .row
 	.col-md-3
 	  h4 Generar Factura
-	.col-md-8
-	  = FormBuilder::collection_select_v(nil, :orden_compra_id, @ordenes_compra, :id, :numero,{col_class: 'col-md-8', label_class: 'hide', prompt: 'Seleccione una orden de compra...'})
+	.col-md-6
+	  select class="form-control " id="orden_compra_id" name="orden_compra_id"
+	  	option value=""Seleccione una orden de compra...
+	  	- @ordenes_compra.each do |o|
+	  		option value="#{o.id}" Orden #{o.numero} [#{o.proveedor.nombre}] #{o.estado}
+
 .modal-body
   .col-md-12
 	.detalles-orden-compra
