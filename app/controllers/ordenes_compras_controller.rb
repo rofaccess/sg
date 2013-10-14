@@ -35,8 +35,8 @@ class OrdenesComprasController < ApplicationController
   end
 
   def get_pedido_compra
-    @pedido_cotizacion = PedidoCotizacion.find(params[:id])
-    render partial: 'get_pedido_cotizacion', formats: 'html'
+    @pedido_compra = PedidoCompra.find(params[:id])
+    render partial: 'get_pedido_compra', formats: 'html'
   end
 
   # GET /ordenes_compras/1/edit
