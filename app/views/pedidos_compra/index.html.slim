@@ -1,14 +1,11 @@
 .row.row-page-title
   h2 Pedidos de Compra
-
-row
   = link_to 'Test Data', create_test_data_pedidos_compra_url, class: 'btn btn-success', method: 'get', remote: true
+.row
+  = render 'search'
 
 div id="list"
   = render 'list'
 
 div id="paginator"
   = paginate @pedidos_compra, remote: true
-
-/#add-form.col-md-4
-/  = render 'pedidos_compra/show'

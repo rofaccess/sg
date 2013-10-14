@@ -1,2 +1,5 @@
-| $('#main-modal .modal-content').html('#{escape_javascript(render 'show', formats: 'html')}');
+- if @pedido_compra.estado == PedidosEstados::PROCESADO
+  | $('#main-modal .modal-content').html('#{escape_javascript(render 'show_procesado', formats: 'html')}');
+- else
+  | $('#main-modal .modal-content').html('#{escape_javascript(render 'show_pendiente', formats: 'html')}');
 | $('#main-modal').modal('show');

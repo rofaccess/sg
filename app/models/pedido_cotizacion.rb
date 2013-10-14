@@ -7,6 +7,7 @@ class PedidoCotizacion < ActiveRecord::Base
   belongs_to :pedido_compra
   belongs_to :proveedor
   has_one :orden_compra
+  belongs_to :user
 
   accepts_nested_attributes_for :pedido_cotizacion_detalles
 
