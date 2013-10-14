@@ -23,8 +23,8 @@ table.table
         td.show-pedido = Formatter.format_date(pedido_cotizacion.fecha_creacion)
         - unless defined? short_view
           td.show-pedido = pedido_cotizacion.fecha_cotizado
-        td.show-pedido = pedido_cotizacion.user.username
-        td.show-pedido = pedido_cotizacion.pedido_compra.numero
+        <!-- td.show-pedido = pedido_cotizacion.user.username -->
+        <!-- td.show-pedido = pedido_cotizacion.pedido_compra.numero -->
         - unless defined? short_view
           td
             = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_pedido_cotizacion_path(pedido_cotizacion), remote: true
