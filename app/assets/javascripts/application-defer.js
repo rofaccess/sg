@@ -14,6 +14,7 @@
 //= require pedidosCotizacionUI
 //= require facturasCompraUI
 //= require pedidosCompraUI
+//= require ordenesCompraUI
 //
 $(function(){
 	$('#add-modal').on('show.bs.modal', function(){
