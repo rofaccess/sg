@@ -1,0 +1,33 @@
+.panel.panel-default
+  .panel-heading
+    h3.panel-title Pedido de cotizacion N° #{@pedido_cotizacion.numero}
+    span.fecha Generado el #{@pedido_cotizacion.created_at}
+  .panel-body
+    .row.table-scroll
+      table.table
+        thead
+          tr
+            th Nombre
+            th Cantidad Requerida
+            th Marca
+            th Categoria
+            th Cantidad Cotizada
+            th Costo Unitario
+        tbody
+          - @pedido_cotizacion.pedido_cotizacion_detalles.each do |p|
+            tr
+              td = p.componente.nombre
+              td = p.cantidad_requerida
+              - if p.componente.marca.blank?
+                td Sin Marca
+              - else
+                td = p.componente.marca.nombre
+              - if p.componente.componente_categoria.blank?
+                td Sin Categoria
+              - else
+                td = p.componente.componente_categoria.nombre
+                td = p.cantidad_cotizada
+                td = p.costo_unitario
+  .panel-footer
+    button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
+    = submit_tag 'Generar Orden de Compra', class: 'btn btn-primary pull-right'
