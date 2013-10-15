@@ -16,14 +16,15 @@
               thead
                 tr
                   th Nombre
-                  th Cantidad
                   th Marca
                   th Categoria
+                  th Cantidad Requerida
+                  th Cantidad Cotizada
+                  th Costo Unit.
               tbody
                 - p.pedido_cotizacion_detalles.each do |p|
                   tr
                     td = p.componente.nombre
-                    td = p.cantidad
                     - if p.componente.marca.blank?
                       td Sin Marca
                     - else
@@ -32,6 +33,9 @@
                       td Sin Categoria
                     - else
                       td = p.componente.componente_categoria.nombre
+                      td = p.cantidad_requerida
+                      td = p.cantidad_cotizada
+                      td = p.costo_unitario
 
 .panel-footer
   button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
