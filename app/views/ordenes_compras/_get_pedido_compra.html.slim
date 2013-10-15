@@ -1,15 +1,16 @@
 .panel.panel-default
   .panel-heading
-    h3.panel-title Existen #{@pedido_compra.pedido_cotizacions.size} cotizaciones para el pedido de compra seleccionado
+    h3.panel-title Existen #{@pedido_compra.pedido_cotizacions.where(estado: 'Cotizado').size} cotizaciones para el pedido de compra seleccionado
     <!-- span.fecha Generado el #{@pedido_compra.created_at} -->
 .table-scroll
-  - @pedido_compra.pedido_cotizacions.each do |p|
-    -if p.estado = 'Cotizado'
+
+  - @pedido_compra.pedido_cotizacions.where(estado: 'Cotizado').each do |p|
+
       .panel-body
       .panel.panel-default
         .panel-heading
           h3.panel-title Cotizaciones de:: #{p.proveedor.nombre}
-
+        -total = 0
         .panel-body
           .row.table-scroll
             table.table
@@ -21,6 +22,7 @@
                   th Cantidad Requerida
                   th Cantidad Cotizada
                   th Costo Unit.
+                  th Costo.x.Cantidad
               tbody
                 - p.pedido_cotizacion_detalles.each do |p|
                   tr
@@ -33,9 +35,14 @@
                       td Sin Categoria
                     - else
                       td = p.componente.componente_categoria.nombre
-                      td = p.cantidad_requerida
-                      td = p.cantidad_cotizada
-                      td = p.costo_unitario
+                    td = p.cantidad_requerida
+                    td = p.cantidad_cotizada
+                    td = p.costo_unitario
+                    td = (p.costo_unitario * p.cantidad_cotizada)
+                  -total += (p.costo_unitario * p.cantidad_cotizada)
+        .panel.panel-default
+          .panel-heading
+            h3.panel-title TOTAL COTIZACION: #{total}
 
 .panel-footer
   button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
