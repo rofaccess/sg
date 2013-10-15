@@ -1,29 +1,38 @@
 .panel.panel-default
   .panel-heading
-    h3.panel-title Pedido de compra N° #{@pedido_compra.numero}
-    span.fecha Generado el #{@pedido_compra.created_at}
-  .panel-body
-    .row.table-scroll
-      table.table
-        thead
-          tr
-            th Nombre
-            th Cantidad
-            th Marca
-            th Categoria
-        tbody
-          - @pedido_compra.pedido_compra_detalles.each do |p|
-            tr
-              td = p.componente.nombre
-              td = p.cantidad
-              - if p.componente.marca.blank?
-                td Sin Marca
-              - else
-                td = p.componente.marca.nombre
-              - if p.componente.componente_categoria.blank?
-                td Sin Categoria
-              - else
-                td = p.componente.componente_categoria.nombre
-  .panel-footer
-    button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
-    = submit_tag 'Generar Pedido de Cotizacion', class: 'btn btn-primary pull-right'
+    h3.panel-title Existen #{@pedido_compra.pedido_cotizacions.size} cotizaciones para el pedido de compra seleccionado
+    <!-- span.fecha Generado el #{@pedido_compra.created_at} -->
+.table-scroll
+  - @pedido_compra.pedido_cotizacions.each do |p|
+    -if p.estado = 'Cotizado'
+      .panel-body
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title Cotizaciones de:: #{p.proveedor.nombre}
+
+        .panel-body
+          .row.table-scroll
+            table.table
+              thead
+                tr
+                  th Nombre
+                  th Cantidad
+                  th Marca
+                  th Categoria
+              tbody
+                - p.pedido_cotizacion_detalles.each do |p|
+                  tr
+                    td = p.componente.nombre
+                    td = p.cantidad
+                    - if p.componente.marca.blank?
+                      td Sin Marca
+                    - else
+                      td = p.componente.marca.nombre
+                    - if p.componente.componente_categoria.blank?
+                      td Sin Categoria
+                    - else
+                      td = p.componente.componente_categoria.nombre
+
+.panel-footer
+  button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
+  = submit_tag 'Generar Pedido de Cotizacion', class: 'btn btn-primary pull-right'
