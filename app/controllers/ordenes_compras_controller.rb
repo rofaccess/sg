@@ -47,17 +47,11 @@ class OrdenesComprasController < ApplicationController
   # POST /ordenes_compras
   # POST /ordenes_compras.json
   def create
-    @orden_compra = OrdenCompra.new(orden_compra_params)
+    @pedido_compra = PedidoCompra.find(params[:orden_compra][:pedido_compra_id])
+    @pedido_cotizacion = PedidoCotizacion.find(params[:orden_compra][:pedido_cotizacion_id])
+    categorias = @pedido_compra.get_componente_categorias
+    cotizaciones = @pedido_compra.pedido_cotizacions.where(estado: 'Cotizado')
 
-    respond_to do |format|
-      if @orden_compra.save
-        format.html { redirect_to @orden_compra, notice: 'Orden compra was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @orden_compra }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @orden_compra.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # PATCH/PUT /ordenes_compras/1

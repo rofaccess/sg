@@ -1,6 +1,7 @@
 class OrdenCompra < ActiveRecord::Base
 	protokoll :numero, pattern: '#####'
     paginates_per 20
+
 	belongs_to :user
 	belongs_to :proveedor
 	belongs_to :pedido_cotizacion

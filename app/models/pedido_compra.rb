@@ -16,6 +16,11 @@ class PedidoCompra < ActiveRecord::Base
     categorias
   end
 
+  def get_pedido_cotizaciones
+    cotizaciones
+
+  end
+
   def self.procesados
     PedidoCompra.where(estado: PedidosEstados::PROCESADO)
   end
