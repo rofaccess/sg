@@ -1,3 +1,4 @@
+- total_factura = 0
 = form_for @factura_compra, html: {class: 'form-horizontal'}, remote: true  do |f|
   label.text-success Encabezado
   .row
@@ -20,14 +21,36 @@
       thead
         tr
           th #
-          th.col-md-4 Componente
+          th.col-md-3 Componente
+          th.text-right.col-md-2 % Iva
           th.col-md-1 Cantidad
-          th Precio
-          th Total
-          th Iva
-          th.col-md-2 % Iva
+          th.text-right Precio
+          th.text-right Total
+          /th.text-right Iva
+      tfoot
+        tr.subtotal
+          td
+          td
+          td
+          td
+          td.text-right Subtotales:
+          td.text-right.costo
+        tr.total-iva
+          td
+          td
+          td
+          td
+          td.text-right Total Iva:
+          td.text-right.costo
+        tr.total
+          td
+          td
+          td
+          td
+          td.text-right Total a Pagar:
+          td.text-right.costo
+
       tbody
-        - total_factura = 0
         - total_iva = 0
         - cont = 1
         - @orden_compra.orden_compra_detalles.each do |o|
@@ -40,19 +63,16 @@
             tr
               td = cont
               td = o.componente.nombre
-              td = d.text_field(:cantidad, class: 'form-control text-right can_act', value: "#{cantidad}")
-              td = o.costo_unitario
-              td = total_item
-              td = iva
-              td.hide = d.text_field(:iva, value:"#{o.componente.iva.porcentaje}", disabled: true)
-              td = o.componente.iva.abreviatura
+              td.text-right = o.componente.iva.abreviatura
+              td.cantidad = d.text_field(:cantidad, class: 'form-control text-right', value: "#{cantidad}")
+              td.precio.text-right  #{o.costo_unitario}
+              td.costo.text-right  #{total_item}
+              td.iva.hide  #{iva}
+              td.hide.iva-p = d.text_field(:iva, value:"#{o.componente.iva.porcentaje}", disabled: true)
               = d.hidden_field(:componente_id, value: o.componente_id)
               /= d.hidden_field(:iva, value: o.componente.iva.porcentaje, class: 'iva_act')
               - cont += 1
-  .row
-    = FormBuilder::text_field_v(f, :total_factura, {col_class: 'col-md-2 pull-right', label_text: "Total", input_value: "#{total_factura}", input_class: "text-right integer"})
-    = FormBuilder::text_field_v(f, :total_iva, {col_class: 'col-md-2 pull-right', label_text: "I.V.A.", input_value: "#{total_iva}", input_class: "text-right decimal"})
-    = FormBuilder::text_field_v(f, :subtotal, {col_class: 'col-md-2 pull-right', label_text: "Subtotales", input_value: "#{total_factura - total_iva}", input_class: "text-right decimal to-disabled"})
+
 
   .modal-footer
     button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
@@ -67,21 +87,21 @@ javascript:
   //$('.integer, .decimal').attr("readonly",true);
   //$('.to-disable').attr("disabled",true);
   //Hacer esto antes de enviar el formulario
-  $('input[type="submit"]').click(function(e){
+  //$('input[type="submit"]').click(function(e){
     //Se hace modificable al input
     //$('.integer').attr("readonly",false);
     // Se eliminan todos los '.' de los input
     //$('.integer, .decimal').each(function(){
-      $(this).val($(this).val().replace(/\./g, ''));
-    });
-    $('.decimal').each(function(){
-      $(this).val($(this).val().replace(/\,/g, '.'));
-    });
+      //$(this).val($(this).val().replace(/\./g, ''));
+    //});
+    //$('.decimal').each(function(){
+      //$(this).val($(this).val().replace(/\,/g, '.'));
+    //});
 
     // Y se envia el formulario
-    $(this).parents('form').submit();
-    e.preventDefault();
-  });
+    //$(this).parents('form').submit();
+    //e.preventDefault();
+  //});
 
   //Un plugin para los input de fecha
   $(function() {
@@ -105,13 +125,43 @@ javascript:
       $('#factura_compra_plazo_pago_id').attr("disabled",true);
     }
   });
+
   //Actualiza los datos si se cambia cantidad
-  $('body').on('change', '.can_act', function(e){
-    var cantidad = $(this).val();
-    var costo_unitario = $(this).parent().next().children().val();
-    var total = cantidad * costo_unitario;
-    var porcentaje = $(this).parent().next().next().next().next().children().val();
-    var iva_ite = (total * porcentaje).toFixed(0);
-    $(this).parent().next().next().children().val(total);
-    $(this).parent().next().next().next().children().val(iva_ite);
+  // $('body').on('change', '.can_act', function(e){
+  //   var cantidad = $(this).val();
+  //   var costo_unitario = $(this).parent().next().children().val();
+  //   var total = cantidad * costo_unitario;
+  //   var porcentaje = $(this).parent().next().next().next().next().children().val();
+  //   var iva_ite = (total * porcentaje).toFixed(0);
+  //   $(this).parent().next().next().children().val(total);
+  //   $(this).parent().next().next().next().children().val(iva_ite);
+  // });
+
+  // En los campos input de cantidad se ignoran los valores que no sean numericos
+  $('td.cantidad input').keypress(function(event){
+    if (event.which && (event.which < 48 || event.which > 57)) {
+      event.preventDefault();
+    }
+  });
+
+  //Al cambiar cantidad, multiplica por precio y actualiza total
+  $('td.cantidad input').change(function(){
+    var subtotal = 0;
+    var total = 0;
+    var total_iva = 0;
+    $('table tbody tr').each(function() {
+      var precio = parseFloat($('td.precio', this).text().replace(/^[^\d.]*/, ''));
+      var cantidad = parseInt ($('td.cantidad input', this).val());
+      var costo = cantidad * precio;
+      $('td.costo', this).text(' ' + costo);
+      var iva_p = $('td.iva-p input', this).val();
+      var iva = iva_p * costo
+      $('td.iva', this).text(' ' + iva.toFixed(0));
+      subtotal += (costo - iva);
+      total_iva += iva;
+      total += costo;
+    });
+    $('tr.subtotal td.costo').text(' ' + subtotal.toFixed(0));
+    $('tr.total-iva td.costo').text(' ' + total_iva.toFixed(0));
+    $('tr.total td.costo').text(' ' + total);
   });
