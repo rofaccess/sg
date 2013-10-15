@@ -30,7 +30,7 @@ class OrdenesComprasController < ApplicationController
 
   # GET /ordenes_compras/new
   def new
-    @pedidos_compra = PedidoCompra.where(estado: 'Pendiente')
+    @pedidos_compra = PedidoCompra.where(estado: 'Procesado')
     @orden_compra = OrdenCompra.new
   end
 
