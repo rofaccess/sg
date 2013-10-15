@@ -51,14 +51,7 @@
           td.text-right.costo
 
       tbody
-        - total_iva = 0
-        - cont = 1
         - @orden_compra.orden_compra_detalles.each do |o|
-          - cantidad = o.cantidad_requerida - o.cantidad_recibida
-          - total_item = cantidad * o.costo_unitario
-          - total_factura = total_factura + total_item
-          - iva = (total_item * o.componente.iva.porcentaje).round(0)
-          - total_iva = total_iva + iva
           = f.fields_for :factura_compra_detalles do |d|
             tr
               td = cont
@@ -72,7 +65,16 @@
               = d.hidden_field(:componente_id, value: o.componente_id)
               /= d.hidden_field(:iva, value: o.componente.iva.porcentaje, class: 'iva_act')
               - cont += 1
-
+      .row
+        dl.col-md-3
+          dt Subtotal:
+          dd #{Formatter.format_datetime(@pedido_compra.created_at)}
+        dl.col-md-3
+          dt Total Iva:
+          dd = @pedido_compra.estado
+        dl.col-md-3
+          dt Total a Pagar:
+          dd #{Formatter.format_datetime(@pedido_compra.updated_at)}
 
   .modal-footer
     button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
