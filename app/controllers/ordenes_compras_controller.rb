@@ -48,9 +48,10 @@ class OrdenesComprasController < ApplicationController
   # POST /ordenes_compras.json
   def create
     @pedido_compra = PedidoCompra.find(params[:orden_compra][:pedido_compra_id])
-    @pedido_cotizacion = PedidoCotizacion.find(params[:orden_compra][:pedido_cotizacion_id])
+   # @pedido_cotizacion = PedidoCotizacion.find(params[:orden_compra][:pedido_cotizacion_id])
     categorias = @pedido_compra.get_componente_categorias
     cotizaciones = @pedido_compra.pedido_cotizacions.where(estado: 'Cotizado')
+
 
   end
 
