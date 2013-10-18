@@ -38,13 +38,13 @@ $(function(){
 var SideFormUI = (function(){
 	return{
 		showForm: function(){
+			$('#sideForm-backdrop').switchClass('hide','show', 500, 'swing');
 			$('#add-form').addClass('side-form-show', 500, 'swing');
 			$('#add-form').find('form').validate();
-			//$('#add-form').find('form').validationEngine({promptPosition: 'topRight'});
 		},
 		closeForm: function(){
-		$('#add-form').removeClass('side-form-show', 500, 'swing');
-
+			$('#add-form').removeClass('side-form-show', 500, 'swing');
+			$('#sideForm-backdrop').switchClass('show', 'hide', 500, 'swing');
 		}
 	};
 }());
