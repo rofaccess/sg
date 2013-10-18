@@ -6,7 +6,7 @@ table.table
 	  th Direccion
 	  th Ciudad
 	  th Email
-	  th
+	  th.hidden-print
   tbody
 	- @proveedores.each do |p|
 	  tr
@@ -15,6 +15,6 @@ table.table
 		td = p.direccion
 		td = p.ciudad.nombre
 		td = p.email
-		td
+		td.hidden-print
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_proveedor_path(p), remote: true
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, proveedor_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}

@@ -10,7 +10,7 @@ class ProveedoresController < ApplicationController
   def index
     @search = Proveedor.search(params[:q])
     if @search.sorts.empty?
-      @proveedores = @search.result.order('nombre').page(params[:page]).per(10)
+      @proveedores = @search.result.order('nombre').page(params[:page]).per(20)
     else
       @proveedores = @search.result.page(params[:page]).per(10)
     end
