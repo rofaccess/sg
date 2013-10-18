@@ -36,8 +36,8 @@ class OrdenesComprasController < ApplicationController
 
   def get_pedido_compra
     @pedido_compra = PedidoCompra.find(params[:id])
+    @mejores_precios = @pedido_compra.get_mejores_precios
     render partial: 'get_pedido_compra', formats: 'html'
-
   end
 
   # GET /ordenes_compras/1/edit

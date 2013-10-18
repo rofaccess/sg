@@ -146,6 +146,15 @@ body{
   margin-left: 200px;
 }
 
+// Icon links
+.link-icon{
+  color: #777;
+  &:hover{
+    color: #000;
+    text-decoration: none;
+  }
+}
+
 // Content wrapper style
 
 #content-wrapper{
