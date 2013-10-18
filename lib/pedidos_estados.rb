@@ -4,4 +4,5 @@ module PedidosEstados
 	ENTREGADO = 'Entregado'
 	PROCESADO = 'Procesado'
 	SEMIPROCESADO = 'Semiprocesado'
+	ORDENADO = 'Ordenado'
 end

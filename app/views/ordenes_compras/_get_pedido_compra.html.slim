@@ -1,49 +1,45 @@
-.panel.panel-default
-  .panel-heading
-    h3.panel-title Existen #{@pedido_compra.pedido_cotizacions.where(estado: 'Cotizado').size} cotizaciones para el pedido de compra seleccionado
+.alert.alert-info
+  | Hay #{@pedido_compra.pedido_cotizacions.where(estado: 'Cotizado').size} cotizaciones para el pedido de compra seleccionado
     <!-- span.fecha Generado el #{@pedido_compra.created_at} -->
-.table-scroll
+- @pedido_compra.pedido_cotizacions.where(estado: 'Cotizado').each do |p|
+  .panel.panel-default.cotizacion-detalles
+    .panel-heading
+      = link_to '<i class="icon-remove icon-2x"></i> '.html_safe, '#', class: 'remover-cotizacion link-icon pull-right hide'
+      h3.panel-title Cotizacion N° #{p.numero}
+      h3.panel-title Proveedor: #{p.proveedor.nombre}
+      -total = 0
+    .panel-body
+      table.table
+        thead
+          tr
+            th Producto
+            th Marca
+            th Cantidad Requerida
+            th Cantidad Cotizada
+            th Costo Unit.
+            th Subtotal
+            th
+        tbody
+          - p.pedido_cotizacion_detalles.each do |p|
+            - mejor_precio = @mejores_precios.include?(p.id) ? 'success' : ''
+            tr [class="#{mejor_precio} cotizacion-detalle"]
+              td = p.componente.nombre
+              - if p.componente.marca.blank?
+                td Sin Marca
+              - else
+                td = p.componente.marca.nombre
+              td = p.cantidad_requerida
+              td = p.cantidad_cotizada
+              - costo_unitario = p.costo_unitario.nil? ? 0 : p.costo_unitario
+              td = costo_unitario
+              td = (costo_unitario * p.cantidad_cotizada)
+              td = link_to '<i class="icon-remove icon-large"></i> '.html_safe, '#', class: 'remover-detalle-cotizacion link-icon'
+            -total += (costo_unitario * p.cantidad_cotizada)
+    .panel-footer
+      h3.panel-title.text-right TOTAL COTIZACION: #{total}
 
-  - @pedido_compra.pedido_cotizacions.where(estado: 'Cotizado').each do |p|
+button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
+= submit_tag 'Generar Orden de Compra', class: 'btn btn-primary pull-right'
 
-      .panel-body
-      .panel.panel-default
-        .panel-heading
-          h3.panel-title Cotizaciones de:: #{p.proveedor.nombre}
-        -total = 0
-        .panel-body
-          .row.table-scroll
-            table.table
-              thead
-                tr
-                  th Nombre
-                  th Marca
-                  th Categoria
-                  th Cantidad Requerida
-                  th Cantidad Cotizada
-                  th Costo Unit.
-                  th Costo.x.Cantidad
-              tbody
-                - p.pedido_cotizacion_detalles.each do |p|
-                  tr
-                    td = p.componente.nombre
-                    - if p.componente.marca.blank?
-                      td Sin Marca
-                    - else
-                      td = p.componente.marca.nombre
-                    - if p.componente.componente_categoria.blank?
-                      td Sin Categoria
-                    - else
-                      td = p.componente.componente_categoria.nombre
-                    td = p.cantidad_requerida
-                    td = p.cantidad_cotizada
-                    td = p.costo_unitario
-                    td = (p.costo_unitario * p.cantidad_cotizada)
-                  -total += (p.costo_unitario * p.cantidad_cotizada)
-        .panel.panel-default
-          .panel-heading
-            h3.panel-title TOTAL COTIZACION: #{total}
-
-.panel-footer
-  button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
-  = submit_tag 'Generar Pedido de Cotizacion', class: 'btn btn-primary pull-right'
+javascript:
+  pedidosCompraUI.hoverEventCotizaciones();

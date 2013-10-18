@@ -2,11 +2,11 @@
   - url_form = @ciudad.id.nil? ? crear_localidades_path : actualizar_localidad_path
   = form_for @ciudad, url: url_form, html: {class: 'add-form'}, remote: true do |f|
     .col-md-12
-      = FormBuilder::text_field(f, :nombre, '', '', 'validate[required]')
+      = FormBuilder::text_field(f, :nombre, '', '', 'required')
     .col-md-12
       = FormBuilder::collection_select(nil, :pais, @paises, :id, :nombre, "Seleccione Pais", '', '', 'recargar-estados', @ciudad.estado.nil? ? nil : @ciudad.estado.pais_id)
     .col-md-12
-      = FormBuilder::collection_select(f, :estado_id, @estados, :id, :nombre, "Seleccione Estado", '', '', 'validate[required]')
+      = FormBuilder::collection_select(f, :estado_id, @estados, :id, :nombre, "Seleccione Estado", '', '', 'required')
     = hidden_field_tag 'tipo_localidad', 'ciudad'
     - if defined? provider_abm
       = hidden_field_tag 'select_ciudad', 'true'

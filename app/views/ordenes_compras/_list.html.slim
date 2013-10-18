@@ -13,14 +13,18 @@ table.table
 	    tr.success
 		  td = p.numero
 		  td = p.estado
-		  td = p.created_at
+		  td = Formatter.format_datetime(p.created_at)
+		  td = p.costo_total
+		  td = p.proveedor.nombre
 		  td
-		    = link_to '<i class="icon-list icon-large"></i> '.html_safe, orden_compra_path(p), remote: true
+		    = link_to '<i class="icon-ok icon-large"></i> '.html_safe, orden_compra_path(p), remote: true
 		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, orden_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
 	  - else
 	    tr
 		  td = p.numero
 		  td = p.estado
-		  td = p.created_at
+		  td = Formatter.format_datetime(p.created_at)
+		  td = p.costo_total
+		  td = p.proveedor.nombre
 		  td
 		    = link_to '<i class="icon-list icon-large"></i> '.html_safe, orden_compra_path(p), remote: true

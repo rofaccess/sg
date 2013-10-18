@@ -36,8 +36,8 @@ class OrdenesComprasController < ApplicationController
 
   def get_pedido_compra
     @pedido_compra = PedidoCompra.find(params[:id])
+    @mejores_precios = @pedido_compra.get_mejores_precios
     render partial: 'get_pedido_compra', formats: 'html'
-
   end
 
   # GET /ordenes_compras/1/edit
@@ -47,30 +47,33 @@ class OrdenesComprasController < ApplicationController
   # POST /ordenes_compras
   # POST /ordenes_compras.json
   def create
+     @search = OrdenCompra.search(params[:q])
     @pedido_compra = PedidoCompra.find(params[:orden_compra][:pedido_compra_id])
-    @pedido_cotizacion = PedidoCotizacion.find(params[:orden_compra][:pedido_cotizacion_id])
-    categorias = @pedido_compra.get_componente_categorias
+   # @pedido_cotizacion = PedidoCotizacion.find(params[:orden_compra][:pedido_cotizacion_id])
+   # categorias = @pedido_compra.get_componente_categorias
     cotizaciones = @pedido_compra.pedido_cotizacions.where(estado: 'Cotizado')
+    #proveedores = ComponenteCategoria.get_proveedores(categorias)
+    cotizaciones.each do |c|
 
-  end
+      orden_compra = OrdenCompra.new( fecha: DateTime.now,
+                                              costo_total: 0,
+                                              estado: PedidosEstados::PENDIENTE,
+                                              user_id: current_user.id,
+                                              proveedor_id: c.proveedor_id,
+                                              pedido_cotizacion_id: c.id,
+                                              pedido_compra_id: c.pedido_compra_id)
 
-  # PATCH/PUT /ordenes_compras/1
-  # PATCH/PUT /ordenes_compras/1.json
-  def update
-    respond_to do |format|
-      if @orden_compra.update(orden_compra_params)
-        format.html { redirect_to @orden_compra, notice: 'Orden compra was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @orden_compra.errors, status: :unprocessable_entity }
+
+      c.pedido_cotizacion_detalles.each do |d|
+        orden_compra.orden_compra_detalles.build(componente_id: d.componente_id, costo_unitario: d.costo_unitario, cantidad_requerida: d.cantidad_cotizada)
       end
+      orden_compra.save
     end
+
+    @pedido_compra.update(estado: PedidosEstados::ORDENADO)
+
+
   end
-
-  # DELETE /ordenes_compras/1
-  # DELETE /ordenes_compras/1.json
-
 
   def destroy
     if @orden_compra.destroy
@@ -79,6 +82,8 @@ class OrdenesComprasController < ApplicationController
       redirect_to ordenes_compras_path, alert: t('messages.pedido_compra_not_deleted')
     end
   end
+
+
 
   def update_list
     index

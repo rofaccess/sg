@@ -51,7 +51,7 @@ class PedidosCotizacionController < ApplicationController
                                                 user_id: current_user.id)
 
       @pedido_compra.pedido_compra_detalles.each do |d|
-        pedido_cotizacion.pedido_cotizacion_detalles.build(componente_id: d.componente_id, cantidad_requerida: d.cantidad) if proveedor.componente_categorias.exists?(d.componente.componente_categoria_id)
+        pedido_cotizacion.pedido_cotizacion_detalles.build(componente_id: d.componente_id, cantidad_requerida: d.cantidad, pedido_compra_detalle_id: d.id) if proveedor.componente_categorias.exists?(d.componente.componente_categoria_id)
       end
 
       pedido_cotizacion.save

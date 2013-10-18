@@ -46,6 +46,20 @@
   	}
 }
 
+// Expose Mask Style
+#sideForm-backdrop{
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #333;
+  opacity: 0.6;
+  z-index: 1031;
+}
+.modal-backdrop{
+  z-index: 1033;
+}
+
 // Sobreescribir el btn-primary
 
 .btn-primary{
@@ -132,6 +146,15 @@ body{
   margin-left: 200px;
 }
 
+// Icon links
+.link-icon{
+  color: #777;
+  &:hover{
+    color: #000;
+    text-decoration: none;
+  }
+}
+
 // Content wrapper style
 
 #content-wrapper{
@@ -144,13 +167,14 @@ body{
 
   #add-form{
     position: fixed;
-    top: 50px;
+    top: 0;
     background: #f7f7f7;
     right: 0;
     height: 100%;
     width: 500px;
     margin-right: -500px;
     border-left: 1px solid #ccc;
+    z-index: 1032;
     &.side-form-show{
       margin-right: 0;
     }

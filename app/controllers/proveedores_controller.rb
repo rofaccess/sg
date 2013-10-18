@@ -8,7 +8,12 @@ class ProveedoresController < ApplicationController
     @sidebar_layout = 'layouts/compras_sidemenu'
   end
   def index
-    @proveedores = Proveedor.all
+    @search = Proveedor.search(params[:q])
+    if @search.sorts.empty?
+      @proveedores = @search.result.order('nombre').page(params[:page]).per(10)
+    else
+      @proveedores = @search.result.page(params[:page]).per(10)
+    end
   end
 
   def edit
