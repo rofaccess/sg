@@ -4,7 +4,7 @@ class PedidoCompra < ActiveRecord::Base
 
   has_many :pedido_compra_detalles
   has_many :pedido_cotizacions
-  has_one :orden_compra
+  has_many :orden_compras
 
   # Este metodo retorna todas las categorias que hay en los detalles de un pedido de compra
   def get_componente_categorias

@@ -1,6 +1,6 @@
 .panel.panel-default
   .panel-heading
-    h3.panel-title Se ha generado #{@pedido_compra.pedido_cotizacions.size} ordenes de compras para el pedido de compra N° #{@pedido_compra.numero}
+    h3.panel-title Se ha generado #{@pedido_compra.orden_compras.size} ordenes de compras para el pedido de compra N° #{@pedido_compra.numero}
   .panel-body
-    - @ordenes_compras = @pedido_compra.pedido_cotizacions
+    - @ordenes_compras = @pedido_compra.orden_compras
     = render partial: 'list', locals: {short_view: true}
