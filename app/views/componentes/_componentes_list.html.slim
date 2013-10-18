@@ -23,7 +23,7 @@ table.table
 		- if p.iva.blank?
 			td Sin Iva
 		- else
-		  	td = p.iva.abreviatura
+		  	td #{p.iva.valor} %
 		td
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_componente_path(p), remote: true
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, componente_path(p), method: 'delete', confirm: t('messages.confirm_delete')
