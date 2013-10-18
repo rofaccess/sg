@@ -11,8 +11,10 @@
   / Formularios Ocultos
   = f.hidden_field(:proveedor_id,value:"#{@orden_compra.proveedor_id}")
   = f.hidden_field(:user_id, value: "#{current_user.id}")
-  = f.hidden_field(:estado)
+  = f.hidden_field(:estado, value: "Pendiente")
   = f.hidden_field(:orden_compra_id, value: "#{@orden_compra.id}")
+  = f.hidden_field(:total_factura, class: "total-f")
+  = f.hidden_field(:total_iva, class: "total-i")
 
   label.text-success Detalles
   .row.table-scroll
@@ -38,11 +40,12 @@
               td.cantidad = d.text_field(:cantidad, class: 'form-control text-right', value: cantidad)
               td.precio.text-right  #{o.costo_unitario}
               td.costo.text-right
-              td.text-right = o.componente.iva.abreviatura
+              td.text-right  #{o.componente.iva.valor} %
               td.iva.text-right
-              td.hide.iva-p = d.text_field(:iva, value:"#{o.componente.iva.porcentaje}", disabled: true)
+              td.iva-p.hide = d.text_field(:iva, value:"#{o.componente.iva.valor}", disabled: true)
               = d.hidden_field(:componente_id, value: o.componente_id)
-              /= d.hidden_field(:iva, value: o.componente.iva.porcentaje, class: 'iva_act')
+              = d.hidden_field(:iva_porcentaje, value: o.componente.iva.valor)
+              = d.hidden_field(:costo_unitario, value: o.costo_unitario)
   .row
     dl.col-md-3
       dt Subtotal:
@@ -90,12 +93,14 @@ javascript:
     var total_iva = 0;
     $('table tbody tr').each(function() {
       var precio = parseFloat($('td.precio', this).text().replace(/^[^\d.]*/, ''));
-      var cantidad = parseInt ($('td.cantidad input', this).val());
+      var cantidad = parseInt($('td.cantidad input', this).val());
       var costo = cantidad * precio;
       $('td.costo', this).text(' ' + costo);
-      var iva_p = $('td.iva-p input', this).val();
-      var iva = iva_p * costo
+      var iva_p = ($('td.iva-p input', this).val()) / 100;
+      var iva = iva_p * costo;
       $('td.iva', this).text(' ' + iva.toFixed(0));
+      costo = isNaN(costo) ? 0 : costo;
+      iva = isNaN(iva) ? 0 : iva;
       subtotal += (costo - iva);
       total_iva += iva;
       total += costo;
@@ -103,10 +108,13 @@ javascript:
     $('dd.subtotal').text(' ' + subtotal.toFixed(0));
     $('dd.total-iva').text(' ' + total_iva.toFixed(0));
     $('dd.total').text(' ' + total);
+
+    $('.total-f').val(total);
+    $('.total-i').val(total_iva.toFixed(0));
   });
 
   //Al cambiar cantidad, multiplica por precio y actualiza total
-  $('td.cantidad input').change(function(){
+  $('td.cantidad input').keyup(function(){
     var subtotal = 0;
     var total = 0;
     var total_iva = 0;
@@ -115,9 +123,11 @@ javascript:
       var cantidad = parseInt ($('td.cantidad input', this).val());
       var costo = cantidad * precio;
       $('td.costo', this).text(' ' + costo);
-      var iva_p = $('td.iva-p input', this).val();
-      var iva = iva_p * costo
+      var iva_p = ($('td.iva-p input', this).val()) / 100;
+      var iva = iva_p * costo;
       $('td.iva', this).text(' ' + iva.toFixed(0));
+      costo = isNaN(costo) ? 0 : costo;
+      iva = isNaN(iva) ? 0 : iva;
       subtotal += (costo - iva);
       total_iva += iva;
       total += costo;
@@ -125,34 +135,12 @@ javascript:
     $('dd.subtotal').text(' ' + subtotal.toFixed(0));
     $('dd.total-iva').text(' ' + total_iva.toFixed(0));
     $('dd.total').text(' ' + total);
+
+    $('.total-f').val(total);
+    $('.total-i').val(total_iva.toFixed(0));
   });
 
    $(function() {
     $('.datepicker').datepicker();
   });
 
-  // Enmascarar los campos numericos
-  //$('.integer').maskMoney({thousands: '.', defaultZero: false, precision: 0});
-  //$('.decimal').maskMoney({thousands: '.', defaultZero: false, precision: 1, decimal: ','});
-  //$('.integer, .decimal').maskMoney('mask');
-  //Input a solo lectura
-  //$('.integer, .decimal').attr("readonly",true);
-  //$('.to-disable').attr("disabled",true);
-  //Hacer esto antes de enviar el formulario
-  //$('input[type="submit"]').click(function(e){
-    //Se hace modificable al input
-    //$('.integer').attr("readonly",false);
-    // Se eliminan todos los '.' de los input
-    //$('.integer, .decimal').each(function(){
-      //$(this).val($(this).val().replace(/\./g, ''));
-    //});
-    //$('.decimal').each(function(){
-      //$(this).val($(this).val().replace(/\,/g, '.'));
-    //});
-
-    // Y se envia el formulario
-    //$(this).parents('form').submit();
-    //e.preventDefault();
-  //});
-
-  //Un plugin para los input de fecha

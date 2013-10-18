@@ -1,35 +1,29 @@
 table.table
   thead
 	tr
-	  th = sort_link(@search, :numero, "Numero", {}, method: :get, remote: true)
-	  th = sort_link(@search, :condicion_pago_id, "Condicion de Pago", {}, method: :get, remote: true)
-	  th = sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
-	  th = sort_link(@search, :user_id, "Usuario", {}, method: :get, remote: true)
-	  th = sort_link(@search, :fecha_compra, "Fecha de Emision", {}, method: :get, remote: true)
-	  th = sort_link(@search, :estado, "Estado", {}, method: :get, remote: true)
+	  /th = sort_link(@search, :numero, "Numero", {}, method: :get, remote: true)
+	  /th = sort_link(@search, :condicion_pago_id, "Condicion de Pago", {}, method: :get, remote: true)
+	  /th = sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
+	  /th = sort_link(@search, :user_id, "Usuario", {}, method: :get, remote: true)
+	  /th = sort_link(@search, :fecha_compra, "Fecha de Emision", {}, method: :get, remote: true)
+	  /th = sort_link(@search, :estado, "Estado", {}, method: :get, remote: true)
+	  th Numero
+	  th Condicion de Pago
+	  th Proveedor
+	  th Usuario
+	  th Fecha de Compra
+	  th Estado
+	  th Orden de Compra
 	  th
   tbody
 	- @facturas_compra.each do |p|
-	  - if p.estado == 'Pendiente'
-	    tr.success
-		  td = p.numero
-		  td = p.condicion_pago.nombre
-		  td = p.proveedor.nombre
-		  td = p.user.username
-		  td = p.fecha_compra
-		  td = p.estado
-		  td
-		    = link_to '<i class="icon-list icon-large"></i> '.html_safe, factura_compra_path(p), remote: true
-		    = link_to '<i class="icon-ok icon-large"></i>'.html_safe
-		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, factura_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
-	  - else
-	    tr
-		  td = p.numero
-		  td = p.condicion_pago.nombre
-		  td = p.proveedor.nombre
-		  td = p.user.username
-		  td = p.fecha_compra
-		  td = p.estado
-		  td
-		    = link_to '<i class="icon-list icon-large"></i> '.html_safe, factura_compra_path(p), remote: true
-		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, factura_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
+	  tr [data-url="#{factura_compra_path(p)}"]
+		td.show-factura = p.numero
+		td.show-factura = p.condicion_pago.nombre
+		td.show-factura = p.proveedor.nombre
+		td.show-factura = p.user.username
+		td.show-factura = p.fecha_compra
+		td.show-factura = p.estado
+		td.show-factura = p.orden_compra.numero
+		td
+		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, factura_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}

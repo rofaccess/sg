@@ -1,47 +1,69 @@
-button.close.close-add-form [type="button" aria-hidden="true"] &times;
-.panel.panel-info
-  .panel-heading
-    h4.panel-title Pedido de Compra
-  .panel-body
-    table.table
-      tbody
-        tr
-          td = @pedido_compra.numero
-          td = @pedido_compra.estado
-          td = @pedido_compra.created_at
-    .col-md-12
-      button.btn.btn-default.close-add-form [type="button"] Cancelar
-      - if @pedido_compra.estado == 'Pendiente'
-        = link_to '<button class="btn btn-primary pull-right">Generar Pedido de Cotizacion</button> '.html_safe, edit_proveedor_path(@pedido_compra.id)
-
-- if not @pedidos_compra_detalle.blank?
-  .panel.panel-info
-    .panel-heading
+.modal-body
+  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+  /Cabecera de la Factura
+  p.lead.text-muted
+    strong Factura  #{@factura_compra.numero}
+    i.text-muted
       .row
-        h4.panel-title.col-lg-11 Registros de Componentes:
-        .col-lg-1 = @pedidos_compra_detalle.length
-    .panel-body
-      .row.table-scroll
-        table.table
-          thead
-            tr
-              th Nombre
-              th Cantidad
-              th Marca
-              th Categoria
-          tbody
-            - @pedidos_compra_detalle.each do |p|
-              tr
-                td = p.componente.nombre
-                td = p.cantidad
-                - if p.componente.marca.blank?
-                  td Sin Marca
-                - else
-                  td = p.componente.marca.nombre
-                - if p.componente.componente_categoria.blank?
-                  td Sin Categoria
-                - else
-                  td = p.componente.componente_categoria.nombre
+        dl.col-md-3
+          dt Fecha
+          dd #{Formatter.format_datetime(@factura_compra.fecha_compra)}
+        dl.col-md-3
+          dt Estado
+          dd = @factura_compra.estado
+        dl.col-md-3
+          dt Proveedor
+          dd = @factura_compra.proveedor.nombre
+      .row
+        dl.col-md-3
+          dt Condicion de Pago
+          dd = @factura_compra.condicion_pago.nombre
+        dl.col-md-3
+          dt Plazo de Pago
+          - if @factura_compra.plazo_pago.blank?
+            dd Ninguno
+          - else
+            dd = @factura_compra.plazo_pago.nombre
+        dl.col-md-3
+          dt Usuario
+          dd = @factura_compra.user.username
 
+  /Detalles de la factura
+  /Tabs
+  .table-scroll
+    table.table
+      thead
+        tr
+          th #
+          th Componente
+          th Cantidad
+          th Marca
+          th Categoria
+          th Costo Unitario
+      tbody
+        - total = 0
+        - cont = 1
+        - @factura_compra.factura_compra_detalles.each do |p|
+          tr
+            td = cont
+            td = p.componente.nombre
+            td.text-center = p.cantidad
 
+            - if p.componente.marca.blank?
+              td Sin Marca
+            - else
+              td = p.componente.marca.nombre
+
+            - if p.componente.componente_categoria.blank?
+              td Sin Categoria
+            - else
+              td = p.componente.componente_categoria.nombre
+            td = p.costo_unitario
+              - total += (p.componente.costo * p.cantidad)
+            - cont += 1
+
+/Botones Cancelar y generar
+/.panel-footer
+/  button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
+/  = link_to '<button class="btn btn-primary pull-right">Generar Pedido de Cotizacion</button> '.html_safe, create_pedido_cotizacion_pedido_compra_path(@pedido_compra.id), remote: true
 

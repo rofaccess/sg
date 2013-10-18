@@ -7,4 +7,8 @@ class FacturaCompra < ActiveRecord::Base
 	belongs_to :user
 
 	accepts_nested_attributes_for :factura_compra_detalles
+
+	def self.filtrar(orden_compra_id = nil)
+      orden_compra_id.nil? ? FacturaCompra.all : FacturaCompra.where(orden_compra_id: orden_compra_id)
+  	end
 end
