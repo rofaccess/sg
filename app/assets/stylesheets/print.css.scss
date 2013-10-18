@@ -1,0 +1,18 @@
+@media print {
+	#container{
+		margin-top: 0;
+	}
+	#content-wrapper{
+		margin-left: 0;
+		border: none;
+	}
+	#paginator{
+		display: none;
+	}
+	.buscador{
+		display: none;
+	}
+	.btn{
+		display: none;
+	}
+}

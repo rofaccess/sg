@@ -11,7 +11,7 @@ html
       = render 'layouts/menu'
     #container
       - unless @sidebar_layout.nil?
-        aside#sidebar-menu
+        aside#sidebar-menu.hidden-print
     		  = render @sidebar_layout
         #content-wrapper.has-sidebar
     		  = yield

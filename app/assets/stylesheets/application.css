@@ -17,4 +17,5 @@
  *= require pedidos_cotizacion
  *= require facturas_compra
  *= require jquery-ui
+ *= require print
  */
