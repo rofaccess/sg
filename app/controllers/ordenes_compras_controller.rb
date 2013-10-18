@@ -47,6 +47,15 @@ class OrdenesComprasController < ApplicationController
   # POST /ordenes_compras
   # POST /ordenes_compras.json
   def create
+    pedidos = params[:pedido_cotizacion]
+    pedidos.each do |id, val|
+      puts "#{id} => #{val}"
+      val[:detalles].each do |id_, val_|
+        puts "#{id_} => #{val_}"
+
+      end
+    end
+=begin
      @search = OrdenCompra.search(params[:q])
     @pedido_compra = PedidoCompra.find(params[:orden_compra][:pedido_compra_id])
    # @pedido_cotizacion = PedidoCotizacion.find(params[:orden_compra][:pedido_cotizacion_id])
@@ -68,11 +77,12 @@ class OrdenesComprasController < ApplicationController
         orden_compra.orden_compra_detalles.build(componente_id: d.componente_id, costo_unitario: d.costo_unitario, cantidad_requerida: d.cantidad_cotizada)
       end
       orden_compra.save
+
     end
 
     @pedido_compra.update(estado: PedidosEstados::ORDENADO)
 
-
+=end
   end
 
   def destroy
