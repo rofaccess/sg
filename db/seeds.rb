@@ -46,7 +46,7 @@ for i in 1..5
 end
 
 # Crear ivas
-Iva.create([{ abreviatura: '10%', porcentaje: 0.1 }, { abreviatura: '5%',porcentaje: 0.005 }])
+Iva.create([{ valor: '10'}, { valor: '5'}])
 
 # Crear 5 categorias de componentes
 for i in 1..5
