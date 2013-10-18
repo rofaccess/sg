@@ -18,12 +18,9 @@
 //
 $(function(){
 	$('#add-modal').on('show.bs.modal', function(){
-		//$(this).find('form').validationEngine({promptPosition: 'topRight'});
+		$(this).find('form').validate();
 	});
 
-	//$('#add-form').find('form').validationEngine({promptPosition: 'topLeft'});
-
-	//$('.add-form').validationEngine({promptPosition: 'bottomLeft'});
 	$('body').on('click', '.close-add-form', function(e){
 		SideFormUI.closeForm();
 		e.preventDefault();

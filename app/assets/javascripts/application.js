@@ -15,10 +15,9 @@
 //= require jquery.ui.all
 //= require turbolinks
 //= require bootstrap
-//= require jquery.validationEngine
 //= require jquery.validate.min
+//= require validationsSetup
 //= require languages/jquery.validate.messages_es
-//= require languages/jquery.validationEngine-es
 //= require noty/jquery.noty
 //= require noty/layouts/topRight
 //= require noty/themes/default
