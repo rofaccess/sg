@@ -9,12 +9,12 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
-//= require jquery.spin.min
-//= require localidadesUI
-//= require pedidosCotizacionUI
-//= require facturasCompraUI
-//= require pedidosCompraUI
-//= require ordenesCompraUI
+//= require vendor/jquery.spin.min
+//= require modules/localidadesUI
+//= require modules/pedidosCotizacionUI
+//= require modules/facturasCompraUI
+//= require modules/pedidosCompraUI
+//= require modules/ordenesCompraUI
 //
 $(function(){
 	// Inicializar el validador para los formularios cuando se abre un modal
@@ -53,13 +53,7 @@ $(function(){
     });
 
     // Agregar el icono para limpiar campos
-    $('.has-clear').after('<i class="icon-remove limpiar-campo"></i>');
-
-    // Evento para limpiar campos
-    $('body').on('click', '.limpiar-campo', function(e){
-		$(this).prev('input').val('');
-		e.preventDefault();
-    });
+    $('.has-clear').clearInput();
 
     // Inicializar datepicker
     $('.datepicker').datepicker();

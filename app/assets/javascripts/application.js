@@ -14,16 +14,17 @@
 //= require jquery_ujs
 //= require jquery.ui.all
 //= require turbolinks
-//= require bootstrap
-//= require jquery.validate.min
-//= require validationsSetup
+//= require vendor/bootstrap
+//= require vendor/jquery.validate.min
+//= require custom_plugins/validationsSetup
+//= require custom_plugins/clearInput
 //= require languages/jquery.validate.messages_es
 //= require noty/jquery.noty
 //= require noty/layouts/topRight
 //= require noty/themes/default
-//= require jquery.tools.min
-//= require jquery.maskMoney
-//= require select2.min
+//= require vendor/jquery.tools.min
+//= require vendor/jquery.maskMoney
+//= require vendor/select2.min
 //= require languages/jquery.ui.datepicker-es
 //
 
