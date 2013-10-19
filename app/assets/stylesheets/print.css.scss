@@ -9,4 +9,7 @@
 	#paginator, .buscador, .btn, .btn-group{
 		display: none;
 	}
+	a[href]:after {
+    content: none !important;
+  }
 }

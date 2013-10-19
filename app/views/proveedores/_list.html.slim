@@ -1,11 +1,11 @@
 table.table
   thead
 	tr
-	  th Nombre
-	  th Ruc
-	  th Direccion
-	  th Ciudad
-	  th Email
+	  th = sort_link(@search, :nombre, "Nombre", {}, method: :get, remote: true)
+	  th = sort_link(@search, :ruc, "Ruc", {}, method: :get, remote: true)
+	  th = sort_link(@search, :direccion, "Direccion", {}, method: :get, remote: true)
+	  th = sort_link(@search, :ciudad_id, "Ciudad", {}, method: :get, remote: true)
+	  th = sort_link(@search, :email, "Email", {}, method: :get, remote: true)
 	  th.hidden-print
   tbody
 	- @proveedores.each do |p|
