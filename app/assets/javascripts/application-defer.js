@@ -17,24 +17,52 @@
 //= require ordenesCompraUI
 //
 $(function(){
+	// Inicializar el validador para los formularios cuando se abre un modal
 	$('#add-modal').on('show.bs.modal', function(){
 		$(this).find('form').validate();
 	});
 
+	// Evento para cerrar el side form
 	$('body').on('click', '.close-add-form', function(e){
 		SideFormUI.closeForm();
 		e.preventDefault();
 	});
 
+	// Inicializar tooltip
 	$('body').tooltip({
       selector: '[data-toggle=tooltip]'
     });
 
+	// Evento para imprimir listado actual
     $('body').on('click', '.listado-actual', function(e){
 		$('#printable').html($('#list table').clone());
 		window.print();
 		e.preventDefault();
     });
+
+    // Evento para mostrar el formulario de filtros
+    $('.filtrar-link').click(function(e){
+		$(this).parents('.form-search').hide().next('.form-filtrar').addClass('show');
+		e.preventDefault();
+    });
+
+    // Evento para esconder el formulario de filtros
+    $('.esconder-filtros').click(function(e){
+		$(this).parents('.form-filtrar').removeClass('show').prev('.form-search').show();
+		e.preventDefault();
+    });
+
+    // Agregar el icono para limpiar campos
+    $('.has-clear').after('<i class="icon-remove limpiar-campo"></i>');
+
+    // Evento para limpiar campos
+    $('body').on('click', '.limpiar-campo', function(e){
+		$(this).prev('input').val('');
+		e.preventDefault();
+    });
+
+    // Inicializar datepicker
+    $('.datepicker').datepicker();
 
 });
 

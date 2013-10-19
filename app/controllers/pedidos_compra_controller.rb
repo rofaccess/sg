@@ -9,9 +9,15 @@ class PedidosCompraController < ApplicationController
   end
 
   def index
-  	@search = PedidoCompra.search(params[:q])
+    #formatear las fechas
+    if defined? params[:q][:created_at_lt]
+      params[:q][:created_at_lt] = params[:q][:created_at_lt] + ' 23:59:59' unless params[:q][:created_at_lt].blank?
+      params[:q][:fecha_lt] = params[:q][:fecha_lt] + ' 23:59:59' unless params[:q][:fecha_lt].blank?
+    end
+
+   	@search = PedidoCompra.search(params[:q])
     @pedido_compra = PedidoCompra.new
-  	if @search.sorts.empty?
+    if @search.sorts.empty?
       @pedidos_compra = @search.result.order('created_at').order('estado').page(params[:page]).per(8)
     else
       @pedidos_compra = @search.result.page(params[:page]).per(8)

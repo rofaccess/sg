@@ -75,7 +75,8 @@ class ProveedoresController < ApplicationController
   end
 
   def imprimir_todos
-    @proveedores = Proveedor.all
+    @search = Proveedor.search(params[:q])
+    @proveedores = @search.result.order('nombre')
   end
 
   def nueva_ciudad

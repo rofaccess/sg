@@ -267,6 +267,46 @@ body{
   padding-right: 0;
 }
 
+// Formulario de filtros
+.form-filtrar{
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  @include rounded(2px);
+  padding: 10px;
+}
+.form-filtros{
+  .form-group{
+    padding-left: 0;
+  }
+  .rango-fechas{
+    .col-md-6:last-child{
+      padding-left: 0;
+    }
+    .datepicker{
+
+    }
+  }
+  .rango-fechas:nth-last-child(3){
+    padding-right: 0;
+  }
+}
+.buscador{
+  padding: 0;
+}
+
+.esconder-filtros{
+  position: absolute;
+  right: 30px;
+}
+
+.limpiar-campo{
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  color: #999;
+  cursor: pointer;
+}
+
 //Scroll para tablas
 .table-scroll{
   overflow:auto;
