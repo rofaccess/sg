@@ -1,7 +1,17 @@
 .row.row-page-title
   h2 Proveedores
   = link_to 'Agregar Proveedor', new_proveedor_path, class: 'btn btn-primary', remote: true
-  = link_to '<i class="icon-print"></i> Imprimir listado'.html_safe, '#', class: 'btn btn-default print-link pull-right hidden-print', onClick: 'window.print()'
+  .btn-group.pull-right.print-link
+  	button.btn.btn-default.dropdown-toggle [type="button" data-toggle="dropdown"]
+  	  i.icon-print
+  	  | #{" Imprimir Listado "}
+  	  span.caret
+  	ul.dropdown-menu
+  	  li
+  	    = link_to 'Listado Actual', '#', class: 'listado-actual'
+  	  li
+  	    = link_to 'Listar Todos', imprimir_todos_proveedores_path, class: '', remote: true
+
 .row
   = render 'search'
 

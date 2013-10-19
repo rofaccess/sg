@@ -25,6 +25,7 @@ Sg::Application.routes.draw do
       post 'load_test_data'
       get 'nueva_ciudad'
       get 'nueva_categoria'
+      get 'imprimir_todos'
     end
   end
   resources :pedidos_compra do

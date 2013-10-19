@@ -10,7 +10,7 @@ class ProveedoresController < ApplicationController
   def index
     @search = Proveedor.search(params[:q])
     if @search.sorts.empty?
-      @proveedores = @search.result.order('nombre').page(params[:page]).per(20)
+      @proveedores = @search.result.order('nombre').page(params[:page]).per(10)
     else
       @proveedores = @search.result.page(params[:page]).per(10)
     end
@@ -52,15 +52,15 @@ class ProveedoresController < ApplicationController
     new_cat.each do |n|
      @proveedor.componente_categorias << ComponenteCategoria.find(n) unless n.empty? || old_cat.include?(n)
     end
-   	if @proveedor.update(proveedor_params)
-       update_list
+    if @proveedor.update(proveedor_params)
+      update_list
     else
       redirect_to proveedores_path, alert: t('messages.proveedor_not_saved')
     end
   end
 
   def destroy
-  	if @proveedor.destroy
+    if @proveedor.destroy
       redirect_to proveedores_path, notice: t('messages.proveedor_deleted')
     else
       redirect_to proveedores_path, alert: t('messages.proveedor_not_deleted')
@@ -72,6 +72,10 @@ class ProveedoresController < ApplicationController
             ruc: Faker::Number.number(9),
             direccion: Faker::Address.street_address,
             email: Faker::Internet.email)
+  end
+
+  def imprimir_todos
+    @proveedores = Proveedor.all
   end
 
   def nueva_ciudad

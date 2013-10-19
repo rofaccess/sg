@@ -9,7 +9,7 @@ html
   body
   	- if user_signed_in?
       = render 'layouts/menu'
-    #container
+    #container.hidden-print
       - unless @sidebar_layout.nil?
         aside#sidebar-menu.hidden-print
     		  = render @sidebar_layout
@@ -18,6 +18,8 @@ html
       - else
         #content-wrapper.container
     		  = yield
+    #printable.visible-print
+      = yield(:printable)
   	#add-modal.modal.fade [tabindex="-1"]
         .modal-dialog
           .modal-content

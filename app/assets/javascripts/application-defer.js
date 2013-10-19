@@ -30,6 +30,12 @@ $(function(){
       selector: '[data-toggle=tooltip]'
     });
 
+    $('body').on('click', '.listado-actual', function(e){
+		$('#printable').html($('#list table').clone());
+		window.print();
+		e.preventDefault();
+    });
+
 });
 
 var SideFormUI = (function(){
