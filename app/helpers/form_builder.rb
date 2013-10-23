@@ -22,6 +22,24 @@ module FormBuilder
   	html.html_safe
   end
 
+  def self.text_field_h(f, field, option)
+    html = ""
+    html << "<div class='form-group'>"
+      html << f.label(field, "#{option.key?(:label_text) ? option[:label_text] : ''}", class: "control-label #{option.key?(:label_class) ? option[:label_class] : 'col-md-2'}")
+      html << "<div class='#{option.key?(:field_class) ? option[:field_class] : 'col-md-10'}'>"
+        html << f.text_field(field, class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}",value: "#{option.key?(:input_value) ? option[:input_value] : ''}", placeholder: "#{option.key?(:placeholder) ? option[:placeholder] : ''}", disabled: option.key?(:disabled) ? option[:disabled] : false, readonly: option.key?(:readonly) ? option[:readonly] : false)
+      html << "</div>"
+      if option.key?(:btn)
+        html << "<div class='col-md-2'><a href='#{option[:btn]}' data-remote='true' data-url='' class='btn btn-default btn-block'><i class='icon-plus'></i></a></div>"
+      end
+      if option.key?(:onclick)
+        html << "<div class='col-md-2'><a href='#' onclick='#{option[:onclick]}' class='btn btn-default btn-block'><i class='icon-minus'></i></a></div>"
+      end
+    html << "</div>"
+
+    html.html_safe
+  end
+
   # Opciones admisibles del hash option :col_class, :label_class, :input_class, :input_value, :placeholder, :label_text, :disabled, :readonly
   # Para el hash option no es necesario la llave cuando se usa el metodo
   def self.text_field_v(f, field, option)

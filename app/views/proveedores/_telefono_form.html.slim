@@ -1,7 +1,10 @@
-p.fields
-	= FormBuilder::text_field(f, :numero, nil, nil, 'required')
-	= f.label :content, "Answer"
-	= f.text_field :content
+div.fields
+	= FormBuilder::text_field_h(f, :numero, {field_class: 'col-md-8 with-btn', label_text: 'Telefono', input_class: 'required', onclick: 'remove_fields(this)'})
 	= f.hidden_field :_destroy
-	= link_to_function "remove", "remove_fields(this)"
+
+javascript:
+	function remove_fields(link) {
+        $(link).parent().parent().next("input[type=hidden]").val("true");
+        $(link).closest(".fields").hide();
+	}
 
