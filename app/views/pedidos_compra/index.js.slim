@@ -1,2 +1,3 @@
 | $("#list").html("#{escape_javascript(render partial: 'list', format: 'html')}");
 | $('#paginator').html("#{escape_javascript(paginate(@pedidos_compra, remote: true)) }");
+| $('#pedidos-compra-size').text('#{@pedidos_compra_size}');

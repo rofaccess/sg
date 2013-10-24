@@ -31,6 +31,7 @@ Sg::Application.routes.draw do
   resources :pedidos_compra do
     collection do
       get 'create_test_data'
+      get 'imprimir_listado'
     end
     member do
       get 'create_pedido_cotizacion'

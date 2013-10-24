@@ -16,6 +16,15 @@ var pedidosCompraUI = (function(){
 				$(this).parents('tr.cotizacion-detalle').remove();
 				e.preventDefault();
 			});
+
+			$('body').on('click', '.imprimir-pedidos-compra', function(e){
+				$.ajax({
+					url: $(this).attr('href'),
+					data: $('#pedido_compra_search.form-filtros').serialize(),
+					dataType: 'script'
+				});
+				e.preventDefault();
+			});
 		},
 
 		// Funcion para registrar evento que muestre/esconda el icono de remove cotizacion
