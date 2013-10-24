@@ -32,6 +32,15 @@ var pedidosCotizacionUI = (function(){
 			$('body').on('click', '.show-pedido', function(e){
 				$.get($(this).parents('tr').data('url'), {}, function(){}, 'script');
 			});
+
+			$('body').on('click', '.imprimir-pedidos-cotizacion', function(e){
+				$.ajax({
+					url: $(this).attr('href'),
+					data: $('#pedido_cotizacion_search.form-filtros').serialize(),
+					dataType: 'script'
+				});
+				e.preventDefault();
+			});
 		}
 	};
 }());

@@ -11,7 +11,33 @@ class PedidosCotizacionController < ApplicationController
   # GET /pedido_cotizacions
   # GET /pedido_cotizacions.json
   def index
-    @pedidos_cotizacion = PedidoCotizacion.filtrar(params[:pedido_compra_id]).page(params[:page])
+    #formatear las fechas
+    if defined? params[:q][:fecha_creacion_lt]
+      setupFechas
+    end
+
+    @search = PedidoCotizacion.search(params[:q])
+    @pedidos_cotizacion_size = @search.result.size
+    if @search.sorts.empty?
+      @pedidos_cotizacion = @search.result.order('estado').order('fecha_creacion').page(params[:page]).per(15)
+    else
+      @pedidos_cotizacion = @search.result.page(params[:page]).per(15)
+    end
+  end
+
+
+  def imprimir_listado
+    setupFechas
+    @search = PedidoCotizacion.search(params[:q])
+    @pedidos_cotizacion = @search.result.order('estado').order('fecha_creacion')
+
+  end
+
+  def setupFechas
+      params[:q][:fecha_creacion_lt] = params[:q][:fecha_creacion_lt] + ' 23:59:59' unless params[:q][:fecha_creacion_lt].blank?
+      params[:q][:fecha_cotizado_lt] = params[:q][:fecha_cotizado_lt] + ' 23:59:59' unless params[:q][:fecha_cotizado_lt].blank?
+
+
   end
 
   # GET /pedido_cotizacions/1
@@ -68,6 +94,7 @@ class PedidosCotizacionController < ApplicationController
     @pedido_cotizacion.fecha_cotizado = DateTime.now
     if @pedido_cotizacion.update(pedido_cotizacion_params)
       flash.notice = "Se ha actualizado los datos del pedido de cotizacion."
+      index
       render template: 'pedidos_cotizacion/show', formats: 'js'
     else
       flash.alert = "No se ha actualizado los datos del pedido de cotizacion."

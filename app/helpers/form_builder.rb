@@ -112,7 +112,7 @@ module FormBuilder
   # Para el hash option no es necesario la llave cuando se usa el metodo
   def self.collection_select_v(f, field, collection, value, text,option)
     html = ""
-    html << "<div class='#{option.key?(:col_class) ? option[:col_class] : ''}'>"
+    html << "<div class='form-group #{option.key?(:col_class) ? option[:col_class] : ''}'>"
       if f.nil?
         html << label_tag(field, option.key?(:label_text) ? option[:label_text] : nil,
                                  class: "control-label #{option.key?(:label_class) ? option[:label_class] : ''}")

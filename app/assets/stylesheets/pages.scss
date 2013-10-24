@@ -277,6 +277,9 @@ body{
   border: 1px solid #ccc;
   @include rounded(2px);
   padding: 10px;
+  .filter-actions{
+    margin-top: 25px;
+  }
 }
 .form-filtros{
   .form-group{
