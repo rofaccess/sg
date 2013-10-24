@@ -5,7 +5,7 @@ table.table
 	  th = sort_link(@search, :estado, "Estado", {}, method: :get, remote: true)
 	  th = sort_link(@search, :created_at, "Generado", {}, method: :get, remote: true)
 	  th = sort_link(@search, :updated_at, "Procesado", {}, method: :get, remote: true)
-	  th
+	  th.hidden-print
   tbody
 	- @pedidos_compra.each do |p|
 	  - if p.estado == "Pendiente"
@@ -14,7 +14,7 @@ table.table
 	      td.show-ped-comp = p.estado
 		  td.show-ped-comp = Formatter.format_datetime(p.created_at)
 		  td.show-ped-comp
-		  td
+		  td.hidden-print
 		  	= link_to '<i class="icon-ok icon-large"></i>'.html_safe, create_pedido_cotizacion_pedido_compra_path(p), remote: true, data: {confirm: t('messages.confirm_generar_pedido_cotizacion')}
 		  	= link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
 	  - else
@@ -23,4 +23,4 @@ table.table
 	      td.show-ped-comp = p.estado
 		  td.show-ped-comp = Formatter.format_datetime(p.created_at)
 		  td.show-ped-comp = Formatter.format_datetime(p.fecha)
-		  td
+		  td.hidden-print

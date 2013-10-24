@@ -1,17 +1,17 @@
 table.table
   thead
     tr
-      th Numero
-      th Proveedor
+      th = sort_link(@search, :numero, "Numero", {}, method: :get, remote: true)
+      th = sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
       - unless defined? short_view
-        th Estado
-      th Fecha creacion
+        th = sort_link(@search, :estado, "Estado", {}, method: :get, remote: true)
+        th = sort_link(@search, :fecha_creacion, "Fecha de Emisión", {}, method: :get, remote: true)
       - unless defined? short_view
-        th Fecha cotizado
-      th Usuario
-      th Pedido compra
+        th = sort_link(@search, :fecha_cotizado, "Fecha Cotizado", {}, method: :get, remote: true)
+      th = sort_link(@search, :user_id, "Usuario", {}, method: :get, remote: true)
+      th = sort_link(@search, :pedido_compra_id, "Pedido de Compra", {}, method: :get, remote: true)
       - unless defined? short_view
-        th
+        th.hidden-print
 
   tbody
     - @pedidos_cotizacion.each do |pedido_cotizacion|
@@ -26,6 +26,6 @@ table.table
         td.show-pedido = pedido_cotizacion.user.username
         td.show-pedido = pedido_cotizacion.pedido_compra.numero
         - unless defined? short_view
-          td
+          td.hidden-print
             = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_pedido_cotizacion_path(pedido_cotizacion), remote: true
             = link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_cotizacion, method: 'delete', data: {confirm: t('messages.confirm_delete')}

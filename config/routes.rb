@@ -11,6 +11,7 @@ Sg::Application.routes.draw do
     collection do
       post 'get_pedido_compra'
       post 'cotizar'
+      get 'imprimir_listado'
     end
   end
 
@@ -31,6 +32,7 @@ Sg::Application.routes.draw do
   resources :pedidos_compra do
     collection do
       get 'create_test_data'
+      get 'imprimir_listado'
     end
     member do
       get 'create_pedido_cotizacion'

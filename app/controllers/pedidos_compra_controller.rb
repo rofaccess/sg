@@ -17,6 +17,7 @@ class PedidosCompraController < ApplicationController
 
    	@search = PedidoCompra.search(params[:q])
     @pedido_compra = PedidoCompra.new
+    @pedidos_compra_size = @search.result.size
     if @search.sorts.empty?
       @pedidos_compra = @search.result.order('created_at').order('estado').page(params[:page]).per(8)
     else
@@ -58,6 +59,13 @@ class PedidosCompraController < ApplicationController
         @pedidos_cotizacion = PedidoCotizacion.where(pedido_compra_id: @pedido_compra.id)
       end
     end
+  end
+
+  def imprimir_listado
+    @search = PedidoCompra.search(params[:q])
+
+    @pedidos_compra = @search.result.order('created_at').order('estado')
+
   end
 
   def create_test_data
