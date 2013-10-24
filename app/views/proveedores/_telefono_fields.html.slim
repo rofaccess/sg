@@ -1,0 +1,16 @@
+.nested-fields
+  = FormBuilder::text_field_h(f, :numero, {field_class: 'col-md-8 with-btn', label_text: 'Telefono', input_class: 'required', btn_del_class: 'remove_fields existing', onclick: 'remove_fields(this)'})
+  = f.hidden_field :_destroy
+  /= link_to_remove_association "Borrar Telefono", f
+  // El helper anterior muestra un enlace para borrar el input de telefono y ademas crea el hidden_field para
+  // _destroy automaticamente, asi cuando se hace click en el enlace, se borra el input y _destroy se pone a 1
+  //, pero como en el text_field_h se puede indicar un boton, la indico como clase 'remove_fields existing' y
+  // al hacer click sobre el se actualiza el hidden field insertado a mano en true para borrar el valor cuando en
+  // editar se intenta eliminar el numero de telefono
+  // Para todo esto uso la gema cocoon
+javascript:
+    function remove_fields(link) {
+        $(link).parent().parent().next("input[type=hidden]").val("true");
+    }
+
+

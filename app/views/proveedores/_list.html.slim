@@ -6,6 +6,7 @@ table.table
 	  th = sort_link(@search, :direccion, "Direccion", {}, method: :get, remote: true)
 	  th = sort_link(@search, :ciudad_id, "Ciudad", {}, method: :get, remote: true)
 	  th = sort_link(@search, :email, "Email", {}, method: :get, remote: true)
+	  th.text-info Telefonos
 	  th.hidden-print
   tbody
 	- @proveedores.each do |p|
@@ -15,6 +16,13 @@ table.table
 		td = p.direccion
 		td = p.ciudad.nombre
 		td = p.email
+		td
+		  - if not p.telefonos.blank?
+		  	- p.telefonos.each do |t|
+		  	  = t.numero
+		  	  br
+		  - else
+		  	|Ningun Telefono
 		td.hidden-print
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_proveedor_path(p), remote: true
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, proveedor_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}

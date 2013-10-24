@@ -71,3 +71,6 @@ gem 'kaminari', '0.14.1'
 
 
 gem 'protokoll', git: 'git://github.com/celsodantas/protokoll.git', branch: 'rails4'
+
+# Dynamic nested forms using jQuery made easy; works with formtastic, simple_form or default forms
+gem "cocoon"
