@@ -2,4 +2,6 @@
   | $('#main-modal .modal-content').html('#{escape_javascript(render 'show_procesado', formats: 'html')}');
 - else
   | $('#main-modal .modal-content').html('#{escape_javascript(render 'show_pendiente', formats: 'html')}');
+- if @pedido_compra.estado == PedidosEstados::ORDENADO
+  | $('#main-modal .modal-content').html('#{escape_javascript(render 'show_ordenado', formats: 'html')}');
 | $('#main-modal').modal('show');

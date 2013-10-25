@@ -31,6 +31,11 @@ class PedidosCompraController < ApplicationController
     if @pedido_compra.estado == PedidosEstados::PROCESADO
       @pedidos_cotizacion = PedidoCotizacion.where(pedido_compra_id: @pedido_compra.id)
     end
+
+    if @pedido_compra.estado == PedidosEstados::ORDENADO
+      @pedidos_cotizacion = PedidoCotizacion.where(pedido_compra_id: @pedido_compra.id)
+      @ordenes_compra = OrdenCompra.where(pedido_compra_id: @pedido_compra.id)
+    end
   end
 
   def new

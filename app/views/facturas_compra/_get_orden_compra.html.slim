@@ -33,7 +33,10 @@
         - @orden_compra.orden_compra_detalles.each do |o|
           = f.fields_for :factura_compra_detalles do |d|
             - cont += 1
-            - cantidad = o.cantidad_requerida - o.cantidad_recibida
+            - if o.cantidad_recibida.blank?
+              - cantidad = o.cantidad_requerida
+            - else
+              - cantidad = o.cantidad_requerida - o.cantidad_recibida
             tr
               td = cont
               td = o.componente.nombre
