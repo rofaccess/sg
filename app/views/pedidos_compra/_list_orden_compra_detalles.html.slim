@@ -1,0 +1,41 @@
+- drop_cont = 0
+- @ordenes_compra.each do |p|
+  - drop_cont += 1
+  div class="tab-pane fade" id="dropdown2#{drop_cont}"
+    .table-scroll
+      table.table
+        thead
+          tr
+            th #
+            th Componente
+            th Categoria
+            th Cantidad Requerida
+            th Cantidad Recibida
+            th Costo Unitario
+        tbody
+          - cont = 1
+          - p.orden_compra_detalles.each do |det|
+            tr
+              td = cont
+              td = det.componente.nombre
+
+              - if det.componente.componente_categoria.blank?
+                td Sin Categoria
+              - else
+                td = det.componente.componente_categoria.nombre
+
+              td.text-center = det.cantidad_requerida
+              - if det.cantidad_recibida.blank?
+                td.text-center 0
+              - else
+                td.text-center = det.cantidad_recibida
+
+              td.text-center.integer = det.costo_unitario
+
+            - cont += 1
+          - cont = 1
+    /br
+    /i
+      /strong.pull-right.text-muted.integer  Total Cotizado: #{total_c}
+      /br
+

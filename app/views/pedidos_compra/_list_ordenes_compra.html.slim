@@ -1,0 +1,26 @@
+.table-scroll
+  table.table
+    thead
+      tr
+        th #
+        th Numero
+        th Proveedor
+        - unless defined? short_view
+          th Estado
+        th Fecha creacion
+        th Importe
+        th Usuario
+
+    tbody
+      - cont = 1
+      - if not @ordenes_compra.blank?
+        - @ordenes_compra.each do |orden_compra|
+          tr
+            td = cont
+            td = orden_compra.numero
+            td = orden_compra.proveedor.nombre
+            td = orden_compra.estado
+            td = Formatter.format_datetime(orden_compra.fecha)
+            td = orden_compra.costo_total
+            td = orden_compra.user.username
+            - cont += 1
