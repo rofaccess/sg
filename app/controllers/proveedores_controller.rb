@@ -21,7 +21,7 @@ class ProveedoresController < ApplicationController
 
   def new
   	@proveedor = Proveedor.new
-    2.times { @proveedor.telefonos.build }
+    @proveedor.telefonos.build
   end
 
   def create
@@ -29,13 +29,6 @@ class ProveedoresController < ApplicationController
     params[:proveedor][:componente_categoria_ids].each do |v,k|
       @proveedor.componente_categorias << ComponenteCategoria.find(v) unless v.empty?
     end
-
-    params[:proveedor][:telefonos_attributes].each do |key,value|
-      if value[:_destroy] == "false"
-        @proveedor.telefonos << Telefono.new(numero: value[:numero])
-      end
-    end
-
     if @proveedor.save
   		update_list
   	end
@@ -102,7 +95,7 @@ class ProveedoresController < ApplicationController
   end
 
   def proveedor_params
-      params.require(:proveedor).permit(:nombre, :ruc, :direccion, :email, :ciudad_id)
-        #telefonos_attributes: [:numero])
+      params.require(:proveedor).permit(:nombre, :ruc, :direccion, :email, :ciudad_id,
+        telefonos_attributes: [:id, :numero, :_destroy])
   end
 end

@@ -51,7 +51,7 @@ class PedidosCompraController < ApplicationController
                                                 user_id: current_user.id)
 
       @pedido_compra.pedido_compra_detalles.each do |d|
-        pedido_cotizacion.pedido_cotizacion_detalles.build(componente_id: d.componente_id, cantidad_requerida: d.cantidad) if proveedor.componente_categorias.exists?(d.componente.componente_categoria_id)
+        pedido_cotizacion.pedido_cotizacion_detalles.build(componente_id: d.componente_id, cantidad_requerida: d.cantidad, pedido_compra_detalle_id: d.id) if proveedor.componente_categorias.exists?(d.componente.componente_categoria_id)
       end
 
       if pedido_cotizacion.save
@@ -72,8 +72,13 @@ class PedidosCompraController < ApplicationController
     pedido_compra = PedidoCompra.new(estado: "Pendiente")
 
     Componente.all.each do |c|
-      # por cada componente hay 30% de posibilidad de guardar un detalle
-      if rand(100) < 30
+      # por cada componente hay 10% de posibilidad de guardar un detalle
+      if rand(100) < 10
+        pedido_compra.pedido_compra_detalles.build(componente_id: c.id,
+                                                   cantidad: rand(1..10))
+      end
+      # si no llega a crear ninguno entonces carga un detalle
+      if pedido_compra.pedido_compra_detalles.blank?
         pedido_compra.pedido_compra_detalles.build(componente_id: c.id,
                                                    cantidad: rand(1..10))
       end
