@@ -16,6 +16,10 @@ var ordenesCompraUI = (function(){
 			$('body').on('change', '#orden_compra_pedido_compra_id', function(e){
 				ordenesCompraUI.cargarPedidosDetalles($(this).val());
 			});
+
+			$('body').on('click', '.show-pedido', function(e){
+				$.get($(this).parents('tr').data('url'), {}, function(){}, 'script');
+			});
 		}
 	};
 }());

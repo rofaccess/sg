@@ -27,7 +27,7 @@
           td.text-center = p.cantidad_requerida
           td.text-center = p.cantidad_recibida
 
-          - if p.costo_unitario.costo.blank?
+          - if p.costo_unitario.blank?
             td Sin Costo
           - else
             td.text-right = p.costo_unitario
