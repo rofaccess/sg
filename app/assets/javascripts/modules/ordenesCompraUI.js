@@ -17,6 +17,10 @@ var ordenesCompraUI = (function(){
 				ordenesCompraUI.cargarPedidosDetalles($(this).val());
 			});
 
+			$('body').on('click', '.show-pedido', function(e){
+				$.get($(this).parents('tr').data('url'), {}, function(){}, 'script');
+			});
+
 			$('body').on('click', '.orden-automatica', function(e){
 				$.ajax({
 					url: 'ordenes_compras',
