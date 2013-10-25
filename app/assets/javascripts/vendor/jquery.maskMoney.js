@@ -27,7 +27,7 @@
 		mask : function(){
 			return this.trigger('mask');
 		},
-		
+
 		init : function(settings) {
 			settings = $.extend({
 				symbol: '',
@@ -37,7 +37,8 @@
 				precision: 2,
 				defaultZero: true,
 				allowZero: false,
-				allowNegative: false
+				allowNegative: false,
+				isDiv: false,
 			}, settings);
 
 			return this.each(function() {
@@ -205,10 +206,16 @@
 					startPos = startPos - (originalLen - newLen);
 					setCursorPosition(input, startPos);
 				}
-				
+
 				function mask(){
-					var value = input.val();
-					input.val(maskValue(value));
+					var value = null;
+					if(settings.isDiv){
+						value = input.text();
+						input.text(maskValue(value));
+					}else{
+						value = input.val();
+						input.val(maskValue(value));
+					}
 				}
 
 				function maskValue(v) {

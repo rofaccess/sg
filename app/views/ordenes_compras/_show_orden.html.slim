@@ -1,0 +1,23 @@
+.modal-body.pedido-detalles
+  .well
+    h3 Orden de compra N° #{@orden_compra.numero}
+    h4 Proveedor: #{@orden_compra.proveedor.nombre}
+    h5.extra Creado el: #{Formatter.format_date(@orden_compra.fecha)}
+  table.table
+    thead
+      tr
+        th Componente
+        th Cantidad
+        th.text-right Costo Unitario
+    tbody
+      - @orden_compra.orden_compra_detalles.each do |pedido_detalle|
+        tr
+          td = pedido_detalle.componente.nombre
+          td.cantidad-field = pedido_detalle.cantidad_requerida
+          td.monto-field = pedido_detalle.costo_unitario
+javascript:
+  // Enmascarar los campos numericos
+  //$('.monto-field, .cantidad-field').maskMoney({thousands: '.', defaultZero: false, precision: 0});
+  $('.monto-field, .cantidad-field').maskMoney({thousands: '.', defaultZero: false, precision: 0, isDiv: true});
+  $('.monto-field, .cantidad-field').maskMoney('mask');
+  // Quitar los '.' de los numeros antes de enviar el formulari

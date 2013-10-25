@@ -25,7 +25,7 @@ class OrdenesComprasController < ApplicationController
   # GET /ordenes_compras/1.json
   def show
     @orden_compra = OrdenCompra.find(params[:id])
-    @ordenes_compra_detalle = OrdenCompraDetalle.where('orden_compra_id=?', @orden_compra)
+    #@ordenes_compra_detalle = OrdenCompraDetalle.where('orden_compra_id=?', @orden_compra)
   end
 
   # GET /ordenes_compras/new
@@ -36,7 +36,11 @@ class OrdenesComprasController < ApplicationController
 
   def get_pedido_compra
     @pedido_compra = PedidoCompra.find(params[:id])
-    @mejores_precios = @pedido_compra.get_mejores_precios
+    #if @pedido_compra.pedidos_cotizados.size > 0
+      @mejores_precios = @pedido_compra.get_mejores_precios
+    #else
+
+    #end
     render partial: 'get_pedido_compra', formats: 'html'
   end
 
@@ -48,7 +52,7 @@ class OrdenesComprasController < ApplicationController
   # POST /ordenes_compras.json
   def create
     @search =OrdenCompra.search(params[:q])
-    @pedido_compra = PedidoCompra.find(params[:orden_compra][:pedido_compra_id])
+    @pedido_compra = PedidoCompra.find(params[:pedido_compra_id])
     mejores_precios = @pedido_compra.get_mejores_precios
     cotizaciones = @pedido_compra.pedido_cotizacions.where(estado: 'Cotizado')
     cotizaciones.each do |c|
@@ -78,22 +82,26 @@ class OrdenesComprasController < ApplicationController
     @pedido_compra = PedidoCompra.find(params[:orden_compra][:pedido_compra_id])
     pedidos = params[:pedido_cotizacion]
     pedidos.each do |c, d|
+      cotizacion = PedidoCotizacion.find(c)
       orden_compra = OrdenCompra.new( fecha: DateTime.now,
                                               costo_total: 0,
                                               estado: PedidosEstados::PENDIENTE,
                                               user_id: current_user.id,
-                                              proveedor_id: c.proveedor_id,
-                                              pedido_cotizacion_id: c.id,
-                                              pedido_compra_id: c.pedido_compra_id)
+                                              proveedor_id: cotizacion.proveedor_id,
+                                              pedido_cotizacion_id: cotizacion.id,
+                                              pedido_compra_id: cotizacion.pedido_compra_id)
 
       d[:detalles].each do |i, v|
-        orden_compra.orden_compra_detalles.build(componente_id: i.componente_id, costo_unitario: i.costo_unitario, cantidad_requerida: i.cantidad_cotizada)
+        detalle = PedidoCotizacionDetalle.find(v)
+        orden_compra.orden_compra_detalles.build(componente_id: detalle.componente_id, costo_unitario: detalle.costo_unitario, cantidad_requerida: detalle.cantidad_cotizada)
 
       end
       if orden_compra.orden_compra_detalles.size > 0
         orden_compra.save
       end
     end
+    @pedido_compra.update(estado: PedidosEstados::ORDENADO)
+
   end
 
 =begin

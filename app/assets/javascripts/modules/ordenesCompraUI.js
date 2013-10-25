@@ -16,6 +16,19 @@ var ordenesCompraUI = (function(){
 			$('body').on('change', '#orden_compra_pedido_compra_id', function(e){
 				ordenesCompraUI.cargarPedidosDetalles($(this).val());
 			});
+
+			$('body').on('click', '.orden-automatica', function(e){
+				$.ajax({
+					url: 'ordenes_compras',
+					type: 'post',
+					dataType: 'script',
+					data: {pedido_compra_id: $('#orden_compra_pedido_compra_id').val()},
+					success: function(response){
+						$('#main-modal .detalles-pedido-compra').html(response);
+					}
+				});
+				e.preventDefault();
+			});
 		}
 	};
 }());
