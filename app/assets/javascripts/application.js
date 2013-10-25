@@ -26,7 +26,7 @@
 //= require vendor/jquery.maskMoney
 //= require vendor/select2.min
 //= require languages/jquery.ui.datepicker-es
-//= require cocoon
+
 //
 
 $.rails.allowAction = function(link) {
