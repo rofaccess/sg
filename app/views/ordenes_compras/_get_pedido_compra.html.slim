@@ -43,10 +43,9 @@
       h3.panel-title.text-right TOTAL COTIZACION: #{total}
 
 button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
-= submit_tag 'Generar Orden Automatico', orden_compra_path(:pedido_compra_id => @pedido_compra.id),class: 'btn btn-primary pull-right',method: 'post', remote: true
+= submit_tag 'Generar Orden Automatico',class: 'btn btn-primary pull-right', method: 'post', remote: true
+= submit_tag 'Generar Orden Personalizado',class: 'btn btn-primary pull-right', method: 'post', remote: true
 
-button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
-= submit_tag 'Generar Orden personalizado', orden_compra_path(:pedido_compra_id => @pedido_compra.id),class: 'btn btn-primary pull-right',method: 'post', remote: true
 
 javascript:
   pedidosCompraUI.hoverEventCotizaciones();
