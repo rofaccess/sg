@@ -47,12 +47,41 @@ class OrdenesComprasController < ApplicationController
   # POST /ordenes_compras
   # POST /ordenes_compras.json
   def create
+    @search =OrdenCompra.search(params[:q])
+    @pedido_compra = PedidoCompra.find(params[:orden_compra][:pedido_compra_id])
+    mejores_precios = @pedido_compra.get_mejores_precios
+    cotizaciones = @pedido_compra.pedido_cotizacions.where(estado: 'Cotizado')
+    cotizaciones.each do |c|
+      orden_compra = OrdenCompra.new( fecha: DateTime.now,
+                                              costo_total: 0,
+                                              estado: PedidosEstados::PENDIENTE,
+                                              user_id: current_user.id,
+                                              proveedor_id: c.proveedor_id,
+                                              pedido_cotizacion_id: c.id,
+                                              pedido_compra_id: c.pedido_compra_id)
+
+      c.pedido_cotizacion_detalles.each do |d|
+        if mejores_precios.include?(d.id)
+          orden_compra.orden_compra_detalles.build(componente_id: d.componente_id, costo_unitario: d.costo_unitario, cantidad_requerida: d.cantidad_cotizada)
+        end
+      end
+
+      if orden_compra.orden_compra_detalles.size > 0
+        orden_compra.save
+      end
+    end
+    @pedido_compra.update(estado: PedidosEstados::ORDENADO)
+  end
+
+
+
+=begin
     pedidos = params[:pedido_cotizacion]
     pedidos.each do |id, val|
       puts "#{id} => #{val}"
       val[:detalles].each do |id_, val_|
         puts "#{id_} => #{val_}"
-
+   =end
       end
     end
 =begin
@@ -83,7 +112,7 @@ class OrdenesComprasController < ApplicationController
     @pedido_compra.update(estado: PedidosEstados::ORDENADO)
 
 =end
-  end
+
 
   def destroy
     if @orden_compra.destroy
