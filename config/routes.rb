@@ -3,6 +3,7 @@ Sg::Application.routes.draw do
   resources :ordenes_compras do
     collection do
       post 'get_pedido_compra'
+      post 'orden_personalizado'
 
     end
   end

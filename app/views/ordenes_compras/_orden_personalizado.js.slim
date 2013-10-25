@@ -1,0 +1,2 @@
+| $('#main-modal .modal-body').html('#{escape_javascript(render 'ordenes_generados', formats: 'html')}');
+| $.get('#{ordenes_compras_path}', {}, function(){}, 'script');
