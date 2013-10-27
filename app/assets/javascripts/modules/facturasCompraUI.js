@@ -28,6 +28,15 @@ var facturasCompraUI = (function(){
 			});
 		},
 
+		//Todos los montos en la UI de Factura de compra se formatean como moneda
+		formatearMontos: function(){
+			$('.monto').each(function() {
+    			$(this).number( true, 0,  ',', '.' )
+    			var monto = $(this).text();
+    			$(this).text($('.simbolo_moneda').text()+ ' ' + monto);
+  			});
+		},
+
 		// Se carga al hacer render a get_orden_compra
 		initInGetOrdenCompra: function(){
 		    //Esconde el plazo de pago
@@ -54,6 +63,7 @@ var facturasCompraUI = (function(){
 		      		event.preventDefault();
 		    	}
 		  	});
+
 		  	//Ejecuta el primer calculo al renderizar get_orden_compra
 		  	$(function(){
 		    	var subtotal = 0;
@@ -79,6 +89,8 @@ var facturasCompraUI = (function(){
 
 			    $('.total-f').val(total);
 			    $('.total-i').val(total_iva.toFixed(0));
+
+			    pedidosCompraUI.formatearMontos();
 		  	});
 
 		  	//Al cambiar cantidad, multiplica por precio y actualiza total
@@ -106,6 +118,8 @@ var facturasCompraUI = (function(){
 
 			    $('.total-f').val(total);
 			    $('.total-i').val(total_iva.toFixed(0));
+
+			    pedidosCompraUI.formatearMontos();
 		  	});
 
 		   	$(function() {

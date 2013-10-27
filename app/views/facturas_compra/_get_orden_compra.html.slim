@@ -45,10 +45,10 @@
                 td = cont
                 td = o.componente.nombre
                 td.cantidad = d.text_field(:cantidad, class: 'form-control text-right', value: cantidad)
-                td.precio.text-right  #{o.costo_unitario}
-                td.costo.text-right
+                td.precio.text-right.monto-u #{o.costo_unitario}
+                td.costo.text-right.monto
                 td.text-right  #{o.componente.iva.valor} %
-                td.iva.text-right
+                td.iva.text-right.monto
                 td.iva-p.hide = d.text_field(:iva, value:"#{o.componente.iva.valor}", disabled: true)
                 td.text-right = link_to '<i class="icon-remove icon-large"></i> '.html_safe, '#', class: 'remover-detalle-factura link-icon'
                 = d.hidden_field(:componente_id, value: o.componente_id)
@@ -58,13 +58,13 @@
   .row
     dl.col-md-3
       dt Subtotal:
-      dd.subtotal
+      dd.subtotal.monto
     dl.col-md-3
       dt Total Iva:
-      dd.total-iva
+      dd.total-iva.monto
     dl.col-md-3
       dt Total a Pagar:
-      dd.total
+      dd.total.monto
   /Muestra un mensaje
   div.alert.alert-info.alert-dismissable
     button.close [type="button" aria-hidden="true" data-dismiss="alert"] &times;
@@ -74,5 +74,6 @@
     button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
     = submit_tag 'Guardar Factura', class: 'btn btn-success pull-right'
 
+.hide.simbolo_moneda = @simbolo_moneda
 javascript:
   facturasCompraUI.initInGetOrdenCompra();
