@@ -8,8 +8,9 @@
   = search_form_for @search, method: :get, remote: true, class: 'form-filtros' do |f|
     = FormBuilder::text_field_v(f, :numero_cont, {col_class: 'col-md-2', label_text: 'Numero'})
     = FormBuilder::select(f, :estado_cont, ['Pendiente','Procesado', 'Ordenado'], {col_class: 'col-md-2', label_text: 'Estado'})
-    = FormBuilder::rango_fechas(f, :created_at_gt, :created_at_lt, {col_class: 'col-md-4', label_text: 'Fecha Generado'})
-    = FormBuilder::rango_fechas(f, :fecha_gt, :fecha_lt, {col_class: 'col-md-4', label_text: 'Fecha Procesado'})
+    = FormBuilder::rango_fechas(f, :fecha_generado_gt, :fecha_generado_lt, {col_class: 'col-md-4', label_text: 'Fecha Generado'})
+    = FormBuilder::rango_fechas(f, :fecha_procesado_gt, :fecha_procesado_lt, {col_class: 'col-md-4', label_text: 'Fecha Procesado'})
+    = FormBuilder::rango_fechas(f, :fecha_ordenado_gt, :fecha_ordenado_lt, {col_class: 'col-md-4', label_text: 'Fecha Ordenado'})
     = f.submit 'Filtrar', class: 'btn btn-default pull-right'
     = f.submit 'Limpiar Filtros', type: 'reset', class: 'btn btn-link pull-right'
 

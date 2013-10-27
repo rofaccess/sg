@@ -27,6 +27,7 @@
 //= require vendor/select2.min
 //= require languages/jquery.ui.datepicker-es
 //= require cocoon
+//= require vendor/jquery.number
 //
 
 $.rails.allowAction = function(link) {

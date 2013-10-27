@@ -83,7 +83,7 @@ class PedidosCotizacionController < ApplicationController
       pedido_cotizacion.save
     end
 
-    @pedido_compra.update(estado: PedidosEstados::PROCESADO)
+    @pedido_compra.update(estado: PedidosEstados::PROCESADO, fecha_procesado: DateTime.now)
 
   end
 
