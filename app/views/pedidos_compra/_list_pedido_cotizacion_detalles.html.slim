@@ -9,12 +9,11 @@
             th #
             th Componente
             th Categoria
-            th Cantidad Requerida
-            th Cantidad Cotizada
-            th Cos/Unit Cotizado
-            th Cos/Unit Anterior
+            th.text-right Cantidad Requerida
+            th.text-right Cantidad Cotizada
+            th.text-right Cos/Unit Cotizado
+            th.text-right Cos/Unit Anterior
         tbody
-          - total_c = 0
           - cont = 1
           - p.pedido_cotizacion_detalles.each do |det|
             tr
@@ -26,24 +25,19 @@
               - else
                 td = det.componente.componente_categoria.nombre
 
-              td.text-center = det.cantidad_requerida
-              td.text-center = det.cantidad_cotizada
+              td.text-right = det.cantidad_requerida
+              td.text-right= det.cantidad_cotizada
 
               - if det.costo_unitario.blank?
-                td Sin Cotizar
+                td
               - else
-                td.text-center.integer = det.costo_unitario
-                - if not det.cantidad_cotizada == nil
-                  - total_c += (det.costo_unitario * det.cantidad_cotizada)
+                td.text-right.monto = det.costo_unitario
 
               - if det.componente.costo.blank?
                 td Sin Costo
               - else
-                td.text-center.integer = det.componente.costo
+                td.text-right.monto = det.componente.costo
             - cont += 1
           - cont = 1
-    br
-    i
-      strong.pull-right.text-muted.integer  Total Cotizado: #{total_c}
-      br
+
 

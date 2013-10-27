@@ -4,37 +4,44 @@
       tr
         th #
         th Componente
-        th Cantidad
-        th Marca
+        th.text-right Cantidad
+        th.text-right Costo Unitario
+        th.text-right Subtotal
         th Categoria
-        th Costo Unitario
+        th Marca
     tbody
       - total = 0
       - cont = 1
+      - total_pedido = 0
       - @pedido_compra.pedido_compra_detalles.each do |p|
         tr
           td = cont
           td = p.componente.nombre
-          td.text-center = p.cantidad
+          td.text-right = p.cantidad
 
-          - if p.componente.marca.blank?
-            td Sin Marca
+          - if p.componente.costo.blank?
+            td Sin Costo
           - else
-            td = p.componente.marca.nombre
-
+            td.text-right.monto = p.componente.costo
+            - total += (p.componente.costo * p.cantidad)
+          td.text-right.monto = total
           - if p.componente.componente_categoria.blank?
             td Sin Categoria
           - else
             td = p.componente.componente_categoria.nombre
 
-          - if p.componente.costo.blank?
-            td Sin Costo
+          - if p.componente.marca.blank?
+            td Sin Marca
           - else
-            td.text-right = p.componente.costo
-            - total += (p.componente.costo * p.cantidad)
+            td = p.componente.marca.nombre
           - cont += 1
+          - total_pedido += total
 /Muestra el total del pedido
-br
-i
-  strong.pull-right.text-muted Total Estimado: #{total}
-br
+div.alert.alert-info.alert-dismissable
+  button.close [type="button" aria-hidden="true" data-dismiss="alert"] &times;
+  |En base a los costos registrados por cada componente y la cantidad requerida se estima un costo total de #{' '}
+  strong.monto #{total_pedido}
+
+.hide.simbolo_moneda = @simbolo_moneda
+javascript:
+  pedidosCompraUI.formatearMontos();

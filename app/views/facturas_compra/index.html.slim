@@ -1,10 +1,7 @@
 .row.row-page-title
   h2 Facturas Recibidas
   = link_to 'Cargar Factura', new_factura_compra_path, class: 'btn btn-primary', remote: true
-#filtros
-  .row.form-horizontal
-    .col-md-5.pull-right
-      = FormBuilder::collection_select(nil, :orden_compra_id, OrdenCompra.procesados, :id, :numero, 'Filtrar por orden de compra', 'hide', 'col-md-10 pull-right')
+
 #list
   = render 'list'
 #paginator

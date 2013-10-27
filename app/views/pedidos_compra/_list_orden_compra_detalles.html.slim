@@ -9,9 +9,9 @@
             th #
             th Componente
             th Categoria
-            th Cantidad Requerida
-            th Cantidad Recibida
-            th Costo Unitario
+            th.text-right Cantidad Requerida
+            th.text-right Cantidad Recibida
+            th.text-right Costo Unitario
         tbody
           - cont = 1
           - p.orden_compra_detalles.each do |det|
@@ -24,18 +24,13 @@
               - else
                 td = det.componente.componente_categoria.nombre
 
-              td.text-center = det.cantidad_requerida
+              td.text-right = det.cantidad_requerida
               - if det.cantidad_recibida.blank?
-                td.text-center 0
+                td.text-right 0
               - else
-                td.text-center = det.cantidad_recibida
+                td.text-right = det.cantidad_recibida
 
-              td.text-center.integer = det.costo_unitario
+              td.text-right.monto = det.costo_unitario
 
             - cont += 1
           - cont = 1
-    /br
-    /i
-      /strong.pull-right.text-muted.integer  Total Cotizado: #{total_c}
-      /br
-

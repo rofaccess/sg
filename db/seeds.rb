@@ -10,7 +10,7 @@
 User.create(username: 'admin', password: 'admin', password_confirmation: 'admin')
 
 # Generar registro de configuracion
-Configuracion.create(nombre: 'SG')
+Configuracion.create(nombre: 'SG', simbolo_moneda: '')
 
 # Crear 10 paises
 for i in 1..10
@@ -58,7 +58,7 @@ end
 ComponenteCategoria.all.each do |c|
 	for i in 1..5
 		componente = Faker::Commerce.product_name
-		costo = rand(1000)
+		costo = rand(2000..10000)
 		Componente.create(nombre: componente, costo: costo, iva_id: rand(1..2), componente_categoria_id: c.id) if Componente.where(nombre: componente).empty?
 	end
 end

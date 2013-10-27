@@ -3,24 +3,37 @@ table.table
 	tr
 	  th = sort_link(@search, :numero, "Numero", {}, method: :get, remote: true)
 	  th = sort_link(@search, :estado, "Estado", {}, method: :get, remote: true)
-	  th = sort_link(@search, :created_at, "Generado", {}, method: :get, remote: true)
-	  th = sort_link(@search, :updated_at, "Procesado", {}, method: :get, remote: true)
+	  th = sort_link(@search, :fecha_generado, "Generado", {}, method: :get, remote: true)
+	  th = sort_link(@search, :fecha_procesado, "Procesado", {}, method: :get, remote: true)
+	  th = sort_link(@search, :fecha_ordenado, "Ordenado", {}, method: :get, remote: true)
 	  th.hidden-print
   tbody
 	- @pedidos_compra.each do |p|
 	  - if p.estado == "Pendiente"
 		tr.success [data-url="#{pedido_compra_path(p)}"]
 		  td.show-ped-comp = p.numero
-	      td.show-ped-comp = p.estado
-		  td.show-ped-comp = Formatter.format_datetime(p.created_at)
+		  td.show-ped-comp = p.estado
+		  td.show-ped-comp = Formatter.format_datetime(p.fecha_generado)
+		  td.show-ped-comp
 		  td.show-ped-comp
 		  td.hidden-print
-		  	= link_to '<i class="icon-ok icon-large"></i>'.html_safe, create_pedido_cotizacion_pedido_compra_path(p), remote: true, data: {confirm: t('messages.confirm_generar_pedido_cotizacion')}
-		  	= link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
-	  - else
-	  	tr [data-url="#{pedido_compra_path(p)}"]
+			/= link_to '<i class="icon-ok icon-large"></i>'.html_safe, create_pedido_cotizacion_pedido_compra_path(p), remote: true, data: {confirm: t('messages.confirm_generar_pedido_cotizacion')}
+			= link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete_pedido_compra')}
+
+	  - if p.estado == "Procesado"
+		tr.active [data-url="#{pedido_compra_path(p)}"]
 		  td.show-ped-comp = p.numero
-	      td.show-ped-comp = p.estado
-		  td.show-ped-comp = Formatter.format_datetime(p.created_at)
-		  td.show-ped-comp = Formatter.format_datetime(p.fecha)
+		  td.show-ped-comp = p.estado
+		  td.show-ped-comp = Formatter.format_datetime(p.fecha_generado)
+		  td.show-ped-comp = Formatter.format_datetime(p.fecha_procesado)
+		  td.show-ped-comp
+		  td.hidden-print
+
+	  - if p.estado == "Ordenado"
+		tr [data-url="#{pedido_compra_path(p)}"]
+		  td.show-ped-comp = p.numero
+		  td.show-ped-comp = p.estado
+		  td.show-ped-comp = Formatter.format_datetime(p.fecha_generado)
+		  td.show-ped-comp = Formatter.format_datetime(p.fecha_procesado)
+		  td.show-ped-comp = Formatter.format_datetime(p.fecha_ordenado)
 		  td.hidden-print

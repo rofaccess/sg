@@ -10,10 +10,11 @@ table.table
 	  th Numero
 	  th Condicion de Pago
 	  th Proveedor
-	  th Usuario
 	  th Fecha de Compra
+	  th Total Factura
 	  th Estado
 	  th Orden de Compra
+	  th Usuario
 	  th
   tbody
 	- @facturas_compra.each do |p|
@@ -21,9 +22,10 @@ table.table
 		td.show-factura = p.numero
 		td.show-factura = p.condicion_pago.nombre
 		td.show-factura = p.proveedor.nombre
-		td.show-factura = p.user.username
-		td.show-factura = p.fecha_compra
+		td.show-factura = Formatter.format_datetime(p.fecha_compra)
+		td.show-factura = p.total_factura
 		td.show-factura = p.estado
 		td.show-factura = p.orden_compra.numero
+		td.show-factura = p.user.username
 		td
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, factura_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}

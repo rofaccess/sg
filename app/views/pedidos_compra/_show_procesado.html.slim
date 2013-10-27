@@ -5,15 +5,15 @@
     strong Pedido de Compra  #{@pedido_compra.numero}
     i
       .row
-        dl.col-md-3
-          dt Generado
-          dd #{Formatter.format_datetime(@pedido_compra.created_at)}
-        dl.col-md-3
+        dl.col-md-2
           dt Estado
           dd = @pedido_compra.estado
         dl.col-md-3
+          dt Generado
+          dd #{Formatter.format_datetime(@pedido_compra.fecha_generado)}
+        dl.col-md-3
           dt Procesado
-          dd #{Formatter.format_datetime(@pedido_compra.updated_at)}
+          dd #{Formatter.format_datetime(@pedido_compra.fecha_procesado)}
 
   /Detalles del Pedido de compra
   /Tabs

@@ -66,7 +66,7 @@ class OrdenesComprasController < ApplicationController
 
       c.pedido_cotizacion_detalles.each do |d|
         if mejores_precios.include?(d.id)
-          orden_compra.orden_compra_detalles.build(componente_id: d.componente_id, costo_unitario: d.costo_unitario, cantidad_requerida: d.cantidad_cotizada)
+          orden_compra.orden_compra_detalles.build(componente_id: d.componente_id, costo_unitario: d.costo_unitario, cantidad_requerida: d.cantidad_cotizada, cantidad_recibida: 0)
         end
       end
 
@@ -74,7 +74,7 @@ class OrdenesComprasController < ApplicationController
         orden_compra.save
       end
     end
-    @pedido_compra.update(estado: PedidosEstados::ORDENADO)
+    @pedido_compra.update(estado: PedidosEstados::ORDENADO, fecha_ordenado: DateTime.now)
   end
 
   def orden_personalizado

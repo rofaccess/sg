@@ -10,23 +10,25 @@ class PedidosCompraController < ApplicationController
 
   def index
     #formatear las fechas
-    if defined? params[:q][:created_at_lt]
-      params[:q][:created_at_lt] = params[:q][:created_at_lt] + ' 23:59:59' unless params[:q][:created_at_lt].blank?
-      params[:q][:fecha_lt] = params[:q][:fecha_lt] + ' 23:59:59' unless params[:q][:fecha_lt].blank?
+    if defined? params[:q][:fecha_generado_lt]
+      params[:q][:fecha_generado_lt] = params[:q][:fecha_generado_lt] + ' 23:59:59' unless params[:q][:fecha_generado_lt].blank?
+      params[:q][:fecha_procesado_lt] = params[:q][:fecha_procesado_lt] + ' 23:59:59' unless params[:q][:fecha_procesado_lt].blank?
+      params[:q][:fecha_ordenado_lt] = params[:q][:fecha_ordenado_lt] + ' 23:59:59' unless params[:q][:fecha_ordenado_lt].blank?
     end
 
    	@search = PedidoCompra.search(params[:q])
     @pedido_compra = PedidoCompra.new
     @pedidos_compra_size = @search.result.size
     if @search.sorts.empty?
-      @pedidos_compra = @search.result.order('created_at').order('estado').page(params[:page]).per(8)
+      @pedidos_compra = @search.result.order('fecha_generado desc').page(params[:page]).per(15)
     else
-      @pedidos_compra = @search.result.page(params[:page]).per(8)
+      @pedidos_compra = @search.result.page(params[:page]).per(15)
     end
   end
 
   def show
     @pedido_compra = PedidoCompra.find(params[:id])
+    @simbolo_moneda = Configuracion.find(1).simbolo_moneda
 
     if @pedido_compra.estado == PedidosEstados::PROCESADO
       @pedidos_cotizacion = PedidoCotizacion.where(pedido_compra_id: @pedido_compra.id)
@@ -60,7 +62,7 @@ class PedidosCompraController < ApplicationController
       end
 
       if pedido_cotizacion.save
-        @pedido_compra.update(estado: PedidosEstados::PROCESADO)
+        @pedido_compra.update(estado: PedidosEstados::PROCESADO, fecha_procesado: DateTime.now)
         @pedidos_cotizacion = PedidoCotizacion.where(pedido_compra_id: @pedido_compra.id)
       end
     end
@@ -69,12 +71,12 @@ class PedidosCompraController < ApplicationController
   def imprimir_listado
     @search = PedidoCompra.search(params[:q])
 
-    @pedidos_compra = @search.result.order('created_at').order('estado')
+    @pedidos_compra = @search.result.order('fecha_generado').order('estado')
 
   end
 
   def create_test_data
-    pedido_compra = PedidoCompra.new(estado: "Pendiente")
+    pedido_compra = PedidoCompra.new(estado: "Pendiente", fecha_generado: DateTime.now)
 
     Componente.all.each do |c|
       # por cada componente hay 10% de posibilidad de guardar un detalle
@@ -112,6 +114,6 @@ class PedidosCompraController < ApplicationController
     @pedido_compra = PedidoCompra.find(params[:id])
   end
   def pedido_compra_params
-      params.require(:pedido_compra).permit(:numero, :created_at, :estado, :user_id)
+      params.require(:pedido_compra).permit(:numero, :fecha_generado, :fecha_procesado, :fecha_ordenado, :estado, :user_id)
   end
 end
