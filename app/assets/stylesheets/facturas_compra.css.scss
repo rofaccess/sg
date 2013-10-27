@@ -23,3 +23,17 @@
 
 	}
 }
+
+//Scroll para tablas
+.table-scroll-factura{
+  overflow:auto;
+  height:200px;
+}
+tbody{
+  .scrollContent {
+    display: block;
+    height: 262px;
+    overflow: auto;
+    width: 100%;
+  }
+}

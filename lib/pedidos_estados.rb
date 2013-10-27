@@ -5,4 +5,6 @@ module PedidosEstados
 	PROCESADO = 'Procesado'
 	SEMIPROCESADO = 'Semiprocesado'
 	ORDENADO = 'Ordenado'
+	SEMIFACTURADO = 'Semifacturado'
+	FACTURADO = 'Facturado'
 end

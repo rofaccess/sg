@@ -17,20 +17,14 @@ var facturasCompraUI = (function(){
 				facturasCompraUI.cargarOrdenesDetalles($(this).val());
 			});
 
-			$('body').on('change', '#orden_compra_id', function(e){
-				$.ajax({
-					url: 'facturas_compra',
-					type: 'get',
-					dataType: 'script',
-					data: {orden_compra_id: $(this).val()},
-					success: function(response) {
-						// body...
-					}
-				});
-			});
-
 			$('body').on('click', '.show-factura', function(e){
 				$.get($(this).parents('tr').data('url'), {}, function(){}, 'script');
+			});
+
+			// Evento para remover un detalle de una factura en la pantalla de generar factura de compra
+			$('body').on('click', '.remover-detalle-factura', function(e){
+				$(this).parents('tr.factura-detalle').remove();
+				e.preventDefault();
 			});
 		},
 
@@ -119,6 +113,18 @@ var facturasCompraUI = (function(){
 		  	});
 
 		  	$('form').validate();
+
+		  	//Evita enviar un componente cuya cantidad sea cero
+		  	$('input[type="submit"]').click(function(e){
+		  		$('table tbody tr').each(function() {
+		  			var cantidad = parseInt ($('td.cantidad input', this).val());
+		  			if (cantidad == 0){
+		  				$(this).remove();
+		  			}
+		  		});
+    			$(this).parents('form').submit();
+    			e.preventDefault();
+  			});
 		}
 	};
 }());
