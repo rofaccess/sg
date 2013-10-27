@@ -39,7 +39,7 @@
 
 javascript:
   // Enmascarar los campos numericos
-  $('.monto-field, .cantidad-field').maskMoney({thousands: '.', defaultZero: false, precision: 0});
+  $('.monto-field, .cantidad-field').maskMoney();
   $('.monto-field, .cantidad-field').maskMoney('mask');
   // Quitar los '.' de los numeros antes de enviar el formulario
   $('input[type="submit"]').click(function(e){

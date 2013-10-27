@@ -28,18 +28,8 @@
 			return this.trigger('mask');
 		},
 
-		init : function(settings) {
-			settings = $.extend({
-				symbol: '',
-				symbolStay: false,
-				thousands: ',',
-				decimal: '.',
-				precision: 2,
-				defaultZero: true,
-				allowZero: false,
-				allowNegative: false,
-				isDiv: false,
-			}, settings);
+		init : function(options) {
+			var settings = $.extend({}, $.fn.maskMoney.defaults, options);
 
 			return this.each(function() {
 				var input = $(this);
@@ -375,5 +365,17 @@
 		} else {
 			$.error( 'Method ' +  method + ' does not exist on jQuery.maskMoney' );
 		}
+	};
+
+	$.fn.maskMoney.defaults = {
+				symbol: '',
+				symbolStay: false,
+				thousands: '.',
+				decimal: '.',
+				precision: 0,
+				defaultZero: false,
+				allowZero: false,
+				allowNegative: false,
+				isDiv: false,
 	};
 })(window.jQuery || window.Zepto);

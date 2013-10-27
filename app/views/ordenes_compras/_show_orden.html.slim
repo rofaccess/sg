@@ -13,11 +13,9 @@
       - @orden_compra.orden_compra_detalles.each do |pedido_detalle|
         tr
           td = pedido_detalle.componente.nombre
-          td.cantidad-field = pedido_detalle.cantidad_requerida
-          td.monto-field = pedido_detalle.costo_unitario
+          td.cantidad-text = pedido_detalle.cantidad_requerida
+          td.monto-text = pedido_detalle.costo_unitario
 javascript:
   // Enmascarar los campos numericos
-  //$('.monto-field, .cantidad-field').maskMoney({thousands: '.', defaultZero: false, precision: 0});
-  $('.monto-field, .cantidad-field').maskMoney({thousands: '.', defaultZero: false, precision: 0, isDiv: true});
-  $('.monto-field, .cantidad-field').maskMoney('mask');
-  // Quitar los '.' de los numeros antes de enviar el formulari
+  $('.monto-text, .cantidad-text').maskMoney({isDiv: true});
+  $('.monto-text, .cantidad-text').maskMoney('mask');
