@@ -24,5 +24,8 @@ $.validator.addClassRules({
 	},
 	longString: {
 		maxlength: 250
+	},
+	numberDocCom: {
+		maxlength: 15
 	}
 });

@@ -81,6 +81,13 @@ class FacturasCompraController < ApplicationController
     end
   end
 
+  def check_numero
+    @factura_compra = FacturaCompra.find_by_numero(params[:factura_compra][:numero])
+    respond_to do |format|
+      format.json { render :json => !@factura_compra }
+    end
+  end
+
   def set_factura_compra
     @factura_compra = FacturaCompra.find(params[:id])
   end

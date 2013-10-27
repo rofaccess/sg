@@ -69,6 +69,8 @@ var facturasCompraUI = (function(){
 		    	var subtotal = 0;
 		    	var total = 0;
 		    	var total_iva = 0;
+		    	var iva5 = 0;
+		    	var iva10 = 0;
 		    	$('table tbody tr').each(function() {
 		      		var precio = parseInt($('td.precio', this).text().replace(/^[^\d.]*/, ''));
 		      		var cantidad = parseInt($('td.cantidad input', this).val());
@@ -82,10 +84,17 @@ var facturasCompraUI = (function(){
 			      	subtotal += (costo - iva);
 			      	total_iva += iva;
 			      	total += costo;
+			      	if (($('td.iva-p input', this).val()) == '10'){
+			      		iva10 += iva;
+			      	}else{
+			      		iva5 += iva;
+			      	}
 		    	});
-			    $('dd.subtotal').text(subtotal.toFixed(0));
-			    $('dd.total-iva').text(total_iva.toFixed(0));
-			    $('dd.total').text(total);
+			    $('div.subtotal').text(subtotal.toFixed(0));
+			    $('div.total-iva').text(total_iva.toFixed(0));
+			    $('div.total').text(total);
+			    $('div.iva5').text(iva5.toFixed(0));
+			    $('div.iva10').text(iva10.toFixed(0));
 
 			    $('.total-f').val(total);
 			    $('.total-i').val(total_iva.toFixed(0));
@@ -98,6 +107,8 @@ var facturasCompraUI = (function(){
 		    	var subtotal = 0;
 		    	var total = 0;
 		    	var total_iva = 0;
+		    	var iva5 = 0;
+		    	var iva10 = 0;
 		    	$('table tbody tr').each(function() {
 		      		var precio = parseInt($('td.precio', this).text().replace(/^[^\d.]*/, ''));
 		      		var cantidad = parseInt ($('td.cantidad input', this).val());
@@ -111,10 +122,17 @@ var facturasCompraUI = (function(){
 		      		subtotal += (costo - iva);
 		      		total_iva += iva;
 		      		total += costo;
+		      		if  (($('td.iva-p input', this).val()) == '10'){
+			      		iva10 += iva;
+			      	}else{
+			      		iva5 += iva;
+			      	}
 		    	});
-			    $('dd.subtotal').text(subtotal.toFixed(0));
-			    $('dd.total-iva').text(total_iva.toFixed(0));
-			    $('dd.total').text(total);
+			    $('div.subtotal').text(subtotal.toFixed(0));
+			    $('div.total-iva').text(total_iva.toFixed(0));
+			    $('div.total').text(total);
+			    $('div.iva5').text(iva5.toFixed(0));
+			    $('div.iva10').text(iva10.toFixed(0));
 
 			    $('.total-f').val(total);
 			    $('.total-i').val(total_iva.toFixed(0));
@@ -126,7 +144,12 @@ var facturasCompraUI = (function(){
 		    	$('.datepicker').datepicker();
 		  	});
 
-		  	$('form').validate();
+		   	//Valida el formulario antes de enviarlo
+		  	$('form').validate({
+				rules: {
+		           "factura_compra[numero]": {required: true, numberDocCom: true, remote: "/facturas_compra/check_numero" }
+				}
+			});
 
 		  	//Evita enviar un componente cuya cantidad sea cero
 		  	$('input[type="submit"]').click(function(e){
