@@ -16,6 +16,7 @@
  *= require localidades
  *= require pedidos_cotizacion
  *= require facturas_compra
+ *= require pedidos_compra
  *= require jquery-ui
  *= require print
  */
