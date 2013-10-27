@@ -44,7 +44,7 @@ module FormBuilder
   # Para el hash option no es necesario la llave cuando se usa el metodo
   def self.text_field_v(f, field, option)
     html = ""
-      html << "<div class='form-group #{option.key?(:col_class) ? option[:col_class] : ''}' style = 'margin-right: 0.2in'>"
+      html << "<div class='form-group #{option.key?(:col_class) ? option[:col_class] : ''}'>"
         html << f.label(field,"#{option.key?(:label_text) ? option[:label_text] : ''}", class: "control-label #{option.key?(:label_class) ? option[:label_class] : ''}")
 
         html << f.text_field(field, class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}",value: "#{option.key?(:input_value) ? option[:input_value] : ''}", placeholder: "#{option.key?(:placeholder) ? option[:placeholder] : ''}", disabled: option.key?(:disabled) ? option[:disabled] : false, readonly: option.key?(:readonly) ? option[:readonly] : false)
@@ -112,7 +112,7 @@ module FormBuilder
   # Para el hash option no es necesario la llave cuando se usa el metodo
   def self.collection_select_v(f, field, collection, value, text,option)
     html = ""
-    html << "<div class='form-group #{option.key?(:col_class) ? option[:col_class] : ''}' style = 'margin-right: 0.2in'>"
+    html << "<div class='form-group #{option.key?(:col_class) ? option[:col_class] : ''}'>"
       if f.nil?
         html << label_tag(field, option.key?(:label_text) ? option[:label_text] : nil,
                                  class: "control-label #{option.key?(:label_class) ? option[:label_class] : ''}")
