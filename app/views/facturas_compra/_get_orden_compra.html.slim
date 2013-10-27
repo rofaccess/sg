@@ -45,7 +45,8 @@
                 td = cont
                 td = o.componente.nombre
                 td.cantidad = d.text_field(:cantidad, class: 'form-control text-right', value: cantidad)
-                td.precio.text-right.monto-u #{o.costo_unitario}
+                td.text-right.monto #{o.costo_unitario}
+                td.precio.hide #{o.costo_unitario}
                 td.costo.text-right.monto
                 td.text-right  #{o.componente.iva.valor} %
                 td.iva.text-right.monto

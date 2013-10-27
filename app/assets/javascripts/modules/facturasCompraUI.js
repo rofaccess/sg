@@ -70,27 +70,27 @@ var facturasCompraUI = (function(){
 		    	var total = 0;
 		    	var total_iva = 0;
 		    	$('table tbody tr').each(function() {
-		      		var precio = parseFloat($('td.precio', this).text().replace(/^[^\d.]*/, ''));
+		      		var precio = parseInt($('td.precio', this).text().replace(/^[^\d.]*/, ''));
 		      		var cantidad = parseInt($('td.cantidad input', this).val());
 		      		var costo = cantidad * precio;
-		      		$('td.costo', this).text(' ' + costo);
+		      		$('td.costo', this).text(costo);
 			      	var iva_p = ($('td.iva-p input', this).val()) / 100;
 			      	var iva = iva_p * costo;
-			      	$('td.iva', this).text(' ' + iva.toFixed(0));
+			      	$('td.iva', this).text(iva.toFixed(0));
 			      	costo = isNaN(costo) ? 0 : costo;
 			      	iva = isNaN(iva) ? 0 : iva;
 			      	subtotal += (costo - iva);
 			      	total_iva += iva;
 			      	total += costo;
 		    	});
-			    $('dd.subtotal').text(' ' + subtotal.toFixed(0));
-			    $('dd.total-iva').text(' ' + total_iva.toFixed(0));
-			    $('dd.total').text(' ' + total);
+			    $('dd.subtotal').text(subtotal.toFixed(0));
+			    $('dd.total-iva').text(total_iva.toFixed(0));
+			    $('dd.total').text(total);
 
 			    $('.total-f').val(total);
 			    $('.total-i').val(total_iva.toFixed(0));
 
-			    pedidosCompraUI.formatearMontos();
+			    facturasCompraUI.formatearMontos();
 		  	});
 
 		  	//Al cambiar cantidad, multiplica por precio y actualiza total
@@ -99,27 +99,27 @@ var facturasCompraUI = (function(){
 		    	var total = 0;
 		    	var total_iva = 0;
 		    	$('table tbody tr').each(function() {
-		      		var precio = parseFloat($('td.precio', this).text().replace(/^[^\d.]*/, ''));
+		      		var precio = parseInt($('td.precio', this).text().replace(/^[^\d.]*/, ''));
 		      		var cantidad = parseInt ($('td.cantidad input', this).val());
 		      		var costo = cantidad * precio;
-		      		$('td.costo', this).text(' ' + costo);
+		      		$('td.costo', this).text(costo);
 		      		var iva_p = ($('td.iva-p input', this).val()) / 100;
 		      		var iva = iva_p * costo;
-		      		$('td.iva', this).text(' ' + iva.toFixed(0));
+		      		$('td.iva', this).text(iva.toFixed(0));
 		      		costo = isNaN(costo) ? 0 : costo;
 		      		iva = isNaN(iva) ? 0 : iva;
 		      		subtotal += (costo - iva);
 		      		total_iva += iva;
 		      		total += costo;
 		    	});
-			    $('dd.subtotal').text(' ' + subtotal.toFixed(0));
-			    $('dd.total-iva').text(' ' + total_iva.toFixed(0));
-			    $('dd.total').text(' ' + total);
+			    $('dd.subtotal').text(subtotal.toFixed(0));
+			    $('dd.total-iva').text(total_iva.toFixed(0));
+			    $('dd.total').text(total);
 
 			    $('.total-f').val(total);
 			    $('.total-i').val(total_iva.toFixed(0));
 
-			    pedidosCompraUI.formatearMontos();
+			    facturasCompraUI.formatearMontos();
 		  	});
 
 		   	$(function() {
