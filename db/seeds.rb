@@ -40,31 +40,40 @@ for i in 1..5
 	Proveedor.create(	nombre: Faker::Company.name,
 						ruc: Faker::Number.number(9),
 						direccion: Faker::Address.street_address,
-						#telefono: Faker::PhoneNumber.phone_number,
 						ciudad_id: ciudad.id,
 						email: Faker::Internet.email)
+end
+
+# Agregar 1 telefono a cada proveedor
+Proveedor.all.each do |p|
+	Telefono.create(numero: Faker::PhoneNumber.phone_number, persona_id: p.id)
 end
 
 # Crear ivas
 Iva.create([{ valor: '10'}, { valor: '5'}])
 
 # Crear 5 categorias de componentes
-for i in 1..5
-	categoria = Faker::Commerce.department
-	ComponenteCategoria.create(nombre: categoria) if ComponenteCategoria.where(nombre: categoria).empty?
+categorias = ['Placa Madre','Disco Duro','Procesador','Memoria','Monitor','Teclados y Mouses']
+categorias.each do |c|
+	ComponenteCategoria.create(nombre: c) if ComponenteCategoria.where(nombre: c).empty?
 end
 
-# Crear 10 componentes para cada categoria
-ComponenteCategoria.all.each do |c|
-	for i in 1..5
-		componente = Faker::Commerce.product_name
+# Crear 5 marchas de componentes
+marcas = ['Asus','Intel','Amd','Lenovo','Aoc','Toshiba']
+marcas.each do |m|
+	Marca.create(nombre: m) if Marca.where(nombre: m).empty?
+end
+
+# Crear 5 componentes para cada categoria
+componentes = ['ATX-2324','MSProLInk','PCChips','LM 256 Mhz','SL-5343L','Tok-14']
+i = 1
+componentes.each do |c|
 		costo = rand(2000..10000)
-		Componente.create(nombre: componente, costo: costo, iva_id: rand(1..2), componente_categoria_id: c.id) if Componente.where(nombre: componente).empty?
-	end
+		Componente.create(nombre: c, costo: costo, iva_id: rand(1..2), componente_categoria_id: i, marca_id: i)
+		i += 1
 end
 
 # Agregar todas las categorias a 5 proveedores
-
 Proveedor.limit(5).each do |p|
 	ComponenteCategoria.all.each do |c|
 		p.componente_categorias << c

@@ -22,7 +22,9 @@
       thead
         tr
           th #
-          th.col-md-6 Componente
+          th Componente
+          th Marca
+          th Categoria
           th.col-md-1 Cantidad
           th.text-right Precio
           th.text-right Total
@@ -44,6 +46,9 @@
               tr.factura-detalle
                 td = cont
                 td = o.componente.nombre
+                - if not o.componente.marca.blank?
+                  td = o.componente.marca.nombre
+                td = o.componente.componente_categoria.nombre
                 td.cantidad = d.text_field(:cantidad, class: 'form-control text-right', value: cantidad)
                 td.text-right.monto #{o.costo_unitario}
                 td.precio.hide #{o.costo_unitario}
