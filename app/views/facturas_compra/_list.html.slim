@@ -1,20 +1,14 @@
 table.table
   thead
 	tr
-	  /th = sort_link(@search, :numero, "Numero", {}, method: :get, remote: true)
-	  /th = sort_link(@search, :condicion_pago_id, "Condicion de Pago", {}, method: :get, remote: true)
-	  /th = sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
-	  /th = sort_link(@search, :user_id, "Usuario", {}, method: :get, remote: true)
-	  /th = sort_link(@search, :fecha_compra, "Fecha de Emision", {}, method: :get, remote: true)
-	  /th = sort_link(@search, :estado, "Estado", {}, method: :get, remote: true)
-	  th Numero
-	  th Condicion de Pago
-	  th Proveedor
-	  th Fecha de Compra
-	  th Total Factura
-	  th Estado
-	  th Orden de Compra
-	  th Usuario
+	  th = sort_link(@search, :numero, "Numero", {}, method: :get, remote: true)
+	  th = sort_link(@search, :condicion_pago_id, "Condicion de Pago", {}, method: :get, remote: true)
+	  th = sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
+	  th = sort_link(@search, :fecha_compra, "Fecha de Compra", {}, method: :get, remote: true)
+	  th.text-right = sort_link(@search, :total_factura, "Importe", {}, method: :get, remote: true)
+	  th = sort_link(@search, :estado, "Estado", {}, method: :get, remote: true)
+	  th = sort_link(@search, :orden_compra_id, "Orden de Compra", {}, method: :get, remote: true)
+	  th = sort_link(@search, :user_id, "Usuario", {}, method: :get, remote: true)
 	  th
   tbody
 	- @facturas_compra.each do |p|
@@ -23,9 +17,13 @@ table.table
 		td.show-factura = p.condicion_pago.nombre
 		td.show-factura = p.proveedor.nombre
 		td.show-factura = Formatter.format_datetime(p.fecha_compra)
-		td.show-factura = p.total_factura
+		td.show-factura.monto.text-right = p.total_factura
 		td.show-factura = p.estado
 		td.show-factura = p.orden_compra.numero
 		td.show-factura = p.user.username
 		td
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, factura_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
+
+.hide.simbolo_moneda = @simbolo_moneda
+javascript:
+  facturasCompraUI.formatearMontos();

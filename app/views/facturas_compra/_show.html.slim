@@ -1,45 +1,41 @@
 .modal-body
   button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
   /Cabecera de la Factura
-  p.lead
-    strong Factura  #{@factura_compra.numero}
-    i
-      .row
-        dl.col-md-3
-          dt Fecha
-          dd #{Formatter.format_datetime(@factura_compra.fecha_compra)}
-        dl.col-md-3
-          dt Estado
-          dd = @factura_compra.estado
-        dl.col-md-3
-          dt Proveedor
-          dd = @factura_compra.proveedor.nombre
-      .row
-        dl.col-md-3
-          dt Condicion de Pago
-          dd = @factura_compra.condicion_pago.nombre
-        dl.col-md-3
-          dt Plazo de Pago
-          - if @factura_compra.plazo_pago.blank?
-            dd Ninguno
-          - else
-            dd = @factura_compra.plazo_pago.nombre
-        dl.col-md-3
-          dt Usuario
-          dd = @factura_compra.user.username
+  h3 Factura  #{@factura_compra.numero}
+  .col-md-12
+    .row
+      .col-md-5
+        strong Proveedor:
+        | #{'  '} #{@factura_compra.proveedor.nombre}
+      .col-md-4
+        strong Fecha:
+        | #{'  '} #{Formatter.format_datetime(@factura_compra.fecha_compra)}
+      .col-md-3
+        strong Estado:
+        | #{'  '} #{@factura_compra.estado}
+    .row
+      .col-md-5
+        strong Condicion de Pago:
+        | #{'  '} #{@factura_compra.condicion_pago.nombre}
+      .col-md-5
+        - if not @factura_compra.plazo_pago.blank?
+          strong Plazo de Pago:
+          | #{'  '} #{@factura_compra.plazo_pago.nombre}
 
   /Detalles de la factura
   /Tabs
+  br
   .table-scroll
-    table.table
+    table.table.table-bordered.table-condensed
       thead
-        tr
+        tr.text-muted
           th #
           th Componente
-          th Cantidad
           th Marca
           th Categoria
-          th Costo Unitario
+          th.text-right Cantidad
+          th.text-right Costo Unitario
+          th.text-right Total
       tbody
         - total = 0
         - cont = 1
@@ -47,8 +43,6 @@
           tr
             td = cont
             td = p.componente.nombre
-            td.text-center = p.cantidad
-
             - if p.componente.marca.blank?
               td Sin Marca
             - else
@@ -58,12 +52,23 @@
               td Sin Categoria
             - else
               td = p.componente.componente_categoria.nombre
-            td = p.costo_unitario
-              - total += (p.componente.costo * p.cantidad)
+            td.text-right = p.cantidad
+            td.text-right.monto = p.costo_unitario
+            td.text-right.monto #{p.costo_unitario * p.cantidad}
             - cont += 1
+  .row
+    .row.col-md-9
+    strong.row.col-md-2.text-right Subtotales:
+    .row.col-md-2.subtotal.monto.text-right #{@factura_compra.total_factura - @factura_compra.total_iva}
+  .row
+    .row.col-md-9
+    strong.row.col-md-2.text-right Total Iva:
+    .row.col-md-2.total.monto.text-right #{@factura_compra.total_iva}
+  .row
+    .row.col-md-9
+    strong.row.col-md-2.text-right Total:
+    .row.col-md-2.total.monto.text-right #{@factura_compra.total_factura}
 
-/Botones Cancelar y generar
-/.panel-footer
-/  button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
-/  = link_to '<button class="btn btn-primary pull-right">Generar Pedido de Cotizacion</button> '.html_safe, create_pedido_cotizacion_pedido_compra_path(@pedido_compra.id), remote: true
+javascript:
+  facturasCompraUI.formatearMontos();
 

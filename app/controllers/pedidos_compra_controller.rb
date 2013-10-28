@@ -9,6 +9,7 @@ class PedidosCompraController < ApplicationController
   end
 
   def index
+    @simbolo_moneda = Configuracion.find(1).simbolo_moneda
     #formatear las fechas
     if defined? params[:q][:fecha_generado_lt]
       params[:q][:fecha_generado_lt] = params[:q][:fecha_generado_lt] + ' 23:59:59' unless params[:q][:fecha_generado_lt].blank?
@@ -28,7 +29,6 @@ class PedidosCompraController < ApplicationController
 
   def show
     @pedido_compra = PedidoCompra.find(params[:id])
-    @simbolo_moneda = Configuracion.find(1).simbolo_moneda
 
     if @pedido_compra.estado == PedidosEstados::PROCESADO
       @pedidos_cotizacion = PedidoCotizacion.where(pedido_compra_id: @pedido_compra.id)

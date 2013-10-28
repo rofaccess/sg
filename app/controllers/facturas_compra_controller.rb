@@ -7,14 +7,14 @@ class FacturasCompraController < ApplicationController
     @sidebar_layout = 'layouts/compras_sidemenu'
   end
   def index
-    #@search = FacturaCompra.search(params[:q])
-    #@factura_compra = FacturaCompra.new
-    #if @search.sorts.empty?
-    #  @facturas_compra = @search.result.order('estado').page(params[:page]).per(10)
-    #else
-    #  @facturas_compra = @search.result.page(params[:page]).per(10)
-    #end
-    @facturas_compra = FacturaCompra.filtrar(params[:orden_compra_id]).page(params[:page]).per(10)
+    @simbolo_moneda = Configuracion.find(1).simbolo_moneda
+    @search = FacturaCompra.search(params[:q])
+    @factura_compra = FacturaCompra.new
+    if @search.sorts.empty?
+      @facturas_compra = @search.result.order('estado').page(params[:page]).per(15)
+    else
+      @facturas_compra = @search.result.page(params[:page]).per(15)
+    end
   end
 
   def new
@@ -25,7 +25,7 @@ class FacturasCompraController < ApplicationController
     @orden_compra = OrdenCompra.find(params[:id])
     @factura_compra = FacturaCompra.new
     @factura_compra.factura_compra_detalles.build
-    @simbolo_moneda = Configuracion.find(1).simbolo_moneda
+    #@simbolo_moneda = Configuracion.find(1).simbolo_moneda
     render partial: 'get_orden_compra', formats: 'html'
   end
 
@@ -64,7 +64,7 @@ class FacturasCompraController < ApplicationController
   end
 
   def show
-
+    #@simbolo_moneda = Configuracion.find(1).simbolo_moneda
   end
 
   def update
