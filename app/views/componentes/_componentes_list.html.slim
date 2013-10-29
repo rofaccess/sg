@@ -19,7 +19,7 @@ table.table
 			td Sin Categoria
 		- else
 		  	td = p.componente_categoria.nombre
-		td = p.costo
+		td.monto-text = p.costo
 		- if p.iva.blank?
 			td Sin Iva
 		- else
@@ -27,3 +27,7 @@ table.table
 		td
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_componente_path(p), remote: true
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, componente_path(p), method: 'delete', confirm: t('messages.confirm_delete')
+javascript:
+  // Enmascarar los campos numericos
+  $('.monto-text, .cantidad-text').maskMoney({isDiv: true});
+  $('.monto-text, .cantidad-text').maskMoney('mask');

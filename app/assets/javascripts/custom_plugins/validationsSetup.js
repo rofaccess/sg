@@ -16,6 +16,9 @@ $.validator.addClassRules({
 	required: {
 		required: true
 	},
+	date: {
+		dateITA: true
+	},
 	shortString: {
 		maxlength: 50
 	},
@@ -26,9 +29,11 @@ $.validator.addClassRules({
 		maxlength: 250
 	},
 	numberDocCom: {
-		maxlength: 15
+		maxlength: 15,
+		remote: "/facturas_compra/check_numero"
 	},
 	cantidadDocCom: {
-		maxlength: 5
+		maxlength: 5,
+		min: 1
 	}
 });

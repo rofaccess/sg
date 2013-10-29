@@ -17,6 +17,7 @@
 //= require vendor/bootstrap
 //= require vendor/jquery.validate.min
 //= require custom_plugins/validationsSetup
+//= require vendor/additional-methods.min
 //= require custom_plugins/clearInput
 //= require languages/jquery.validate.messages_es
 //= require noty/jquery.noty
