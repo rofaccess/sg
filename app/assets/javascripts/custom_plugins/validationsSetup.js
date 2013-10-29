@@ -27,5 +27,8 @@ $.validator.addClassRules({
 	},
 	numberDocCom: {
 		maxlength: 15
+	},
+	cantidadDocCom: {
+		maxlength: 5
 	}
 });
