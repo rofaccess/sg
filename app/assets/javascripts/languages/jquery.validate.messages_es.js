@@ -5,11 +5,12 @@
 (function ($) {
 	$.extend($.validator.messages, {
 		required: "Este campo es obligatorio.",
-		remote: "Por favor, rellena este campo.",
+		remote: "El valor ingresado ya existe en la base de datos.",
 		email: "Por favor, escribe una dirección de correo válida",
 		url: "Por favor, escribe una URL válida.",
 		date: "Por favor, escribe una fecha válida.",
 		dateISO: "Por favor, escribe una fecha (ISO) válida.",
+		dateITA: "Por favor, escribe una fecha (dd/mm/aaaa) válida.",
 		number: "Por favor, escribe un número entero válido.",
 		digits: "Por favor, escribe sólo dígitos.",
 		creditcard: "Por favor, escribe un número de tarjeta válido.",

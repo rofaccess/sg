@@ -2,7 +2,7 @@
   label.text-success Encabezado
   .row
     = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3', input_class: 'required numberDocCom'})
-    = FormBuilder::text_field_v(f, :fecha_compra, {col_class: 'col-md-3', label_text: 'Fecha',input_class: 'datepicker required'})
+    = FormBuilder::text_field_v(f, :fecha_compra, {col_class: 'col-md-3', label_text: 'Fecha',input_class: 'required date datepicker'})
     = FormBuilder::text_field_v(f, :proveedor_id, {col_class: 'col-md-4', input_value: @orden_compra.proveedor.nombre, disabled: true})
   .row
     = FormBuilder::collection_select_v(f, :condicion_pago_id, CondicionPago.all, :id, :nombre,{col_class: 'col-md-3', label_text: 'Condicion de Pago'})

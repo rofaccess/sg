@@ -186,23 +186,20 @@ var facturasCompraUI = (function(){
 		  	});
 
 		   	//Valida el formulario antes de enviarlo
-		  	$('form').validate({
-				rules: {
-		           "factura_compra[numero]": {required: true, numberDocCom: true, remote: "/facturas_compra/check_numero" }
-				}
-			});
+		  	$('form').validate();
 
 		  	//Evita enviar un componente cuya cantidad sea cero
-		  	$('input[type="submit"]').click(function(e){
-		  		$('table tbody tr').each(function() {
-		  			var cantidad = parseInt ($('td.cantidad input', this).val());
-		  			if (cantidad == 0){
-		  				$(this).remove();
-		  			}
-		  		});
-    			$(this).parents('form').submit();
-    			e.preventDefault();
-  			});
+		  	//Esto ya no es necesario porque valida que la cantida sea mayor o igual a 1
+		  	//$('input[type="submit"]').click(function(e){
+		  	//	$('table tbody tr').each(function() {
+		  	//		var cantidad = parseInt ($('td.cantidad input', this).val());
+		  	//		if (cantidad == 0){
+		  	//			$(this).remove();
+		  	//		}
+		  	//	});
+    		//	$(this).parents('form').submit();
+    		//	e.preventDefault();
+  			//});
 		}
 	};
 }());
