@@ -56,8 +56,14 @@ class OrdenesComprasController < ApplicationController
     mejores_precios = @pedido_compra.get_mejores_precios
     cotizaciones = @pedido_compra.pedido_cotizacions.where(estado: 'Cotizado')
     cotizaciones.each do |c|
+      total = 0
+      c.pedido_cotizacion_detalles.each do |d|
+        if mejores_precios.include?(d.id)
+          total += d.costo_unitario
+        end
+      end
       orden_compra = OrdenCompra.new( fecha: DateTime.now,
-                                              costo_total: 0,
+                                              costo_total: total,
                                               estado: PedidosEstados::PENDIENTE,
                                               user_id: current_user.id,
                                               proveedor_id: c.proveedor_id,
