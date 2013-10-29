@@ -1,9 +1,9 @@
 = form_for @factura_compra, html: {class: ''}, remote: true  do |f|
   label.text-success Encabezado
   .row
-    = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3', input_class: 'required numberDocCom'})
+    = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3', input_class: 'required numFactura'})
     = FormBuilder::text_field_v(f, :fecha_compra, {col_class: 'col-md-3', label_text: 'Fecha',input_class: 'required date datepicker'})
-    = FormBuilder::text_field_v(f, :proveedor_id, {col_class: 'col-md-4', input_value: @orden_compra.proveedor.nombre, disabled: true})
+    = FormBuilder::text_field_v(f, :proveedor, {col_class: 'col-md-4', input_value: @orden_compra.proveedor.nombre, disabled: true})
   .row
     = FormBuilder::collection_select_v(f, :condicion_pago_id, CondicionPago.all, :id, :nombre,{col_class: 'col-md-3', label_text: 'Condicion de Pago'})
     = FormBuilder::collection_select_v(f, :plazo_pago_id, PlazoPago.all, :id, :nombre,{col_class: 'col-md-3 to-hide', label_text: 'Plazo de Pago', btn:'sepa'})
@@ -25,7 +25,7 @@
           th Componente
           th Marca
           th Categoria
-          th.col-md-1 Cantidad
+          th.col-md-2 Cantidad
           th.text-right Precio
           th.text-right Total
           th.text-right.col-md-2.hide % Iva
@@ -49,7 +49,8 @@
                 - if not o.componente.marca.blank?
                   td = o.componente.marca.nombre
                 td = o.componente.componente_categoria.nombre
-                td.cantidad = d.text_field(:cantidad, class: 'form-control text-right required cantidadDocCom', value: cantidad)
+                td.cantidad = FormBuilder::text_field_v(d, :cantidad, {input_class: 'text-right required cantidadDocCom', input_value: cantidad, label_class: 'hide'})
+                /td.cantidad = d.text_field(:cantidad, class: 'form-control text-right required cantidadDocCom', value: cantidad)
                 td.text-right.monto #{o.costo_unitario}
                 td.precio.hide #{o.costo_unitario}
                 td.costo.text-right.monto

@@ -28,12 +28,21 @@ $.validator.addClassRules({
 	longString: {
 		maxlength: 250
 	},
-	numberDocCom: {
+	numFactura: {
 		maxlength: 15,
-		remote: "/facturas_compra/check_numero"
+		remote: {
+			url: "/facturas_compra/check_numero",
+			type: "get",
+			data: {
+				proveedor_id: function(){
+					return $("#factura_compra_proveedor_id").val();
+				}
+			}
+		}
 	},
 	cantidadDocCom: {
 		maxlength: 5,
 		min: 1
 	}
 });
+
