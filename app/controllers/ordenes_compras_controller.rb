@@ -110,45 +110,6 @@ class OrdenesComprasController < ApplicationController
 
   end
 
-=begin
-    pedidos = params[:pedido_cotizacion]
-    pedidos.each do |id, val|
-      puts "#{id} => #{val}"
-      val[:detalles].each do |id_, val_|
-        puts "#{id_} => #{val_}"
-   =end
-      end
-    end
-=begin
-     @search = OrdenCompra.search(params[:q])
-    @pedido_compra = PedidoCompra.find(params[:orden_compra][:pedido_compra_id])
-   # @pedido_cotizacion = PedidoCotizacion.find(params[:orden_compra][:pedido_cotizacion_id])
-   # categorias = @pedido_compra.get_componente_categorias
-    cotizaciones = @pedido_compra.pedido_cotizacions.where(estado: 'Cotizado')
-    #proveedores = ComponenteCategoria.get_proveedores(categorias)
-    cotizaciones.each do |c|
-
-      orden_compra = OrdenCompra.new( fecha: DateTime.now,
-                                              costo_total: 0,
-                                              estado: PedidosEstados::PENDIENTE,
-                                              user_id: current_user.id,
-                                              proveedor_id: c.proveedor_id,
-                                              pedido_cotizacion_id: c.id,
-                                              pedido_compra_id: c.pedido_compra_id)
-
-
-      c.pedido_cotizacion_detalles.each do |d|
-        orden_compra.orden_compra_detalles.build(componente_id: d.componente_id, costo_unitario: d.costo_unitario, cantidad_requerida: d.cantidad_cotizada)
-      end
-      orden_compra.save
-
-    end
-
-    @pedido_compra.update(estado: PedidosEstados::ORDENADO)
-
-=end
-
-
   def destroy
     if @orden_compra.destroy
       redirect_to ordenes_compras_path, notice: t('messages.pedido_compra_deleted')
