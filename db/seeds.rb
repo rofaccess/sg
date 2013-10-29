@@ -10,7 +10,7 @@
 User.create(username: 'admin', password: 'admin', password_confirmation: 'admin')
 
 # Generar registro de configuracion
-Configuracion.create(nombre: 'SG', simbolo_moneda: '')
+Configuracion.create(nombre: 'SG', simbolo_moneda: 'Gs.', direccion: 'Lomas Valentinas 524 c/ Mallorquin', telefono: '071 205698', email: 'sg_dev@sistema.com')
 
 # Crear 10 paises
 for i in 1..10
