@@ -53,19 +53,19 @@ end
 Iva.create([{ valor: '10'}, { valor: '5'}])
 
 # Crear 5 categorias de componentes
-categorias = ['Placa Madre','Disco Duro','Procesador','Memoria','Monitor','Teclados y Mouses']
+categorias = ['Placa Madre','Procesador','HDD','Monitor','Teclados y Mouses','Parlantes']
 categorias.each do |c|
 	ComponenteCategoria.create(nombre: c) if ComponenteCategoria.where(nombre: c).empty?
 end
 
 # Crear 5 marchas de componentes
-marcas = ['Asus','Intel','Amd','Lenovo','Aoc','Toshiba']
+marcas = ['Asus','Intel','Maxtor','Aoc','Verbatim','Satellite']
 marcas.each do |m|
 	Marca.create(nombre: m) if Marca.where(nombre: m).empty?
 end
 
 # Crear 5 componentes para cada categoria
-componentes = ['ATX-2324','MSProLInk','PCChips','LM 256 Mhz','SL-5343L','Tok-14']
+componentes = ['P8H61-M LX','Core 2 Duo','7200 RPM 1TB','16" - e1660Sw','Mouse Verbatim 000023','AS-878 2x1 SubWoofer']
 i = 1
 componentes.each do |c|
 		costo = rand(2000..10000)
