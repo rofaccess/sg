@@ -27,5 +27,5 @@ table.table
         td.show-pedido = pedido_cotizacion.pedido_compra.numero
         - unless defined? short_view
           td.hidden-print
-            = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_pedido_cotizacion_path(pedido_cotizacion), remote: true
+            = link_to '<i class="icon-print icon-large"></i> '.html_safe, imprimir_pedido_pedido_cotizacion_path(pedido_cotizacion), remote: true
             = link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_cotizacion, method: 'delete', data: {confirm: t('messages.confirm_delete')}

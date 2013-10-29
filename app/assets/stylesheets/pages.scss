@@ -327,3 +327,22 @@ tbody{
     width: 100%;
   }
 }
+
+#printable{
+  .header{
+    width: 400px;
+  }
+    h1,h2,h3{
+      margin-top: 0;
+    }
+    dl{
+      margin-top: 0;
+      dt{
+        float: left;
+        width: 105px;
+      }
+    }
+    hr{
+      margin-top: 0;
+    }
+}

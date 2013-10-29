@@ -73,6 +73,6 @@ class ConfiguracionesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def configuracion_params
-      params.require(:configuracion).permit(:nombre, :direccion, :imagen, :simbolo_moneda)
+      params.require(:configuracion).permit(:nombre, :direccion, :imagen, :simbolo_moneda, :telefono, :email)
     end
 end
