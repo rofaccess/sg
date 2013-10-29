@@ -8,6 +8,10 @@ Sg::Application.routes.draw do
   end
 
   resources :pedidos_cotizacion do
+    member do
+      get 'imprimir_pedido'
+    end
+
     collection do
       post 'get_pedido_compra'
       post 'cotizar'

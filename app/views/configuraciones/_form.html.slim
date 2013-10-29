@@ -1,11 +1,16 @@
-= form_for @configuracion, html: {class: 'form-horizontal', multipart: true} do |f|
+= form_for @configuracion, html: {class: 'form-horizontal edit_configuraciones', multipart: true} do |f|
   .modal-header
     h4.modal-title Datos de la Empresa
   .modal-body
-    = FormBuilder::text_field(f, :nombre, nil, nil, 'validate[required]')
-    = FormBuilder::text_field(f, :direccion, nil, nil, 'validate[required]')
-    = FormBuilder::file_field(f, :imagen, nil, nil, 'validate[required]')
-    = FormBuilder::text_field(f, :simbolo_moneda, nil, nil, 'validate[required]')
+    = FormBuilder::text_field(f, :nombre, nil, nil, 'required')
+    = FormBuilder::text_field(f, :direccion, nil, nil, 'required')
+    = FormBuilder::text_field(f, :telefono, nil, nil, 'required')
+    = FormBuilder::text_field(f, :email, nil, nil, 'required email')
+    = FormBuilder::file_field(f, :imagen, nil, nil, '')
+    = FormBuilder::text_field(f, :simbolo_moneda, nil, nil, 'required')
   .modal-footer
     = link_to 'Cancelar',pages_index_path, class: 'btn btn-info'
     = f.submit 'Guardar', class: 'btn btn-primary'
+
+javascript:
+  $('.edit_configuraciones').validate();

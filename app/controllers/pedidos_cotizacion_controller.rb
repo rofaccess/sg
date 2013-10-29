@@ -1,6 +1,6 @@
 class PedidosCotizacionController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_pedido_cotizacion, only: [:show, :edit, :update, :destroy]
+  before_action :set_pedido_cotizacion, only: [:show, :edit, :update, :destroy, :imprimir_pedido]
   before_action :set_sidemenu, only: [:index]
   respond_to :html, :js
 
@@ -109,6 +109,10 @@ class PedidosCotizacionController < ApplicationController
       format.html { redirect_to pedido_cotizacions_url }
       format.json { head :no_content }
     end
+  end
+
+  def imprimir_pedido
+
   end
 
   private

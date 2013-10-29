@@ -16,6 +16,9 @@ $.validator.addClassRules({
 	required: {
 		required: true
 	},
+	date: {
+		dateITA: true
+	},
 	shortString: {
 		maxlength: 50
 	},
@@ -25,10 +28,21 @@ $.validator.addClassRules({
 	longString: {
 		maxlength: 250
 	},
-	numberDocCom: {
-		maxlength: 15
+	numFactura: {
+		maxlength: 15,
+		remote: {
+			url: "/facturas_compra/check_numero",
+			type: "get",
+			data: {
+				proveedor_id: function(){
+					return $("#factura_compra_proveedor_id").val();
+				}
+			}
+		}
 	},
 	cantidadDocCom: {
-		maxlength: 5
+		maxlength: 5,
+		min: 1
 	}
 });
+

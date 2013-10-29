@@ -82,9 +82,14 @@ class FacturasCompraController < ApplicationController
   end
 
   def check_numero
-    @factura_compra = FacturaCompra.find_by_numero(params[:factura_compra][:numero])
+    @factura_compra = FacturaCompra.where("numero = ? AND proveedor_id = ?", params[:factura_compra][:numero], params[:proveedor_id])
+    if @factura_compra.blank?
+      condition = true
+    else
+      condition = false
+    end
     respond_to do |format|
-      format.json { render :json => !@factura_compra }
+      format.json { render :json => condition}
     end
   end
 

@@ -11,5 +11,12 @@
 	}
 	a[href]:after {
     content: none !important;
-  }
+  	}
+
+  	dl{
+  		dt{
+  			float: left;
+  			width: 105px;
+  		}
+  	}
 }
