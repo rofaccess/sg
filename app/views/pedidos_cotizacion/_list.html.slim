@@ -1,15 +1,15 @@
 table.table
   thead
     tr
-      th = sort_link(@search, :numero, "Numero", {}, method: :get, remote: true)
-      th = sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
+      th = defined? short_view ? sort_link(@search, :numero, "Numero", {}, method: :get, remote: true) : 'Numero'
+      th = defined? short_view ? sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true) : 'Proveedor'
       - unless defined? short_view
         th = sort_link(@search, :estado, "Estado", {}, method: :get, remote: true)
         th = sort_link(@search, :fecha_creacion, "Fecha de Emisión", {}, method: :get, remote: true)
       - unless defined? short_view
         th = sort_link(@search, :fecha_cotizado, "Fecha Cotizado", {}, method: :get, remote: true)
-      th = sort_link(@search, :user_id, "Usuario", {}, method: :get, remote: true)
-      th = sort_link(@search, :pedido_compra_id, "Pedido de Compra", {}, method: :get, remote: true)
+      th = defined? short_view ? sort_link(@search, :user_id, "Usuario", {}, method: :get, remote: true) : 'Usuario'
+      th = defined? short_view ? sort_link(@search, :pedido_compra_id, "Pedido de Compra", {}, method: :get, remote: true) : 'Pedido de Compra'
       - unless defined? short_view
         th.hidden-print
 
