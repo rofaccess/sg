@@ -10,7 +10,13 @@ class ProductosController < ApplicationController
   def index
   	@search = Producto.search(params[:q])
     @productos = @search.result
+    if @search.sorts.empty?
+      @componentes = @search.result.order('nombre').page(params[:page]).per(15)
+    else
+      @componentes = @search.result.page(params[:page]).per(15)
+    end
   end
+
   def show
   end
   def new
