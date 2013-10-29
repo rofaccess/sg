@@ -7,14 +7,30 @@
     thead
       tr
         th Componente
-        th Cantidad
-        th.text-right Costo Unitario
+        th Marca
+        th Categoria
+        th Cantidad Requerida
+        th Cantidad Recibida
+        th Costo Unitario
+
     tbody
-      - @orden_compra.orden_compra_detalles.each do |pedido_detalle|
+      - @orden_compra.orden_compra_detalles.each do |orden_detalle|
         tr
-          td = pedido_detalle.componente.nombre
-          td.cantidad-text = pedido_detalle.cantidad_requerida
-          td.monto-text = pedido_detalle.costo_unitario
+          td = orden_detalle.componente.nombre
+          - if orden_detalle.componente.marca.blank?
+            td Sin Marca
+          - else
+            td = orden_detalle.componente.marca.nombre
+          - if orden_detalle.componente.componente_categoria.blank?
+            td Sin Categoria
+          - else
+            td = orden_detalle.componente.componente_categoria.nombre
+          td.text-center = orden_detalle.cantidad_requerida
+          td.text-center = orden_detalle.cantidad_recibida
+          td.text-center.cantidad-text = orden_detalle.costo_unitario
+.panel-footer
+  h3.panel-title.text-right TOTAL ORDEN: #{@orden_compra.costo_total}
+
 javascript:
   // Enmascarar los campos numericos
   $('.monto-text, .cantidad-text').maskMoney({isDiv: true});
