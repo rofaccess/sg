@@ -19,7 +19,7 @@ class PedidosCotizacionController < ApplicationController
     @search = PedidoCotizacion.search(params[:q])
     @pedidos_cotizacion_size = @search.result.size
     if @search.sorts.empty?
-      @pedidos_cotizacion = @search.result.order('estado').order('fecha_creacion').page(params[:page]).per(15)
+      @pedidos_cotizacion = @search.result.order('fecha_creacion desc').order('estado desc').page(params[:page]).per(15)
     else
       @pedidos_cotizacion = @search.result.page(params[:page]).per(15)
     end
