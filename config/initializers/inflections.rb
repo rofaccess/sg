@@ -12,7 +12,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'estado', 'estados'
   inflect.irregular 'ciudad', 'ciudades'
   inflect.irregular 'configuracion', 'configuraciones'
-  inflect.irregular 'componente_categoria', 'componentes_categorias'
+  inflect.irregular 'componente_categoria', 'componentes_categoria'
   inflect.irregular 'pedido_compra', 'pedidos_compra'
   inflect.irregular 'pedido_compra_detalle', 'pedidos_compra_detalle'
   inflect.irregular 'proveedor', 'proveedores'
@@ -23,9 +23,9 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'factura_compra_detalle', 'facturas_compra_detalle'
   inflect.irregular 'pedido_cotizacion', 'pedidos_cotizacion'
   inflect.irregular 'pedido_cotizacion_detalle', 'pedidos_cotizacion_detalle'
-  inflect.irregular 'orden_compra', 'ordenes_compras'
+  inflect.irregular 'orden_compra', 'ordenes_compra'
   inflect.irregular 'orden_compra_detalle', 'ordenes_compra_detalle'
-  inflect.irregular 'componente_categoria_proveedor', 'componentes_categorias_proveedores'
+  inflect.irregular 'componente_categoria_proveedor', 'componentes_categoria_proveedores'
   inflect.uncountable %w( fish sheep )
 end
 

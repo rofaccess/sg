@@ -5,7 +5,7 @@ class CreateCustomAutoIncrements < ActiveRecord::Migration
       t.integer :counter, :default => 0
       t.timestamps
     end
-    
+
     add_index :custom_auto_increments, :model_name
   end
 

@@ -1,8 +1,8 @@
 class CreatePlazosPagoDetalle < ActiveRecord::Migration
   def change
     create_table :plazos_pago_detalle do |t|
-      t.integer :plazo_pago_id,    null: false
-      t.string  :dias_vencimiento, null: false, limit:3
+      t.integer :plazo_pago_id ,null: false
+      t.string  :cant_dias     ,default: '' ,limit: Domain::CANT_DIAS ,null: false
 
       t.timestamps
     end

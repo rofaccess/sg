@@ -1,21 +1,23 @@
 class CreatePersonas < ActiveRecord::Migration
   def change
     create_table :personas do |t|
-      t.string   :nombre,                 null: false, limit: 50
-      t.string   :ruc,                    null: true,  limit: 20
-      t.string   :documento_numero,       null: true,  limit: 20
-      t.string   :direccion,              null: true,  limit: 70
-      t.string   :email,                  null: true,  limit: 60
-      t.string   :edad,                   null: true,  limit: 3
-      t.string   :sexo,                   null: true,  limit: 10
-      t.datetime :fecha_nacimiento,       null: true
-      t.integer  :documento_identidad_id, null: true
-      t.integer  :ciudad_id,              null: true
-      t.string   :type,                   null: false,  limit: 10
+      t.string   :nombre                  ,default: '' ,limit: Domain::NOMBRE ,null: false
+      t.string   :apellido                ,default: '' ,limit: Domain::NOMBRE
+      t.string   :ruc                     ,default: '' ,limit: Domain::RUC
+      t.string   :documento_id_num        ,default: '' ,limit: Domain::NUMERO_DOC_IDE
+      t.string   :direccion               ,default: '' ,limit: Domain::DIRECCION
+      t.string   :email                   ,default: '' ,limit: Domain::EMAIL
+      t.string   :edad                    ,default: '' ,limit: Domain::EDAD
+      t.string   :sexo                    ,default: '' ,limit: Domain::SEXO
+      t.datetime :fecha_nacimiento
+      t.integer  :documento_identidad_id
+      t.integer  :ciudad_id
+      t.string   :type                    ,default: '' ,limit: Domain::TIPO_PERSONA
 
       t.timestamps
     end
 
+  add_index :personas, :email, unique: true
   add_foreign_key(:personas, :ciudades, column: 'ciudad_id', options: 'ON DELETE RESTRICT')
   end
 end

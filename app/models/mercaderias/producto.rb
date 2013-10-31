@@ -1,0 +1,2 @@
+class Producto < Mercaderia
+end
