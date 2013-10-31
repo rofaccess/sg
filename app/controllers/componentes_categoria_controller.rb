@@ -1,4 +1,4 @@
-class ComponentesCategoriasController < ApplicationController
+class ComponentesCategoriaController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_sidemenu, only: [:index]
   before_action :set_componente_categoria, only: [:show, :edit, :update, :destroy]
@@ -11,11 +11,11 @@ class ComponentesCategoriasController < ApplicationController
   # GET /componentes_categorias.json
   def index
     @search = ComponenteCategoria.search(params[:q])
-    @componentes_categorias = ComponenteCategoria.new
+    @componentes_categoria = ComponenteCategoria.new
     if @search.sorts.empty?
-      @componentes_categorias = @search.result.order('nombre').page(params[:page]).per(15)
+      @componentes_categoria = @search.result.order('nombre').page(params[:page]).per(15)
     else
-      @componentes_categorias = @search.result.page(params[:page]).per(15)
+      @componentes_categoria = @search.result.page(params[:page]).per(15)
     end
   end
 
@@ -56,7 +56,7 @@ class ComponentesCategoriasController < ApplicationController
     if @componente_categoria.update(componente_categoria_params)
       update_list
     else
-      redirect_to componentes_categorias_path, alert: t('messages.componente_categoria_not_update')
+      redirect_to componentes_categoria_path, alert: t('messages.componente_categoria_not_update')
     end
   end
 
@@ -65,7 +65,7 @@ class ComponentesCategoriasController < ApplicationController
   def destroy
     @componente_categoria.destroy
     respond_to do |format|
-      format.html { redirect_to componentes_categorias_url }
+      format.html { redirect_to componentes_categoria_url }
       format.json { head :no_content }
     end
   end

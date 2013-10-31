@@ -9,7 +9,6 @@ class CreateEstados < ActiveRecord::Migration
     end
 
     add_index :estados, :nombre, unique: true
-    add_index :estados, :abreviatura, unique: true
     add_foreign_key(:estados, :paises, dependent: :delete, column: 'pais_id')
   end
 end

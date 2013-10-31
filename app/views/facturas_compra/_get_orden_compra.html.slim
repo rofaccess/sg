@@ -2,7 +2,7 @@
   label.text-success Encabezado
   .row
     = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3', input_class: 'required numFactura'})
-    = FormBuilder::text_field_v(f, :fecha_compra, {col_class: 'col-md-3', label_text: 'Fecha',input_class: 'required date datepicker'})
+    = FormBuilder::text_field_v(f, :fecha, {col_class: 'col-md-3', label_text: 'Fecha',input_class: 'required date datepicker'})
     = FormBuilder::text_field_v(f, :proveedor, {col_class: 'col-md-4', input_value: @orden_compra.proveedor.nombre, disabled: true})
   .row
     = FormBuilder::collection_select_v(f, :condicion_pago_id, CondicionPago.all, :id, :nombre,{col_class: 'col-md-3', label_text: 'Condicion de Pago'})
@@ -59,7 +59,7 @@
                 td.iva-p.hide = d.text_field(:iva, value:"#{o.componente.iva.valor}", disabled: true)
                 td.text-right = link_to '<i class="icon-remove icon-large"></i> '.html_safe, '#', class: 'remover-detalle-factura link-icon'
                 = d.hidden_field(:componente_id, value: o.componente_id)
-                = d.hidden_field(:iva_porcentaje, value: o.componente.iva.valor)
+                = d.hidden_field(:iva_valor, value: o.componente.iva.valor)
                 = d.hidden_field(:costo_unitario, value: o.costo_unitario)
                 = d.hidden_field(:orden_compra_detalle_id, value: o.id)
   .row

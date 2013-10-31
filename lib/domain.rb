@@ -7,7 +7,6 @@ module Domain
 	MONEDA 	  = 3
 	IVA       = 2
 	CODIGO    = 15
-	TIPO	  = 10
 	RUC       = 20
 	EDAD      = 3
 	SEXO      = 9
@@ -20,5 +19,6 @@ module Domain
 	NUMERO_DOC_IDE = 10
 	NUMERO_DOC_COM = 15
 	ABREVIATURA    = 5
+	TIPO_MERCADERIA	= 10
 
 end

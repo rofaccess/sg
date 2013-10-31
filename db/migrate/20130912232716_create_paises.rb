@@ -8,6 +8,5 @@ class CreatePaises < ActiveRecord::Migration
     end
 
     add_index :paises, :nombre     , unique: true
-    add_index :paises, :abreviatura, unique: true
   end
 end

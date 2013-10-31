@@ -10,7 +10,7 @@
 User.create(username: 'admin', password: 'admin', password_confirmation: 'admin')
 
 # Generar registro de configuracion
-Configuracion.create(nombre: 'SG', simbolo_moneda: 'Gs.', direccion: 'Lomas Valentinas 524 c/ Mallorquin', telefono: '071 205698', email: 'sg_dev@sistema.com')
+Configuracion.create(nombre: 'SG', simbolo_moneda: 'Gs.', direccion: 'Lomas Valentinas 524 c/ Mallorquin', telefono1: '071 205698', telefono2: '071 204356', email: 'sg_dev@sistema.com')
 
 # Crear 10 paises
 for i in 1..10
@@ -89,6 +89,6 @@ PlazoPago.create([{ nombre: '30/60/90', cuotas: '3' }, { nombre: '30/60/90/120',
 dias = ['30','60','90','120']
 PlazoPago.all.each do |p|
 	p.cuotas.to_i.times do |c|
-		PlazoPagoDetalle.create(plazo_pago_id: p.id, dias_vencimiento: dias[c])
+		PlazoPagoDetalle.create(plazo_pago_id: p.id, cant_dias: dias[c])
 	end
 end

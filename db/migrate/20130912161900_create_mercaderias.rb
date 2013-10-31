@@ -4,11 +4,11 @@ class CreateMercaderias < ActiveRecord::Migration
       t.string  :nombre      ,default: '' ,limit: Domain::NOMBRE      ,null: false
       t.string  :codigo      ,default: '' ,limit: Domain::CODIGO
       t.string  :descripcion ,default: '' ,limit: Domain::DESCRIPCION
-      t.string  :type        ,default: '' ,limit: Domain::TIPO        ,null: false
+      t.string  :type        ,default: '' ,limit: Domain::TIPO_MERCADERIA
       t.decimal :costo 	     ,null: false
-      t.integer :marca_id    ,null: false
+      t.integer :marca_id
       t.integer :iva_id      ,null: false
-      t.integer :componente_categoria_id ,null: false
+      t.integer :componente_categoria_id
 
       t.timestamps
     end

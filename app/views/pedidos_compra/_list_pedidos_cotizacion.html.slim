@@ -7,9 +7,9 @@
         th Proveedor
         - unless defined? short_view
           th Estado
-        th Fecha creacion
+        th Fecha Generado
         - unless defined? short_view
-          th Fecha cotizado
+          th Fecha Cotizado
         th Usuario
 
     tbody
@@ -23,7 +23,7 @@
             /short_view  es?
             - unless defined? short_view
               td = pedido_cotizacion.estado
-            td = Formatter.format_datetime(pedido_cotizacion.fecha_creacion)
+            td = Formatter.format_datetime(pedido_cotizacion.fecha_generado)
             - unless defined? short_view
               td = Formatter.format_datetime(pedido_cotizacion.fecha_cotizado)
             td = pedido_cotizacion.user.username

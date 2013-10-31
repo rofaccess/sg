@@ -4,7 +4,7 @@ table.table.table-striped.table-condensed
       th = sort_link(@search, :nombre, {}, method: :get, remote: true)
 
   tbody
-	- @componentes_categorias.each do |p|
+	- @componentes_categoria.each do |p|
 	  tr
 	    td = p.nombre
 		td

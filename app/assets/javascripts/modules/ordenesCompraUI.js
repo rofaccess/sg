@@ -2,7 +2,7 @@ var ordenesCompraUI = (function(){
 	return {
 		cargarPedidosDetalles: function(id){
 			$.ajax({
-				url: 'ordenes_compras/get_pedido_compra',
+				url: 'ordenes_compra/get_pedido_compra',
 				type: 'post',
 				dataType: 'html',
 				data: {id: id},
@@ -23,7 +23,7 @@ var ordenesCompraUI = (function(){
 
 			$('body').on('click', '.orden-automatica', function(e){
 				$.ajax({
-					url: 'ordenes_compras',
+					url: 'ordenes_compra',
 					type: 'post',
 					dataType: 'script',
 					data: {pedido_compra_id: $('#orden_compra_pedido_compra_id').val()},

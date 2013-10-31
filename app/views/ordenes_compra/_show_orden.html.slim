@@ -2,7 +2,7 @@
   .well
     h3 Orden de compra N° #{@orden_compra.numero}
     h4 Proveedor: #{@orden_compra.proveedor.nombre}
-    h5.extra Creado el: #{Formatter.format_date(@orden_compra.fecha)}
+    h5.extra Creado el: #{Formatter.format_date(@orden_compra.fecha_generado)}
   table.table.table-condensed
     thead
       tr
@@ -29,7 +29,7 @@
           td.text-center = orden_detalle.cantidad_recibida
           td.text-center.monto-text = orden_detalle.costo_unitario
 .panel-footer
-  h3.panel-title.text-right.monto-text TOTAL ORDEN: #{@orden_compra.costo_total}
+  h3.panel-title.text-right.monto-text TOTAL ORDEN: #{@orden_compra.total_requerido}
 
 javascript:
   // Enmascarar los campos numericos

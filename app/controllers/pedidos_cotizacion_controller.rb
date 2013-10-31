@@ -12,14 +12,14 @@ class PedidosCotizacionController < ApplicationController
   # GET /pedido_cotizacions.json
   def index
     #formatear las fechas
-    if defined? params[:q][:fecha_creacion_lt]
+    if defined? params[:q][:fecha_generado_lt]
       setupFechas
     end
 
     @search = PedidoCotizacion.search(params[:q])
     @pedidos_cotizacion_size = @search.result.size
     if @search.sorts.empty?
-      @pedidos_cotizacion = @search.result.order('estado').order('fecha_creacion').page(params[:page]).per(15)
+      @pedidos_cotizacion = @search.result.order('estado').order('fecha_generado').page(params[:page]).per(15)
     else
       @pedidos_cotizacion = @search.result.page(params[:page]).per(15)
     end
@@ -29,12 +29,12 @@ class PedidosCotizacionController < ApplicationController
   def imprimir_listado
     setupFechas
     @search = PedidoCotizacion.search(params[:q])
-    @pedidos_cotizacion = @search.result.order('estado').order('fecha_creacion')
+    @pedidos_cotizacion = @search.result.order('estado').order('fecha_generado')
 
   end
 
   def setupFechas
-      params[:q][:fecha_creacion_lt] = params[:q][:fecha_creacion_lt] + ' 23:59:59' unless params[:q][:fecha_creacion_lt].blank?
+      params[:q][:fecha_generado_lt] = params[:q][:fecha_generado_lt] + ' 23:59:59' unless params[:q][:fecha_generado_lt].blank?
       params[:q][:fecha_cotizado_lt] = params[:q][:fecha_cotizado_lt] + ' 23:59:59' unless params[:q][:fecha_cotizado_lt].blank?
 
 
@@ -72,7 +72,7 @@ class PedidosCotizacionController < ApplicationController
       proveedor = Proveedor.find(p)
       pedido_cotizacion = PedidoCotizacion.new( proveedor_id: p,
                                                 pedido_compra_id: @pedido_compra.id,
-                                                fecha_creacion: DateTime.now,
+                                                fecha_generado: DateTime.now,
                                                 estado: PedidosEstados::PENDIENTE,
                                                 user_id: current_user.id)
 
@@ -106,7 +106,7 @@ class PedidosCotizacionController < ApplicationController
   def destroy
     @pedido_cotizacion.destroy
     respond_to do |format|
-      format.html { redirect_to pedido_cotizacions_url }
+      format.html { redirect_to pedidos_cotizacion_url }
       format.json { head :no_content }
     end
   end
@@ -123,7 +123,7 @@ class PedidosCotizacionController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pedido_cotizacion_params
-      params.require(:pedido_cotizacion).permit(:numero, :proveedor_id, :estado, :fecha_creacion, :fecha_cotizado, :user_id, :pedido_compra_id,
+      params.require(:pedido_cotizacion).permit(:numero, :proveedor_id, :estado, :fecha_generado, :fecha_cotizado, :user_id, :pedido_compra_id,
         pedido_cotizacion_detalles_attributes: [:id, :cantidad_cotizada, :costo_unitario])
     end
 end

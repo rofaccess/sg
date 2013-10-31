@@ -53,7 +53,7 @@ class PedidosCompraController < ApplicationController
       proveedor = Proveedor.find(p)
       pedido_cotizacion = PedidoCotizacion.new( proveedor_id: p,
                                                 pedido_compra_id: @pedido_compra.id,
-                                                fecha_creacion: DateTime.now,
+                                                fecha_generado: DateTime.now,
                                                 estado: PedidosEstados::PENDIENTE,
                                                 user_id: current_user.id)
 

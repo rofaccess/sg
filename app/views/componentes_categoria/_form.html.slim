@@ -2,7 +2,7 @@
 	= form_for @componente_categoria, html: {class: 'form-horizontal'}, remote: true do |f|
 	  - unless defined? provider_abm
 	    button.close.close-add-form [type="button" aria-hidden="true"] &times;
-	    h3 Agregar Categoria
+	    h3 = @componente_categoria.id.nil? ? 'Agregar Categoria' : 'Editar Categoria'
 	  -else
 	    = hidden_field_tag 'select_categoria', 'true'
 	  .row

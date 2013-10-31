@@ -5,7 +5,7 @@ table.table.table-condensed
       th = (defined? short_view) ? 'Proveedor' : sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
       - unless defined? short_view
         th = sort_link(@search, :estado, "Estado", {}, method: :get, remote: true)
-        th = sort_link(@search, :fecha_creacion, "Fecha de Emisión", {}, method: :get, remote: true)
+        th = sort_link(@search, :fecha_generado, "Fecha de Emisión", {}, method: :get, remote: true)
       - unless defined? short_view
         th = sort_link(@search, :fecha_cotizado, "Fecha Cotizado", {}, method: :get, remote: true)
       th = (defined? short_view) ? 'Usuario' : sort_link(@search, :user_id, "Usuario", {}, method: :get, remote: true)
@@ -20,7 +20,7 @@ table.table.table-condensed
         td.show-pedido = pedido_cotizacion.proveedor.nombre
         - unless defined? short_view
           td.show-pedido = pedido_cotizacion.estado
-          td.show-pedido = Formatter.format_date(pedido_cotizacion.fecha_creacion)
+          td.show-pedido = Formatter.format_date(pedido_cotizacion.fecha_generado)
         - unless defined? short_view
           td.show-pedido = Formatter.format_date(pedido_cotizacion.fecha_cotizado)
         td.show-pedido = pedido_cotizacion.user.username

@@ -11,7 +11,7 @@
     span[class="label #{estado_label} pull-right"] #{@pedido_cotizacion.estado}
     h3 Pedido de cotizacion N° #{@pedido_cotizacion.numero}
     h4 Proveedor: #{@pedido_cotizacion.proveedor.nombre}
-    h5.extra Creado el: #{Formatter.format_date(@pedido_cotizacion.fecha_creacion)}
+    h5.extra Creado el: #{Formatter.format_date(@pedido_cotizacion.fecha_generado)}
   // Tabla para mostrar los detalles del pedido con la opcion de actualizar los datos
   = form_for @pedido_cotizacion, remote: true do |pedido_form|
     = pedido_form.hidden_field :id

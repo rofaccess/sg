@@ -5,6 +5,8 @@ class CreateConfiguraciones < ActiveRecord::Migration
       t.string :direccion       ,default: '' ,limit: Domain::DIRECCION ,null: false
       t.string :simbolo_moneda  ,default: '' ,limit: Domain::MONEDA    ,null: false
       t.string :email           ,default: '' ,limit: Domain::EMAIL
+      t.string :telefono1       ,default: '' ,limit: Domain::TELEFONO  ,null: false
+      t.string :telefono2       ,default: '' ,limit: Domain::TELEFONO  ,null: false
 
       t.timestamps
     end

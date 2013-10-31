@@ -6,7 +6,8 @@
     = FormBuilder::text_field(f, :codigo, nil, nil, 'validate[required')
     = FormBuilder::text_field(f, :nombre, nil, nil, 'validate[required]')
     = FormBuilder::text_field(f, :descripcion, nil, nil, 'validate[required]')
-    = FormBuilder::text_field(f, :costo_unitario, nil, nil, 'validate[required]')
+    = FormBuilder::text_field(f, :costo, nil, nil, 'validate[required]')
+    = FormBuilder::collection_select(f, :iva_id, Iva.all, :id, :valor, '', nil, 'col-md-8 with-btn required', 'required', nil, false)
 
   .modal-footer
     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

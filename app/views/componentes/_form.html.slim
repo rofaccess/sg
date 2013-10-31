@@ -1,5 +1,6 @@
 = form_for @componente, html: {class: 'form-horizontal'}, remote: true  do |f|
   bootton.close.close-add-form [type="button" aria-hidden="true"] &times;
+  h3 = @componente.id.nil? ? 'Agregar Componente' : 'Editar Componente'
   h3 Agregar Componentes
 
   .row

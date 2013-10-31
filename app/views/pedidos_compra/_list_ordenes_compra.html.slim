@@ -20,7 +20,7 @@
             td = orden_compra.numero
             td = orden_compra.proveedor.nombre
             td = orden_compra.estado
-            td = Formatter.format_datetime(orden_compra.fecha)
-            td = orden_compra.costo_total
+            td = Formatter.format_datetime(orden_compra.fecha_generado)
+            td = orden_compra.total_requerido
             td = orden_compra.user.username
             - cont += 1

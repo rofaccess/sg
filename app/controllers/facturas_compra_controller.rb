@@ -98,7 +98,7 @@ class FacturasCompraController < ApplicationController
   end
 
   def factura_compra_params
-      params.require(:factura_compra).permit(:numero, :fecha_compra,:fecha_vencimiento, :total_iva, :total_factura, :proveedor_id, :condicion_pago_id, :plazo_pago_id, :user_id, :estado, :orden_compra_id,
-          factura_compra_detalles_attributes: [:iva_porcentaje, :componente_id, :cantidad, :costo_unitario, :iva_unitario, :total, :orden_compra_detalle_id])
+      params.require(:factura_compra).permit(:numero, :fecha, :total_iva, :total_factura, :proveedor_id, :condicion_pago_id, :plazo_pago_id, :user_id, :estado, :orden_compra_id,
+          factura_compra_detalles_attributes: [:componente_id, :cantidad, :costo_unitario, :iva_valor, :orden_compra_detalle_id])
   end
 end

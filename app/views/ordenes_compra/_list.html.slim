@@ -4,18 +4,18 @@ table.table.table-condensed
 	  th = sort_link(@search, :numero, "Numero", {}, method: :get, remote: true)
 	  th = sort_link(@search, :estado, "Estado", {}, method: :get, remote: true)
 	  th = sort_link(@search, :created_at, "Fecha", {}, method: :get, remote: true)
-	  th = sort_link(@search, :costo_total, "Importe", {}, method: :get, remote: true)
+	  th = sort_link(@search, :total_requerido, "Importe", {}, method: :get, remote: true)
 	  th = sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
 	  th Pedido de compra
 	  th
   tbody
-	- @ordenes_compras.each do |p|
+	- @ordenes_compra.each do |p|
 	  - if p.estado == 'Pendiente'
 	    tr.success [data-url="#{orden_compra_path(p)}"]
 		  td.show-pedido = p.numero
 		  td.show-pedido = p.estado
 		  td.show-pedido = Formatter.format_datetime(p.created_at)
-		  td.show-pedido = p.costo_total
+		  td.show-pedido = p.total_requerido
 		  td.show-pedido = p.proveedor.nombre
 		  td.show-pedido = p.pedido_compra.numero
 		  td
@@ -26,7 +26,7 @@ table.table.table-condensed
 		  td.show-pedido = p.numero
 		  td.show-pedido = p.estado
 		  td.show-pedido = Formatter.format_datetime(p.created_at)
-		  td.show-pedido = p.costo_total
+		  td.show-pedido = p.total_requerido
 		  td.show-pedido = p.proveedor.nombre
 		  td.show-pedido = p.pedido_compra.numero
 		  td

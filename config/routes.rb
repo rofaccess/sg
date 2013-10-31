@@ -1,6 +1,6 @@
 Sg::Application.routes.draw do
 
-  resources :ordenes_compras do
+  resources :ordenes_compra do
     collection do
       post 'get_pedido_compra'
       post 'orden_personalizado'
@@ -54,7 +54,7 @@ Sg::Application.routes.draw do
 
   resources :marcas
 
-  resources :componentes_categorias
+  resources :componentes_categoria
 
   resources :configuraciones
 

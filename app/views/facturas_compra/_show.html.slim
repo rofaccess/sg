@@ -9,7 +9,7 @@
         | #{'  '} #{@factura_compra.proveedor.nombre}
       .col-md-4
         strong Fecha:
-        | #{'  '} #{Formatter.format_datetime(@factura_compra.fecha_compra)}
+        | #{'  '} #{Formatter.format_datetime(@factura_compra.fecha)}
       .col-md-3
         strong Estado:
         | #{'  '} #{@factura_compra.estado}

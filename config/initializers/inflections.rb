@@ -26,6 +26,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'orden_compra', 'ordenes_compra'
   inflect.irregular 'orden_compra_detalle', 'ordenes_compra_detalle'
   inflect.irregular 'componente_categoria_proveedor', 'componentes_categoria_proveedores'
+  inflect.irregular 'mercaderia', 'mercaderias'
   inflect.uncountable %w( fish sheep )
 end
 

@@ -1,4 +1,4 @@
-class OrdenesComprasController < ApplicationController
+class OrdenesCompraController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_orden_compra, only: [:show, :edit, :update, :destroy]
   before_action :set_sidemenu, only: [:index]
@@ -15,9 +15,9 @@ class OrdenesComprasController < ApplicationController
     @search = OrdenCompra.search(params[:q])
     @orden_compra = OrdenCompra.new
     if @search.sorts.empty?
-      @ordenes_compras = @search.result.order('estado').page(params[:page]).per(15)
+      @ordenes_compra = @search.result.order('estado').page(params[:page]).per(15)
     else
-      @ordenes_compras = @search.result.page(params[:page]).per(15)
+      @ordenes_compra = @search.result.page(params[:page]).per(15)
     end
   end
 
@@ -62,8 +62,8 @@ class OrdenesComprasController < ApplicationController
           total += d.costo_unitario
         end
       end
-      orden_compra = OrdenCompra.new( fecha: DateTime.now,
-                                              costo_total: total,
+      orden_compra = OrdenCompra.new( fecha_generado: DateTime.now,
+                                              total_requerido: total,
                                               estado: PedidosEstados::PENDIENTE,
                                               user_id: current_user.id,
                                               proveedor_id: c.proveedor_id,
@@ -89,8 +89,8 @@ class OrdenesComprasController < ApplicationController
     pedidos = params[:pedido_cotizacion]
     pedidos.each do |c, d|
       cotizacion = PedidoCotizacion.find(c)
-      orden_compra = OrdenCompra.new( fecha: DateTime.now,
-                                              costo_total: 0,
+      orden_compra = OrdenCompra.new( fecha_generado: DateTime.now,
+                                              total_requerido: 0,
                                               estado: PedidosEstados::PENDIENTE,
                                               user_id: current_user.id,
                                               proveedor_id: cotizacion.proveedor_id,
@@ -112,9 +112,9 @@ class OrdenesComprasController < ApplicationController
 
   def destroy
     if @orden_compra.destroy
-      redirect_to ordenes_compras_path, notice: t('messages.pedido_compra_deleted')
+      redirect_to ordenes_compra_path, notice: t('messages.pedido_compra_deleted')
     else
-      redirect_to ordenes_compras_path, alert: t('messages.pedido_compra_not_deleted')
+      redirect_to ordenes_compra_path, alert: t('messages.pedido_compra_not_deleted')
     end
   end
 
@@ -133,6 +133,6 @@ class OrdenesComprasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def orden_compra_params
-      params.require(:orden_compra).permit(:numero, :fecha, :costo_total, :estado, :user_id, :proveedor_id, :pedido_cotizacion_id)
+      params.require(:orden_compra).permit(:numero, :fecha_generado, :fecha_procesado, :total_requerido, :total_recibido, :estado, :user_id, :proveedor_id, :pedido_cotizacion_id)
     end
 end
