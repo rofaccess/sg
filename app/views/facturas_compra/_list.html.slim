@@ -22,8 +22,9 @@ table.table.table-condensed
 		td.show-factura = p.orden_compra.numero
 		td.show-factura = p.user.username
 		td
+		  = link_to '<i class="icon-print icon-large"></i> '.html_safe, imprimir_factura_factura_compra_path(p), remote: true
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, factura_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
 
 .hide.simbolo_moneda = @simbolo_moneda
 javascript:
-  //facturasCompraUI.formatearMontos();
+  facturasCompraUI.formatearMontos();

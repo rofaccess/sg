@@ -24,6 +24,9 @@ Sg::Application.routes.draw do
       post 'get_orden_compra'
       get 'check_numero'
     end
+    member do
+      get 'imprimir_factura'
+    end
   end
 
   resources :proveedores do

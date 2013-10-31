@@ -1,7 +1,7 @@
 class FacturasCompraController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_sidemenu, only: [:index]
-  before_action :set_factura_compra, only: [:show, :edit, :update, :destroy]
+  before_action :set_factura_compra, only: [:show, :edit, :update, :destroy, :imprimir_factura]
   respond_to :html, :js
   def set_sidemenu
     @sidebar_layout = 'layouts/compras_sidemenu'
@@ -91,6 +91,10 @@ class FacturasCompraController < ApplicationController
     respond_to do |format|
       format.json { render :json => condition}
     end
+  end
+
+  def imprimir_factura
+
   end
 
   def set_factura_compra
