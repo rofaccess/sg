@@ -12,9 +12,9 @@ class MarcasController < ApplicationController
   def index
     @search = Marca.search(params[:q])
     if @search.sorts.empty?
-      @marcas = @search.result.order('nombre').page(params[:page]).per(15)
+      @marcas = @search.result.order('nombre').page(params[:page])
     else
-      @marcas = @search.result.page(params[:page]).per(15)
+      @marcas = @search.result.page(params[:page])
     end
   end
 

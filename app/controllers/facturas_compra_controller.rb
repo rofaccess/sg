@@ -11,9 +11,9 @@ class FacturasCompraController < ApplicationController
     @search = FacturaCompra.search(params[:q])
     @factura_compra = FacturaCompra.new
     if @search.sorts.empty?
-      @facturas_compra = @search.result.order('estado').page(params[:page]).per(15)
+      @facturas_compra = @search.result.order('estado').page(params[:page])
     else
-      @facturas_compra = @search.result.page(params[:page]).per(15)
+      @facturas_compra = @search.result.page(params[:page])
     end
   end
 

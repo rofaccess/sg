@@ -11,9 +11,9 @@ class ProductosController < ApplicationController
   	@search = Producto.search(params[:q])
     @productos = @search.result
     if @search.sorts.empty?
-      @componentes = @search.result.order('nombre').page(params[:page]).per(15)
+      @componentes = @search.result.order('nombre').page(params[:page])
     else
-      @componentes = @search.result.page(params[:page]).per(15)
+      @componentes = @search.result.page(params[:page])
     end
   end
 

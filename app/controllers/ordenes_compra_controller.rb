@@ -15,9 +15,9 @@ class OrdenesCompraController < ApplicationController
     @search = OrdenCompra.search(params[:q])
     @orden_compra = OrdenCompra.new
     if @search.sorts.empty?
-      @ordenes_compra = @search.result.order('estado').page(params[:page]).per(15)
+      @ordenes_compra = @search.result.order('estado').page(params[:page])
     else
-      @ordenes_compra = @search.result.page(params[:page]).per(15)
+      @ordenes_compra = @search.result.page(params[:page])
     end
   end
 

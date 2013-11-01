@@ -1,4 +1,5 @@
 class Componente < Mercaderia
+	paginates_per 15
 	belongs_to :marca
 	belongs_to :componente_categoria
 	has_many :pedidos_compra_detalle

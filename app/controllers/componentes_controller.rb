@@ -14,9 +14,9 @@ class ComponentesController < ApplicationController
     @search = Componente.search(params[:q])
     @componente = Componente.new
     if @search.sorts.empty?
-      @componentes = @search.result.order('nombre').page(params[:page]).per(15)
+      @componentes = @search.result.order('nombre').page(params[:page])
     else
-      @componentes = @search.result.page(params[:page]).per(15)
+      @componentes = @search.result.page(params[:page])
     end
   end
 
