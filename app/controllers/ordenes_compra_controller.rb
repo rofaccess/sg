@@ -36,11 +36,11 @@ class OrdenesCompraController < ApplicationController
 
   def get_pedido_compra
     @pedido_compra = PedidoCompra.find(params[:id])
-    #if @pedido_compra.pedidos_cotizados.size > 0
+    if @pedido_compra.pedidos_cotizados.size > 0
       @mejores_precios = @pedido_compra.get_mejores_precios
-    #else
-
-    #end
+    else
+      @mejores_precios = nil
+    end
     render partial: 'get_pedido_compra', formats: 'html'
   end
 
@@ -87,21 +87,24 @@ class OrdenesCompraController < ApplicationController
     @search =OrdenCompra.search(params[:q])
     @pedido_compra = PedidoCompra.find(params[:orden_compra][:pedido_compra_id])
     pedidos = params[:pedido_cotizacion]
+    total_requerido = 0
     pedidos.each do |c, d|
       cotizacion = PedidoCotizacion.find(c)
       orden_compra = OrdenCompra.new( fecha_generado: DateTime.now,
-                                              total_requerido: 0,
-                                              estado: PedidosEstados::PENDIENTE,
-                                              user_id: current_user.id,
-                                              proveedor_id: cotizacion.proveedor_id,
-                                              pedido_cotizacion_id: cotizacion.id,
-                                              pedido_compra_id: cotizacion.pedido_compra_id)
+                                      estado: PedidosEstados::PENDIENTE,
+                                      user_id: current_user.id,
+                                      proveedor_id: cotizacion.proveedor_id,
+                                      pedido_cotizacion_id: cotizacion.id,
+                                      pedido_compra_id: cotizacion.pedido_compra_id)
 
       d[:detalles].each do |i, v|
         detalle = PedidoCotizacionDetalle.find(v)
         orden_compra.orden_compra_detalles.build(componente_id: detalle.componente_id, costo_unitario: detalle.costo_unitario, cantidad_requerida: detalle.cantidad_cotizada)
-
+        total_requerido += detalle.cantidad_cotizada*detalle.costo_unitario
       end
+
+      orden_compra.total_requerido = total_requerido
+      
       if orden_compra.orden_compra_detalles.size > 0
         orden_compra.save
       end

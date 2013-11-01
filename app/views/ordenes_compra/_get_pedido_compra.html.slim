@@ -1,51 +1,46 @@
-.alert.alert-info
-  | Hay #{@pedido_compra.pedido_cotizacions.where(estado: 'Cotizado').size} cotizaciones para el pedido de compra seleccionado
+- if @mejores_precios.nil?
+  .alert.alert-warning
+    | No hay pedidos de cotizacion cotizados para el pedido de compra N #{@pedido_compra.numero}
+- else
+  .alert.alert-info
+    | Hay #{@pedido_compra.pedido_cotizacions.where(estado: 'Cotizado').size} cotizaciones para el pedido de compra seleccionado
     <!-- span.fecha Generado el #{@pedido_compra.created_at} -->
-- @pedido_compra.pedido_cotizacions.where(estado: 'Cotizado').each do |p|
-  //= hidden_field_tag :pedido_cotizacion, p.id
-  .panel.panel-default.cotizacion-detalles
-    .panel-heading
-      = link_to '<i class="icon-remove icon-2x"></i> '.html_safe, '#', class: 'remover-cotizacion link-icon pull-right hide'
-      h3.panel-title Cotizacion N° #{p.numero}
-      h3.panel-title Proveedor: #{p.proveedor.nombre}
-      -total = 0
-    .panel-body
-      table.table
-        thead
-          tr
-            th Producto
-            th Marca
-            th Cantidad Requerida
-            th Cantidad Cotizada
-            th Costo Unit.
-            th Subtotal
-            th
-        tbody
-          - p.pedido_cotizacion_detalles.each do |d|
 
-            - mejor_precio = @mejores_precios.include?(d.id) ? 'success' : ''
-            tr [class="#{mejor_precio} cotizacion-detalle"]
-              = hidden_field_tag "pedido_cotizacion[#{p.id}][detalles][#{d.id}]", d.id
+- unless @mejores_precios.nil?
+  table.table
+    thead
+      tr
+        th Componente
+        th Marca
+        th Cantidad
+        th Costo Unit.
+        th Subtotal
+        th Proveedor
+        th
+    tbody
+      - @pedido_compra.pedido_compra_detalles.each do |d|
+        - p = PedidoCotizacionDetalle.find(@mejores_precios[d.id][0])
+        tr [class="cotizacion-detalle"]
+          td = d.componente.nombre
+          - if d.componente.marca.blank?
+            td Sin Marca
+          - else
+            td = d.componente.marca.nombre
+          td.monto-text.cantidad_cotizada = p.cantidad_cotizada.to_i
+          td.monto-text.costo_unitario = p.costo_unitario.to_i
+          td.monto-text.subtotal = p.cantidad_cotizada.to_i * p.costo_unitario.to_i
+          - prov = p.proveedores.map { |pr| ["#{pr.pedido_cotizacion.proveedor.nombre} - #{pr.costo_unitario.to_i}", "#{pr.id}-#{p.pedido_cotizacion.id}-#{pr.costo_unitario.to_i}"] }
+          //td = @mejores_precios[d.id]
+          td 
+            = select_tag 'proveedor_select', options_for_select(prov, selected: "#{p.id}-#{p.pedido_cotizacion.id}-#{p.costo_unitario.to_i}"), class: 'proveedor_for_orden'
+            = hidden_field_tag "pedido_cotizacion[#{p.pedido_cotizacion.id}][detalles][#{p.id}]", p.id, class: 'hidden-value'
+            - if @mejores_precios[d.id].size > 1
+              span.badge.badge-warning [data-toggle = "tooltip" data-original-title = "Hay #{@mejores_precios[d.id].size} proveedores con el mejor precio"] = @mejores_precios[d.id].size
+          td = link_to '<i class="icon-remove icon-large"></i> '.html_safe, '#', class: 'remover-detalle-cotizacion link-icon'
+  button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
+  = submit_tag 'Generar Orden de compra', class: 'btn btn-primary pull-right'
 
-              td = d.componente.nombre
-              - if d.componente.marca.blank?
-                td Sin Marca
-              - else
-                td = d.componente.marca.nombre
-              td = d.cantidad_requerida
-              td = d.cantidad_cotizada
-              - costo_unitario = d.costo_unitario.nil? ? 0 : d.costo_unitario
-              td = costo_unitario
-              td = (costo_unitario * d.cantidad_cotizada)
-              td = link_to '<i class="icon-remove icon-large"></i> '.html_safe, '#', class: 'remover-detalle-cotizacion link-icon'
-            -total += (costo_unitario * d.cantidad_cotizada)
-    .panel-footer
-      h3.panel-title.text-right TOTAL COTIZACION: #{total}
-
-= link_to 'Generar Orden Automaticamente', '#', class: 'orden-automatica btn btn-primary pull-right'
-
-button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
-= submit_tag 'Generar Orden personalizado', class: 'btn btn-primary pull-right'
-
-javascript:
-  pedidosCompraUI.hoverEventCotizaciones();
+  javascript:
+    pedidosCompraUI.hoverEventCotizaciones();
+    $('.monto-text').maskMoney({isDiv: true});
+    $('.monto-text').maskMoney('mask');
