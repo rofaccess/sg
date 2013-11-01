@@ -1,8 +1,25 @@
 .row.row-page-title
   h2 Ordenes de Compra
   = link_to 'Generar Orden de compras', new_orden_compra_path, class: 'btn btn-primary', remote: true
-.row
+.row.form-search.row-grid
   = render 'search'
+  = link_to '<i class="icon-filter"></i> Filtrar'.html_safe, '#', class: 'btn btn-sm btn-default pull-right filtrar-link'
+.row.form-filtrar.hide.row-grid
+  = search_form_for @search, method: :get, remote: true, class: 'form-filtros' do |f|
+    = FormBuilder::text_field_v(f, :numero_cont, {col_class: 'col-md-2', label_text: 'Numero'})
+    = FormBuilder::select(f, :estado_cont, ['Pendiente','Procesado', 'Ordenado'], {col_class: 'col-md-2', label_text: 'Estado'})
+    = FormBuilder::rango_fechas(f, :fecha_generado_gt, :fecha_generado_lt, {col_class: 'col-md-4', label_text: 'Fecha Generado'})
+    = FormBuilder::rango_fechas(f, :fecha_procesado_gt, :fecha_procesado_lt, {col_class: 'col-md-4', label_text: 'Fecha Procesado'})
+    = f.submit 'Filtrar', class: 'btn btn-default pull-right'
+    = f.submit 'Limpiar Filtros', type: 'reset', class: 'btn btn-link pull-right'
+
+  = link_to '<i class="icon-angle-up icon-large"></i>'.html_safe, '#', class: 'esconder-filtros link-icon', title: 'Cerrar Filtros', data: {toggle: 'tooltip'}
+.row.search-message.row-grid
+  h4.text-info.pull-left
+    |Se han encontrado #{' '}
+    span#pedidos-compra-size #{@ordenes_compra_size}
+    |  registros
+  = link_to '<i class="icon-print icon-large"></i> Imprimir Listado'.html_safe, '#', class: 'btn btn-default pull-right '
 
 div id="list"
   = render 'list'
