@@ -7,9 +7,9 @@ gem 'faker', '1.2.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
-gem 'sqlite3'
+#gem 'sqlite3'
 # Use mysql as the database for Active Record
-#gem 'mysql2', '0.3.13'
+gem 'mysql2', '0.3.13'
 
 gem 'thin', '1.5.1'
 
