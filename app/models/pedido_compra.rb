@@ -24,17 +24,22 @@ class PedidoCompra < ActiveRecord::Base
     detalles.each do |d|
       cotizaciones = d.cotizados # Cotizaciones cotizadas para este componente
       # Seteamos la primera cotizacion como mejor
-      mejor_precio = cotizaciones[0].costo_unitario
       mejor_precio_ids = []
 
       mejores_precios[d.id] = []
+      if cotizaciones.size > 0
+        mejor_precio = cotizaciones[0].costo_unitario
+      
 
-      cotizaciones.each do |cotizacion|
-        if !cotizacion.costo_unitario.nil? && cotizacion.costo_unitario < mejor_precio
-          mejor_precio = cotizacion.costo_unitario
-          mejor_precio_ids = [cotizacion.id]
-        elsif !cotizacion.costo_unitario.nil? && cotizacion.costo_unitario == mejor_precio
-          mejor_precio_ids.push(cotizacion.id)
+        cotizaciones.each do |cotizacion|
+          #unless cotizacion.costo_unitario.nil? || cotizacion.costo_unitario == 0
+            if cotizacion.costo_unitario < mejor_precio
+              mejor_precio = cotizacion.costo_unitario
+              mejor_precio_ids = [cotizacion.id]
+            elsif cotizacion.costo_unitario == mejor_precio
+              mejor_precio_ids.push(cotizacion.id)
+            end
+          #end
         end
       end
       mejores_precios[d.id] = mejor_precio_ids
