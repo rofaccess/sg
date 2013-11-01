@@ -28,11 +28,11 @@
             td = pedido_detalle.componente.nombre
             td = pedido_detalle.cantidad_requerida
             = pedido_form.fields_for :pedido_cotizacion_detalles, pedido_detalle do |detalle_form|
-              - pedido_detalle.cantidad_cotizada = pedido_detalle.cantidad_requerida if pedido_detalle.cantidad_cotizada.nil?
+              - pedido_detalle.cantidad_cotizada = pedido_detalle.cantidad_requerida if pedido_detalle.cantidad_cotizada == 0
               td
                 = detalle_form.text_field :cantidad_cotizada, class: 'cantidad-field pull-right'
               td
-                = detalle_form.text_field :costo_unitario, class: 'monto-field pull-right'
+                = detalle_form.text_field :costo_unitario, value: pedido_detalle.costo_unitario.to_i, class: 'monto-field pull-right'
     .row
       .col-md-12
         = pedido_form.submit submit_text, class: 'btn btn-primary pull-right'

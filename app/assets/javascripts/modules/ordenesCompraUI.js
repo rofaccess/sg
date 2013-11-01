@@ -17,6 +17,16 @@ var ordenesCompraUI = (function(){
 				ordenesCompraUI.cargarPedidosDetalles($(this).val());
 			});
 
+			$('body').on('change', '.proveedor_for_orden', function(e){
+				var values = $(this).val().split('-'),
+					row = $(this).parents('tr'),
+					cantidad = row.find('.cantidad_cotizada').text().replace(/\./g, '');
+				row.find('.hidden-value').attr('name', 'pedido_cotizacion['+values[1]+'][detalles]['+values[0]+']').val(values[0]);
+				row.find('.costo_unitario').text(values[2]);
+				row.find('.subtotal').text(parseInt(values[2])*parseInt(cantidad));
+				$('.monto-text').maskMoney('mask');
+			});
+
 			$('body').on('click', '.show-pedido', function(e){
 				$.get($(this).parents('tr').data('url'), {}, function(){}, 'script');
 			});

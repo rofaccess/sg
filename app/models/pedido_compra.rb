@@ -19,23 +19,31 @@ class PedidoCompra < ActiveRecord::Base
   # Retorna los mejores precios para cada componente de un pedido de compra
   def get_mejores_precios
     detalles = self.pedido_compra_detalles
-    mejores_precios = []
+    mejores_precios = {}
     # Por cada detalle/componente recorremos todas sus cotizaciones
     detalles.each do |d|
       cotizaciones = d.cotizados # Cotizaciones cotizadas para este componente
       # Seteamos la primera cotizacion como mejor
       mejor_precio = cotizaciones[0].costo_unitario
-      mejor_precio_id = cotizaciones[0].id
+      mejor_precio_ids = []
+
+      mejores_precios[d.id] = []
 
       cotizaciones.each do |cotizacion|
         if !cotizacion.costo_unitario.nil? && cotizacion.costo_unitario < mejor_precio
           mejor_precio = cotizacion.costo_unitario
-          mejor_precio_id = cotizacion.id
+          mejor_precio_ids = [cotizacion.id]
+        elsif !cotizacion.costo_unitario.nil? && cotizacion.costo_unitario == mejor_precio
+          mejor_precio_ids.push(cotizacion.id)
         end
       end
-      mejores_precios.push(mejor_precio_id)
+      mejores_precios[d.id] = mejor_precio_ids
     end
     mejores_precios
+  end
+
+  def pedidos_cotizados
+    self.pedido_cotizacions.where(estado: 'Cotizado')
   end
 
   def self.procesados

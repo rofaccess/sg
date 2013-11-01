@@ -15,7 +15,7 @@ table.table.table-condensed
 		  td.show-pedido = p.numero
 		  td.show-pedido = p.estado
 		  td.show-pedido = Formatter.format_datetime(p.created_at)
-		  td.show-pedido = p.total_requerido
+		  td.show-pedido.monto-text = p.total_requerido.to_i
 		  td.show-pedido = p.proveedor.nombre
 		  td.show-pedido = p.pedido_compra.numero
 		  td
@@ -26,8 +26,11 @@ table.table.table-condensed
 		  td.show-pedido = p.numero
 		  td.show-pedido = p.estado
 		  td.show-pedido = Formatter.format_datetime(p.created_at)
-		  td.show-pedido = p.total_requerido
+		  td.show-pedido.monto-text = p.total_requerido.to_i
 		  td.show-pedido = p.proveedor.nombre
 		  td.show-pedido = p.pedido_compra.numero
 		  td
 		    = link_to '<i class="icon-list icon-large"></i> '.html_safe, orden_compra_path(p), remote: true
+javascript:
+	$('.monto-text').maskMoney({isDiv: true});
+    $('.monto-text').maskMoney('mask');
