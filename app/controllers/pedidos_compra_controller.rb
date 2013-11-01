@@ -21,9 +21,9 @@ class PedidosCompraController < ApplicationController
     @pedido_compra = PedidoCompra.new
     @pedidos_compra_size = @search.result.size
     if @search.sorts.empty?
-      @pedidos_compra = @search.result.order('fecha_generado desc').page(params[:page]).per(15)
+      @pedidos_compra = @search.result.order('fecha_generado desc').page(params[:page])
     else
-      @pedidos_compra = @search.result.page(params[:page]).per(15)
+      @pedidos_compra = @search.result.page(params[:page])
     end
   end
 

@@ -1,4 +1,5 @@
 class FacturaCompra < ActiveRecord::Base
+	paginates_per 15
 	has_many   :factura_compra_detalles
 	belongs_to :orden_compra
 	belongs_to :proveedor

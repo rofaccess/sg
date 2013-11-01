@@ -1,4 +1,5 @@
 class ComponenteCategoria < ActiveRecord::Base
+	paginates_per 15
 	has_many :componentes
 	has_and_belongs_to_many :proveedores, join_table: 'componentes_categoria_proveedores'
 

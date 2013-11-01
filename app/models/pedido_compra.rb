@@ -1,6 +1,6 @@
 class PedidoCompra < ActiveRecord::Base
   protokoll :numero, pattern: '#####'
-  paginates_per 20
+  paginates_per 15
 
   has_many :pedido_compra_detalles
   has_many :pedido_cotizacions
