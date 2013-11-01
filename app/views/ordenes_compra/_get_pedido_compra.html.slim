@@ -19,24 +19,25 @@
         th
     tbody
       - @pedido_compra.pedido_compra_detalles.each do |d|
-        - p = PedidoCotizacionDetalle.find(@mejores_precios[d.id][0])
-        tr [class="cotizacion-detalle"]
-          td = d.componente.nombre
-          - if d.componente.marca.blank?
-            td Sin Marca
-          - else
-            td = d.componente.marca.nombre
-          td.monto-text.cantidad_cotizada = p.cantidad_cotizada.to_i
-          td.monto-text.costo_unitario = p.costo_unitario.to_i
-          td.monto-text.subtotal = p.cantidad_cotizada.to_i * p.costo_unitario.to_i
-          - prov = p.proveedores.map { |pr| ["#{pr.pedido_cotizacion.proveedor.nombre} - #{pr.costo_unitario.to_i}", "#{pr.id}-#{p.pedido_cotizacion.id}-#{pr.costo_unitario.to_i}"] }
-          //td = @mejores_precios[d.id]
-          td 
-            = select_tag 'proveedor_select', options_for_select(prov, selected: "#{p.id}-#{p.pedido_cotizacion.id}-#{p.costo_unitario.to_i}"), class: 'proveedor_for_orden'
-            = hidden_field_tag "pedido_cotizacion[#{p.pedido_cotizacion.id}][detalles][#{p.id}]", p.id, class: 'hidden-value'
-            - if @mejores_precios[d.id].size > 1
-              span.badge.badge-warning [data-toggle = "tooltip" data-original-title = "Hay #{@mejores_precios[d.id].size} proveedores con el mejor precio"] = @mejores_precios[d.id].size
-          td = link_to '<i class="icon-remove icon-large"></i> '.html_safe, '#', class: 'remover-detalle-cotizacion link-icon'
+        - if @mejores_precios[d.id].size > 0
+          - p = PedidoCotizacionDetalle.find(@mejores_precios[d.id][0])
+          tr [class="cotizacion-detalle"]
+            td = d.componente.nombre
+            - if d.componente.marca.blank?
+              td Sin Marca
+            - else
+              td = d.componente.marca.nombre
+            td.monto-text.cantidad_cotizada = p.cantidad_cotizada.to_i
+            td.monto-text.costo_unitario = p.costo_unitario.to_i
+            td.monto-text.subtotal = p.cantidad_cotizada.to_i * p.costo_unitario.to_i
+            - prov = p.proveedores.map { |pr| ["#{pr.pedido_cotizacion.proveedor.nombre} - #{pr.costo_unitario.to_i}", "#{pr.id}-#{p.pedido_cotizacion.id}-#{pr.costo_unitario.to_i}"] }
+            //td = @mejores_precios[d.id]
+            td 
+              = select_tag 'proveedor_select', options_for_select(prov, selected: "#{p.id}-#{p.pedido_cotizacion.id}-#{p.costo_unitario.to_i}"), class: 'proveedor_for_orden'
+              = hidden_field_tag "pedido_cotizacion[#{p.pedido_cotizacion.id}][detalles][#{p.id}]", p.id, class: 'hidden-value'
+              - if @mejores_precios[d.id].size > 1
+                span.badge.badge-warning [data-toggle = "tooltip" data-original-title = "Hay #{@mejores_precios[d.id].size} proveedores con el mejor precio"] = @mejores_precios[d.id].size
+            td = link_to '<i class="icon-remove icon-large"></i> '.html_safe, '#', class: 'remover-detalle-cotizacion link-icon'
   button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
   = submit_tag 'Generar Orden de compra', class: 'btn btn-primary pull-right'
 
