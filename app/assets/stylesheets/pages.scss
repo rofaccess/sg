@@ -328,6 +328,17 @@ tbody{
   }
 }
 
+//Eliminar margen a input en tablas
+td{
+  .form-group{
+    margin-bottom: 0;
+  }
+}
+
+.monto-text{
+  text-align: right;
+}
+
 #printable{
   .header{
     width: 400px;

@@ -1,3 +1,5 @@
+include ActionView::Helpers::NumberHelper
+
 module Formatter
 
   DATE_FORMAT = "%d/%m/%Y"
@@ -9,6 +11,10 @@ module Formatter
 
   def Formatter.format_datetime(datetime)
     (datetime != NIL) ? datetime.strftime(DATETIME_FORMAT) : NIL
+  end
+
+  def Formatter.to_money(monto)
+	number_with_precision(monto, precision: 0, separator: ',', delimiter: '.')
   end
 
 end
