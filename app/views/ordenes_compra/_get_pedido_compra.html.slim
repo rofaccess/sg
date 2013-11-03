@@ -1,5 +1,5 @@
 .alert.alert-warning.recargar-warning.hide
-  | Debe seleccionar por lo menos un detalle para generar la orden de compra. 
+  = "Debe seleccionar por lo menos un detalle para generar la orden de compra. "
   = link_to 'Recargar Detalles', '#', class: 'recargar-detalles'
 .orden-detalles
   - if @mejores_precios.nil?
@@ -35,8 +35,8 @@
               td.monto-text.subtotal = p.cantidad_cotizada.to_i * p.costo_unitario.to_i
               - prov = p.proveedores.map { |pr| ["#{pr.pedido_cotizacion.proveedor.nombre} - #{pr.costo_unitario_f}", "#{pr.id}-#{pr.pedido_cotizacion.id}-#{pr.costo_unitario.to_i}"] }
               //td = @mejores_precios[d.id]
-              td 
-                = select_tag 'proveedor_select', options_for_select(prov, selected: "#{p.id}-#{p.pedido_cotizacion.id}-#{p.costo_unitario.to_i}"), class: 'proveedor_for_orden'
+              td.precios-proveedores
+                = select_tag 'proveedor_select', options_for_select(prov, selected: "#{p.id}-#{p.pedido_cotizacion.id}-#{p.costo_unitario.to_i}"), class: 'proveedor_for_orden form-control'
                 = hidden_field_tag "pedido_cotizacion[#{p.pedido_cotizacion.id}][detalles][#{p.id}]", p.id, class: 'hidden-value'
                 - if @mejores_precios[d.id].size > 1
                   span.badge.badge-warning [data-toggle = "tooltip" data-original-title = "Hay #{@mejores_precios[d.id].size} proveedores con el mejor precio"] = @mejores_precios[d.id].size

@@ -1,6 +1,18 @@
 // Place all the styles related to the ordenes_compras controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.monto-text{
-	text-align: right;
+.precios-proveedores{
+	position: relative;
+	span.badge-warning{
+		position: absolute;
+		top: 0;
+		right: 0;
+		background-color: #DBA701;
+	}
+}
+
+.cotizacion-detalle{
+	td{
+		vertical-align: middle !important;
+	}
 }
