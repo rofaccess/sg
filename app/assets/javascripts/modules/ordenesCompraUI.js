@@ -17,6 +17,11 @@ var ordenesCompraUI = (function(){
 				ordenesCompraUI.cargarPedidosDetalles($(this).val());
 			});
 
+			$('body').on('click', '.recargar-detalles', function(e){
+				ordenesCompraUI.cargarPedidosDetalles($('#orden_compra_pedido_compra_id').val());
+				e.preventDefault();
+			});
+
 			$('body').on('change', '.proveedor_for_orden', function(e){
 				var values = $(this).val().split('-'),
 					row = $(this).parents('tr'),
@@ -29,6 +34,15 @@ var ordenesCompraUI = (function(){
 
 			$('body').on('click', '.show-pedido', function(e){
 				$.get($(this).parents('tr').data('url'), {}, function(){}, 'script');
+			});
+
+			$('body').on('click', '.remover-detalle-orden', function(e){
+				$(this).parents('tr.cotizacion-detalle').remove();
+				if($('.cotizacion-detalle').length == 0){
+					$('.orden-detalles').addClass('hide');
+					$('.recargar-warning').addClass('show');
+				}
+				e.preventDefault();
 			});
 
 			$('body').on('click', '.orden-automatica', function(e){

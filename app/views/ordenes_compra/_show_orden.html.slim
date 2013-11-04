@@ -1,5 +1,13 @@
+- if @orden_compra.estado == PedidosEstados::PENDIENTE
+  - estado_label = 'label-danger'
+- elsif @orden_compra.estado == PedidosEstados::FACTURADO
+  - estado_label = 'label-warning'
+
 .modal-body.pedido-detalles
+  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+
   .well
+    span[class="label #{estado_label} pull-right"] #{@orden_compra.estado}
     h3 Orden de compra N° #{@orden_compra.numero}
     h4 Proveedor: #{@orden_compra.proveedor.nombre}
     h5.extra Creado el: #{Formatter.format_date(@orden_compra.fecha_generado)}
@@ -9,9 +17,10 @@
         th Componente
         th Marca
         th Categoria
-        th Cantidad Requerida
-        th Cantidad Recibida
-        th Costo Unitario
+        th.text-right Cantidad Requerida
+        th.text-right Cantidad Recibida
+        th.text-right Costo Unitario
+        th.text-right Subtotal
 
     tbody
       - @orden_compra.orden_compra_detalles.each do |orden_detalle|
@@ -25,11 +34,17 @@
             td Sin Categoria
           - else
             td = orden_detalle.componente.componente_categoria.nombre
-          td.text-center = orden_detalle.cantidad_requerida
-          td.text-center = orden_detalle.cantidad_recibida
-          td.text-center.monto-text = orden_detalle.costo_unitario
-.panel-footer
-  h3.panel-title.text-right.monto-text TOTAL ORDEN: #{@orden_compra.total_requerido}
+          td.monto-text = orden_detalle.cantidad_requerida
+          td.monto-text = orden_detalle.cantidad_recibida
+          td.monto-text = orden_detalle.costo_unitario_f
+          td.monto-text = Formatter.to_money(orden_detalle.cantidad_recibida * orden_detalle.costo_unitario)
+
+  .panel-footer
+    h3.panel-title.text-right Total: #{@orden_compra.total_requerido_f}
+.modal-footer
+  button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cancelar
+  = link_to 'Cargar Factura', '#', class: 'btn btn-primary pull-right'
+
 
 javascript:
   // Enmascarar los campos numericos

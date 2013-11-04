@@ -52,6 +52,11 @@ $(function(){
 		e.preventDefault();
     });
 
+    $('body').on('reset', '.form-filtrar', function(e){
+    	//Limpiar select al resetear el fomulario de filtros.
+    	$(this).find('select').val('').trigger('change');
+    });
+
     // Agregar el icono para limpiar campos
     $('.has-clear').clearInput();
 
