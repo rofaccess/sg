@@ -20,14 +20,14 @@ h3 Factura N° #{@factura_compra.numero}
     dt Importe:
     dd = @factura_compra.total_factura
   dl.col-md-4
-    dt.col-md-2 Condicion de Pago:
+    dt Condicion:
     dd = @factura_compra.condicion_pago.nombre
     - if not @factura_compra.plazo_pago.blank?
-      dt.col-md-2 Plazo de pago:
+      dt Plazo:
       dd = @factura_compra.plazo_pago.nombre
-    dt.col-md-2 Orden de Compra:
+    dt Orden:
     dd = @factura_compra.orden_compra.numero
-    dt.col-md-2 Usuario:
+    dt Usuario:
     dd = @factura_compra.user.username
 
 table.table.table-condensed

@@ -69,6 +69,10 @@
     strong.row.col-md-2.text-right Total:
     .row.col-md-2.total.monto.text-right #{@factura_compra.total_factura}
 
+/Botones Cancelar y generar
+.panel-footer
+  button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
+  = link_to '<i class="icon-print icon-large"></i> Imprimir Factura'.html_safe, imprimir_factura_factura_compra_path(@factura_compra.id), class: 'btn btn-default pull-right', remote: true
 javascript:
   facturasCompraUI.formatearMontos();
 
