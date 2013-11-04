@@ -23,6 +23,7 @@ Sg::Application.routes.draw do
     collection do
       post 'get_orden_compra'
       get 'check_numero'
+      get 'imprimir_listado'
     end
     member do
       get 'imprimir_factura'
