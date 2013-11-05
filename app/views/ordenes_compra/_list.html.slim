@@ -3,10 +3,11 @@ table.table.table-condensed
 	tr
 	  th = sort_link(@search, :numero, "Numero", {}, method: :get, remote: true)
 	  th = sort_link(@search, :estado, "Estado", {}, method: :get, remote: true)
-	  th = sort_link(@search, :created_at, "Fecha", {}, method: :get, remote: true)
-	  th = sort_link(@search, :total_requerido, "Importe", {}, method: :get, remote: true)
+	  th = sort_link(@search, :created_at, "Fecha Generado", {}, method: :get, remote: true)
+	  th = sort_link(@search, :fecha_procesado, "Fecha Procesado", {}, method: :get, remote: true)
 	  th = sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
-	  th Pedido de compra
+	  th = sort_link(@search, :pedido_compra_id, "Pedido de compra", {}, method: :get, remote: true)
+	  th = sort_link(@search, :user_id, "Usuario", {}, method: :get, remote: true)
 	  th
   tbody
 	- @ordenes_compra.each do |p|
@@ -14,23 +15,25 @@ table.table.table-condensed
 	    tr.success [data-url="#{orden_compra_path(p)}"]
 		  td.show-pedido = p.numero
 		  td.show-pedido = p.estado
-		  td.show-pedido = Formatter.format_datetime(p.created_at)
-		  td.show-pedido.monto-text = p.total_requerido.to_i
+		  td.show-pedido = Formatter.format_datetime(p.fecha_generado)
+		  td.show-pedido = Formatter.format_datetime(p.fecha_procesado)
 		  td.show-pedido = p.proveedor.nombre
 		  td.show-pedido = p.pedido_compra.numero
-		  td
-		    = link_to '<i class="icon-ok icon-large"></i> '.html_safe, orden_compra_path(p), remote: true
+		  td.show-pedido = p.user.username
+		  td.hidden-print
+
 		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, orden_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
 	  - else
 	    tr [data-url="#{orden_compra_path(p)}"]
 		  td.show-pedido = p.numero
 		  td.show-pedido = p.estado
-		  td.show-pedido = Formatter.format_datetime(p.created_at)
-		  td.show-pedido.monto-text = p.total_requerido.to_i
+		  td.show-pedido = Formatter.format_datetime(p.fecha_generado)
+		  td.show-pedido = Formatter.format_datetime(p.fecha_procesado)
 		  td.show-pedido = p.proveedor.nombre
 		  td.show-pedido = p.pedido_compra.numero
-		  td
-		    = link_to '<i class="icon-list icon-large"></i> '.html_safe, orden_compra_path(p), remote: true
+		  td.show-pedido = p.user.username
+		  td.hidden-print
+
 javascript:
 	$('.monto-text').maskMoney({isDiv: true});
     $('.monto-text').maskMoney('mask');
