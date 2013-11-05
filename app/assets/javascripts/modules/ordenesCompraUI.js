@@ -57,6 +57,15 @@ var ordenesCompraUI = (function(){
 				});
 				e.preventDefault();
 			});
+
+			$('body').on('click', '.imprimir-ordenes-compra', function(e){
+				$.ajax({
+					url: $(this).attr('href'),
+					data: $('#orden_compra_search.form-filtros').serialize(),
+					dataType: 'script'
+				});
+				e.preventDefault();
+			});
 		}
 	};
 }());

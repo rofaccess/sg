@@ -12,6 +12,11 @@ class OrdenesCompraController < ApplicationController
 
 
   def index
+    #formatear las fechas
+    if defined? params[:q][:fecha_generado_lt]
+      setupFechas
+    end
+
     @search = OrdenCompra.search(params[:q])
     @orden_compra = OrdenCompra.new
     @ordenes_compra_size = @search.result.size
@@ -53,6 +58,13 @@ class OrdenesCompraController < ApplicationController
       @mejores_precios = nil
     end
     render partial: 'get_pedido_compra', formats: 'html'
+  end
+
+  def setupFechas
+      params[:q][:fecha_generado_lt] = params[:q][:fecha_generado_lt] + ' 23:59:59' unless params[:q][:fecha_generado_lt].blank?
+      params[:q][:fecha_procesado_lt] = params[:q][:fecha_procesado_lt] + ' 23:59:59' unless params[:q][:fecha_procesado_lt].blank?
+
+
   end
 
   # GET /ordenes_compras/1/edit
@@ -115,7 +127,7 @@ class OrdenesCompraController < ApplicationController
       end
 
       orden_compra.total_requerido = total_requerido
-      
+
       if orden_compra.orden_compra_detalles.size > 0
         orden_compra.save
       end
@@ -132,6 +144,13 @@ class OrdenesCompraController < ApplicationController
     end
   end
 
+
+  def imprimir_listado
+    setupFechas
+    @search = OrdenCompra.search(params[:q])
+    @ordenes_compra = @search.result.order('estado').order('fecha_generado')
+
+  end
 
 
   def update_list
