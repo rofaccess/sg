@@ -55,12 +55,16 @@ class FacturasCompraController < ApplicationController
         # Actualiza cantidades recibidas en los detalles de la orden de compra
         @factura_compra.factura_compra_detalles.each do |d|
           orden_compra_detalle = OrdenCompraDetalle.find(d.orden_compra_detalle_id)
-          if orden_compra_detalle.cantidad_recibida.blank?
-            can_rec_act = 0
+          cant = d.cantidad
+          cant_actual = orden_compra_detalle.cantidad_recibida
+          cant_requerida = orden_compra_detalle.cantidad_requerida
+          cant_invalida = ((cant + cant_actual) - cant_requerida)
+          if (cant_invalida > 0)
+            orden_compra_detalle.update(cantidad_recibida: cant_requerida)
+            d.update(cantidad: (cant - cant_invalida), cantidad_invalida: cant_invalida)
           else
-            can_rec_act = orden_compra_detalle.cantidad_recibida
+            orden_compra_detalle.update(cantidad_recibida: (cant_actual + cant))
           end
-          orden_compra_detalle.update(cantidad_recibida: (d.cantidad + can_rec_act))
         end
         # Cuando las cantidades recibidas y requeridas sean iguales el estado de la orden pasa a facturado
         if @orden_compra.orden_compra_detalles.sum('cantidad_recibida') == @orden_compra.orden_compra_detalles.sum('cantidad_requerida')
