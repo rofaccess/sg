@@ -15,7 +15,7 @@ table.table.table-condensed
 	    tr.success [data-url="#{orden_compra_path(p)}"]
 		  td.show-pedido = p.numero
 		  td.show-pedido = p.estado
-		  td.show-pedido = Formatter.format_datetime(p.created_at)
+		  td.show-pedido = Formatter.format_datetime(p.fecha_generado)
 		  td.show-pedido = Formatter.format_datetime(p.fecha_procesado)
 		  td.show-pedido = p.proveedor.nombre
 		  td.show-pedido = p.pedido_compra.numero
@@ -27,7 +27,7 @@ table.table.table-condensed
 	    tr [data-url="#{orden_compra_path(p)}"]
 		  td.show-pedido = p.numero
 		  td.show-pedido = p.estado
-		  td.show-pedido = Formatter.format_datetime(p.created_at)
+		  td.show-pedido = Formatter.format_datetime(p.fecha_generado)
 		  td.show-pedido = Formatter.format_datetime(p.fecha_procesado)
 		  td.show-pedido = p.proveedor.nombre
 		  td.show-pedido = p.pedido_compra.numero
