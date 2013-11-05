@@ -62,8 +62,12 @@ class FacturasCompraController < ApplicationController
           if (cant_invalida > 0)
             orden_compra_detalle.update(cantidad_recibida: cant_requerida)
             d.update(cantidad: (cant - cant_invalida), cantidad_invalida: cant_invalida)
+            # la factura se deberia guardar tal y como esta
+            # pero solo entra al stock la cantidad requerida
+            # Aca se actualiza el stock
           else
             orden_compra_detalle.update(cantidad_recibida: (cant_actual + cant))
+            # Aca se actualiza el stock
           end
         end
         # Cuando las cantidades recibidas y requeridas sean iguales el estado de la orden pasa a facturado
