@@ -30,6 +30,15 @@ var facturasCompraUI = (function(){
 			});
 
 			facturasCompraUI.formatearMontos();
+
+			$('body').on('click', '.imprimir-facturas-compra', function(e){
+				$.ajax({
+					url: $(this).attr('href'),
+					data: $('#factura_compra_search.form-filtros').serialize(),
+					dataType: 'script'
+				});
+				e.preventDefault();
+			});
 		},
 
 		// Calcula y formatea los montos una vez

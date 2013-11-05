@@ -7,14 +7,29 @@ class FacturasCompraController < ApplicationController
     @sidebar_layout = 'layouts/compras_sidemenu'
   end
   def index
-    @simbolo_moneda = Configuracion.find(1).simbolo_moneda
+    #formatear las fechas
+    if defined? params[:q][:fecha_lt]
+      setupFechas
+    end
+
     @search = FacturaCompra.search(params[:q])
-    @factura_compra = FacturaCompra.new
+    @facturas_compra_size = @search.result.size
     if @search.sorts.empty?
-      @facturas_compra = @search.result.order('estado').page(params[:page])
+      @facturas_compra = @search.result.order('fecha desc').order('estado desc').page(params[:page])
     else
       @facturas_compra = @search.result.page(params[:page])
     end
+  end
+
+  def imprimir_listado
+    setupFechas
+    @search = FacturaCompra.search(params[:q])
+    @facturas_compra = @search.result.order('estado').order('fecha')
+
+  end
+
+  def setupFechas
+      params[:q][:fecha_lt] = params[:q][:fecha_lt] + ' 23:59:59' unless params[:q][:fecha_lt].blank?
   end
 
   def new

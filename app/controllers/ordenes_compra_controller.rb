@@ -110,7 +110,7 @@ class OrdenesCompraController < ApplicationController
         orden_compra.save
       end
     end
-    @pedido_compra.update(estado: PedidosEstados::ORDENADO)
+    @pedido_compra.update(estado: PedidosEstados::ORDENADO, fecha_ordenado: DateTime.now)
 
   end
 

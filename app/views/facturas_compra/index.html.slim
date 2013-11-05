@@ -1,9 +1,35 @@
 .row.row-page-title
   h2 Facturas Recibidas
   = link_to 'Cargar Factura', new_factura_compra_path, class: 'btn btn-primary', remote: true
+.row.form-search.row-grid
+  = render 'search'
+  = link_to '<i class="icon-filter"></i> Filtrar'.html_safe, '#', class: 'btn btn-sm btn-default pull-right filtrar-link'
+.row.form-filtrar.hide.row-grid
+  = search_form_for @search, method: :get, remote: true, class: 'form-filtros' do |f|
+    = FormBuilder::text_field_v(f, :numero_cont, {col_class: 'col-md-2', label_text: 'Numero'})
+    = FormBuilder::select(f, :estado_cont, ['Pendiente','Pagado'], {col_class: 'col-md-2', label_text: 'Estado'})
+    = FormBuilder::rango_fechas(f, :fecha_gt, :fecha_lt, {col_class: 'col-md-4', label_text: 'Fecha'})
+    = FormBuilder::collection_select_v(f, :proveedor_id_eq, Proveedor.all, :id, :nombre, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Proveedor'})
+    = FormBuilder::collection_select_v(f, :orden_compra_id_eq, OrdenCompra.all, :id, :numero, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Orden de compra'})
+    = FormBuilder::collection_select_v(f, :condicion_pago_id_eq, CondicionPago.all, :id, :nombre, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Condicion de Pago'})
+    = FormBuilder::collection_select_v(f, :plazo_pago_id_eq, PlazoPago.all, :id, :nombre, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Plazo de Pago'})
+    .filter-actions.pull-right.col-md-3
+      = f.submit 'Filtrar', class: 'btn btn-default pull-right'
+      = f.submit 'Limpiar Filtros', type: 'reset', class: 'btn btn-link pull-right'
+
+  = link_to '<i class="icon-angle-up icon-large"></i>'.html_safe, '#', class: 'esconder-filtros link-icon', title: 'Cerrar Filtros', data: {toggle: 'tooltip'}
+
+.row.search-message.row-grid
+  h4.text-info.pull-left
+    |Se han encontrado #{' '}
+    span#facturas-compra-size #{@facturas_compra_size}
+    |  registros
+  = link_to '<i class="icon-print icon-large"></i> Imprimir Listado'.html_safe, imprimir_listado_facturas_compra_path, class: 'btn btn-default pull-right imprimir-facturas-compra'
 
 #list
   = render 'list'
 #paginator
   = paginate @facturas_compra, remote: true
 
+javascript:
+  $('.custom-select').select2();

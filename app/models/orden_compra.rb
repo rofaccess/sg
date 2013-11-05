@@ -1,4 +1,6 @@
 class OrdenCompra < ActiveRecord::Base
+	include Formatter
+
 	protokoll :numero, pattern: '#####'
     paginates_per 15
 
@@ -14,4 +16,8 @@ class OrdenCompra < ActiveRecord::Base
 	def self.procesados
     	OrdenCompra.where(estado: PedidosEstados::PROCESADO)
   	end
+
+  	def total_requerido_f
+  		Formatter.to_money(self.total_requerido)
+	end
 end
