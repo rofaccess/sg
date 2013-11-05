@@ -75,3 +75,7 @@ gem 'protokoll', git: 'git://github.com/celsodantas/protokoll.git', branch: 'rai
 
 # Dynamic nested forms using jQuery made easy; works with formtastic, simple_form or default forms
 gem "cocoon"
+
+gem 'wicked_pdf'
+
+gem 'wkhtmltopdf-binary'

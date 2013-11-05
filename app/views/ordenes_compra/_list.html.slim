@@ -19,7 +19,7 @@ table.table.table-condensed
 		  td.show-pedido = p.proveedor.nombre
 		  td.show-pedido = p.pedido_compra.numero
 		  td
-		    = link_to '<i class="icon-ok icon-large"></i> '.html_safe, orden_compra_path(p), remote: true
+		    = link_to '<i class="icon-print icon-large"></i> '.html_safe, orden_compra_path(p, format: 'pdf')
 		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, orden_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
 	  - else
 	    tr [data-url="#{orden_compra_path(p)}"]
@@ -30,7 +30,8 @@ table.table.table-condensed
 		  td.show-pedido = p.proveedor.nombre
 		  td.show-pedido = p.pedido_compra.numero
 		  td
-		    = link_to '<i class="icon-list icon-large"></i> '.html_safe, orden_compra_path(p), remote: true
+		    = link_to '<i class="icon-print icon-large"></i> '.html_safe, orden_compra_path(p, format: 'pdf')
+
 javascript:
 	$('.monto-text').maskMoney({isDiv: true});
     $('.monto-text').maskMoney('mask');

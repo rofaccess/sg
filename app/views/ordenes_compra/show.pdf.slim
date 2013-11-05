@@ -1,0 +1,39 @@
+- if @orden_compra.estado == PedidosEstados::PENDIENTE
+  - estado_label = 'label-danger'
+- elsif @orden_compra.estado == PedidosEstados::FACTURADO
+  - estado_label = 'label-warning'
+.well
+  span[class="label #{estado_label} pull-right"] #{@orden_compra.estado}
+  h3 Orden de compra N° #{@orden_compra.numero}
+  h4 Proveedor: #{@orden_compra.proveedor.nombre}
+  h5.extra Creado el: #{Formatter.format_date(@orden_compra.fecha_generado)}
+table.table.table-condensed
+  thead
+    tr
+      th Componente
+      th Marca
+      th Categoria
+      th.text-right Cantidad Requerida
+      th.text-right Cantidad Recibida
+      th.text-right Costo Unitario
+      th.text-right Subtotal
+
+  tbody
+    - @orden_compra.orden_compra_detalles.each do |orden_detalle|
+      tr
+        td = orden_detalle.componente.nombre
+        - if orden_detalle.componente.marca.blank?
+          td Sin Marca
+        - else
+          td = orden_detalle.componente.marca.nombre
+        - if orden_detalle.componente.componente_categoria.blank?
+          td Sin Categoria
+        - else
+          td = orden_detalle.componente.componente_categoria.nombre
+        td.monto-text = orden_detalle.cantidad_requerida
+        td.monto-text = orden_detalle.cantidad_recibida
+        td.monto-text = orden_detalle.costo_unitario_f
+        td.monto-text = Formatter.to_money(orden_detalle.cantidad_recibida * orden_detalle.costo_unitario)
+
+.panel-footer
+  h3.panel-title.text-right Total: #{@orden_compra.total_requerido_f}

@@ -20,4 +20,5 @@
  *= require ordenes_compras
  *= require jquery-ui
  *= require print
+ *= require pdf
  */

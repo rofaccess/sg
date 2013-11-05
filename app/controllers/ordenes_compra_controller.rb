@@ -2,7 +2,7 @@ class OrdenesCompraController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_orden_compra, only: [:show, :edit, :update, :destroy]
   before_action :set_sidemenu, only: [:index]
-  respond_to :html, :js
+  respond_to :html, :js, :pdf
 
   # GET /ordenes_compras
   # GET /ordenes_compras.json
@@ -27,6 +27,16 @@ class OrdenesCompraController < ApplicationController
   def show
     @orden_compra = OrdenCompra.find(params[:id])
     #@ordenes_compra_detalle = OrdenCompraDetalle.where('orden_compra_id=?', @orden_compra)
+
+    respond_to do |format|
+      format.js { render 'show' }
+      format.pdf { render :pdf => "orden_compra",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
+
   end
 
   # GET /ordenes_compras/new
