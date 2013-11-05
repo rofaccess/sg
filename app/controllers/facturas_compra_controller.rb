@@ -64,9 +64,9 @@ class FacturasCompraController < ApplicationController
         end
         # Cuando las cantidades recibidas y requeridas sean iguales el estado de la orden pasa a facturado
         if @orden_compra.orden_compra_detalles.sum('cantidad_recibida') == @orden_compra.orden_compra_detalles.sum('cantidad_requerida')
-          @orden_compra.update(estado: PedidosEstados::FACTURADO)
+          @orden_compra.update(estado: PedidosEstados::FACTURADO, fecha_procesado: DateTime.now)
         else
-          @orden_compra.update(estado: PedidosEstados::SEMIFACTURADO)
+          @orden_compra.update(estado: PedidosEstados::SEMIFACTURADO, fecha_procesado: DateTime.now)
         end
         update_list
       end
