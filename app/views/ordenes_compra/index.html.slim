@@ -22,7 +22,7 @@
     |Se han encontrado #{' '}
     span#pedidos-compra-size #{@ordenes_compra_size}
     |  registros
-  = link_to '<i class="icon-print icon-large"></i> Imprimir Listado'.html_safe, '#', class: 'btn btn-default pull-right '
+  = link_to '<i class="icon-print icon-large"></i> Imprimir Listado'.html_safe, imprimir_listado_ordenes_compra_path, class: 'btn btn-default pull-right imprimir-ordenes-compra'
 
 div id="list"
   = render 'list'

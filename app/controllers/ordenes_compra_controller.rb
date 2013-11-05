@@ -105,7 +105,7 @@ class OrdenesCompraController < ApplicationController
       end
 
       orden_compra.total_requerido = total_requerido
-      
+
       if orden_compra.orden_compra_detalles.size > 0
         orden_compra.save
       end
@@ -122,6 +122,13 @@ class OrdenesCompraController < ApplicationController
     end
   end
 
+
+  def imprimir_listado
+    @search = OrdenCompra.search(params[:q])
+
+    @ordenes_compra = @search.result.order('estado').order('fecha_generado')
+
+  end
 
 
   def update_list
