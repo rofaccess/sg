@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  orden_devolucion_id: 1
+  componente_id: 1
+  cantidad_devuelta: 1
+  costo_unitario: 9.99
+  iva: MyString
+  motivo: MyString
+
+two:
+  orden_devolucion_id: 1
+  componente_id: 1
+  cantidad_devuelta: 1
+  costo_unitario: 9.99
+  iva: MyString
+  motivo: MyString

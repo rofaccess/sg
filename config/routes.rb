@@ -1,5 +1,6 @@
 Sg::Application.routes.draw do
 
+  resources :ordenes_devolucion
   resources :ordenes_compra do
     collection do
       post 'get_pedido_compra'

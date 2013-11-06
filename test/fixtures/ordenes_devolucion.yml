@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  numero: MyString
+  total_orden: 9.99
+  total_iva: 9.99
+  fecha_generado: 2013-11-06 11:04:23
+  motivo: MyString
+  factura_compra_id: 1
+  proveedor_id: 1
+
+two:
+  numero: MyString
+  total_orden: 9.99
+  total_iva: 9.99
+  fecha_generado: 2013-11-06 11:04:23
+  motivo: MyString
+  factura_compra_id: 1
+  proveedor_id: 1

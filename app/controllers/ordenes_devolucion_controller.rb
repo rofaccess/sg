@@ -1,0 +1,2 @@
+class OrdenesDevolucionController < ApplicationController
+end
