@@ -1,4 +1,4 @@
-= form_for @factura_compra, html: {class: ''}, remote: true  do |f|
+= form_for @factura_compra, html: {class: 'factura_compra'}, remote: true  do |f|
   label.text-success Encabezado
   .row
     = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3', input_class: 'required numFactura'})

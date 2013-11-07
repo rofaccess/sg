@@ -171,7 +171,7 @@ var facturasCompraUI = (function(){
 		  	});
 
 		   	// Valida el formulario antes de enviarlo
-		  	$('form').validate();
+		  	$('form.factura_compra').validate();
 		}
 	};
 }());
