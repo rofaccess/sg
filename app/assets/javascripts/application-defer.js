@@ -15,6 +15,7 @@
 //= require modules/facturasCompraUI
 //= require modules/pedidosCompraUI
 //= require modules/ordenesCompraUI
+//= require modules/ordenesDevolucionUI
 //
 $(function(){
 	// Inicializar el validador para los formularios cuando se abre un modal

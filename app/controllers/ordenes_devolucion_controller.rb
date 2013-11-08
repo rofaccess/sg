@@ -41,7 +41,7 @@ class OrdenesDevolucionController < ApplicationController
   end
 
   def new
-    @facturas_compra = FacturaCompra.where(estado: 'Procesado')
+    @facturas_compra = FacturaCompra.where(estado: 'Pendiente')
     @orden_devolucion = OrdenDevolucion.new
   end
 
