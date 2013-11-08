@@ -120,7 +120,7 @@ module FormBuilder
         html << select_tag(field, options_from_collection_for_select(collection, value, text, option.key?(:selected) ? option[:selected] : nil),
                           {multiple: option.key?(:multiple) ? option[:multiple] : false,
                            prompt: option.key?(:prompt) ? option[:prompt] : '',
-                           class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}",
+                           class: "form-control #{option.key?(:select_class) ? option[:select_class] : ''}",
                            disabled: option.key?(:disabled) ? option[:disabled] : false,
                            readonly: option.key?(:readonly) ? option[:readonly] : false})
       else

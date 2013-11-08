@@ -5,8 +5,9 @@
     = FormBuilder::text_field_v(f, :fecha, {col_class: 'col-md-3', label_text: 'Fecha',input_class: 'required date datepicker'})
     = FormBuilder::text_field_v(f, :proveedor, {col_class: 'col-md-4', input_value: @orden_compra.proveedor.nombre, disabled: true})
   .row
-    = FormBuilder::collection_select_v(f, :condicion_pago_id, CondicionPago.all, :id, :nombre,{col_class: 'col-md-3', label_text: 'Condicion de Pago'})
-    = FormBuilder::collection_select_v(f, :plazo_pago_id, PlazoPago.all, :id, :nombre,{col_class: 'col-md-3 to-hide', label_text: 'Plazo de Pago', btn:'sepa'})
+    = FormBuilder::collection_select_v(f, :condicion_pago_id, CondicionPago.all, :id, :nombre,{col_class: 'col-md-3', label_text: 'Condicion de Pago', select_class:'required'})
+    = FormBuilder::collection_select_v(f, :plazo_pago_id, PlazoPago.all, :id, :nombre,{col_class: 'col-md-3 to-hide', label_text: 'Plazo de Pago', select_class:'required'})
+    = FormBuilder::collection_select_v(f, :deposito_destino_id, DepositoMateriaPrima.all, :id, :nombre,{col_class: 'col-md-4', label_text: 'Deposito Destino', select_class:'required'})
 
   / Formularios Ocultos
   = f.hidden_field(:proveedor_id,value:"#{@orden_compra.proveedor_id}")
@@ -25,7 +26,8 @@
           th Componente
           th Marca
           th Categoria
-          th.col-md-2 Cantidad
+          th.text-right.hide Faltante
+          th.text-right.col-md-2 Cantidad
           th.text-right Precio
           th.text-right Total
           th.text-right.col-md-2.hide % Iva
@@ -49,6 +51,7 @@
                 - if not o.componente.marca.blank?
                   td = o.componente.marca.nombre
                 td = o.componente.componente_categoria.nombre
+                td.text-right.faltante.hide = cantidad
                 td.cantidad = FormBuilder::text_field_v(d, :cantidad, {input_class: 'text-right required cantidadDocCom', input_value: cantidad, label_class: 'hide'})
                 /td.cantidad = d.text_field(:cantidad, class: 'form-control text-right required cantidadDocCom', value: cantidad)
                 td.text-right.monto #{o.costo_unitario}
@@ -83,7 +86,7 @@
   br
   div.alert.alert-info.alert-dismissable
     button.close [type="button" aria-hidden="true" data-dismiss="alert"] &times;
-    |Si elimina todos los detalles de la factura, la misma no se creara. Los detalles reapareceran si cierra y abre de nuevo el modal
+    |Si elimina todos los detalles de la factura, la misma no se creara. Use el boton recargar
 
   .modal-footer
     button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar

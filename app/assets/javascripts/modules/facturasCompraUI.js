@@ -17,6 +17,10 @@ var facturasCompraUI = (function(){
 				facturasCompraUI.cargarOrdenesDetalles($(this).val());
 			});
 
+			$('body').on('click', '#recargar_orden', function(e){
+				facturasCompraUI.cargarOrdenesDetalles($('#orden_compra_id').val());
+			});
+
 			$('body').on('click', '.show-factura', function(e){
 				$.get($(this).parents('tr').data('url'), {}, function(){}, 'script');
 			});
@@ -99,6 +103,11 @@ var facturasCompraUI = (function(){
 		    	$('table tbody tr').each(function() {
 		      		var precio = parseInt($('td.precio', this).text().replace(/^[^\d.]*/, ''));
 		      		var cantidad = parseInt ($('td.cantidad input', this).val());
+		      		var faltante = parseInt ($('td.faltante', this).text());
+		      		if (cantidad > faltante) {
+		      			cantidad = faltante;
+		      			$('td.cantidad input', this).val(cantidad);
+		      		}
 		      		var costo = cantidad * precio;
 		      		$('td.costo', this).text(costo);
 		      		var iva_p = ($('td.iva-p input', this).val()) / 100;
@@ -135,8 +144,8 @@ var facturasCompraUI = (function(){
 		    //Desactiva el select de plazos de pago
 		    $('#factura_compra_plazo_pago_id').attr("disabled",true);
 		    //Remueve opciones vacias
-		    $("#factura_compra_condicion_pago_id option:selected").remove();
-		    $("#factura_compra_plazo_pago_id option:selected").remove();
+		    //$("#factura_compra_condicion_pago_id option:selected").remove();
+		    //$("#factura_compra_plazo_pago_id option:selected").remove();
 		    //Controla los cambios en las opciones de condicion de pago
 		    $('#factura_compra_condicion_pago_id').change(function(){
 		        if ($(this).find(':selected').val() == '2') {

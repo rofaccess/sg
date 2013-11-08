@@ -8,7 +8,9 @@
 	  	option value=""Seleccione una orden de compra...
 	  	- @ordenes_compra.each do |o|
 	  		option value="#{o.id}" Orden #{o.numero} [#{o.proveedor.nombre}] #{o.estado}
-
+	.col-md-1
+		a class="btn btn-default" href="#" id="recargar_orden" data-toggle="tooltip" data-original-title="Recargar"
+			i class="icon-refresh icon-large"
 .modal-body
   .col-md-12
 	.detalles-orden-compra

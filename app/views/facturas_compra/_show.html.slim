@@ -1,32 +1,43 @@
 .modal-body
-  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
-  /Cabecera de la Factura
-  h3 Factura  #{@factura_compra.numero}
-  .col-md-12
-    .row
-      .col-md-5
-        strong Proveedor:
-        | #{'  '} #{@factura_compra.proveedor.nombre}
-      .col-md-4
-        strong Fecha:
-        | #{'  '} #{Formatter.format_datetime(@factura_compra.fecha)}
-      .col-md-3
-        strong Estado:
-        | #{'  '} #{@factura_compra.estado}
-    .row
-      .col-md-5
-        strong Condicion de Pago:
-        | #{'  '} #{@factura_compra.condicion_pago.nombre}
-      .col-md-5
-        - if not @factura_compra.plazo_pago.blank?
-          strong Plazo de Pago:
-          | #{'  '} #{@factura_compra.plazo_pago.nombre}
+  .well
+    button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+    /Cabecera de la Factura
+    h3 Factura Nº  #{@factura_compra.numero}
+    .col-md-12
+      .row
+        .col-md-5
+          strong Proveedor:
+          | #{'  '} #{@factura_compra.proveedor.nombre}
+        .col-md-4
+          strong Fecha:
+          | #{'  '} #{Formatter.format_date(@factura_compra.fecha)}
+        .col-md-3
+          strong Estado:
+          | #{'  '} #{@factura_compra.estado}
+      .row
+        .col-md-5
+          strong Deposito Destino:
+          | #{'  '} #{@factura_compra.deposito_destino_id}
+        .col-md-4
+          strong Orden de Compra:
+          | #{'  '} #{@factura_compra.orden_compra.numero}
+        .col-md-3
+          strong Usuario:
+          | #{'  '} #{@factura_compra.user.username}
+      .row
+        .col-md-5
+          strong Condicion de Pago:
+          | #{'  '} #{@factura_compra.condicion_pago.nombre}
+        .col-md-5
+          - if not @factura_compra.plazo_pago.blank?
+            strong Plazo de Pago:
+            | #{'  '} #{@factura_compra.plazo_pago.nombre}
 
   /Detalles de la factura
   /Tabs
   br
   .table-scroll
-    table.table.table-bordered.table-condensed
+    table.table.table-condensed.table-striped
       thead
         tr.text-muted
           th #
@@ -72,7 +83,7 @@
 /Botones Cancelar y generar
 .panel-footer
   button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
-  = link_to '<i class="icon-print icon-large"></i> Imprimir Factura'.html_safe, imprimir_factura_factura_compra_path(@factura_compra.id), class: 'btn btn-default pull-right', remote: true
+  = link_to '<i class="icon-print icon-large"></i> Imprimir Factura'.html_safe, factura_compra_path(@factura_compra.id, format: 'pdf'), class: 'btn btn-default pull-right'
 javascript:
   facturasCompraUI.formatearMontos();
 

@@ -20,5 +20,6 @@ module Domain
 	NUMERO_DOC_COM = 15
 	ABREVIATURA    = 5
 	TIPO_MERCADERIA	= 10
+	TIPO_DEPOSITO	= 25
 
 end

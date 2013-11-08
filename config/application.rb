@@ -29,6 +29,7 @@ module Sg
     # Ubicacion de todos los modelos STI
     config.autoload_paths += %W(#{config.root}/app/models/personas)
     config.autoload_paths += %W(#{config.root}/app/models/mercaderias)
+    config.autoload_paths += %W(#{config.root}/app/models/depositos)
 
   end
 end
