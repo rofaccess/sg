@@ -18,7 +18,7 @@ var facturasCompraUI = (function(){
 			});
 
 			$('body').on('click', '#recargar_orden', function(e){
-				facturasCompraUI.cargarOrdenesDetalles($('#orden_compra_id').val());
+				facturasCompraUI.cargarOrdenesDetalles('facturas_compra/get_orden_compra', $('#orden_compra_id').val(), '#main-modal .detalles-orden-compra');
 			});
 
 			$('body').on('click', '.show-factura', function(e){
