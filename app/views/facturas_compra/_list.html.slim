@@ -3,6 +3,7 @@ table.table.table-condensed
 	tr
 	  th = sort_link(@search, :numero, "Numero", {}, method: :get, remote: true)
 	  th = sort_link(@search, :condicion_pago_id, "Condicion de Pago", {}, method: :get, remote: true)
+	  th = sort_link(@search, :plazo_pago_id, "Plazo de Pago", {}, method: :get, remote: true)
 	  th = sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
 	  th = sort_link(@search, :fecha, "Fecha", {}, method: :get, remote: true)
 	  th.text-right = sort_link(@search, :total_factura, "Importe", {}, method: :get, remote: true)
@@ -16,6 +17,10 @@ table.table.table-condensed
 	  tr [data-url="#{factura_compra_path(p)}"]
 		td.show-factura = p.numero
 		td.show-factura = p.condicion_pago.nombre
+		- if p.plazo_pago.blank?
+		  td
+		- else
+		  td.show-factura = p.plazo_pago.nombre
 		td.show-factura = p.proveedor.nombre
 		td.show-factura = Formatter.format_datetime(p.fecha)
 		td.show-factura.monto.text-right = p.total_factura
