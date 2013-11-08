@@ -1,3 +1,4 @@
 | $("#list").html("#{escape_javascript(render partial: 'list', format: 'html')}");
 | $('#main-modal').modal('hide');
 | $('#paginator').html("#{escape_javascript(paginate(@facturas_compra, remote: true)) }");
+| $('#facturas-compra-size').text('#{@facturas_compra_size}');

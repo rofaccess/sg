@@ -1,12 +1,15 @@
 = form_for @factura_compra, html: {class: ''}, remote: true  do |f|
-  label.text-success Encabezado
+  - if params[:from_orden_abm]
+    = hidden_field_tag(:from_orden_abm, 'true')
+  label.title-seccion Encabezado
   .row
     = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3', input_class: 'required numFactura'})
     = FormBuilder::text_field_v(f, :fecha, {col_class: 'col-md-3', label_text: 'Fecha',input_class: 'required date datepicker'})
     = FormBuilder::text_field_v(f, :proveedor, {col_class: 'col-md-4', input_value: @orden_compra.proveedor.nombre, disabled: true})
   .row
-    = FormBuilder::collection_select_v(f, :condicion_pago_id, CondicionPago.all, :id, :nombre,{col_class: 'col-md-3', label_text: 'Condicion de Pago'})
-    = FormBuilder::collection_select_v(f, :plazo_pago_id, PlazoPago.all, :id, :nombre,{col_class: 'col-md-3 to-hide', label_text: 'Plazo de Pago', btn:'sepa'})
+    = FormBuilder::collection_select_v(f, :condicion_pago_id, CondicionPago.all, :id, :nombre,{col_class: 'col-md-3', label_text: 'Condicion de Pago', select_class:'required'})
+    = FormBuilder::collection_select_v(f, :plazo_pago_id, PlazoPago.all, :id, :nombre,{col_class: 'col-md-3 to-hide', label_text: 'Plazo de Pago', select_class:'required'})
+    = FormBuilder::collection_select_v(f, :deposito_destino_id, DepositoMateriaPrima.all, :id, :nombre,{col_class: 'col-md-4', label_text: 'Deposito Destino', select_class:'required'})
 
   / Formularios Ocultos
   = f.hidden_field(:proveedor_id,value:"#{@orden_compra.proveedor_id}")
@@ -16,7 +19,7 @@
   = f.hidden_field(:total_factura, class: "total-f")
   = f.hidden_field(:total_iva, class: "total-i")
 
-  label.text-success Detalles
+  label.title-seccion Detalles
   .row.table-scroll-factura
     table.table-condensed.table-striped
       thead
@@ -25,7 +28,8 @@
           th Componente
           th Marca
           th Categoria
-          th.col-md-2 Cantidad
+          th.text-right.hide Faltante
+          th.text-right.col-md-2 Cantidad
           th.text-right Precio
           th.text-right Total
           th.text-right.col-md-2.hide % Iva
@@ -49,6 +53,7 @@
                 - if not o.componente.marca.blank?
                   td = o.componente.marca.nombre
                 td = o.componente.componente_categoria.nombre
+                td.text-right.faltante.hide = cantidad
                 td.cantidad = FormBuilder::text_field_v(d, :cantidad, {input_class: 'text-right required cantidadDocCom', input_value: cantidad, label_class: 'hide'})
                 /td.cantidad = d.text_field(:cantidad, class: 'form-control text-right required cantidadDocCom', value: cantidad)
                 td.text-right.monto #{o.costo_unitario}
@@ -62,6 +67,8 @@
                 = d.hidden_field(:iva_valor, value: o.componente.iva.valor)
                 = d.hidden_field(:costo_unitario, value: o.costo_unitario)
                 = d.hidden_field(:orden_compra_detalle_id, value: o.id)
+
+  label.title-seccion Totales
   .row
     .row.col-md-9
     strong.row.col-md-2.text-right Subtotales:
@@ -83,7 +90,7 @@
   br
   div.alert.alert-info.alert-dismissable
     button.close [type="button" aria-hidden="true" data-dismiss="alert"] &times;
-    |Si elimina todos los detalles de la factura, la misma no se creara. Los detalles reapareceran si cierra y abre de nuevo el modal
+    |Si elimina todos los detalles de la factura, la misma no se creara. Use el boton recargar
 
   .modal-footer
     button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar

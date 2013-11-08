@@ -92,3 +92,7 @@ PlazoPago.all.each do |p|
 		PlazoPagoDetalle.create(plazo_pago_id: p.id, cant_dias: dias[c])
 	end
 end
+
+# Crear Depositos para materia prima y productos terminados
+DepositoMateriaPrima.create(nombre: "Casa Central - Materia Prima", disponible: true)
+DepositoProductoTerminado.create(nombre: "Casa Central - Producto Terminado", disponible: true)

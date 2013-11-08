@@ -1,2 +1,6 @@
 | $("#list").html("#{escape_javascript(render partial: 'list', format: 'html')}");
 | $('#paginator').html("#{escape_javascript(paginate(@ordenes_compra, remote: true)) }");
+| $('#ordenes-compra-size').text('#{@ordenes_compra_size}');
+- if params[:recargar_modal]
+  | $.get('#{ordenes_compra_path}/#{params[:orden_compra_id]}', {}, function(){}, 'script');
+

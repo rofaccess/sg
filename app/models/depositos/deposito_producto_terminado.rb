@@ -1,0 +1,2 @@
+class DepositoProductoTerminado < Deposito
+end

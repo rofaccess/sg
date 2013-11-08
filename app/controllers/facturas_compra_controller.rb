@@ -57,18 +57,8 @@ class FacturasCompraController < ApplicationController
           orden_compra_detalle = OrdenCompraDetalle.find(d.orden_compra_detalle_id)
           cant = d.cantidad
           cant_actual = orden_compra_detalle.cantidad_recibida
-          cant_requerida = orden_compra_detalle.cantidad_requerida
-          cant_invalida = ((cant + cant_actual) - cant_requerida)
-          if (cant_invalida > 0)
-            orden_compra_detalle.update(cantidad_recibida: cant_requerida)
-            d.update(cantidad: (cant - cant_invalida), cantidad_invalida: cant_invalida)
-            # la factura se deberia guardar tal y como esta
-            # pero solo entra al stock la cantidad requerida
-            # Aca se actualiza el stock
-          else
-            orden_compra_detalle.update(cantidad_recibida: (cant_actual + cant))
-            # Aca se actualiza el stock
-          end
+          orden_compra_detalle.update(cantidad_recibida: (cant_actual + cant))
+          # Aca se actualiza el stock
         end
         # Cuando las cantidades recibidas y requeridas sean iguales el estado de la orden pasa a facturado
         if @orden_compra.orden_compra_detalles.sum('cantidad_recibida') == @orden_compra.orden_compra_detalles.sum('cantidad_requerida')
@@ -76,7 +66,11 @@ class FacturasCompraController < ApplicationController
         else
           @orden_compra.update(estado: PedidosEstados::SEMIFACTURADO, fecha_procesado: DateTime.now)
         end
-        update_list
+        if params[:from_orden_abm]
+          redirect_to update_list_ordenes_compra_path(recargar_modal: true, orden_compra_id: @orden_compra.id)
+        else
+          update_list
+        end
       end
     end
   end
@@ -87,7 +81,14 @@ class FacturasCompraController < ApplicationController
   end
 
   def show
-    #@simbolo_moneda = Configuracion.find(1).simbolo_moneda
+    respond_to do |format|
+      format.js { render 'show' }
+      format.pdf { render :pdf => "factura_compra",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   def update
@@ -125,7 +126,7 @@ class FacturasCompraController < ApplicationController
   end
 
   def factura_compra_params
-      params.require(:factura_compra).permit(:numero, :fecha, :total_iva, :total_factura, :proveedor_id, :condicion_pago_id, :plazo_pago_id, :user_id, :estado, :orden_compra_id,
+      params.require(:factura_compra).permit(:numero, :fecha, :total_iva, :total_factura, :proveedor_id, :condicion_pago_id, :plazo_pago_id, :user_id, :estado, :orden_compra_id,:deposito_destino_id,
           factura_compra_detalles_attributes: [:componente_id, :cantidad, :costo_unitario, :iva_valor, :orden_compra_detalle_id])
   end
 end

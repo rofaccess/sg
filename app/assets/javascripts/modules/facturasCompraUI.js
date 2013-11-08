@@ -1,20 +1,24 @@
 var facturasCompraUI = (function(){
 	return {
-		cargarOrdenesDetalles: function(id){
+		cargarOrdenesDetalles: function(url, id, replace){
 			$.ajax({
-				url: 'facturas_compra/get_orden_compra',
+				url: url,
 				type: 'post',
 				dataType: 'html',
 				data: {id: id},
 				success: function(response){
-					$('#main-modal .detalles-orden-compra').html(response);
+					$(replace).html(response);
 				}
 			});
 		},
 
 		init: function(){
 			$('body').on('change', '#orden_compra_id', function(e){
-				facturasCompraUI.cargarOrdenesDetalles($(this).val());
+				facturasCompraUI.cargarOrdenesDetalles('facturas_compra/get_orden_compra', $(this).val(), '#main-modal .detalles-orden-compra');
+			});
+
+			$('body').on('click', '#recargar_orden', function(e){
+				facturasCompraUI.cargarOrdenesDetalles('facturas_compra/get_orden_compra', $('#orden_compra_id').val(), '#main-modal .detalles-orden-compra');
 			});
 
 			$('body').on('click', '.show-factura', function(e){
@@ -99,6 +103,11 @@ var facturasCompraUI = (function(){
 		    	$('table tbody tr').each(function() {
 		      		var precio = parseInt($('td.precio', this).text().replace(/^[^\d.]*/, ''));
 		      		var cantidad = parseInt ($('td.cantidad input', this).val());
+		      		var faltante = parseInt ($('td.faltante', this).text());
+		      		if (cantidad > faltante) {
+		      			cantidad = faltante;
+		      			$('td.cantidad input', this).val(cantidad);
+		      		}
 		      		var costo = cantidad * precio;
 		      		$('td.costo', this).text(costo);
 		      		var iva_p = ($('td.iva-p input', this).val()) / 100;
@@ -135,8 +144,8 @@ var facturasCompraUI = (function(){
 		    //Desactiva el select de plazos de pago
 		    $('#factura_compra_plazo_pago_id').attr("disabled",true);
 		    //Remueve opciones vacias
-		    $("#factura_compra_condicion_pago_id option:selected").remove();
-		    $("#factura_compra_plazo_pago_id option:selected").remove();
+		    //$("#factura_compra_condicion_pago_id option:selected").remove();
+		    //$("#factura_compra_plazo_pago_id option:selected").remove();
 		    //Controla los cambios en las opciones de condicion de pago
 		    $('#factura_compra_condicion_pago_id').change(function(){
 		        if ($(this).find(':selected').val() == '2') {
@@ -171,7 +180,7 @@ var facturasCompraUI = (function(){
 		  	});
 
 		   	// Valida el formulario antes de enviarlo
-		  	$('form').validate();
+		  	$('#new_factura_compra').validate();
 		}
 	};
 }());
