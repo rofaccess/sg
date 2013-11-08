@@ -4,13 +4,15 @@
   - estado_label = 'label-warning'
 
 .modal-body.pedido-detalles
-  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+  .col-md-12
+    button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
 
-  = render partial: 'orden_detalles', locals: {estado_label: estado_label}
+    = render partial: 'orden_detalles', locals: {estado_label: estado_label}
 
 .modal-footer
   button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cancelar
-  = link_to 'Cargar Factura', '#', class: 'btn btn-primary pull-right'
+  - if @orden_compra.estado == PedidosEstados::PENDIENTE
+    = link_to 'Cargar Factura', '#', class: 'btn btn-primary pull-right', onClick: "facturasCompraUI.cargarOrdenesDetalles('facturas_compra/get_orden_compra?from_orden_abm=true',#{@orden_compra.id}, '#main-modal .pedido-detalles>.col-md-12'); $('#main-modal .modal-footer').hide();"
 
 
 javascript:

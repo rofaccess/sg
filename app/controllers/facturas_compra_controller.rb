@@ -76,7 +76,11 @@ class FacturasCompraController < ApplicationController
         else
           @orden_compra.update(estado: PedidosEstados::SEMIFACTURADO, fecha_procesado: DateTime.now)
         end
-        update_list
+        if params[:from_orden_abm]
+          redirect_to update_list_ordenes_compra_path(recargar_modal: true, orden_compra_id: @orden_compra.id)
+        else
+          update_list
+        end
       end
     end
   end

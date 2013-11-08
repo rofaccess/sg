@@ -1,5 +1,7 @@
 = form_for @factura_compra, html: {class: ''}, remote: true  do |f|
-  label.text-success Encabezado
+  - if params[:from_orden_abm]
+    = hidden_field_tag(:from_orden_abm, 'true')
+  label.title-seccion Encabezado
   .row
     = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3', input_class: 'required numFactura'})
     = FormBuilder::text_field_v(f, :fecha, {col_class: 'col-md-3', label_text: 'Fecha',input_class: 'required date datepicker'})
@@ -16,7 +18,7 @@
   = f.hidden_field(:total_factura, class: "total-f")
   = f.hidden_field(:total_iva, class: "total-i")
 
-  label.text-success Detalles
+  label.title-seccion Detalles
   .row.table-scroll-factura
     table.table-condensed.table-striped
       thead
@@ -62,6 +64,8 @@
                 = d.hidden_field(:iva_valor, value: o.componente.iva.valor)
                 = d.hidden_field(:costo_unitario, value: o.costo_unitario)
                 = d.hidden_field(:orden_compra_detalle_id, value: o.id)
+
+  label.title-seccion Totales
   .row
     .row.col-md-9
     strong.row.col-md-2.text-right Subtotales:

@@ -1,20 +1,20 @@
 var facturasCompraUI = (function(){
 	return {
-		cargarOrdenesDetalles: function(id){
+		cargarOrdenesDetalles: function(url, id, replace){
 			$.ajax({
-				url: 'facturas_compra/get_orden_compra',
+				url: url,
 				type: 'post',
 				dataType: 'html',
 				data: {id: id},
 				success: function(response){
-					$('#main-modal .detalles-orden-compra').html(response);
+					$(replace).html(response);
 				}
 			});
 		},
 
 		init: function(){
 			$('body').on('change', '#orden_compra_id', function(e){
-				facturasCompraUI.cargarOrdenesDetalles($(this).val());
+				facturasCompraUI.cargarOrdenesDetalles('facturas_compra/get_orden_compra', $(this).val(), '#main-modal .detalles-orden-compra');
 			});
 
 			$('body').on('click', '.show-factura', function(e){
@@ -171,7 +171,7 @@ var facturasCompraUI = (function(){
 		  	});
 
 		   	// Valida el formulario antes de enviarlo
-		  	$('form').validate();
+		  	$('#new_factura_compra').validate();
 		}
 	};
 }());
