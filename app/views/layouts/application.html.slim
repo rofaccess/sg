@@ -12,6 +12,9 @@ html
     #container.hidden-print
       - unless @sidebar_layout.nil?
         aside#sidebar-menu.hidden-print
+          = link_to "#", class: 'btn btn-success', id: 'toggle-sidebar', data: {status: 'open', toggle: 'tooltip', 'original-title' => 'Mostrar/Ocultar menú lateral.', placement: 'right'} do
+            i.icon-chevron-left
+          div
     		  = render @sidebar_layout
         #content-wrapper.has-sidebar
     		  = yield
