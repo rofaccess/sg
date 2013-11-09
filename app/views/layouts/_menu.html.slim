@@ -1,0 +1,32 @@
+nav.navbar.navbar-default.navbar-custom.navbar-fixed-top.hidden-print [role="navigation"]
+  .navbar-header
+    button.navbar-toggle [type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse"]
+    span.sr-only
+    span.icon-bar
+    span.icon-bar
+    span.icon-bar
+    a.navbar-brand [href="#"] = @config.nombre
+    //img src="<%#= @config.imagen.url(:thumb) %>
+  .collapse.navbar-collapse.navbar-ex1-collapse
+    ul.nav.navbar-nav
+      li [class="#{current_menu([pages_index_path])}"]
+        = link_to 'Inicio', pages_index_path
+      li [class="#{current_menu([proveedores_path, pedidos_compra_path, facturas_compra_path, pedidos_cotizacion_path])} dropdown"]
+        = link_to 'Compras'.html_safe, pedidos_compra_path
+        ul.dropdown-menu
+          //= render 'layouts/compras_sidemenu'
+      li [class="#{current_menu([componentes_path, marcas_path, productos_path])}"]
+        = link_to 'Stock', componentes_path
+      li [class="#{current_menu([configuraciones_path, localidades_path])}"]
+        = link_to 'Configuración', configuraciones_path
+    ul.nav.navbar-nav.navbar-right
+      li.dropdown
+        a [href="#" class="dropdown-toggle" data-toggle="dropdown"]
+          i.icon-user
+          = current_user.email
+          b.caret
+        ul.dropdown-menu
+          li
+            a [href="#"] Perfil
+          li
+            = link_to "Salir", destroy_user_session_path, method: :delete

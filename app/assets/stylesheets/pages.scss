@@ -34,7 +34,7 @@
   					color: #000;
   				}
   			}
-  			&.active a{
+  			&.active>a{
   				color: #fff;
   				border: 1px solid $navbar-link-active-border;
   				@include gradient-vertical($navbar-link-active-start, $navbar-link-active-end);
@@ -43,6 +43,9 @@
   				}
   			}
   		}
+      .icon-chevron-right{
+        display: none;
+      }
   	}
 }
 
@@ -117,6 +120,13 @@ body{
   width: 200px;
   height: 100%;
   background: $sidebar-bg;
+  #toggle-sidebar{
+    position: absolute;
+    right: -35px;
+  }
+  &.hidden-sidebar{
+    margin-left: -200px;
+  }
   .menu{
     list-style: none;
     padding:0;
@@ -146,6 +156,7 @@ body{
   margin-left: 200px;
 }
 
+
 // Icon links
 .link-icon{
   color: #777;
@@ -160,9 +171,14 @@ body{
 #content-wrapper{
   background: #fff;
   padding: 0 15px;
+  padding-top: 20px;
   &>.row{
     margin-left: 0;
     margin-right: 0;
+  }
+
+  &.hidden-sidebar{
+    margin-left: 0;
   }
 
   #add-form{

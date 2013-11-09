@@ -1,0 +1,10 @@
+.modal-header
+  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+  h4.modal-title Generar Orden de Devolucion
+.modal-body
+  .row
+    = form_for @orden_devolucion, html: {class: 'form-horizontal'}, remote: true do |f|
+      .col-md-12
+        = FormBuilder::collection_select(f, :factura_compra_id, @facturas_compra, :id, :numero, 'Seleccione una factura de compra...', nil, 'col-md-8', '')
+      .col-md-12
+        .detalles-factura-compra

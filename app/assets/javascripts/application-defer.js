@@ -15,6 +15,7 @@
 //= require modules/facturasCompraUI
 //= require modules/pedidosCompraUI
 //= require modules/ordenesCompraUI
+//= require modules/ordenesDevolucionUI
 //
 $(function(){
 	// Inicializar el validador para los formularios cuando se abre un modal
@@ -55,6 +56,19 @@ $(function(){
     $('body').on('reset', '.form-filtrar', function(e){
     	//Limpiar select al resetear el fomulario de filtros.
     	$(this).find('select').val('').trigger('change');
+    });
+
+    $('#toggle-sidebar').on('click', function(e){
+    	if($(this).data('status') == 'closed'){
+    		$('#sidebar-menu').removeClass('hidden-sidebar', 500, 'swing');
+    		$('#content-wrapper').removeClass('hidden-sidebar', 500, 'swing');
+    		$(this).data('status', 'open').find('i').removeClass('icon-chevron-right');
+    	}else{
+    		$('#sidebar-menu').addClass('hidden-sidebar', 500, 'swing');
+    		$('#content-wrapper').addClass('hidden-sidebar', 500, 'swing');
+    		$(this).data('status', 'closed').find('i').addClass('icon-chevron-right');
+    	}
+    	e.preventDefault();
     });
 
     // Agregar el icono para limpiar campos
