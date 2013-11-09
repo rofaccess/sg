@@ -34,7 +34,7 @@
   					color: #000;
   				}
   			}
-  			&.active a{
+  			&.active>a{
   				color: #fff;
   				border: 1px solid $navbar-link-active-border;
   				@include gradient-vertical($navbar-link-active-start, $navbar-link-active-end);
@@ -43,6 +43,9 @@
   				}
   			}
   		}
+      .icon-chevron-right{
+        display: none;
+      }
   	}
 }
 
