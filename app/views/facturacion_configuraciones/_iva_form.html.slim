@@ -1,0 +1,12 @@
+- form_url = @iva.id.nil? ? crear_facturacion_configuraciones_path : actualizar_facturacion_configuracion_path
+= form_for @iva, url: form_url, html: {class: 'form-horizontal'}, remote: true do |f|
+  .modal-header
+    button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+    h4.modal-title = @iva.id.nil? ? 'Agregar Iva' : 'Editar Iva'
+  .modal-body
+    = hidden_field_tag 'tipo_resource', 'iva'
+  	= FormBuilder::text_field(f, :descripcion, nil, 'col-md-6', 'required')
+  	= FormBuilder::text_field(f, :valor, nil, 'col-md-2', 'required')
+  .modal-footer
+    button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cancelar
+    = f.submit 'Guardar', class: 'btn btn-primary'

@@ -17,7 +17,7 @@ nav.navbar.navbar-default.navbar-custom.navbar-fixed-top.hidden-print [role="nav
           //= render 'layouts/compras_sidemenu'
       li [class="#{current_menu([componentes_path, marcas_path, productos_path])}"]
         = link_to 'Stock', componentes_path
-      li [class="#{current_menu([configuraciones_path, localidades_path])}"]
+      li [class="#{current_menu([configuraciones_path, localidades_path, facturacion_configuraciones_path])}"]
         = link_to 'Configuración', configuraciones_path
     ul.nav.navbar-nav.navbar-right
       li.dropdown
