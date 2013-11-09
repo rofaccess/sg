@@ -69,28 +69,29 @@
                 = d.hidden_field(:orden_compra_detalle_id, value: o.id)
 
   label.title-seccion Totales
-  .row
-    .row.col-md-9
-    strong.row.col-md-2.text-right Subtotales:
-    .row.col-md-2.subtotal.monto.text-right
-  .row
-    .row.col-md-3
-    strong.row.col-md-2.text-right I.V.A. 5%:
-    .row.col-md-2.monto.text-right.iva5
-    strong.row.col-md-2.text-right I.V.A. 10%:
-    .row.col-md-2.monto.text-right.iva10
-    strong.row.col-md-2.text-center I.V.A.:
-    .row.col-md-2.monto.text-center.total-iva
-  .row
-    .row.col-md-9
-    strong.row.col-md-2.text-right Total:
-    .row.col-md-2.total.monto.text-right
-
-  /Muestra un mensaje
-  br
-  div.alert.alert-info.alert-dismissable
-    button.close [type="button" aria-hidden="true" data-dismiss="alert"] &times;
-    |Si elimina todos los detalles de la factura, la misma no se creara. Use el boton recargar
+  table.table.tabla-sin-borde.table-condensed
+    tbody
+      tr
+        td
+        td
+        td
+        td
+        td.text-right.negrita Subtotales:
+        td.monto.text-right.subtotal
+      tr
+        td.text-right.negrita I.V.A. 5%:
+        td.monto.text-right.iva5
+        td.text-right.negrita I.V.A. 10%:
+        td.monto.text-right.iva10
+        td.text-right.negrita Total I.V.A.:
+        td.monto.text-right.total-iva
+      tr
+        td
+        td
+        td
+        td
+        td.text-right.negrita Total a Pagar:
+        td.monto.text-right.total
 
   .modal-footer
     button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar

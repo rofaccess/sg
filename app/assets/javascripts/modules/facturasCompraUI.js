@@ -17,8 +17,12 @@ var facturasCompraUI = (function(){
 				facturasCompraUI.cargarOrdenesDetalles('facturas_compra/get_orden_compra', $(this).val(), '#main-modal .detalles-orden-compra');
 			});
 
-			$('body').on('click', '#recargar_orden', function(e){
+			$('body').on('click', '.recargar_orden', function(e){
 				facturasCompraUI.cargarOrdenesDetalles('facturas_compra/get_orden_compra', $('#orden_compra_id').val(), '#main-modal .detalles-orden-compra');
+				$('.detalles-orden-compra').removeClass('hide');
+				$('.detalles-orden-compra').addClass('show');
+				$('.recargar-warning').removeClass('show');
+				$('.recargar-warning').addClass('hide');
 			});
 
 			$('body').on('click', '.show-factura', function(e){
@@ -28,8 +32,15 @@ var facturasCompraUI = (function(){
 			// Evento para remover un detalle de una factura en la pantalla de generar factura de compra
 			$('body').on('click', '.remover-detalle-factura', function(e){
 				$(this).parents('tr.factura-detalle').remove();
-				//Al borrar la fila recalcula los montos
-				facturasCompraUI.calcularFormatearMontos();
+				if($('.factura-detalle').length == 0){
+					$('.detalles-orden-compra').removeClass('show');
+					$('.detalles-orden-compra').addClass('hide');
+					$('.recargar-warning').removeClass('hide');
+					$('.recargar-warning').addClass('show');
+				}else{
+					//Al borrar la fila recalcula los montos
+					facturasCompraUI.calcularFormatearMontos();
+				}
 				e.preventDefault();
 			});
 
@@ -58,7 +69,7 @@ var facturasCompraUI = (function(){
 		      		var costo = cantidad * precio;
 		      		$('td.costo', this).text(costo);
 			      	var iva_p = ($('td.iva-p input', this).val()) / 100;
-			      	var iva = iva_p * costo;
+			      	var iva = (costo / (iva_p + 1)) * iva_p;
 			      	$('td.iva', this).text(iva.toFixed(0));
 			      	costo = isNaN(costo) ? 0 : costo;
 			      	iva = isNaN(iva) ? 0 : iva;
@@ -71,11 +82,11 @@ var facturasCompraUI = (function(){
 			      		iva5 += iva;
 			      	}
 		    	});
-			    $('div.subtotal').text(subtotal.toFixed(0));
-			    $('div.total-iva').text(total_iva.toFixed(0));
-			    $('div.total').text(total);
-			    $('div.iva5').text(iva5.toFixed(0));
-			    $('div.iva10').text(iva10.toFixed(0));
+			    $('td.subtotal').text(subtotal.toFixed(0));
+			    $('td.total-iva').text(total_iva.toFixed(0));
+			    $('td.total').text(total);
+			    $('td.iva5').text(iva5.toFixed(0));
+			    $('td.iva10').text(iva10.toFixed(0));
 
 			    $('.total-f').val(total);
 			    $('.total-i').val(total_iva.toFixed(0));
@@ -111,7 +122,7 @@ var facturasCompraUI = (function(){
 		      		var costo = cantidad * precio;
 		      		$('td.costo', this).text(costo);
 		      		var iva_p = ($('td.iva-p input', this).val()) / 100;
-		      		var iva = iva_p * costo;
+		      		var iva = (costo / (iva_p + 1)) * iva_p;
 		      		$('td.iva', this).text(iva.toFixed(0));
 		      		costo = isNaN(costo) ? 0 : costo;
 		      		iva = isNaN(iva) ? 0 : iva;
@@ -124,11 +135,11 @@ var facturasCompraUI = (function(){
 			      		iva5 += iva;
 			      	}
 		    	});
-			    $('div.subtotal').text(subtotal.toFixed(0));
-			    $('div.total-iva').text(total_iva.toFixed(0));
-			    $('div.total').text(total);
-			    $('div.iva5').text(iva5.toFixed(0));
-			    $('div.iva10').text(iva10.toFixed(0));
+			    $('td.subtotal').text(subtotal.toFixed(0));
+			    $('td.total-iva').text(total_iva.toFixed(0));
+			    $('td.total').text(total);
+			    $('td.iva5').text(iva5.toFixed(0));
+			    $('td.iva10').text(iva10.toFixed(0));
 
 			    $('.total-f').val(total);
 			    $('.total-i').val(total_iva.toFixed(0));

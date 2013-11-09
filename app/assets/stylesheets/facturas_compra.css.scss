@@ -37,3 +37,13 @@ tbody{
     width: 100%;
   }
 }
+
+.negrita{
+	font-weight: bold;
+}
+
+table.tabla-sin-borde{
+	tbody tr{
+		border: hidden;
+	}
+}

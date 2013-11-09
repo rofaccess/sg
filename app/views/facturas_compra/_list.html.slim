@@ -3,31 +3,24 @@ table.table.table-condensed
 	tr
 	  th = sort_link(@search, :numero, "Numero", {}, method: :get, remote: true)
 	  th = sort_link(@search, :condicion_pago_id, "Condicion de Pago", {}, method: :get, remote: true)
-	  th = sort_link(@search, :plazo_pago_id, "Plazo de Pago", {}, method: :get, remote: true)
 	  th = sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
 	  th = sort_link(@search, :fecha, "Fecha", {}, method: :get, remote: true)
 	  th.text-right = sort_link(@search, :total_factura, "Importe", {}, method: :get, remote: true)
 	  th = sort_link(@search, :estado, "Estado", {}, method: :get, remote: true)
 	  th.text-right = sort_link(@search, :orden_compra_id, "Orden de Compra", {}, method: :get, remote: true)
 	  th = sort_link(@search, :user_id, "Usuario", {}, method: :get, remote: true)
-	  th = sort_link(@search, :deposito_destino_id, "Deposito Destino", {}, method: :get, remote: true)
 	  th.hidden-print
   tbody
 	- @facturas_compra.each do |p|
 	  tr [data-url="#{factura_compra_path(p)}"]
 		td.show-factura = p.numero
 		td.show-factura = p.condicion_pago.nombre
-		- if p.plazo_pago.blank?
-		  td
-		- else
-		  td.show-factura = p.plazo_pago.nombre
 		td.show-factura = p.proveedor.nombre
 		td.show-factura = Formatter.format_datetime(p.fecha)
 		td.show-factura.monto.text-right = p.total_factura
 		td.show-factura = p.estado
 		td.show-factura.text-right = p.orden_compra.numero
 		td.show-factura = p.user.username
-		td.show-factura = p.deposito_destino_id
 		td.hidden-print
 		  /= link_to '<i class="icon-print icon-large"></i> '.html_safe, imprimir_factura_factura_compra_path(p), remote: true
 		  = link_to '<i class="icon-print icon-large"></i> '.html_safe, factura_compra_path(p, format: 'pdf')
