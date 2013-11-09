@@ -13,5 +13,5 @@ table.table
           = link_to editar_facturacion_configuracion_path(i, tipo_resource: 'iva'), remote: true do
             i.icon-edit.icon-large
           = ' '
-          = link_to '#', remote: true, data: {remote: true, method: 'delete', confirm: 'Esta seguro que desea eliminar este registro?'} do
+          = link_to eliminar_facturacion_configuracion_path(i, tipo_resource: 'iva'), remote: true, data: {remote: true, method: 'delete', confirm: 'Esta seguro que desea eliminar este registro?'} do
             i.icon-trash.icon-large
