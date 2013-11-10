@@ -79,7 +79,7 @@ $(function(){
 
     //Limpiar campos y limitaciones
     //$('.num-doc-com').inputmask('Regex', { regex: "[0-9\-\.]{15}" });
-  	$('.num-doc-com').clearInput2();
+  	$('.num-doc-com').clearInput();
   	$('.num-doc-com').validCampoFranz('0123456789-/.');
 
 });
