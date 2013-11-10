@@ -16,10 +16,10 @@
 //= require turbolinks
 //= require vendor/bootstrap
 //= require vendor/jquery.validate.min
-//= require custom_plugins/validationsSetup
 //= require vendor/additional-methods.min
 //= require custom_plugins/clearInput
 //= require languages/jquery.validate.messages_es
+//= require custom_plugins/validationsSetup
 //= require noty/jquery.noty
 //= require noty/layouts/topRight
 //= require noty/themes/default
@@ -83,6 +83,11 @@ $.noty.defaults = {
     },
     buttons: false // an array of buttons
 };
+
+$.extend($.inputmask.defaults, {
+  showMaskOnHover: false,
+  showMaskOnFocus: false
+});
 
 function showSpinner(target){
   var opts = {

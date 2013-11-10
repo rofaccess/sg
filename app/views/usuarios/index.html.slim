@@ -1,0 +1,8 @@
+.row.row-page-title
+  h2 Usuarios
+  = link_to 'Agregar Usuario', new_usuario_path, class: 'btn btn-primary', remote: true
+#list
+  = render 'list'
+
+#paginator
+  = paginate @usuarios, remote: true

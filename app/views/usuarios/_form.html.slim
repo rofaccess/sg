@@ -1,0 +1,66 @@
+- form_url = @usuario.id.nil? ? usuarios_path : usuarios_path+"/#{@usuario.id}"
+= form_for @usuario, url: form_url, html: {class: 'form-horizontal'}, remote: true do |f|
+  .modal-header
+    h3.modal-title Agregar Usuario
+  .modal-body
+    label.title-seccion Datos del empleado
+    = hidden_field_tag :user_id, @usuario.id
+    = FormBuilder::text_field_h(f, :username, {label_text: 'Usuario del sistema', input_class: 'required clear username',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::NOMBRE})
+    = f.fields_for :empleado do |e|
+      = FormBuilder::text_field_h(e, :nombre, {input_class: 'required clear',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::NOMBRE})
+      = FormBuilder::text_field_h(e, :apellido, {input_class: 'required clear',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::NOMBRE})
+      = FormBuilder::text_field_h(e, :documento_id_num, {label_text: 'Nro. de Cédula', input_class: 'required clear',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::NUMERO_DOC_COM})
+      = FormBuilder::text_field_h(e, :direccion, {input_class: 'clear',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::DIRECCION})
+      = FormBuilder::text_field_h(e, :email, {input_class: 'clear email',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::EMAIL})
+    label.title-seccion Roles
+    .form-group
+      #user_roles.col-md-offset-3.col-md-9
+        .alert.alert-warning.hide
+          | Debe seleccionar por lo menos un role.
+        .checkbox
+          label
+            = check_box :user_roles, :is_admin, {checked: (@usuario.has_role? :admin), disabled: (current_user.id == @usuario.id)}
+            | Administrador
+        .checkbox
+          label
+            = check_box :user_roles, :is_operador, {checked: (@usuario.has_role? :operador)}
+            | Operador
+  .modal-footer
+    button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cancelar
+    button#new_user_submit.btn.btn-primary.pull-right [type="button"] Guardar
+
+javascript:
+  $(function(){
+  	var userForm = "#{@usuario.id.nil? ? '#new_user' : '#edit_user_'+ @usuario.id.to_s}";
+  	// Validador del formulario
+    $(userForm).validate({
+    	rules: {
+    		'user[username]':{
+		    	remote: {
+					url: "/usuarios/check_username",
+					type: "get",
+					data: {
+						user_id: $('#user_id').val()
+					}
+				}
+			}
+		},
+		messages: {
+			'user[username]': 'El nombre de usuario ya existe en el sistema.'
+		}
+    });
+
+    //Evento para el submit
+    $('#new_user_submit').click(function(e){
+    	// Controlar que sea valido y se este seleccionado algun rol
+    	if(!$(userForm).valid()){return false;}
+    	if($('#user_roles').find('input:checked').length == 0){
+    		$('#user_roles .alert').addClass('show');
+    		return false;
+    	}
+    	// enciar el formulario
+    	$(userForm).submit();
+    	e.preventDefault();
+    });
+
+  });

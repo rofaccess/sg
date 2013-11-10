@@ -6,6 +6,7 @@ module Domain
 	DIRECCION = 100
 	MONEDA 	  = 3
 	IVA       = 2
+	FECHA     = 10
 	CODIGO    = 15
 	RUC       = 20
 	EDAD      = 3

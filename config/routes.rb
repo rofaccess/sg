@@ -41,6 +41,7 @@ Sg::Application.routes.draw do
       get 'imprimir_todos'
     end
   end
+
   resources :pedidos_compra do
     collection do
       get 'create_test_data'
@@ -56,6 +57,12 @@ Sg::Application.routes.draw do
     collection do
       get 'nueva_marca'
       get 'nueva_categoria'
+    end
+  end
+
+  resources :usuarios do
+    collection do
+      get 'check_username'
     end
   end
 

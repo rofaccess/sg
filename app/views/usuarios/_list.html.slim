@@ -1,0 +1,29 @@
+table.table.table-condensed
+  thead
+	tr
+	  th = sort_link(@search, :nombre, "Nombre", {}, method: :get, remote: true)
+	  th Usuario
+	  th Nro de cédula
+	  th Direccion
+	  th Email
+	  th.admin-col Administrador
+	  th.operador-col Operador
+	  th.hidden-print
+  tbody
+	- @usuarios.each do |u|
+	  tr
+	    td = u.empleado.nombre_completo
+		td = u.username
+		td = u.empleado.documento_id_num
+		td = u.empleado.direccion
+		td = u.empleado.email
+		td.text-center
+		  - if u.has_role? :admin
+		    i.icon-check.icon-large.text-success
+		td.text-center
+		  - if u.has_role? :operador
+		    i.icon-check.icon-large.text-success
+		td.hidden-print
+		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_usuario_path(u), remote: true
+		  - unless current_user.id == u.id
+		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, usuario_path(u), method: 'delete', data: {confirm: t('messages.confirm_delete'), remote: true}

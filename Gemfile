@@ -61,6 +61,9 @@ end
 # Flexible authentication solution for Rails
 gem 'devise', '3.0.0'
 
+gem 'cancan', '1.6.10'
+gem 'rolify', '3.2.0'
+
 # Adds foreign key helpers to migrations and correctly dumps foreign keys to schema.rb
 gem 'foreigner', '1.4.2'
 

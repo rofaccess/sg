@@ -83,6 +83,7 @@ body{
 /*-----------Index menu-----------*/
 .index-options{
   list-style: none;
+  padding-left: 0;
   li{
     text-align: right;
     margin-top: 20px;
@@ -298,6 +299,14 @@ body{
   font-weight: normal;
   color: $main-color;
   margin-left: -10px;
+}
+
+.admin-col{
+  width: 110px;
+}
+
+.operador-col{
+  width: 80px;
 }
 
 // Formulario de filtros
