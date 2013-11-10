@@ -1,5 +1,5 @@
 .nested-fields
-  = FormBuilder::text_field_h(f, :numero, {field_class: 'col-md-8 with-btn', label_text: 'Telefono', input_class: 'required phone', btn_del_class: 'remove_fields existing', onclick: 'remove_fields(this)'})
+  = FormBuilder::text_field_h(f, :numero, {field_class: 'col-md-8 with-btn', label_text: 'Telefono', input_class: 'required phone', btn_del_class: 'remove_fields existing', onclick: 'remove_fields(this)',max_length: Domain::TELEFONO})
   = f.hidden_field :_destroy
   /= link_to_remove_association "Borrar Telefono", f
   // El helper anterior muestra un enlace para borrar el input de telefono y ademas crea el hidden_field para
@@ -12,5 +12,6 @@ javascript:
   function remove_fields(link) {
     $(link).parent().parent().next("input[type=hidden]").val("true");
   }
-  $('.phone').inputmask('Regex', { regex: "[0-9\-\.\)\()]{50}" });
+  //$('.phone').inputmask('Regex', { regex: "[0-9\-\.\)\()]{50}" });
+  $('.phone').validCampoFranz('0123456789-/.()');
 

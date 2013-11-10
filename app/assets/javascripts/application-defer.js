@@ -78,8 +78,9 @@ $(function(){
     $('.datepicker').datepicker();
 
     //Limpiar campos y limitaciones
-    $('.num-doc-com').inputmask('Regex', { regex: "[0-9\-\.]{15}" });
+    //$('.num-doc-com').inputmask('Regex', { regex: "[0-9\-\.]{15}" });
   	$('.num-doc-com').clearInput2();
+  	$('.num-doc-com').validCampoFranz('0123456789-/.');
 
 });
 
@@ -112,6 +113,14 @@ var delay = (function(){
   };
 })();
 
+jQuery.fn.numberOnly = function(){
+   $(this[0]).keypress(function(event){
+    	if (event.which && (event.which < 48 || event.which > 57)) {
+      		event.preventDefault();
+    	}
+ 	});
+};
+
 function recargarSelect(map, target){
 	var options = [];
 	$.each(map, function(i, val){
@@ -119,6 +128,4 @@ function recargarSelect(map, target){
 	});
 	target.html(options.join(''));
 }
-
-
 

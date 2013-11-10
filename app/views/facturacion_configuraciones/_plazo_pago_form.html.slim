@@ -5,8 +5,8 @@
     h4.modal-title = @plazo.id.nil? ? 'Agregar Plazo de Pago' : 'Editar Plazo de pago'
   .modal-body
     = hidden_field_tag 'tipo_resource', 'plazo_pago'
-  	= FormBuilder::text_field(f, :nombre, 'col-md-3', 'col-md-6', 'required')
-  	= FormBuilder::text_field(f, :cuotas, 'col-md-3', 'col-md-2', 'required')
+    = FormBuilder::text_field_h(f, :nombre, {input_class: 'required clear',label_class: 'col-md-3', field_class:'col-md-6', max_length: Domain::NOMBRE})
+    = FormBuilder::text_field_h(f, :cuotas, {input_class: 'required clear',label_class: 'col-md-3', field_class:'col-md-2', max_length: Domain::CUOTA})
     .form-group
       label.control-label.col-md-3 Dias de plazos
       .col-md-8
@@ -17,3 +17,6 @@
   .modal-footer
     button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cancelar
     = f.submit 'Guardar', class: 'btn btn-primary'
+javascript:
+  $('.clear').clearInput3();
+  $('#plazo_pago_cuotas').numberOnly();

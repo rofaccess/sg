@@ -3,8 +3,8 @@
     = hidden_field_tag(:from_orden_abm, 'true')
   label.title-seccion Encabezado
   .row
-    = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3', input_class: 'required numFactura clear'})
-    = FormBuilder::text_field_v(f, :fecha, {col_class: 'col-md-3', label_text: 'Fecha',input_class: 'required date datepicker clear', max_length: '10'})
+    = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3', input_class: 'required numFactura clear',max_length: Domain::NUMERO_DOC_COM})
+    = FormBuilder::text_field_v(f, :fecha, {col_class: 'col-md-3', label_text: 'Fecha',input_class: 'required date datepicker clear', max_length: Domain::FECHA})
     = FormBuilder::text_field_v(f, :proveedor, {col_class: 'col-md-4', input_value: @orden_compra.proveedor.nombre, disabled: true})
   .row
     = FormBuilder::collection_select_v(f, :condicion_pago_id, CondicionPago.all, :id, :nombre,{col_class: 'col-md-3', label_text: 'Condicion de Pago', select_class:'required'})
@@ -99,5 +99,6 @@
 
 javascript:
   facturasCompraUI.initInGetOrdenCompra();
-  $('#factura_compra_numero').inputmask('Regex', { regex: "[0-9\-\.]{15}" });
+  //$('#factura_compra_numero').inputmask('Regex', { regex: "[0-9\-\.]{15}" });
+  $('#factura_compra_numero').validCampoFranz('0123456789-/.');
   $('.clear').clearInput2();

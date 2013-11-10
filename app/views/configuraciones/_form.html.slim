@@ -4,7 +4,7 @@
   .modal-body
     = FormBuilder::text_field_h(f, :nombre,{input_class: 'required clear', max_length: Domain::NOMBRE})
     = FormBuilder::text_field_h(f, :direccion,{input_class: 'required clear', max_length: Domain::DIRECCION})
-    = FormBuilder::text_field_h(f, :telefono1,{input_class: 'required clear', max_length: Domain::TELEFONO, label_text: 'Telefono'})
+    = FormBuilder::text_field_h(f, :telefono1,{input_class: 'required clear phone', max_length: Domain::TELEFONO, label_text: 'Telefono'})
     = FormBuilder::text_field_h(f, :email,{input_class: 'required email clear', max_length: Domain::EMAIL})
     = FormBuilder::file_field(f, :imagen, nil, nil, '')
     = FormBuilder::text_field_h(f, :simbolo_moneda,{input_class: 'required clear', max_length: Domain::MONEDA})
@@ -15,3 +15,4 @@
 javascript:
   $('.edit_configuraciones').validate();
   $('.clear').clearInput3();
+  $('.phone').validCampoFranz('0123456789-/.()');

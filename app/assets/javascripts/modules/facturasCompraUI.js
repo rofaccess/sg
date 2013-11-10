@@ -175,11 +175,7 @@ var facturasCompraUI = (function(){
 		  	facturasCompraUI.escondeMuestraPlazoPago();
 
 		  	// En los campos input de cantidad se ignoran los valores que no sean numericos
-		  	$('td.cantidad input').keypress(function(event){
-		    	if (event.which && (event.which < 48 || event.which > 57)) {
-		      		event.preventDefault();
-		    	}
-		  	});
+		  	$('td.cantidad input').numberOnly();
 
 		  	facturasCompraUI.calcularFormatearMontos();
 

@@ -31,6 +31,7 @@
 //= require vendor/jquery.number
 //= require vendor/jquery.inputmask
 //= require vendor/jquery.inputmask.regex.extensions
+//= require vendor/validCampoFranz
 //
 
 $.rails.allowAction = function(link) {
