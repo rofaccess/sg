@@ -76,6 +76,10 @@ gem 'protokoll', git: 'git://github.com/celsodantas/protokoll.git', branch: 'rai
 # Dynamic nested forms using jQuery made easy; works with formtastic, simple_form or default forms
 gem "cocoon"
 
+# Gema para generar pdf
 gem 'wicked_pdf'
 
 gem 'wkhtmltopdf-binary'
+
+# Gema para soft delete
+gem "acts_as_paranoid", git: 'https://github.com/PeteMichaud/acts_as_paranoid.git', branch: 'rails4'

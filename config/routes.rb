@@ -82,6 +82,19 @@ Sg::Application.routes.draw do
     end
   end
 
+  resources :facturacion_configuraciones, only: [:index] do
+    collection do
+      post 'crear'
+      get 'nuevo'
+    end
+
+    member do
+      get 'editar'
+      patch 'actualizar'
+      delete 'eliminar'
+    end
+  end
+
   #post 'localidades/get_estados/:id', to: 'localidades#get_estados', as: 'get_estados_localidades'
 
   resources :productos

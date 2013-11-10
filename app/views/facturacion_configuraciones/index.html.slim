@@ -1,0 +1,19 @@
+.row
+  h2 Configuraciones de facturación
+.row.row-grid
+  .col-md-6
+    .panel.panel-default
+      .panel-heading
+        h3
+          | Iva
+          = link_to 'Agregar Iva', nuevo_facturacion_configuraciones_path(tipo_resource: 'iva'), class: 'btn btn-primary pull-right', data: {remote: true}
+      #iva_list.panel-body
+        = render 'iva_list'
+  .col-md-6
+    .panel.panel-default
+      .panel-heading
+        h3
+          | Plazos de pagos
+          = link_to 'Agregar Plazo de Pago', nuevo_facturacion_configuraciones_path(tipo_resource: 'plazo_pago'), class: 'btn btn-primary pull-right', data: {remote: true}
+      #plazos_list.panel-body
+        = render 'plazos_list'

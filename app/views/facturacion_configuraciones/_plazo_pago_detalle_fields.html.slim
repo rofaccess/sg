@@ -1,0 +1,6 @@
+.row.row-grid
+  .nested-fields
+    .field.col-md-4
+      = f.text_field :cant_dias, class: 'form-control'
+    = link_to_remove_association f, class: 'btn btn-default' do
+      i.icon-trash.icon-large

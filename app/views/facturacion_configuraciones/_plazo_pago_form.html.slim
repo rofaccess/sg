@@ -1,0 +1,19 @@
+- form_url = @plazo.id.nil? ? crear_facturacion_configuraciones_path : actualizar_facturacion_configuracion_path
+= form_for @plazo, url: form_url, html: {class: 'form-horizontal'}, remote: true do |f|
+  .modal-header
+    button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+    h4.modal-title = @plazo.id.nil? ? 'Agregar Plazo de Pago' : 'Editar Plazo de pago'
+  .modal-body
+    = hidden_field_tag 'tipo_resource', 'plazo_pago'
+  	= FormBuilder::text_field(f, :nombre, 'col-md-3', 'col-md-6', 'required')
+  	= FormBuilder::text_field(f, :cuotas, 'col-md-3', 'col-md-2', 'required')
+    .form-group
+      label.control-label.col-md-3 Dias de plazos
+      .col-md-8
+        = f.fields_for :plazo_pago_detalles do |plazo_detalle|
+          = render 'plazo_pago_detalle_fields', :f => plazo_detalle
+        .links
+          = link_to_add_association '<i class="icon-plus"></i> Agregar plazo'.html_safe, f, :plazo_pago_detalles, class: 'btn btn-default'
+  .modal-footer
+    button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cancelar
+    = f.submit 'Guardar', class: 'btn btn-primary'

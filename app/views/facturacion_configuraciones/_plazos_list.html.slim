@@ -1,0 +1,17 @@
+table.table
+  thead
+    tr
+      th Nombre
+      th Cuotas
+      th
+  tbody
+    - @plazos.each do |p|
+      tr
+        td = p.nombre
+        td = p.cuotas
+        td.text-right
+          = link_to editar_facturacion_configuracion_path(p, tipo_resource: 'plazo_pago'), remote: true do
+            i.icon-edit.icon-large
+          = ' '
+          = link_to eliminar_facturacion_configuracion_path(p, tipo_resource: 'plazo_pago'), remote: true, data: {remote: true, method: 'delete', confirm: 'Esta seguro que desea eliminar este registro?'} do
+            i.icon-trash.icon-large

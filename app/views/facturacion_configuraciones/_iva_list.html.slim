@@ -1,0 +1,17 @@
+table.table
+  thead
+    tr
+      th Nombre
+      th Valor
+      th
+  tbody
+    - @ivas.each do |i|
+      tr
+        td = i.descripcion
+        td = i.valor
+        td
+          = link_to editar_facturacion_configuracion_path(i, tipo_resource: 'iva'), remote: true do
+            i.icon-edit.icon-large
+          = ' '
+          = link_to eliminar_facturacion_configuracion_path(i, tipo_resource: 'iva'), remote: true, data: {remote: true, method: 'delete', confirm: 'Esta seguro que desea eliminar este registro?'} do
+            i.icon-trash.icon-large
