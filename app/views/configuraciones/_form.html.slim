@@ -2,15 +2,16 @@
   .modal-header
     h4.modal-title Datos de la Empresa
   .modal-body
-    = FormBuilder::text_field(f, :nombre, nil, nil, 'required')
-    = FormBuilder::text_field(f, :direccion, nil, nil, 'required')
-    = FormBuilder::text_field(f, :telefono1, nil, nil, 'required')
-    = FormBuilder::text_field(f, :email, nil, nil, 'required email')
+    = FormBuilder::text_field_h(f, :nombre,{input_class: 'required clear', max_length: Domain::NOMBRE})
+    = FormBuilder::text_field_h(f, :direccion,{input_class: 'required clear', max_length: Domain::DIRECCION})
+    = FormBuilder::text_field_h(f, :telefono1,{input_class: 'required clear', max_length: Domain::TELEFONO, label_text: 'Telefono'})
+    = FormBuilder::text_field_h(f, :email,{input_class: 'required email clear', max_length: Domain::EMAIL})
     = FormBuilder::file_field(f, :imagen, nil, nil, '')
-    = FormBuilder::text_field(f, :simbolo_moneda, nil, nil, 'required')
+    = FormBuilder::text_field_h(f, :simbolo_moneda,{input_class: 'required clear', max_length: Domain::MONEDA})
   .modal-footer
     = link_to 'Cancelar',pages_index_path, class: 'btn btn-info'
     = f.submit 'Guardar', class: 'btn btn-primary'
 
 javascript:
   $('.edit_configuraciones').validate();
+  $('.clear').clearInput3();

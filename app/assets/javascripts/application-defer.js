@@ -77,6 +77,10 @@ $(function(){
     // Inicializar datepicker
     $('.datepicker').datepicker();
 
+    //Limpiar campos y limitaciones
+    $('.num-doc-com').inputmask('Regex', { regex: "[0-9\-\.]{15}" });
+  	$('.num-doc-com').clearInput2();
+
 });
 
 var SideFormUI = (function(){

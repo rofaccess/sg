@@ -2,15 +2,17 @@
     = form_for @marca, html: {class: 'form-horizontal'}, remote: true do |f|
       - unless defined? componente_abm
         button.close.close-add-form [type="button" aria-hidden="true"] &times;
-        h3 Agregar Marca
+        h3 = @marca.id.nil? ? 'Agregar Marca' : 'Editar Marca'
       -else
         = hidden_field_tag 'select_marca', 'true'
       .row
         .col-md-12
           p
-          = FormBuilder::text_field(f, :nombre, nil, nil, 'required')
+          = FormBuilder::text_field_h(f, :nombre,{input_class: 'required clear', max_length: Domain::NOMBRE})
           - unless defined? componente_abm
             button.btn.btn-default.close-add-form [type="button"] Cancelar
           - else
             button.btn.btn-default [type="button" data-dismiss="modal" aria-hidden="true"] Cancelar
           = f.submit 'Guardar', class: 'btn btn-primary'
+javascript:
+  $('.clear').clearInput3();

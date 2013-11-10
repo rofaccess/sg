@@ -1,13 +1,12 @@
 = form_for @componente, html: {class: 'form-horizontal'}, remote: true  do |f|
   bootton.close.close-add-form [type="button" aria-hidden="true"] &times;
   h3 = @componente.id.nil? ? 'Agregar Componente' : 'Editar Componente'
-  h3 Agregar Componentes
 
   .row
     .col-md-12
       p
-      = FormBuilder::text_field(f, :nombre, nil, nil, 'required')
-      = FormBuilder::text_field(f, :costo, nil, nil, 'required')
+      = FormBuilder::text_field_h(f, :nombre,{input_class: 'required clear', max_length: Domain::NOMBRE})
+      = FormBuilder::text_field_h(f, :costo,{input_class: 'required clear monto-field', max_length: Domain::MONTO})
       = FormBuilder::collection_select(f, :marca_id, Marca.all, :id, :nombre, '',nil, 'col-md-8 with-btn', '', nil, false, [true, nueva_marca_componentes_path])
       = FormBuilder::collection_select(f, :componente_categoria_id, ComponenteCategoria.all, :id, :nombre, '', nil, 'col-md-8 with-btn', 'required', nil, false, [true, nueva_categoria_componentes_path])
       = FormBuilder::collection_select(f, :iva_id, Iva.all, :id, :valor, '', nil, 'col-md-8 with-btn required', 'required', nil, false)
@@ -33,3 +32,17 @@
                 formatNoMatches: function(){
                     return 'No se encontraron resultados...';
                 }});
+            $('.clear').clearInput3();
+
+            $('.monto-field').maskMoney();
+            $('.monto-field').maskMoney('mask');
+            // Quitar los '.' de los numeros antes de enviar el formulario
+            $('input[type="submit"]').click(function(e){
+              // Se eliminan todos los '.' de los campos
+              $('.monto-field').each(function(){
+                $(this).val($(this).val().replace(/\./g, ''));
+              });
+              // Y se envia el formulario
+              $(this).parents('form').submit();
+              e.preventDefault();
+            });

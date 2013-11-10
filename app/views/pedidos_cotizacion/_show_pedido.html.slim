@@ -32,9 +32,9 @@
             = pedido_form.fields_for :pedido_cotizacion_detalles, pedido_detalle do |detalle_form|
               - pedido_detalle.cantidad_cotizada = pedido_detalle.cantidad_requerida if pedido_detalle.cantidad_cotizada == 0
               td
-                = detalle_form.text_field :cantidad_cotizada, class: 'cantidad-field pull-right form-control'
+                = detalle_form.text_field :cantidad_cotizada, class: 'cantidad-field pull-right form-control',maxLength: 5
               td
-                = detalle_form.text_field :costo_unitario, value: pedido_detalle.costo_unitario.to_i, class: 'monto-field pull-right form-control'
+                = detalle_form.text_field :costo_unitario, value: pedido_detalle.costo_unitario.to_i, class: 'monto-field pull-right form-control',maxLength: 13
     .row
       .col-md-12
         button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cancelar

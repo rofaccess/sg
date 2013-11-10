@@ -29,6 +29,8 @@
 //= require languages/jquery.ui.datepicker-es
 //= require cocoon
 //= require vendor/jquery.number
+//= require vendor/jquery.inputmask
+//= require vendor/jquery.inputmask.regex.extensions
 //
 
 $.rails.allowAction = function(link) {

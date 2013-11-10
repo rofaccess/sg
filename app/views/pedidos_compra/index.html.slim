@@ -6,7 +6,7 @@
   = link_to '<i class="icon-filter"></i> Filtrar'.html_safe, '#', class: 'btn btn-sm btn-default pull-right filtrar-link'
 .row.form-filtrar.hide.row-grid
   = search_form_for @search, method: :get, remote: true, class: 'form-filtros' do |f|
-    = FormBuilder::text_field_v(f, :numero_cont, {col_class: 'col-md-2', label_text: 'Numero'})
+    = FormBuilder::text_field_v(f, :numero_cont, {col_class: 'col-md-2', label_text: 'Numero', input_class:'num-doc-com'})
     = FormBuilder::select(f, :estado_cont, ['Pendiente','Procesado', 'Ordenado'], {col_class: 'col-md-2', label_text: 'Estado'})
     = FormBuilder::rango_fechas(f, :fecha_generado_gt, :fecha_generado_lt, {col_class: 'col-md-4', label_text: 'Fecha Generado'})
     = FormBuilder::rango_fechas(f, :fecha_procesado_gt, :fecha_procesado_lt, {col_class: 'col-md-4', label_text: 'Fecha Procesado'})

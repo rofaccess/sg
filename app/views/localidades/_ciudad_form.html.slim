@@ -1,10 +1,10 @@
 .row.localidad-form
   - url_form = @ciudad.id.nil? ? crear_localidades_path : actualizar_localidad_path
-  = form_for @ciudad, url: url_form, html: {class: 'add-form'}, remote: true do |f|
+  = form_for @ciudad, url: url_form, html: {class: 'add-form ciudad-form'}, remote: true do |f|
     .col-md-12
-      = FormBuilder::text_field(f, :nombre, '', '', 'required')
+      = FormBuilder::text_field_v(f, :nombre,{input_class: 'required clear', max_length: Domain::NOMBRE})
     .col-md-12
-      = FormBuilder::collection_select(nil, :pais, @paises, :id, :nombre, "Seleccione Pais", '', '', 'recargar-estados', @ciudad.estado.nil? ? nil : @ciudad.estado.pais_id)
+      = FormBuilder::collection_select(nil, :pais, @paises, :id, :nombre, "Seleccione Pais", '', '', 'recargar-estados required', @ciudad.estado.nil? ? nil : @ciudad.estado.pais_id)
     .col-md-12
       = FormBuilder::collection_select(f, :estado_id, @estados, :id, :nombre, "Seleccione Estado", '', '', 'required')
     = hidden_field_tag 'tipo_localidad', 'ciudad'
@@ -14,3 +14,6 @@
       - unless @ciudad.id.nil?
         button.btn.btn-default.cancelar-edicion.pull-left [type="button"] Cancelar
       = f.submit 'Guardar', class: 'btn btn-primary'
+javascript:
+  $('.ciudad-form').last().validate();
+  $('.clear').clearInput2();

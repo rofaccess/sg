@@ -6,11 +6,11 @@
 				.input-group.input-group-lg
 			    	span.input-group-addon
 			  	  		i.icon-user
-			  		= f.text_field :username, placeholder: 'Nombre de usuario', class: 'form-control input-lg', autofocus: true
+			  		= f.text_field :username, placeholder: 'Nombre de usuario', class: 'form-control input-lg required clear', autofocus: true, maxLength: Domain::NOMBRE
 			  	.input-group.input-group-lg
 			    	span.input-group-addon
 				  		i.icon-key
-					= f.password_field :password, placeholder: 'Contraseña', class: 'form-control input-lg'
+					= f.password_field :password, placeholder: 'Contraseña', class: 'form-control input-lg required clear', maxLength: Domain::NOMBRE
 
 			  	- if devise_mapping.rememberable?
 			    	label.checkbox.pull-left
@@ -19,3 +19,5 @@
 			 	= link_to "Olvidó su contraseña?", new_password_path(resource_name), class: 'pull-right'
 			 	br
 			  	= f.submit "Ingresar", class: 'btn btn-lg btn-primary btn-block'
+javascript:
+  $('#new_user').last().validate();

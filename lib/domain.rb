@@ -14,6 +14,8 @@ module Domain
 	CUOTA     = 3
 	CANT_DIAS = 3
 	ESTADO    = 15
+	MONTO     = 13
+	CANTIDAD  = 5
 	DESCRIPCION    = 100
 	TIPO_PERSONA   = 9
 	NUMERO_DOC_IDE = 10

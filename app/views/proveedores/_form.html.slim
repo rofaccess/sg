@@ -8,11 +8,11 @@
       .col-md-12
         p
         = FormBuilder::collection_select(f, :componente_categoria_ids, ComponenteCategoria.all, :id, :nombre, nil, nil, 'col-md-8 with-btn', '', nil, true, [true, nueva_categoria_proveedores_path])
-        = FormBuilder::text_field(f, :nombre, nil, nil, 'required shortString')
-	    = FormBuilder::text_field(f, :ruc, nil, nil, 'required shortString')
+        = FormBuilder::text_field_h(f, :nombre,{input_class: 'required shortString clear', max_length: Domain::NOMBRE})
+        = FormBuilder::text_field_h(f, :ruc,{input_class: 'required shortString clear', max_length: Domain::RUC})
 	    = FormBuilder::text_field(f, :ciudad_id, nil, 'col-md-8 with-btn', 'required', [true, nueva_ciudad_proveedores_path])
-	    = FormBuilder::text_field(f, :direccion, nil, nil, 'required longString')
-	    = FormBuilder::text_field(f, :email, nil, nil, 'required email')
+        = FormBuilder::text_field_h(f, :direccion,{input_class: 'required longString clear', max_length: Domain::DIRECCION})
+        = FormBuilder::text_field_h(f, :email,{input_class: 'required email clear', max_length: Domain::EMAIL})
         #telefonos
           = f.fields_for :telefonos do |telefono|
             = render 'telefono_fields', :f => telefono
@@ -32,3 +32,5 @@
             $('#s2id_proveedor_ciudad_id').find('.select2-chosen').text('#{@proveedor.ciudad.nil? ? '' : @proveedor.ciudad.nombre}');
             // Agrega un icono y un titulo al boton de agregar telefono
             $('.add_fields').append('<span class="icon-plus"></span>  Agregar Telefono');
+javascript:
+    $('.clear').clearInput3();
