@@ -2,10 +2,8 @@
   - url_form = @estado.id.nil? ? crear_localidades_path : actualizar_localidad_path
   = form_for @estado, url: url_form, html: {class: 'add-form estado-form'}, remote: true do |f|
     .row.row-form
-      .col-md-8
-        = FormBuilder::text_field_v(f, :nombre,{input_class: 'required clear', max_length: Domain::NOMBRE})
-      .col-md-4
-        = FormBuilder::text_field_v(f, :abreviatura,{input_class: 'clear', max_length: Domain::ABREVIATURA})
+        = FormBuilder::text_field_v(f, :nombre,{input_class: 'required clear', col_class:'col-md-8', max_length: Domain::NOMBRE})
+        = FormBuilder::text_field_v(f, :abreviatura,{input_class: 'clear', col_class:'col-md-4', max_length: Domain::ABREVIATURA})
     .col-md-12
       = FormBuilder::collection_select(f, :pais_id, @paises, :id, :nombre, "Seleccione Pais", '', '', 'required')
     = hidden_field_tag 'tipo_localidad', 'estado'
