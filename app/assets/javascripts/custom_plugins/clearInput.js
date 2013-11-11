@@ -25,7 +25,11 @@
 
 		// Inicializar cada input
 		return this.filter('input').each(function(){
-			var icon = $('<i class="icon-remove limpiar-campo"></i>');
+			if($(this).prev('label').length == 0){
+				var icon = $('<i class="icon-remove limpiar-campo" style="top:10px"></i>');
+			}else{
+				var icon = $('<i class="icon-remove limpiar-campo" style="top:35px"></i>');
+			}
 			addIcon($(this), icon);
 		});
 	};
