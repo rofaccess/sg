@@ -5,6 +5,7 @@ class OrdenCompraDetalle < ActiveRecord::Base
 	belongs_to :componente
 	has_many   :factura_compra_detalles
 
+
 	def costo_unitario_f
 		Formatter.to_money(self.costo_unitario)
 	end

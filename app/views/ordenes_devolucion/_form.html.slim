@@ -5,6 +5,6 @@
   .row
     = form_for @orden_devolucion, html: {class: 'form-horizontal'}, remote: true do |f|
       .col-md-12
-        = FormBuilder::collection_select(f, :factura_compra_id, @facturas_compra, :id, :numero, 'Seleccione una factura de compra...', nil, 'col-md-8', '')
+        = FormBuilder::collection_select(f, :orden_compra_id, @ordenes_compra, :id, :numero, 'Seleccione una orden de compra...', nil, 'col-md-8', '')
       .col-md-12
-        .detalles-factura-compra
+        .detalles-orden-compra

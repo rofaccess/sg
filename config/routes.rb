@@ -5,7 +5,12 @@ Sg::Application.routes.draw do
     end
   end
 
-  resources :ordenes_devolucion
+  resources :ordenes_devolucion do
+    collection do
+      post 'get_orden_compra'
+    end
+  end
+
   resources :ordenes_compra do
     collection do
       post 'get_pedido_compra'

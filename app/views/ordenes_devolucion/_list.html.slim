@@ -2,7 +2,8 @@ table.table.table-condensed
   thead
 	tr
 	  th = sort_link(@search, :numero, "Numero", {}, method: :get, remote: true)
-	  th = sort_link(@search, :factura_compra_id, "Factura", {}, method: :get, remote: true)
+	  th = sort_link(@search, :numero_factura, "Factura", {}, method: :get, remote: true)
+	  th = sort_link(@search, :orden_compra_id, "Orden Compra", {}, method: :get, remote: true)
 	  th = sort_link(@search, :fecha_generado, "Fecha Generado", {}, method: :get, remote: true)
 	  th = sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
 	  th = sort_link(@search, :user_id, "Usuario", {}, method: :get, remote: true)
@@ -12,7 +13,8 @@ table.table.table-condensed
     - @ordenes_devolucion.each do |p|
 	  tr
 		td.show-pedido = p.numero
-		td.show-pedido = p.factura_compra.numero
+		td.show-pedido = p.numero_factura
+		td.show-pedido = p.orden_compra.numero
 		td.show-pedido = Formatter.format_datetime(p.fecha_generado)
 		td.show-pedido = p.proveedor.nombre
 		td.show-pedido = p.user.username

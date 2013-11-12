@@ -2,23 +2,23 @@ var ordenesDevolucionUI = (function(){
 	return {
 		cargarFacturasDetalles: function(id){
 			$.ajax({
-				url: 'ordenes_devolucion/get_factura_compra',
+				url: 'ordenes_devolucion/get_orden_compra',
 				type: 'post',
 				dataType: 'html',
 				data: {id: id},
 				success: function(response){
-					$('#main-modal .detalles-factura-compra').html(response);
+					$('#main-modal .detalles-orden-compra').html(response);
 				}
 			});
 		},
 
 		init: function(){
-			$('body').on('change', '#orden_devolucion_factura_compra_id', function(e){
+			$('body').on('change', '#orden_devolucion_orden_compra_id', function(e){
 				ordenesDevolucionUI.cargarFacturasDetalles($(this).val());
 			});
 
 			$('body').on('click', '.recargar-detalles', function(e){
-				ordenesDevolucionUI.cargarFacturasDetalles($('#orden_devolucion_factura_compra_id').val());
+				ordenesDevolucionUI.cargarFacturasDetalles($('#orden_devolucion_orden_compra_id').val());
 				e.preventDefault();
 			});
 

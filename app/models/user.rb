@@ -13,8 +13,9 @@ class User < ActiveRecord::Base
   end
 
   has_many :factura_compras
-  has_many :ordenes_compras
+  has_many :orden_compras
   has_many :pedido_cotizacions
+  has_many :orden_devolucions
   belongs_to :empleado
 
   accepts_nested_attributes_for :empleado

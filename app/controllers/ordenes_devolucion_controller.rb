@@ -41,7 +41,7 @@ class OrdenesDevolucionController < ApplicationController
   end
 
   def new
-    @facturas_compra = FacturaCompra.where(estado: 'Pendiente')
+    @ordenes_compra = OrdenCompra.where(estado: 'Pendiente')
     @orden_devolucion = OrdenDevolucion.new
   end
 
@@ -67,6 +67,14 @@ class OrdenesDevolucionController < ApplicationController
     end
   end
 
+  def get_orden_compra
+    @orden_compra = OrdenCompra.find(params[:id])
+    @orden_devolucion = OrdenDevolucion.new
+    #@factura_compra.factura_compra_detalles.build
+    #@simbolo_moneda = Configuracion.find(1).simbolo_moneda
+    render partial: 'get_orden_compra', formats: 'html'
+  end
+
   def imprimir_listado
     setupFechas
     @search = OrdenDevolucion.search(params[:q])
@@ -87,7 +95,7 @@ class OrdenesDevolucionController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def orden_devolucion_params
-      params.require(:orden_devolucion).permit(:numero, :total_orden, :total_iva, :fecha_generado, :motivo, :factura_compra_id, :proveedor_id, :user_id)
+      params.require(:orden_devolucion).permit(:numero, :numero_factura, :total_orden, :total_iva, :fecha_generado, :motivo, :orden_compra_id, :proveedor_id, :user_id)
     end
 
 end
