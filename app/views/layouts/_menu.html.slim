@@ -11,7 +11,7 @@ nav.navbar.navbar-default.navbar-custom.navbar-fixed-top.hidden-print [role="nav
     ul.nav.navbar-nav
       li [class="#{current_menu([pages_index_path])}"]
         = link_to 'Inicio', pages_index_path
-      li [class="#{current_menu([proveedores_path, pedidos_compra_path, facturas_compra_path, pedidos_cotizacion_path])} dropdown"]
+      li [class="#{current_menu([proveedores_path, pedidos_compra_path, facturas_compra_path, pedidos_cotizacion_path, ordenes_compra_path, ordenes_devolucion_path])} dropdown"]
         = link_to 'Compras'.html_safe, pedidos_compra_path
         ul.dropdown-menu
           //= render 'layouts/compras_sidemenu'
