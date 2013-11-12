@@ -1,0 +1,24 @@
+// Place all the styles related to the facturas_compra controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.show-deposito{
+	cursor: pointer;
+}
+
+//Scroll para tablas
+.table-scroll-factura{
+  overflow:auto;
+  height:200px;
+}
+tbody{
+  .scrollContent {
+    display: block;
+    height: 262px;
+    overflow: auto;
+    width: 100%;
+  }
+}
+
+.negrita{
+	font-weight: bold;
+}

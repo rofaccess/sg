@@ -15,7 +15,7 @@ nav.navbar.navbar-default.navbar-custom.navbar-fixed-top.hidden-print [role="nav
         = link_to 'Compras'.html_safe, pedidos_compra_path
         ul.dropdown-menu
           //= render 'layouts/compras_sidemenu'
-      li [class="#{current_menu([componentes_path, marcas_path, productos_path])}"]
+      li [class="#{current_menu([componentes_path, marcas_path, productos_path, depositos_path])}"]
         = link_to 'Stock', componentes_path
       li [class="#{current_menu([usuarios_path])}"]
         = link_to 'Usuarios', usuarios_path

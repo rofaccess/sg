@@ -1,4 +1,9 @@
 Sg::Application.routes.draw do
+  resources :depositos do
+    collection do
+      get 'imprimir_listado'
+    end
+  end
 
   resources :ordenes_devolucion
   resources :ordenes_compra do

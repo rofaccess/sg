@@ -1,4 +1,5 @@
 class DepositoStock < ActiveRecord::Base
+	belongs_to :deposito
 	def self.actualizar_deposito_stock(deposito_id, factura_compra_id)
 		facturaCompraDetalles = FacturaCompraDetalle.where(factura_compra_id: factura_compra_id)
 		facturaCompraDetalles.each do |f|

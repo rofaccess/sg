@@ -1,0 +1,17 @@
+table.table.table-condensed
+  thead
+	tr
+	  th = sort_link(@search, :nombre, "Nombre", {}, method: :get, remote: true)
+	  th = sort_link(@search, :descripcion, "Descripcion", {}, method: :get, remote: true)
+	  th = sort_link(@search, :disponible, "Disponible", {}, method: :get, remote: true)
+	  th = sort_link(@search, :type, "Tipo de Deposito", {}, method: :get, remote: true)
+	  th.hidden-print
+  tbody
+	- @depositos.each do |p|
+	  tr [data-url="#{deposito_path(p)}"]
+		td.show-deposito = p.nombre
+		td.show-deposito = p.descripcion
+		td.show-deposito = p.disponible
+		td.show-deposito = p.type
+		td.hidden-print
+		  = link_to '<i class="icon-print icon-large"></i> '.html_safe, deposito_path(p, format: 'pdf')
