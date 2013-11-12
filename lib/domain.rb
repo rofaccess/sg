@@ -17,6 +17,8 @@ module Domain
 	ESTADO    = 15
 	MONTO     = 13
 	CANTIDAD  = 5
+	NIVEL     = 2
+	NUM_ASIENTO    = 15
 	DESCRIPCION    = 100
 	TIPO_PERSONA   = 9
 	NUMERO_DOC_IDE = 10
@@ -24,5 +26,6 @@ module Domain
 	ABREVIATURA    = 5
 	TIPO_MERCADERIA	= 10
 	TIPO_DEPOSITO	= 25
+	TIPO_PARTIDA_DOBLE = 5
 
 end

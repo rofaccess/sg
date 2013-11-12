@@ -10,8 +10,8 @@
 u = User.where(username: 'admin')
 if u.blank?
 	e = Empleado.create(nombre: 'Juan', apellido: 'Perez')
-	User.create(username: 'admin', password: 'admin', password_confirmation: 'admin', empleado_id: e.id)
-	u.first.add_role :admin
+	u = User.create(username: 'admin', password: 'admin', password_confirmation: 'admin', empleado_id: e.id)
+	u.add_role :admin
 elsif u.first.empleado_id.nil?
 	e = Empleado.create(nombre: 'Juan', apellido: 'Perez')
 	u.first.empleado_id = e.id
@@ -107,4 +107,16 @@ if Configuracion.all.blank?
 	# Crear Depositos para materia prima y productos terminados
 	DepositoMateriaPrima.create(nombre: "Casa Central - Materia Prima", disponible: true)
 	DepositoProductoTerminado.create(nombre: "Casa Central - Producto Terminado", disponible: true)
+
+	# Crear cuentas contables, Se puede mejorar agregando las cuentas nivel 1 al 4
+	CuentaContable.create( [{nombre: 'Mercaderias', nivel:'5', asentable: true, codigo: '111115'},
+						    {nombre: 'Proveedores', nivel:'5', asentable: true, codigo: '111116'},
+						    {nombre: 'Iva - Credito Fiscal 10 %', nivel:'5', asentable: true, codigo: '111117'}])
+
+	# Crear asientos modelo
+	AsientoModelo.create(concepto: 'Compra de Mercaderias a Credito', origen: 'Factura de Compra')
+
+	AsientoModeloDetalle.create([{asiento_modelo_id: 1, cuenta_contable_id: 1, tipo_partida_doble: 'Debe'},
+		                         {asiento_modelo_id: 1, cuenta_contable_id: 2, tipo_partida_doble: 'Haber'},
+		                         {asiento_modelo_id: 1, cuenta_contable_id: 3, tipo_partida_doble: 'Debe'}])
 end

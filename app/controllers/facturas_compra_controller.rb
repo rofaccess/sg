@@ -58,8 +58,9 @@ class FacturasCompraController < ApplicationController
           cant = d.cantidad
           cant_actual = orden_compra_detalle.cantidad_recibida
           orden_compra_detalle.update(cantidad_recibida: (cant_actual + cant))
-          # Aca se actualiza el stock
         end
+        # Aca se actualiza el stock
+        DepositoStock.actualizar_deposito_stock(@factura_compra.deposito_destino_id, @factura_compra.id)
         # Cuando las cantidades recibidas y requeridas sean iguales el estado de la orden pasa a facturado
         if @orden_compra.orden_compra_detalles.sum('cantidad_recibida') == @orden_compra.orden_compra_detalles.sum('cantidad_requerida')
           @orden_compra.update(estado: PedidosEstados::FACTURADO, fecha_procesado: DateTime.now)
