@@ -2,18 +2,19 @@
   .well
     button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
     /Cabecera
-    h3 Nombre del Deposito: #{@deposito.numero}
+    h3 Deposito Nº #{@deposito.id}
     .col-md-12
       .row
         .col-md-5
-          strong Nombre
-          | #{'  '} #{@deposito.proveedor.nombre}
-        .col-md-4
-          strong Disponible:
-          | #{'  '} #{Formatter.format_date(@deposito.disponible)}
-        .col-md-3
           strong Tipo de Deposito:
           | #{'  '} #{@deposito.type}
+        .col-md-4
+          strong Disponible:
+          | #{'  '} #{@deposito.disponible}
+      .row
+        .col-md-5
+          strong Nombre
+          | #{'  '} #{@deposito.nombre}
       .row
         .col-md-5
           strong Descripcion:
@@ -33,26 +34,28 @@
           th.text-right Existencia Minima
           th.text-right Existencia Maxima
       tbody
-        - @deposito.deposito_detalles.each do |p|
+        - cont = 1
+        - @deposito.deposito_stocks.each do |p|
           tr
             td = cont
-            td = p.componente.nombre
-            - if p.componente.marca.blank?
+            td = p.mercaderia.nombre
+            - if p.mercaderia.marca.blank?
               td Sin Marca
             - else
-              td = p.componente.marca.nombre
+              td = p.mercaderia.marca.nombre
 
-            - if p.componente.componente_categoria.blank?
+            - if p.mercaderia.componente_categoria.blank?
               td Sin Categoria
             - else
-              td = p.componente.componente_categoria.nombre
+              td = p.mercaderia.componente_categoria.nombre
             td.text-right = p.existencia
             td.text-right.monto = p.existencia_min
             td.text-right.monto = p.existencia_max
+          - cont += 1
 
 /Botones Cancelar y generar
 .panel-footer
   button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
-  = link_to '<i class="icon-print icon-large"></i> Imprimir Factura'.html_safe, factura_compra_path(@factura_compra.id, format: 'pdf'), class: 'btn btn-default pull-right'
+  = link_to '<i class="icon-print icon-large"></i> Imprimir Stock del Deposito'.html_safe, deposito_path(@deposito.id, format: 'pdf'), class: 'btn btn-default pull-right'
 
 

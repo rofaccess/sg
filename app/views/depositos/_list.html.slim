@@ -11,7 +11,10 @@ table.table.table-condensed
 	  tr [data-url="#{deposito_path(p)}"]
 		td.show-deposito = p.nombre
 		td.show-deposito = p.descripcion
-		td.show-deposito = p.disponible
+		- if p.disponible
+			td.show-deposito Si
+		- else
+			td.show-deposito No
 		td.show-deposito = p.type
 		td.hidden-print
 		  = link_to '<i class="icon-print icon-large"></i> '.html_safe, deposito_path(p, format: 'pdf')

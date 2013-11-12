@@ -60,7 +60,7 @@ class FacturasCompraController < ApplicationController
           orden_compra_detalle.update(cantidad_recibida: (cant_actual + cant))
         end
         # Aca se actualiza el stock
-        DepositoStock.actualizar_deposito_stock(@factura_compra.deposito_destino_id, @factura_compra.id)
+        DepositoStock.actualizar_deposito_stock(@factura_compra.deposito_id, @factura_compra.id)
         # Cuando las cantidades recibidas y requeridas sean iguales el estado de la orden pasa a facturado
         if @orden_compra.orden_compra_detalles.sum('cantidad_recibida') == @orden_compra.orden_compra_detalles.sum('cantidad_requerida')
           @orden_compra.update(estado: PedidosEstados::FACTURADO, fecha_procesado: DateTime.now)
@@ -127,7 +127,7 @@ class FacturasCompraController < ApplicationController
   end
 
   def factura_compra_params
-      params.require(:factura_compra).permit(:numero, :fecha, :total_iva, :total_factura, :proveedor_id, :condicion_pago_id, :plazo_pago_id, :user_id, :estado, :orden_compra_id,:deposito_destino_id,
+      params.require(:factura_compra).permit(:numero, :fecha, :total_iva, :total_factura, :proveedor_id, :condicion_pago_id, :plazo_pago_id, :user_id, :estado, :orden_compra_id,:deposito_id,
           factura_compra_detalles_attributes: [:componente_id, :cantidad, :costo_unitario, :iva_valor, :orden_compra_detalle_id])
   end
 end

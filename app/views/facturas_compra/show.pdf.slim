@@ -19,11 +19,17 @@ h3 Factura N° #{@factura_compra.numero}
     | #{'  '} #{@factura_compra.proveedor.nombre}
   .col-md-5
     strong Deposito Destino:
-    | #{'  '} #{@factura_compra.deposito_destino_id}
+    | #{'  '} #{@factura_compra.deposito.nombre}
+  .col-md-3
+    strong Usuario:
+    | #{'  '} #{@factura_compra.user.username}
   .col-md-5
     strong Condicion de Pago:
     | #{'  '} #{@factura_compra.condicion_pago.nombre}
 .row.pull-left style="padding-right: 60px"
+  .col-md-3
+    strong Estado:
+    | #{'  '} #{@factura_compra.estado}
   .col-md-4
     strong Fecha:
     | #{'  '} #{Formatter.format_date(@factura_compra.fecha)}
@@ -35,12 +41,6 @@ h3 Factura N° #{@factura_compra.numero}
       strong Plazo de Pago:
       | #{'  '} #{@factura_compra.plazo_pago.nombre}
 .row
-  .col-md-3
-    strong Estado:
-    | #{'  '} #{@factura_compra.estado}
-  .col-md-3
-    strong Usuario:
-    | #{'  '} #{@factura_compra.user.username}
 hr
 /Detalles de la factura
 table.table.table-condensed.table-striped

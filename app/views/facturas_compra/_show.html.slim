@@ -5,27 +5,28 @@
     h3 Factura Nº  #{@factura_compra.numero}
     .col-md-12
       .row
-        .col-md-5
+        .col-md-7
           strong Proveedor:
           | #{'  '} #{@factura_compra.proveedor.nombre}
-        .col-md-4
-          strong Fecha:
-          | #{'  '} #{Formatter.format_date(@factura_compra.fecha)}
         .col-md-3
           strong Estado:
           | #{'  '} #{@factura_compra.estado}
       .row
-        .col-md-5
+        .col-md-7
           strong Deposito Destino:
-          | #{'  '} #{@factura_compra.deposito_destino_id}
+          | #{'  '} #{@factura_compra.deposito.nombre}
+        .col-md-4
+          strong Fecha:
+          | #{'  '} #{Formatter.format_date(@factura_compra.fecha)}
+      .row
+        .col-md-7
+          strong Usuario:
+          | #{'  '} #{@factura_compra.user.username}
         .col-md-4
           strong Orden de Compra:
           | #{'  '} #{@factura_compra.orden_compra.numero}
-        .col-md-3
-          strong Usuario:
-          | #{'  '} #{@factura_compra.user.username}
       .row
-        .col-md-5
+        .col-md-7
           strong Condicion de Pago:
           | #{'  '} #{@factura_compra.condicion_pago.nombre}
         .col-md-5

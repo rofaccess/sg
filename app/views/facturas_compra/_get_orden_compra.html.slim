@@ -9,7 +9,7 @@
   .row
     = FormBuilder::collection_select_v(f, :condicion_pago_id, CondicionPago.all, :id, :nombre,{col_class: 'col-md-3', label_text: 'Condicion de Pago', select_class:'required'})
     = FormBuilder::collection_select_v(f, :plazo_pago_id, PlazoPago.all, :id, :nombre,{col_class: 'col-md-3 to-hide', label_text: 'Plazo de Pago', select_class:'required'})
-    = FormBuilder::collection_select_v(f, :deposito_destino_id, DepositoMateriaPrima.all, :id, :nombre,{col_class: 'col-md-4', label_text: 'Deposito Destino', select_class:'required'})
+    = FormBuilder::collection_select_v(f, :deposito_id, DepositoMateriaPrima.all, :id, :nombre,{col_class: 'col-md-4', label_text: 'Deposito Destino', select_class:'required'})
 
   / Formularios Ocultos
   = f.hidden_field(:proveedor_id,value:"#{@orden_compra.proveedor_id}")
