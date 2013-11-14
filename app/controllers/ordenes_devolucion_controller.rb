@@ -56,13 +56,8 @@ class OrdenesDevolucionController < ApplicationController
   end
 
   def create
-    @orden_compra = OrdenCompra.find(params[:orden_compra_id])
-    orden_devolucion = OrdenDevolucion.new(total_orden: 0,
-                                           total_iva: 0,
-                                           fecha_generado: DateTime.now,
-                                           orden_compra_id: @orden_compra.id,
-                                           proveedor_id: @orden_compra.proveedor_id,
-                                           user_id: current_user.id)
+    #@orden_compra = OrdenCompra.find(params[:orden_compra_id])
+    @orden_devolucion = OrdenDevolucion.new(orden_devolucion_params)
 
 
 
