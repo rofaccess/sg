@@ -73,6 +73,7 @@ Sg::Application.routes.draw do
   resources :usuarios do
     collection do
       get 'check_username'
+      match 'buscar' => 'usuarios#buscar', via: [:get, :post], as: :search
     end
   end
 
@@ -118,6 +119,8 @@ Sg::Application.routes.draw do
 
   devise_for :users
   get "pages/index"
+
+  get 'pages/no_autorizado'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

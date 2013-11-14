@@ -3,4 +3,8 @@ class PagesController < ApplicationController
 
 	def index
 	end
+
+	def no_autorizado
+
+	end
 end

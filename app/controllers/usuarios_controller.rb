@@ -1,14 +1,33 @@
 class UsuariosController < ApplicationController
   before_action :set_usuario, only: [:edit, :update, :destroy]
+  before_action :authorize, only: [:new, :create, :edit, :update, :destroy]
   respond_to :html, :js
+  #load_and_authorize_resource
+
+  def authorize
+    authorize! :manage, User
+  end
 
   def index
   	@search = User.search(params[:q])
-    if @search.sorts.empty?
-      @usuarios = @search.result.page(params[:page])
-    else
-      @usuarios = @search.result.page(params[:page])
+    @usuarios = @search.result
+
+    unless params[:user_roles_filtro].nil?
+      if params[:user_roles_filtro] == 'Administrador'
+        @usuarios = @usuarios.with_role(:admin)
+      elsif params[:user_roles_filtro] == 'Operador'
+        @usuarios = @usuarios.with_role(:operador)
+      end
     end
+
+    @usuarios = @usuarios.page(params[:page])
+
+    authorize! :read, User
+  end
+
+  def buscar
+    index
+    render 'index'
   end
 
   def new

@@ -1,9 +1,9 @@
 table.table.table-condensed
   thead
 	tr
-	  th = sort_link(@search, :nombre, "Nombre", {}, method: :get, remote: true)
-	  th Usuario
-	  th Nro de cédula
+	  th = sort_link(@search, :empleado_nombre, "Nombre", {}, method: :get, remote: true)
+	  th = sort_link(@search, :username, "Usuario", {}, method: :get, remote: true)
+	  th = sort_link(@search, :empleado_documento_id_num, "Nro de cédula", {}, method: :get, remote: true)
 	  th Direccion
 	  th Email
 	  th.admin-col Administrador

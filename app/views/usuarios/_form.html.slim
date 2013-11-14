@@ -1,7 +1,7 @@
 - form_url = @usuario.id.nil? ? usuarios_path : usuarios_path+"/#{@usuario.id}"
 = form_for @usuario, url: form_url, html: {class: 'form-horizontal'}, remote: true do |f|
   .modal-header
-    h3.modal-title Agregar Usuario
+    h3.modal-title = @usuario.id.nil? ? 'Agregar Usuario' : 'Editar Usuario'
   .modal-body
     label.title-seccion Datos del empleado
     = hidden_field_tag :user_id, @usuario.id
@@ -37,17 +37,17 @@ javascript:
     	rules: {
     		'user[username]':{
 		    	remote: {
-					url: "/usuarios/check_username",
-					type: "get",
-					data: {
-						user_id: $('#user_id').val()
-					}
-				}
-			}
-		},
-		messages: {
-			'user[username]': 'El nombre de usuario ya existe en el sistema.'
-		}
+  					url: "/usuarios/check_username",
+  					type: "get",
+  					data: {
+  						user_id: $('#user_id').val()
+  					}
+				  }
+			 }
+		  },
+  		messages: {
+  			'user[username]': 'El nombre de usuario ya existe en el sistema.'
+  		}
     });
 
     //Evento para el submit

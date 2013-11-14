@@ -1,0 +1,2 @@
+= search_form_for @search, url: search_usuarios_path, method: :post, remote: true, class: 'buscador col-md-11'  do |f|
+  = FormBuilder::text_field_search(f, :empleado_nombre_or_empleado_apellido_or_username_cont, "Buscar...")
