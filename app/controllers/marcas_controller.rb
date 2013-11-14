@@ -38,10 +38,10 @@ class MarcasController < ApplicationController
     @marca = Marca.new(marca_params)
 
     if @marca.save
-        update_list
-      else
-        redirect_to componentes_path, alert: t('messages.marca_not_saved')
-      end
+      update_list
+    else
+      redirect_to componentes_path, alert: t('messages.marca_not_saved')
+    end
   end
 
   def update_list

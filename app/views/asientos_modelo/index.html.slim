@@ -1,0 +1,15 @@
+.row.row-page-title
+  h2 Asientos Modelo
+
+= render 'search'
+
+.row.search-message.row-grid
+  h4.text-info.pull-left
+    |Se han encontrado #{' '}
+    span#asientos-modelo-size #{@asientos_modelo_size}
+    |  registros
+
+#list
+  = render 'list'
+#paginator
+  = paginate @asientos_modelo, remote: true

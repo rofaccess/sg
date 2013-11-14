@@ -111,12 +111,13 @@ if Configuracion.all.blank?
 	# Crear cuentas contables, Se puede mejorar agregando las cuentas nivel 1 al 4
 	CuentaContable.create( [{nombre: 'Mercaderias', nivel:'5', asentable: true, codigo: '111115'},
 						    {nombre: 'Proveedores', nivel:'5', asentable: true, codigo: '111116'},
-						    {nombre: 'Iva - Credito Fiscal 10 %', nivel:'5', asentable: true, codigo: '111117'}])
+						    {nombre: 'Iva - Credito Fiscal 10%', nivel:'5', asentable: true, codigo: '111117'},
+						    {nombre: 'Iva - Credito Fiscal 5%', nivel:'5', asentable: true, codigo: '111118'}])
 
 	# Crear asientos modelo
-	AsientoModelo.create(concepto: 'Compra de Mercaderias a Credito', origen: 'Factura de Compra')
-
-	AsientoModeloDetalle.create([{asiento_modelo_id: 1, cuenta_contable_id: 1, tipo_partida_doble: 'Debe'},
-		                         {asiento_modelo_id: 1, cuenta_contable_id: 2, tipo_partida_doble: 'Haber'},
-		                         {asiento_modelo_id: 1, cuenta_contable_id: 3, tipo_partida_doble: 'Debe'}])
+	AsientoModelo.create(concepto: 'Compra de Mercaderias segun factura credito', origen: 'Carga de Factura Compra, Condicion Credito')
+	AsientoModeloDetalle.create([{valor: 'Monto sin Iva', cuenta_contable_id: 1, tipo_partida_doble: 'Debe', asiento_modelo_id: 1},
+								 {valor: 'Monto Total'  , cuenta_contable_id: 2, tipo_partida_doble: 'Haber', asiento_modelo_id: 1},
+								 {valor: 'Iva 10%'      , cuenta_contable_id: 3, tipo_partida_doble: 'Debe', asiento_modelo_id: 1},
+								 {valor: 'Iva 5%'       , cuenta_contable_id: 4, tipo_partida_doble: 'Debe', asiento_modelo_id: 1}])
 end

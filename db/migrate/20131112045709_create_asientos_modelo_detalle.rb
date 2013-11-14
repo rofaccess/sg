@@ -4,6 +4,7 @@ class CreateAsientosModeloDetalle < ActiveRecord::Migration
       t.integer :asiento_modelo_id  ,null: false
       t.integer :cuenta_contable_id ,null: false
       t.string  :tipo_partida_doble ,null: false ,default: '' ,limit: Domain::TIPO_PARTIDA_DOBLE
+      t.string  :valor              ,null: false ,default: '' ,limit: Domain::NOMBRE
 
       t.timestamps
     end
