@@ -1,0 +1,8 @@
+.well
+  h1.text-center
+    i.icon-warning-sign.icon-2x
+  h1.text-center No tienes permisos para realizar esta acción.
+  .text-center
+    a.btn.btn-default [href="#" onClick="history.go(-1);return false;"] Volver Atras
+    = "   "
+    = link_to 'Ir al inicio', pages_index_path, class: 'btn btn-primary'

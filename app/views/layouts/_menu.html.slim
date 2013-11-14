@@ -17,10 +17,12 @@ nav.navbar.navbar-default.navbar-custom.navbar-fixed-top.hidden-print [role="nav
           //= render 'layouts/compras_sidemenu'
       li [class="#{current_menu([componentes_path, marcas_path, productos_path, depositos_path])}"]
         = link_to 'Stock', componentes_path
-      li [class="#{current_menu([usuarios_path])}"]
-        = link_to 'Usuarios', usuarios_path
-      li [class="#{current_menu([configuraciones_path, localidades_path, facturacion_configuraciones_path])}"]
-        = link_to 'Configuración', configuraciones_path
+      - if can? :manage, User
+        li [class="#{current_menu([usuarios_path])}"]
+          = link_to 'Usuarios', usuarios_path
+      - if can? :manage, :all
+        li [class="#{current_menu([configuraciones_path, localidades_path, facturacion_configuraciones_path])}"]
+          = link_to 'Configuración', configuraciones_path
     ul.nav.navbar-nav.navbar-right
       li.dropdown
         a [href="#" class="dropdown-toggle" data-toggle="dropdown"]

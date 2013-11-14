@@ -1,6 +1,12 @@
 class UsuariosController < ApplicationController
   before_action :set_usuario, only: [:edit, :update, :destroy]
+  before_action :authorize, only: [:new, :create, :edit, :update, :destroy]
   respond_to :html, :js
+  #load_and_authorize_resource
+
+  def authorize
+    authorize! :manage, User
+  end
 
   def index
   	@search = User.search(params[:q])
@@ -9,6 +15,7 @@ class UsuariosController < ApplicationController
     else
       @usuarios = @search.result.page(params[:page])
     end
+    authorize! :read, User
   end
 
   def new
