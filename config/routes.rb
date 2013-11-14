@@ -73,6 +73,7 @@ Sg::Application.routes.draw do
   resources :usuarios do
     collection do
       get 'check_username'
+      match 'buscar' => 'usuarios#buscar', via: [:get, :post], as: :search
     end
   end
 

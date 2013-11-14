@@ -10,12 +10,24 @@ class UsuariosController < ApplicationController
 
   def index
   	@search = User.search(params[:q])
-    if @search.sorts.empty?
-      @usuarios = @search.result.page(params[:page])
-    else
-      @usuarios = @search.result.page(params[:page])
+    @usuarios = @search.result
+
+    unless params[:user_roles_filtro].nil?
+      if params[:user_roles_filtro] == 'Administrador'
+        @usuarios = @usuarios.with_role(:admin)
+      elsif params[:user_roles_filtro] == 'Operador'
+        @usuarios = @usuarios.with_role(:operador)
+      end
     end
+
+    @usuarios = @usuarios.page(params[:page])
+
     authorize! :read, User
+  end
+
+  def buscar
+    index
+    render 'index'
   end
 
   def new

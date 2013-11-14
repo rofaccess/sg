@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   resourcify
   rolify
   acts_as_paranoid
+  paginates_per 15
+
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
