@@ -1,41 +1,65 @@
 = form_for @orden_devolucion, html: {class: ''}, remote: true  do |f|
+  //= f.hidden_field :id
   label.title-seccion Encabezado
   .row
-    = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3',label_text: 'Numero Factura', input_class: 'required numFactura clear',max_length: Domain::NUMERO_DOC_COM})
-    = FormBuilder::text_field_v(f, :motivo, {col_class: 'col-md-8', label_text: 'Motivo',input_class: 'required date datepicker clear', max_length: Domain::DESCRIPCION})
+    = FormBuilder::text_field_v(f, :numero_factura, {col_class: 'col-md-3 to-hide',label_text: 'Numero Factura', input_class: 'required numFactura clear',max_length: Domain::NUMERO_DOC_COM})
+    = FormBuilder::text_field_v(f, :motivo, {col_class: 'col-md-8', label_text: 'Motivo',input_class: 'required clear', max_length: Domain::DESCRIPCION})
 
 
 
-.panel.panel-default
-  .panel-heading
-    h3.panel-title Orden de compra N° #{@orden_compra.numero}
-    span.fecha Generado el #{@orden_compra.created_at}
-  .panel-body
-    .row.table-scroll
-      table.table.table-condensed
-        thead
-          tr
-            th Componente
-            th Marca
-            th Categoria
-            th Costo Uni.
-            th Cantidad Requerida
-            th Cantidad Recibida
-        tbody
-          - @orden_compra.orden_compra_detalles.each do |p|
-            tr
-              td = p.componente.nombre
-              - if p.componente.marca.blank?
-                td Sin Marca
-              - else
-                td = p.componente.marca.nombre
-              - if p.componente.componente_categoria.blank?
-                td Sin Categoria
-              - else
-                td = p.componente.componente_categoria.nombre
-              td = p.costo_unitario
-              td = p.cantidad_requerida
-              td = p.cantidad_recibida
-  .panel-footer
-    button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
-    = submit_tag 'Generar Pedido de Cotizacion', class: 'btn btn-primary pull-right'
+  .panel.panel-default
+    .panel-heading
+      h3.panel-title Orden de compra N° #{@orden_compra.numero}
+      span.fecha Generado el #{@orden_compra.created_at}
+
+  table.table.table-condensed
+    thead
+      tr
+        th Componente
+        th Marca
+        th Categoria
+        th Costo Uni.
+        th Cantidad Requerida
+        th.text-right Cantidad Recibida
+        th.text-right Cantidad Devuelta
+    tbody
+      - @orden_compra.orden_compra_detalles.each do |p|
+        tr
+          td = p.componente.nombre
+          - if p.componente.marca.blank?
+            td Sin Marca
+          - else
+            td = p.componente.marca.nombre
+          - if p.componente.componente_categoria.blank?
+            td Sin Categoria
+          - else
+            td = p.componente.componente_categoria.nombre
+          td = p.costo_unitario
+          td = p.cantidad_requerida
+          = f.fields_for :orden_devolucion_detalles, p do |detalle_form|
+            td
+              = detalle_form.text_field :cantidad_recibida, class: 'cantidad-field pull-right form-control text-right',maxLength: 5
+            td
+              = detalle_form.text_field :cantidad_devuelta, value: p.cantidad_requerida.to_i, class: 'cantidad-field pull-right form-control text-right',maxLength: 5
+
+
+  .row
+    .col-md-12
+      button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cancelar
+
+      = f.submit 'Generar Orden de Devolucion', class: 'btn btn-primary pull-right'
+
+javascript:
+  // Enmascarar los campos numericos
+  $('.monto-field, .cantidad-field').maskMoney();
+  $('.monto-field, .cantidad-field').maskMoney('mask');
+  // Quitar los '.' de los numeros antes de enviar el formulario
+  $('input[type="submit"]').click(function(e){
+    // Se eliminan todos los '.' de los campos
+   // $('.monto-field, .cantidad-field').each(function(){
+     // $(this).val($(this).val().replace(/\./g, ''));
+   // });
+    // Y se envia el formulario
+    $(this).parents('form').submit();
+    e.preventDefault();
+  });
