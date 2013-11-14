@@ -56,6 +56,15 @@ class OrdenesDevolucionController < ApplicationController
   end
 
   def create
+    @orden_compra = OrdenCompra.find(params[:orden_compra_id])
+    orden_devolucion = OrdenDevolucion.new(total_orden: 0,
+                                           total_iva: 0,
+                                           fecha_generado: DateTime.now,
+                                           orden_compra_id: @orden_compra.id,
+                                           proveedor_id: @orden_compra.proveedor_id,
+                                           user_id: current_user.id)
+
+
 
   end
 
@@ -95,7 +104,8 @@ class OrdenesDevolucionController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def orden_devolucion_params
-      params.require(:orden_devolucion).permit(:numero, :numero_factura, :total_orden, :total_iva, :fecha_generado, :motivo, :orden_compra_id, :proveedor_id, :user_id)
+      params.require(:orden_devolucion).permit(:numero, :numero_factura, :total_orden, :total_iva, :fecha_generado, :motivo, :orden_compra_id, :proveedor_id, :user_id,
+        orden_devolucion_detalles_attributes: [:id, :cantidad_devuelta])
     end
 
 end
