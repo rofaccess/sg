@@ -1,0 +1,50 @@
+.row
+  h2.header.col-md-6.pull-left = @config.nombre
+  dl.col-md-6
+    dt Telefono:
+    dd = @config.telefono1
+    dt Email:
+    dd = @config.email
+    dt Dirección:
+    dd = @config.direccion
+hr
+h3 Factura N° #{@factura_compra.numero}
+.row
+  dl.col-md-4
+    dt Proveedor:
+    dd = @factura_compra.proveedor.nombre
+    dt Fecha:
+    dd = Formatter.format_date(@factura_compra.fecha)
+    dt Estado:
+    dd = @factura_compra.estado
+    dt Importe:
+    dd = @factura_compra.total_factura
+  dl.col-md-4
+    dt Condicion:
+    dd = @factura_compra.condicion_pago.nombre
+    - if not @factura_compra.plazo_pago.blank?
+      dt Plazo:
+      dd = @factura_compra.plazo_pago.nombre
+    dt Orden:
+    dd = @factura_compra.orden_compra.numero
+    dt Usuario:
+    dd = @factura_compra.user.username
+
+table.table.table-condensed
+  thead
+    tr
+      th Componente
+      th Marca
+      th Categoria
+      th.text-right Cantidad
+      th.text-right Precio Unitario
+      th.text-right Subtotal
+  tbody
+    - @factura_compra.factura_compra_detalles.each do |p|
+      tr
+        td = p.componente.nombre
+        td = p.componente.marca.nil? ? '' : p.componente.marca.nombre
+        td = p.componente.componente_categoria.nombre
+        td.text-right = p.cantidad
+        td.text-right = p.costo_unitario
+        td.text-right = (p.cantidad * p.costo_unitario)

@@ -1,4 +1,5 @@
 Sg::Application.routes.draw do
+  resources :asientos_modelo
   resources :depositos do
     collection do
       get 'imprimir_listado'
