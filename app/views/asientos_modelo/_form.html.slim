@@ -15,16 +15,14 @@
               tr
                 th Valor
                 th Cuenta Contable
-                th.col-md-2 Tipo Partida Doble
+                th.col-md-3 Tipo Partida Doble
             tbody
-              /- @asiento_modelo.asiento_modelo_detalles.each do |o|
-              = f.fields_for :asiento_modelo_detalles do |a|
+              = f.fields_for :asiento_modelo_detalles do |det_viejo|
                 tr
                   td.valor
-                  td style='padding-right:40px' = FormBuilder::collection_select_v(a, :cuenta_contable_id, CuentaContable.all, :id, :nombre, {select_class: 'custom-select',label_class: 'hide'})
-                  td style='padding-right:40px'= FormBuilder::select(a, :tipo_partida_doble, ['Debe','Haber'], {label_class: 'hide'})
-                  td.hide.val = FormBuilder::text_field_v(a, :valor,{})
-
+                  td style='padding-right:40px' = FormBuilder::collection_select_v(det_viejo, :cuenta_contable_id, CuentaContable.all, :id, :nombre, {select_class: 'custom-select',label_class: 'hide'})
+                  td style='padding-right:40px'= FormBuilder::select(det_viejo, :tipo_partida_doble, ['Debe','Haber'], {label_class: 'hide'})
+                  td.hide.val = FormBuilder::text_field_v(det_viejo, :valor,{})
         .modal-footer
             button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
             = submit_tag 'Guardar', class: 'btn btn-success pull-right'

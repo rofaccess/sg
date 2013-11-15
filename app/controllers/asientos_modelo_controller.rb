@@ -8,7 +8,7 @@ class AsientosModeloController < ApplicationController
   end
   def index
     @search = AsientoModelo.search(params[:q])
-    @asiento_modelo_size = @search.result.size
+    @asientos_modelo_size = @search.result.size
     if @search.sorts.empty?
       @asientos_modelo = @search.result.page(params[:page])
     else
@@ -92,6 +92,18 @@ class AsientosModeloController < ApplicationController
   end
 
   def edit
+    #@asiento_modelo = AsientoModelo.find(params[:id]) (Con esto aca no funciona, tiene q estar en set_asiento_modelo)
+    # Obtiene los valores que ya estan en el modelo
+    @valores_viejos = Array.new
+    @asiento_modelo.asiento_modelo_detalles.each do |a|
+      @valores_viejos.push(a.valor)
+    end
+    valores_nuevos = AsientoModelo.filtrar_valores_carga_factura_credito
+    valores_nuevos.each do |valor|
+      if not @valores_viejos.include?(valor)
+        @asiento_modelo.asiento_modelo_detalles.build(valor: valor)
+      end
+    end
   end
 
   # def destroy
@@ -109,5 +121,6 @@ class AsientosModeloController < ApplicationController
   def asiento_modelo_params
       params.require(:asiento_modelo).permit(:concepto, :origen,
           asiento_modelo_detalles_attributes: [:cuenta_contable_id, :valor, :tipo_partida_doble, :asiento_modelo_id, :id])
+          #{asiento_modelo_detalle: [:cuenta_contable_id, :valor, :tipo_partida_doble, :asiento_modelo_id]})
   end
 end
