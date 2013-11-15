@@ -1,9 +1,13 @@
 = form_for @orden_devolucion, html: {class: ''}, remote: true  do |f|
-  //= f.hidden_field :id
-  label.title-seccion Encabezado
   .row
     = FormBuilder::text_field_v(f, :numero_factura, {col_class: 'col-md-3 to-hide',label_text: 'Numero Factura', input_class: 'required numFactura clear',max_length: Domain::NUMERO_DOC_COM})
     = FormBuilder::text_field_v(f, :motivo, {col_class: 'col-md-8', label_text: 'Motivo',input_class: 'required clear', max_length: Domain::DESCRIPCION})
+
+  = f.hidden_field(:total_orden,value:"80")
+  = f.hidden_field(:total_iva,value:"10")
+  = f.hidden_field(:orden_compra_id, value: "#{@orden_compra.id}")
+  = f.hidden_field(:proveedor_id,value:"#{@orden_compra.proveedor_id}")
+  = f.hidden_field(:user_id, value: "#{current_user.id}")
 
 
 
@@ -19,9 +23,8 @@
         th Marca
         th Categoria
         th Costo Uni.
-        th Cantidad Requerida
-        th.text-right Cantidad Recibida
         th.text-right Cantidad Devuelta
+        th.text-right Motivo
     tbody
       - @orden_compra.orden_compra_detalles.each do |p|
         tr
@@ -35,12 +38,15 @@
           - else
             td = p.componente.componente_categoria.nombre
           td = p.costo_unitario
-          td = p.cantidad_requerida
           = f.fields_for :orden_devolucion_detalles, p do |detalle_form|
             td
-              = detalle_form.text_field :cantidad_recibida, class: 'cantidad-field pull-right form-control text-right',maxLength: 5
+              = detalle_form.text_field :cantidad_devuelta, value: p.cantidad_requerida.to_i, class: 'cantidad-field form-control text-right',maxLength: 5
             td
-              = detalle_form.text_field :cantidad_devuelta, value: p.cantidad_requerida.to_i, class: 'cantidad-field pull-right form-control text-right',maxLength: 5
+              = detalle_form.text_field :motivo, value: '', class: 'required form-control text-right',maxLength: Domain::DESCRIPCION
+            = detalle_form.hidden_field(:componente_id, value: p.componente_id)
+            = detalle_form.hidden_field(:costo_unitario, value: p.costo_unitario)
+            = detalle_form.hidden_field(:iva, value: p.componente.iva.valor)
+            = detalle_form.hidden_field(:orden_compra_detalle_id, value: p.id)
 
 
   .row
