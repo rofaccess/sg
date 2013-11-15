@@ -33,6 +33,6 @@ nav.navbar.navbar-default.navbar-custom.navbar-fixed-top.hidden-print [role="nav
           b.caret
         ul.dropdown-menu
           li
-            a [href="#"] Perfil
+            = link_to 'Cambiar contraseña', edit_password_usuario_path(current_user), data: {remote: true}
           li
             = link_to "Salir", destroy_user_session_path, method: :delete

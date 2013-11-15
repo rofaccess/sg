@@ -9,7 +9,7 @@ gem 'rails', '4.0.0'
 
 #gem 'sqlite3'
 # Use mysql as the database for Active Record
-gem 'mysql2', '0.3.13'
+gem 'mysql2', '0.3.14'
 
 gem 'thin', '1.5.1'
 
@@ -86,3 +86,5 @@ gem 'wkhtmltopdf-binary'
 
 # Gema para soft delete
 gem "acts_as_paranoid", git: 'https://github.com/PeteMichaud/acts_as_paranoid.git', branch: 'rails4'
+
+gem 'paper_trail', '>= 3.0.0.rc1'

@@ -72,6 +72,9 @@ Sg::Application.routes.draw do
   end
 
   resources :usuarios do
+    member do
+      get 'edit_password'
+    end
     collection do
       get 'check_username'
       match 'buscar' => 'usuarios#buscar', via: [:get, :post], as: :search
@@ -118,7 +121,7 @@ Sg::Application.routes.draw do
 
   resources :productos
 
-  devise_for :users
+  devise_for :users, controllers: {passwords: 'passwords'}
   get "pages/index"
 
   get 'pages/no_autorizado'

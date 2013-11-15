@@ -1,5 +1,5 @@
 class UsuariosController < ApplicationController
-  before_action :set_usuario, only: [:edit, :update, :destroy]
+  before_action :set_usuario, only: [:edit, :update, :destroy, :edit_password]
   before_action :authorize, only: [:new, :create, :edit, :update, :destroy]
   respond_to :html, :js
   #load_and_authorize_resource
@@ -63,6 +63,10 @@ class UsuariosController < ApplicationController
       @usuario.remove_role :operador if (@usuario.has_role? :operador) && params[:user_roles][:is_operador] == '0'
   	end
   	update_list
+  end
+
+  def edit_password
+
   end
 
   def destroy
