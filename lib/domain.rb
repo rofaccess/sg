@@ -1,5 +1,5 @@
 module Domain
-
+	YEAR      = 4
 	NOMBRE    = 50
 	EMAIL     = 150
 	TELEFONO  = 50

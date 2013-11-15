@@ -108,6 +108,10 @@ if Configuracion.all.blank?
 	DepositoMateriaPrima.create(nombre: "Casa Central - Materia Prima", disponible: true)
 	DepositoProductoTerminado.create(nombre: "Casa Central - Producto Terminado", disponible: true)
 
+	# Crear un ejercicio contable
+	datetime = DateTime.now
+	EjercicioContable.create( fecha_inicio: datetime, year: datetime.year)
+
 	# Crear cuentas contables, Se puede mejorar agregando las cuentas nivel 1 al 4
 	CuentaContable.create( [{nombre: 'Mercaderias', nivel:'5', asentable: true, codigo: '111115'},
 						    {nombre: 'Proveedores', nivel:'5', asentable: true, codigo: '111116'},

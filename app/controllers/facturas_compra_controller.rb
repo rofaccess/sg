@@ -40,40 +40,46 @@ class FacturasCompraController < ApplicationController
     @orden_compra = OrdenCompra.find(params[:id])
     @factura_compra = FacturaCompra.new
     @factura_compra.factura_compra_detalles.build
-    #@simbolo_moneda = Configuracion.find(1).simbolo_moneda
     render partial: 'get_orden_compra', formats: 'html'
   end
 
   def create
     @factura_compra = FacturaCompra.new(factura_compra_params)
-    # Si la factura no tiene detalles entonces no se guarda
-    if @factura_compra.factura_compra_detalles.blank?
-      update_list
-    else
-      @orden_compra = OrdenCompra.find(@factura_compra.orden_compra_id)
-      if @factura_compra.save
-        # Actualiza cantidades recibidas en los detalles de la orden de compra
-        @factura_compra.factura_compra_detalles.each do |d|
-          orden_compra_detalle = OrdenCompraDetalle.find(d.orden_compra_detalle_id)
-          cant = d.cantidad
-          cant_actual = orden_compra_detalle.cantidad_recibida
-          orden_compra_detalle.update(cantidad_recibida: (cant_actual + cant))
-        end
-        # Aca se actualiza el stock
-        DepositoStock.actualizar_deposito_stock(@factura_compra.deposito_id, @factura_compra.id)
-        # Cuando las cantidades recibidas y requeridas sean iguales el estado de la orden pasa a facturado
-        if @orden_compra.orden_compra_detalles.sum('cantidad_recibida') == @orden_compra.orden_compra_detalles.sum('cantidad_requerida')
-          @orden_compra.update(estado: PedidosEstados::FACTURADO, fecha_procesado: DateTime.now)
-        else
-          @orden_compra.update(estado: PedidosEstados::SEMIFACTURADO, fecha_procesado: DateTime.now)
-        end
-        if params[:from_orden_abm]
-          redirect_to update_list_ordenes_compra_path(recargar_modal: true, orden_compra_id: @orden_compra.id)
-        else
-          update_list
-        end
-      end
+    @orden_compra = OrdenCompra.find(@factura_compra.orden_compra_id)
+
+    actualizar_cantidad_orden_compra(@factura_compra)
+    actualizar_estado_orden_compra(@orden_compra)
+    DepositoStock.actualizar_deposito_stock(@factura_compra)
+
+    if(@factura_compra.condicion_pago.nombre == 'Credito')
+      @asiento_modelo = AsientoModelo.find_by(origen: 'Carga de Factura Compra, Condicion Credito')
+      AsientoContable.asentar_carga_factura_credito(@factura_compra, @asiento_modelo)
     end
+
+    @factura_compra.save
+    if params[:from_orden_abm]
+      redirect_to update_list_ordenes_compra_path(recargar_modal: true, orden_compra_id: @orden_compra.id)
+    else
+      update_list
+    end
+  end
+
+  def actualizar_cantidad_orden_compra(factura_compra)
+    factura_compra.factura_compra_detalles.each do |d|
+      orden_compra_detalle = OrdenCompraDetalle.find(d.orden_compra_detalle_id)
+      cant = d.cantidad
+      cant_actual = orden_compra_detalle.cantidad_recibida
+      orden_compra_detalle.update(cantidad_recibida: (cant_actual + cant))
+    end
+  end
+
+  def actualizar_estado_orden_compra(orden_compra)
+    # Cuando las cantidades recibidas y requeridas sean iguales el estado de la orden pasa a facturado
+      if orden_compra.orden_compra_detalles.sum('cantidad_recibida') == orden_compra.orden_compra_detalles.sum('cantidad_requerida')
+        orden_compra.update(estado: PedidosEstados::FACTURADO, fecha_procesado: DateTime.now)
+      else
+        orden_compra.update(estado: PedidosEstados::SEMIFACTURADO, fecha_procesado: DateTime.now)
+      end
   end
 
   def update_list

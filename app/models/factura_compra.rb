@@ -14,4 +14,12 @@ class FacturaCompra < ActiveRecord::Base
 	def self.filtrar(orden_compra_id = nil)
       orden_compra_id.nil? ? FacturaCompra.all : FacturaCompra.where(orden_compra_id: orden_compra_id)
   	end
+
+  	def self.filtrar_valores_carga_factura_credito(factura_compra)
+		valores = ["Monto sin Iva","Monto Total"]
+		Iva.all.each do |iva|
+			valores.push("Iva #{iva.valor}%")
+		end
+		valores
+	end
 end
