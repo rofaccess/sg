@@ -13,7 +13,7 @@ var ordenesDevolucionUI = (function(){
 		},
 
 		init: function(){
-			$('body').on('change', '#orden_devolucion_orden_compra_id', function(e){
+			$('body').on('change', '#orden_compra_id', function(e){
 				ordenesDevolucionUI.cargarFacturasDetalles($(this).val());
 			});
 

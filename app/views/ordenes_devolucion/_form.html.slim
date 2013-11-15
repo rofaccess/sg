@@ -1,10 +1,25 @@
+//.modal-header
+//  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+//  h4.modal-title Generar Orden de Devolucion
+//.modal-body
+//  .row
+//    = form_for @orden_devolucion, html: {class: 'form-horizontal'}, remote: true do |f|
+
+//      .col-md-12
+//        = FormBuilder::collection_select(f, :orden_compra_id, @ordenes_compra, :id, :numero, 'Seleccione una orden de compra...', nil, 'col-md-8', '')
+
+//      .col-md-12
+//        .detalles-orden-compra
 .modal-header
   button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
-  h4.modal-title Generar Orden de Devolucion
-.modal-body
   .row
-    = form_for @orden_devolucion, html: {class: 'form-horizontal'}, remote: true do |f|
-      .col-md-12
-        = FormBuilder::collection_select(f, :orden_compra_id, @ordenes_compra, :id, :numero, 'Seleccione una orden de compra...', nil, 'col-md-8', '')
-      .col-md-12
-        .detalles-orden-compra
+	.col-md-3
+	  h4 Generar Orden de Devolucion
+	.col-md-6
+	  select class="form-control " id="orden_compra_id" name="orden_compra_id"
+	  	option value=""Seleccione una orden de compra...
+	  	- @ordenes_compra.each do |o|
+	  		option value="#{o.id}" Orden #{o.numero} [#{o.proveedor.nombre}] #{o.estado}
+.modal-body
+  .col-md-12
+    .detalles-orden-compra
