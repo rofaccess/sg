@@ -1,5 +1,7 @@
 class FacturaCompra < ActiveRecord::Base
 	paginates_per 15
+    has_paper_trail
+    acts_as_paranoid
 
 	has_many   :factura_compra_detalles
 	belongs_to :orden_compra

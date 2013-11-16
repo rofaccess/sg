@@ -23,6 +23,9 @@ nav.navbar.navbar-default.navbar-custom.navbar-fixed-top.hidden-print [role="nav
         li [class="#{current_menu([usuarios_path])}"]
           = link_to 'Usuarios', usuarios_path
       - if can? :manage, :all
+        li [class="#{current_menu([auditorias_path])}"]
+          = link_to 'Auditoría', auditorias_path
+      - if can? :manage, :all
         li [class="#{current_menu([configuraciones_path, localidades_path, facturacion_configuraciones_path])}"]
           = link_to 'Configuración', configuraciones_path
     ul.nav.navbar-nav.navbar-right

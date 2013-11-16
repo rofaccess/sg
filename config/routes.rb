@@ -118,6 +118,12 @@ Sg::Application.routes.draw do
     end
   end
 
+  resources :auditorias, only: [:index] do
+    collection do
+      match 'buscar' => 'auditorias#buscar', via: [:get, :post], as: :search
+    end
+  end
+
   #post 'localidades/get_estados/:id', to: 'localidades#get_estados', as: 'get_estados_localidades'
 
   resources :productos

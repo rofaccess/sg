@@ -1,0 +1,28 @@
+.row.row-page-title
+  h2 Log de Auditoría
+.row.form-search.row-grid
+  = link_to '<i class="icon-filter"></i> Filtrar'.html_safe, '#', class: 'btn btn-sm btn-default pull-right filtrar-link'
+.row.form-filtrar.hide.row-grid
+  = search_form_for @search, url: search_auditorias_path, method: :post, remote: true, class: 'form-filtros' do |f|
+    = FormBuilder::rango_fechas(f, :created_at_gt, :created_at_lt, {col_class: 'col-md-4', label_text: 'Fecha'})
+    = FormBuilder::select(f, :item_type_eq, [['Pedido de Compra', 'PedidoCompra'], ['Pedido de Cotizacion', 'PedidoCotizacion'], ['Orden de Compra', 'OrdenCompra'], ['Orden de Devolucion', 'OrdenDevolucion'], ['Facturas Recibidas', 'FacturaCompra']], {col_class: 'col-md-2', label_text: 'Modulo'})
+    = FormBuilder::collection_select_v(f, :whodunnit_eq, User.all, :id, :username, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Usuario'})
+
+    .filter-actions.pull-right.col-md-3
+      = f.submit 'Filtrar', class: 'btn btn-default pull-right'
+      = f.submit 'Limpiar Filtros', type: 'reset', class: 'btn btn-link pull-right'
+
+  = link_to '<i class="icon-angle-up icon-large"></i>'.html_safe, '#', class: 'esconder-filtros link-icon', title: 'Cerrar Filtros', data: {toggle: 'tooltip'}
+
+//.row.search-message.row-grid
+  //4.text-info.pull-left
+    //|Se han encontrado #{' '}
+    //span#pedidos-cotizacion-size #{@usuarios.size}
+    //|  registros
+  //= link_to '<i class="icon-print icon-large"></i> Imprimir Listado'.html_safe, imprimir_listado_pedidos_cotizacion_path, class: 'btn btn-default pull-right imprimir-pedidos-cotizacion'
+
+#list
+  = render 'list'
+
+#paginator
+  = paginate @logs, remote: true

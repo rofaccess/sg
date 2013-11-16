@@ -1,6 +1,8 @@
 class PedidoCompra < ActiveRecord::Base
   protokoll :numero, pattern: '#####'
   paginates_per 15
+  has_paper_trail
+  acts_as_paranoid
 
   has_many :pedido_compra_detalles
   has_many :pedido_cotizacions
@@ -29,7 +31,6 @@ class PedidoCompra < ActiveRecord::Base
       mejores_precios[d.id] = []
       if cotizaciones.size > 0
         mejor_precio = cotizaciones[0].costo_unitario
-      
 
         cotizaciones.each do |cotizacion|
           #unless cotizacion.costo_unitario.nil? || cotizacion.costo_unitario == 0

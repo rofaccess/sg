@@ -1,5 +1,6 @@
 class OrdenCompraDetalle < ActiveRecord::Base
 	include Formatter
+    acts_as_paranoid
 
 	belongs_to :orden_compra
 	belongs_to :componente

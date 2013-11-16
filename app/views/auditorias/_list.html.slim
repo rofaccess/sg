@@ -1,0 +1,16 @@
+table.table
+  thead
+    tr
+      th Fecha y hora
+      th Modulo
+      th Usuario
+      th Accion
+      //th Objeto
+  tbody
+    - @logs.each do |l|
+      tr
+        td = Formatter.format_datetime(l.created_at)
+        td = l.item_type.underscore.humanize
+        td = User.with_deleted.find(l.whodunnit).username
+        td = AuditoriaHelper::format_event(l.event, l.item_type, l.item_id)
+        //td = l.object

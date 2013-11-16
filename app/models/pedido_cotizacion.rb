@@ -1,9 +1,10 @@
 class PedidoCotizacion < ActiveRecord::Base
-  has_paper_trail
   protokoll :numero, pattern: '#####'
   paginates_per 15
+  has_paper_trail
+  acts_as_paranoid
 
-  has_many :pedido_cotizacion_detalles
+  has_many :pedido_cotizacion_detalles, dependent: :destroy
   belongs_to :pedido_compra
   belongs_to :proveedor
   has_many :orden_compras

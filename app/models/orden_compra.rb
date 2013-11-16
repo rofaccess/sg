@@ -3,6 +3,8 @@ class OrdenCompra < ActiveRecord::Base
 
 	protokoll :numero, pattern: '#####'
     paginates_per 15
+    has_paper_trail
+    acts_as_paranoid
 
 	belongs_to :user
 	belongs_to :proveedor

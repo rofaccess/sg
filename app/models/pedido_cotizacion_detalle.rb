@@ -1,6 +1,8 @@
 class PedidoCotizacionDetalle < ActiveRecord::Base
   include Formatter
 
+  acts_as_paranoid
+
   belongs_to :pedido_cotizacion
   belongs_to :componente
   belongs_to :pedido_compra_detalle
