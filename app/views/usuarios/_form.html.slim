@@ -5,13 +5,22 @@
   .modal-body
     label.title-seccion Datos del empleado
     = hidden_field_tag :user_id, @usuario.id
-    = FormBuilder::text_field_h(f, :username, {label_text: 'Usuario del sistema', input_class: 'required clear username',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::NOMBRE})
     = f.fields_for :empleado do |e|
       = FormBuilder::text_field_h(e, :nombre, {input_class: 'required clear',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::NOMBRE})
       = FormBuilder::text_field_h(e, :apellido, {input_class: 'required clear',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::NOMBRE})
       = FormBuilder::text_field_h(e, :documento_id_num, {label_text: 'Nro. de Cédula', input_class: 'required clear',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::NUMERO_DOC_COM})
       = FormBuilder::text_field_h(e, :direccion, {input_class: 'clear',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::DIRECCION})
       = FormBuilder::text_field_h(e, :email, {input_class: 'clear email',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::EMAIL})
+    label.title-seccion Usuario del sistema
+    = FormBuilder::text_field_h(f, :username, {label_text: 'Usuario del sistema', input_class: 'required clear username',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::NOMBRE})
+    .alert.alert-info.alert-dismissable.col-md-offset-3.col-md-9
+      button.close [type="button" data-dismiss="alert" aria-hidden="true"] &times;
+      - if @usuario.id.nil?
+        | Complete los siguientes campos para especificar una contraseña; sino por defecto la contraseña del ususario por será igual a su nombre de usuario.
+      - else
+        | Complete los dos siguentes campos si quiere cambiar la contraseña al ususario.
+    = FormBuilder::password_field(f, :password, {label_text: 'Contraseña', input_class: '',label_class: 'col-md-3', field_class:'col-md-9', min_length: 3, max_length: 50})
+    = FormBuilder::password_field(f, :password_confirmation, {label_text: 'Confirmación de Contraseña', input_class: 'passwordConfirmation',label_class: 'col-md-3', field_class:'col-md-9', min_length: 3, max_length: 50})
     label.title-seccion Roles
     .form-group
       #user_roles.col-md-offset-3.col-md-9

@@ -43,6 +43,9 @@ $.validator.addClassRules({
 	cantidadDocCom: {
 		maxlength: 5,
 		min: 1
+	},
+	passwordConfirmation: {
+		equalTo: '#user_password'
 	}
 });
 

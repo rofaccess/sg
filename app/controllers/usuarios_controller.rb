@@ -37,8 +37,11 @@ class UsuariosController < ApplicationController
 
   def create
   	@usuario = User.new(usuario_params)
-  	@usuario.password = '123456'
-  	@usuario.password_confirmation = '123456'
+
+    if @usuario.password == ''
+      @usuario.password = @usuario.username
+      @usuario.password_confirmation = @usuario.username
+    end
 
     if @usuario.save
       if params[:user_roles][:is_admin] == '0' && params[:user_roles][:is_operador] == '0'
@@ -56,7 +59,7 @@ class UsuariosController < ApplicationController
   end
 
   def update
-  	if @usuario.update(usuario_params)
+  	if @usuario.update_without_password(usuario_params)
       @usuario.add_role :admin if !(@usuario.has_role? :admin) && params[:user_roles][:is_admin] == '1'
       @usuario.add_role :operador if !(@usuario.has_role? :operador) && params[:user_roles][:is_operador] == '1'
       @usuario.remove_role :admin if (@usuario.has_role? :admin) && params[:user_roles][:is_admin] == '0'
@@ -71,6 +74,8 @@ class UsuariosController < ApplicationController
 
   def destroy
   	unless current_user.id == @usuario.id
+      @usuario.remove_role(:admin)
+      @usuario.remove_role(:operador)
   	  if @usuario.destroy
   	    flash.notice = "Se ha eliminado el usuario"
   	  else
@@ -92,6 +97,10 @@ class UsuariosController < ApplicationController
   		user_exist = true
   	end
   	render json: user_exist
+  end
+
+  def check_password
+    render json: current_user.valid_password?(params[:user][:current_password])
   end
 
   private

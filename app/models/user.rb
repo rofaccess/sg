@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  resourcify
+  #resourcify
   rolify
   acts_as_paranoid
   paginates_per 15
@@ -22,4 +22,15 @@ class User < ActiveRecord::Base
   belongs_to :empleado
 
   accepts_nested_attributes_for :empleado
+
+  def update_without_password(params, *options)
+    if params[:password].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation)
+    end
+    #puts 'IN********'
+    result = update_attributes(params, *options)
+    clean_up_passwords
+    result
+  end
 end
