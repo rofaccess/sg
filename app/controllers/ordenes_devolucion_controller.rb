@@ -62,7 +62,7 @@ class OrdenesDevolucionController < ApplicationController
     @orden_devolucion.fecha_generado = DateTime.now
     @orden_devolucion.save
 
-
+    update_list
 
   end
 

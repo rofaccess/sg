@@ -16,7 +16,7 @@
 	.col-md-3
 	  h4 Generar Orden de Devolucion
 	.col-md-6
-	  select class="form-control " id="orden_compra_id" name="orden_compra_id"
+	  select class="form-control " id="devolucion_orden_compra_id" name="orden_compra_id"
 	  	option value=""Seleccione una orden de compra...
 	  	- @ordenes_compra.each do |o|
 	  		option value="#{o.id}" Orden #{o.numero} [#{o.proveedor.nombre}] #{o.estado}
