@@ -1,0 +1,30 @@
+table.table.table-condensed.table-bordered
+  thead
+	tr
+	  th.col-md-1 Numero
+	  th
+	  th.text-right Debe
+	  th.text-right	 Haber
+  tbody
+	- @asientos_contable.each do |a|
+	  tr
+		td = a.numero
+		td.negrita #{Formatter.format_date(a.fecha)} : #{a.concepto} Nº #{a.numero_doc_com} - Ejercicio Contable #{a.ejercicio_contable.year}
+		td
+		td
+		- a.asiento_contable_detalles.each do |a_d|
+			tr
+			  td
+			  - if a_d.tipo_partida_doble == "Debe"
+			  	td = a_d.cuenta_contable.nombre
+			  	td.monto.text-right = a_d.monto
+			  	td
+			  - else
+			  	td.text-center = a_d.cuenta_contable.nombre
+			  	td
+			  	td.monto.text-right = a_d.monto
+/.hide.simbolo_moneda = @config.simbolo_moneda
+javascript:
+  //facturasCompraUI.formatearMontos();
+  $('.monto').maskMoney({isDiv: true});
+  $('.monto').maskMoney('mask');

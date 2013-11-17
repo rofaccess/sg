@@ -121,7 +121,7 @@ if Configuracion.all.blank?
 	# Crear asientos modelo
 	AsientoModelo.create(concepto: 'Compra de Mercaderias segun factura credito', origen: 'Carga de Factura Compra, Condicion Credito')
 	AsientoModeloDetalle.create([{valor: 'Monto sin Iva', cuenta_contable_id: 1, tipo_partida_doble: 'Debe', asiento_modelo_id: 1},
-								 {valor: 'Monto Total'  , cuenta_contable_id: 2, tipo_partida_doble: 'Haber', asiento_modelo_id: 1},
 								 {valor: 'Iva 10%'      , cuenta_contable_id: 3, tipo_partida_doble: 'Debe', asiento_modelo_id: 1},
-								 {valor: 'Iva 5%'       , cuenta_contable_id: 4, tipo_partida_doble: 'Debe', asiento_modelo_id: 1}])
+								 {valor: 'Iva 5%'       , cuenta_contable_id: 4, tipo_partida_doble: 'Debe', asiento_modelo_id: 1},
+								 {valor: 'Monto Total'  , cuenta_contable_id: 2, tipo_partida_doble: 'Haber', asiento_modelo_id: 1}])
 end

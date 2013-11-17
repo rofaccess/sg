@@ -16,7 +16,7 @@ table.table.table-condensed
 		td.show-factura = p.numero
 		td.show-factura = p.condicion_pago.nombre
 		td.show-factura = p.proveedor.nombre
-		td.show-factura = Formatter.format_datetime(p.fecha)
+		td.show-factura = Formatter.format_date(p.fecha)
 		td.show-factura.monto.text-right = p.total_factura
 		td.show-factura = p.estado
 		td.show-factura.text-right = p.orden_compra.numero
@@ -26,6 +26,8 @@ table.table.table-condensed
 		  = link_to '<i class="icon-print icon-large"></i> '.html_safe, factura_compra_path(p, format: 'pdf')
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, factura_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
 
-.hide.simbolo_moneda = @config.simbolo_moneda
+/.hide.simbolo_moneda = @config.simbolo_moneda
 javascript:
-  facturasCompraUI.formatearMontos();
+  $('.monto').maskMoney({isDiv: true});
+  $('.monto').maskMoney('mask');
+  //facturasCompraUI.formatearMontos();

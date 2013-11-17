@@ -17,6 +17,7 @@
 //= require modules/ordenesCompraUI
 //= require modules/ordenesDevolucionUI
 //= require modules/depositosUI
+//= require modules/asientosContableUI
 //
 $(function(){
 	// Inicializar el validador para los formularios cuando se abre un modal
