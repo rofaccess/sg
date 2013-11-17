@@ -52,8 +52,7 @@ class FacturasCompraController < ApplicationController
     DepositoStock.actualizar_deposito_stock(@factura_compra)
 
     if(@factura_compra.condicion_pago.nombre == 'Credito')
-      @asiento_modelo = AsientoModelo.find_by(origen: 'Carga de Factura Compra, Condicion Credito')
-      AsientoContable.asentar_carga_factura_credito(@factura_compra, @asiento_modelo)
+      AsientoContable.asentar_carga_factura_credito(@factura_compra)
     end
 
     @factura_compra.save
