@@ -17,7 +17,7 @@ nav.navbar.navbar-default.navbar-custom.navbar-fixed-top.hidden-print [role="nav
           //= render 'layouts/compras_sidemenu'
       li [class="#{current_menu([componentes_path, marcas_path, productos_path, depositos_path])}"]
         = link_to 'Stock', componentes_path
-      li [class="#{current_menu([asientos_contable_path])}"]
+      li [class="#{current_menu([asientos_contable_path,asientos_contable_path,cuentas_contable_path])}"]
         = link_to 'Contabilidad', asientos_contable_path
       - if can? :manage, User
         li [class="#{current_menu([usuarios_path])}"]

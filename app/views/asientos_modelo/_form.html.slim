@@ -20,7 +20,7 @@
               = f.fields_for :asiento_modelo_detalles do |det_viejo|
                 tr
                   td.valor
-                  td style='padding-right:40px' = FormBuilder::collection_select_v(det_viejo, :cuenta_contable_id, CuentaContable.all, :id, :nombre, {select_class: 'custom-select',label_class: 'hide'})
+                  td style='padding-right:40px' = FormBuilder::collection_select_v(det_viejo, :cuenta_contable_id, CuentaContable.where(asentable: true), :id, :nombre, {select_class: 'custom-select',label_class: 'hide'})
                   td style='padding-right:40px'= FormBuilder::select(det_viejo, :tipo_partida_doble, ['Debe','Haber'], {label_class: 'hide'})
                   td.hide.val = FormBuilder::text_field_v(det_viejo, :valor,{})
         .modal-footer

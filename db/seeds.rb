@@ -112,16 +112,27 @@ if Configuracion.all.blank?
 	datetime = DateTime.now
 	EjercicioContable.create( fecha_inicio: datetime, year: datetime.year)
 
-	# Crear cuentas contables, Se puede mejorar agregando las cuentas nivel 1 al 4
-	CuentaContable.create( [{nombre: 'Mercaderias', nivel:'5', asentable: true, codigo: '111115'},
-						    {nombre: 'Proveedores', nivel:'5', asentable: true, codigo: '111116'},
-						    {nombre: 'Iva - Credito Fiscal 10%', nivel:'5', asentable: true, codigo: '111117'},
-						    {nombre: 'Iva - Credito Fiscal 5%', nivel:'5', asentable: true, codigo: '111118'}])
+	# Crear cuentas contables
+	CuentaContable.create( [{nombre: 'ACTIVO', nivel:'1', asentable: false, codigo: '1'},
+							{nombre: 'ACTIVO CORRIENTE', nivel:'2', asentable: false, codigo: '11'},
+							{nombre: 'Caja', nivel:'3', asentable: true, codigo: '111'},
+							{nombre: 'Bancos', nivel:'3', asentable: true, codigo: '112'},
+							{nombre: 'Mercaderias', nivel:'3', asentable: true, codigo: '113'},
+							{nombre: 'Materia Prima', nivel:'4', asentable: true, codigo: '1131'},
+							{nombre: 'Producto Terminado', nivel:'4', asentable: true, codigo: '1132'},
+							{nombre: 'ACTIVO NO CORRIENTE', nivel:'2', asentable: false, codigo: '12'},
+							{nombre: 'Deudores Fiscales', nivel:'3', asentable: false, codigo: '122'},
+							{nombre: 'Iva - Credito Fiscal 10%', nivel:'4', asentable: true, codigo: '1221'},
+							{nombre: 'Iva - Credito Fiscal 5%', nivel:'4', asentable: true, codigo: '1222'},
+							{nombre: 'PASIVO', nivel:'1', asentable: false, codigo: '2'},
+							{nombre: 'PASIVO NO CORRIENTE', nivel:'2', asentable: false, codigo: '21'},
+							{nombre: 'Acreedores Comerciales', nivel:'3', asentable: false, codigo: '211'},
+							{nombre: 'Proveedores', nivel:'4', asentable: true, codigo: '2111'}])
 
 	# Crear asientos modelo
 	AsientoModelo.create(concepto: 'Compra de Mercaderias segun factura credito', origen: 'Carga de Factura Compra, Condicion Credito')
-	AsientoModeloDetalle.create([{valor: 'Monto sin Iva', cuenta_contable_id: 1, tipo_partida_doble: 'Debe', asiento_modelo_id: 1},
-								 {valor: 'Iva 10%'      , cuenta_contable_id: 3, tipo_partida_doble: 'Debe', asiento_modelo_id: 1},
-								 {valor: 'Iva 5%'       , cuenta_contable_id: 4, tipo_partida_doble: 'Debe', asiento_modelo_id: 1},
-								 {valor: 'Monto Total'  , cuenta_contable_id: 2, tipo_partida_doble: 'Haber', asiento_modelo_id: 1}])
+	AsientoModeloDetalle.create([{valor: 'Monto sin Iva', cuenta_contable_id: 6, tipo_partida_doble: 'Debe', asiento_modelo_id: 1},
+								 {valor: 'Iva 10%'      , cuenta_contable_id: 10, tipo_partida_doble: 'Debe', asiento_modelo_id: 1},
+								 {valor: 'Iva 5%'       , cuenta_contable_id: 11, tipo_partida_doble: 'Debe', asiento_modelo_id: 1},
+								 {valor: 'Monto Total'  , cuenta_contable_id: 15, tipo_partida_doble: 'Haber', asiento_modelo_id: 1}])
 end

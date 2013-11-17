@@ -1,0 +1,20 @@
+table.table.table-condensed
+  thead
+	tr
+	  th = sort_link(@search, :codigo, "Codigo", {}, method: :get, remote: true)
+	  th = sort_link(@search, :nombre, "Nombre", {}, method: :get, remote: true)
+	  th = sort_link(@search, :nivel, "Nivel", {}, method: :get, remote: true)
+	  th = sort_link(@search, :asentable, "Asentable", {}, method: :get, remote: true)
+	  th.hidden-print
+  tbody
+	- @cuentas_contable.each do |p|
+	  tr
+		td = p.codigo
+		td = p.nombre
+		td = p.nivel
+		- if p.asentable == 1
+		  td Si
+		- else
+		  td No
+		td.hidden-print
+

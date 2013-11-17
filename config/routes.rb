@@ -1,4 +1,9 @@
 Sg::Application.routes.draw do
+  resources :cuentas_contable do
+    collection do
+      get 'imprimir_listado'
+    end
+  end
   resources :asientos_contable do
     collection do
       get 'imprimir_listado'

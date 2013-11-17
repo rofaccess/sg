@@ -1,0 +1,4 @@
+= search_form_for @search, method: :get, remote: true, class: 'buscador col-md-11' do |f|
+  = FormBuilder::text_field_search(f, :codigo_or_nombre_or_nivel_or_asentable_cont, "Buscar...")
+
+
