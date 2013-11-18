@@ -49,7 +49,6 @@ class FacturasCompraController < ApplicationController
 
     actualizar_cantidad_orden_compra(@factura_compra)
     actualizar_estado_orden_compra(@orden_compra)
-    DepositoStock.actualizar_deposito_stock(@factura_compra)
 
     if(@factura_compra.condicion_pago.nombre == 'Credito')
       AsientoContable.asentar_carga_factura_credito(@factura_compra)
@@ -69,6 +68,9 @@ class FacturasCompraController < ApplicationController
       cant = d.cantidad
       cant_actual = orden_compra_detalle.cantidad_recibida
       orden_compra_detalle.update(cantidad_recibida: (cant_actual + cant))
+
+      # Aca se actualiza el stock
+      DepositoStock.actualizar_deposito_stock(factura_compra, d, orden_compra_detalle)
     end
   end
 
