@@ -1,0 +1,32 @@
+.well
+  h3 Orden de devolucion N° #{@orden_devolucion.numero}
+  h4 Proveedor: #{@orden_devolucion.proveedor.nombre}
+  h5.extra Creado el: #{Formatter.format_date(@orden_devolucion.fecha_generado)}
+table.table.table-condensed
+  thead
+    tr
+      th Componente
+      th Marca
+      th Categoria
+      th Costo Uni.
+      th.text-right Cantidad Devuelta
+      th.text-right Motivo
+  tbody
+    - @orden_devolucion.orden_devolucion_detalles.each do |orden_detalle|
+      tr
+        td = orden_detalle.componente.nombre
+        - if orden_detalle.componente.marca.blank?
+          td Sin Marca
+        - else
+          td = orden_detalle.componente.marca.nombre
+        - if orden_detalle.componente.componente_categoria.blank?
+          td Sin Categoria
+        - else
+          td = orden_detalle.componente.componente_categoria.nombre
+        td.monto-text = orden_detalle.costo_unitario
+        td.monto-text = orden_detalle.cantidad_devuelta
+        td.monto-text = orden_detalle.motivo
+
+
+.panel-footer
+  h3.panel-title.text-right Total:

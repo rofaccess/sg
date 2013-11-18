@@ -12,5 +12,7 @@ class OrdenDevolucion < ActiveRecord::Base
 	belongs_to :orden_compra
 	has_many   :orden_devolucion_detalles
 
+	accepts_nested_attributes_for :orden_devolucion_detalles
+
 
 end

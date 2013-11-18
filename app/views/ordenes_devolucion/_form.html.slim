@@ -20,6 +20,6 @@
 	  	option value=""Seleccione una orden de compra...
 	  	- @ordenes_compra.each do |o|
 	  		option value="#{o.id}" Orden #{o.numero} [#{o.proveedor.nombre}] #{o.estado}
-.modal-body
+.modal-body.pedido-detalles
   .col-md-12
     .detalles-orden-compra
