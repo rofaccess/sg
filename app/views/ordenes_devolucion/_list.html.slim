@@ -11,7 +11,7 @@ table.table.table-condensed
 	  th
   tbody
     - @ordenes_devolucion.each do |p|
-	  tr
+	  tr [data-url="#{orden_devolucion_path(p)}"]
 		td.show-pedido = p.numero
 		td.show-pedido = p.numero_factura
 		td.show-pedido = p.orden_compra.numero
