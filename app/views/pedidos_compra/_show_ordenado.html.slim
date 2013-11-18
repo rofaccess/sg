@@ -17,6 +17,9 @@
         dl.col-md-3
           dt Ordenado
           dd #{Formatter.format_datetime(@pedido_compra.fecha_ordenado)}
+        dl.col-md-3
+          dt Deposito
+          dd = @pedido_compra.deposito.nombre
 
   /Detalles del Pedido de compra
   /Tabs

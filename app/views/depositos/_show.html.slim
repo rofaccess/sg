@@ -33,6 +33,7 @@
           th.text-right Existencia
           th.text-right Existencia Minima
           th.text-right Existencia Maxima
+          th.text-right Pedido Generado
       tbody
         - cont = 1
         - @deposito.deposito_stocks.each do |p|
@@ -51,6 +52,7 @@
             td.text-right = p.existencia
             td.text-right.monto = p.existencia_min
             td.text-right.monto = p.existencia_max
+            td.text-right = p.pedido_generado
           - cont += 1
 
 /Botones Cancelar y generar

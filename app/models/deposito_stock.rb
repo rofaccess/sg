@@ -9,8 +9,14 @@ class DepositoStock < ActiveRecord::Base
 									  mercaderia_id: f.componente_id,
 									  existencia: f.cantidad)
 			else
-				cantidad = deposito.existencia
-				deposito.update(existencia: (cantidad + f.cantidad))
+				cant = deposito.existencia
+				cant_nueva = cant + f.cantidad
+				# Cuando la existencia alcanza la existencia_max, se indica que ya no hay pedido generado
+				if cant_nueva == deposito.existencia_max
+				  deposito.update(existencia: cant_nueva, pedido_generado: "No")
+				else
+				  deposito.update(existencia: cant_nueva)
+				end
 			end
 		end
 	end
