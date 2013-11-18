@@ -79,7 +79,7 @@ if Configuracion.all.blank?
 	componentes = ['P8H61-M LX','Core 2 Duo','7200 RPM 1TB','16" - e1660Sw','Mouse Verbatim 000023','AS-878 2x1 SubWoofer']
 	i = 1
 	componentes.each do |c|
-			costo = rand(2000..10000)
+			costo = rand(200000..1000000)
 			Componente.create(nombre: c, costo: costo, iva_id: rand(1..2), componente_categoria_id: i, marca_id: i)
 			i += 1
 	end
@@ -105,8 +105,14 @@ if Configuracion.all.blank?
 	end
 
 	# Crear Depositos para materia prima y productos terminados
-	DepositoMateriaPrima.create(nombre: "Casa Central - Materia Prima", disponible: true)
+	deposito1 = DepositoMateriaPrima.create(nombre: "Casa Central - Materia Prima", disponible: true)
+	deposito2 = DepositoMateriaPrima.create(nombre: "Sucursal Encarnacion - Materia Prima", disponible: true)
 	DepositoProductoTerminado.create(nombre: "Casa Central - Producto Terminado", disponible: true)
+
+	Componente.all.each do |c|
+		deposito1.deposito_stocks.create(mercaderia_id: c.id, existencia_min: 10, existencia_max: 20 , existencia: rand(5..20))
+		deposito2.deposito_stocks.create(mercaderia_id: c.id, existencia_min: 10, existencia_max: 20 , existencia: rand(5..20))
+	end
 
 	# Crear un ejercicio contable
 	datetime = DateTime.now

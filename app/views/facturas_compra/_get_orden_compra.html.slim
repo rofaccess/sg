@@ -5,14 +5,16 @@
   .row
     = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3', input_class: 'required numFactura clear',max_length: Domain::NUMERO_DOC_COM})
     = FormBuilder::text_field_v(f, :fecha, {col_class: 'col-md-3', label_text: 'Fecha',input_class: 'required date datepicker clear', max_length: Domain::FECHA})
-    = FormBuilder::text_field_v(f, :proveedor, {col_class: 'col-md-4', input_value: @orden_compra.proveedor.nombre, disabled: true})
+    = FormBuilder::text_field_v(f, :proveedor, {col_class: 'col-md-5', input_value: @orden_compra.proveedor.nombre, disabled: true})
   .row
     = FormBuilder::collection_select_v(f, :condicion_pago_id, CondicionPago.all, :id, :nombre,{col_class: 'col-md-3', label_text: 'Condicion de Pago', select_class:'required'})
     = FormBuilder::collection_select_v(f, :plazo_pago_id, PlazoPago.all, :id, :nombre,{col_class: 'col-md-3 to-hide', label_text: 'Plazo de Pago', select_class:'required'})
-    = FormBuilder::collection_select_v(f, :deposito_id, DepositoMateriaPrima.all, :id, :nombre,{col_class: 'col-md-4', label_text: 'Deposito Destino', select_class:'required'})
+    /= FormBuilder::collection_select_v(f, :deposito_id, DepositoMateriaPrima.all, :id, :nombre,{col_class: 'col-md-4', label_text: 'Deposito Destino', select_class:'required'})
+    = FormBuilder::text_field_v(f, :deposito_id, {col_class: 'col-md-5', input_value: @orden_compra.pedido_compra.deposito.nombre, disabled: true})
 
   / Formularios Ocultos
   = f.hidden_field(:proveedor_id,value:"#{@orden_compra.proveedor_id}")
+  = f.hidden_field(:deposito_id,value:"#{@orden_compra.pedido_compra.deposito_id}")
   = f.hidden_field(:user_id, value: "#{current_user.id}")
   = f.hidden_field(:estado, value: "Pendiente")
   = f.hidden_field(:orden_compra_id, value: "#{@orden_compra.id}")

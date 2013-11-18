@@ -76,25 +76,24 @@ class PedidosCompraController < ApplicationController
   end
 
   def create_test_data
-    pedido_compra = PedidoCompra.new(estado: "Pendiente", fecha_generado: DateTime.now)
-
-    Componente.all.each do |c|
-      # por cada componente hay 10% de posibilidad de guardar un detalle
-      if rand(100) < 10
-        pedido_compra.pedido_compra_detalles.build(componente_id: c.id,
-                                                   cantidad: rand(1..10))
+    # Crea un pedido por cada deposito
+    DepositoMateriaPrima.all.each do |d|
+      pedido_compra = PedidoCompra.new(estado: "Pendiente", fecha_generado: DateTime.now, deposito_id: d.id)
+      d.deposito_stocks.each do |d_s|
+        ex = d_s.existencia
+        min = d_s.existencia_min
+        max = d_s.existencia_max
+        if (d_s.pedido_generado == "No") && (ex < min)
+          pedido_compra.pedido_compra_detalles.new( componente_id: d_s.mercaderia_id,
+                                                    cantidad: max - ex)
+          d_s.update(pedido_generado: "Si")
+        end
       end
-      # si no llega a crear ninguno entonces carga un detalle
-      if pedido_compra.pedido_compra_detalles.blank?
-        pedido_compra.pedido_compra_detalles.build(componente_id: c.id,
-                                                   cantidad: rand(1..10))
+      if not pedido_compra.pedido_compra_detalles.blank?
+        pedido_compra.save
       end
     end
-    if  pedido_compra.save
-      update_list
-    else
-      redirect_to pedidos_compra_path, alert: t('messages.pedido_compra_not_saved')
-    end
+    update_list
   end
 
   def update_list
