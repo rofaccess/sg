@@ -1,0 +1,14 @@
+.modal-body.pedido-detalles
+  .col-md-12
+    button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+
+    = render partial: 'orden_detalles'
+
+.modal-footer
+  button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cancelar
+
+
+javascript:
+  // Enmascarar los campos numericos
+  $('.monto-text, .cantidad-text').maskMoney({isDiv: true});
+  $('.monto-text, .cantidad-text').maskMoney('mask');
