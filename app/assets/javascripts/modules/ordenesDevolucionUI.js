@@ -20,7 +20,7 @@ var ordenesDevolucionUI = (function(){
 
 
 			$('body').on('click', '.recargar_devolucion', function(e){
-				ordenesDevolucionUI.cargarDevolucionesDetalles('ordenes_devolucion/get_orden_compra', $('#devolucion_orden_compra_id').val(), '#main-modal .detalles-orden-devolucion');
+				ordenesDevolucionUI.cargarDevolucionesDetalles($('#devolucion_orden_compra_id').val());
 				$('.detalles-orden-devolucion').removeClass('hide');
 				$('.detalles-orden-devolucion').addClass('show');
 				$('.recargar-warning').removeClass('show');
