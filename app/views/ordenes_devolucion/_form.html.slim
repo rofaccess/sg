@@ -16,10 +16,17 @@
 	.col-md-3
 	  h4 Generar Orden de Devolucion
 	.col-md-6
-	  select class="form-control " id="devolucion_orden_compra_id" name="orden_compra_id"
+	  select class="form-control " id="devolucion_orden_compra_id" name="devolucion_orden_compra_id"
 	  	option value=""Seleccione una orden de compra...
 	  	- @ordenes_compra.each do |o|
 	  		option value="#{o.id}" Orden #{o.numero} [#{o.proveedor.nombre}] #{o.estado}
+    .col-md-1
+		a class="btn btn-default recargar_devolucion" href="#" id="recargar_devolucion" data-toggle="tooltip" data-original-title="Recargar"
+			i class="icon-refresh icon-large"
+
 .modal-body.pedido-detalles
   .col-md-12
-    .detalles-orden-compra
+    .alert.alert-warning.recargar-warning.hide
+	  = "Debe tener por lo menos un detalle para generar la orden de devolucion. "
+	  = link_to 'Recargar', '#', class: 'recargar_devolucion'
+    .detalles-orden-devolucion

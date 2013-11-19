@@ -77,8 +77,7 @@ class OrdenesDevolucionController < ApplicationController
   def get_orden_compra
     @orden_compra = OrdenCompra.find(params[:id])
     @orden_devolucion = OrdenDevolucion.new
-    #@factura_compra.factura_compra_detalles.build
-    #@simbolo_moneda = Configuracion.find(1).simbolo_moneda
+    @orden_devolucion.orden_devolucion_detalles.build
     render partial: 'get_orden_compra', formats: 'html'
   end
 

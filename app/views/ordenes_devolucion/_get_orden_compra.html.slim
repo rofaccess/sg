@@ -27,7 +27,7 @@
         th.text-right Motivo
     tbody
       - @orden_compra.orden_compra_detalles.each do |p|
-        tr
+        tr.devolucion-detalle
           td = p.componente.nombre
           - if p.componente.marca.blank?
             td Sin Marca
@@ -43,6 +43,7 @@
               = detalle_form.text_field :cantidad_devuelta, value: p.cantidad_requerida.to_i, class: 'cantidad-field form-control text-right',maxLength: 5
             td
               = detalle_form.text_field :motivo, value: '', class: 'required form-control text-right',maxLength: Domain::DESCRIPCION
+            td.text-right = link_to '<i class="icon-remove icon-large"></i> '.html_safe, '#', class: 'remover-detalle-devolucion link-icon'
             = detalle_form.hidden_field(:componente_id, value: p.componente_id)
             = detalle_form.hidden_field(:costo_unitario, value: p.costo_unitario)
             = detalle_form.hidden_field(:iva, value: p.componente.iva.valor)
