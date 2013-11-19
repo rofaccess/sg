@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   rolify
   acts_as_paranoid
   paginates_per 15
+  has_paper_trail
 
 
   # Include default devise modules. Others available are:
