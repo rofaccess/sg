@@ -25,6 +25,7 @@ var ordenesDevolucionUI = (function(){
 				$('.detalles-orden-devolucion').addClass('show');
 				$('.recargar-warning').removeClass('show');
 				$('.recargar-warning').addClass('hide');
+				e.preventDefault();
 			});
 
 			$('body').on('click', '.show-pedido', function(e){
