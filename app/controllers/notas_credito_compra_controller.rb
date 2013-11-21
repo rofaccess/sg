@@ -38,17 +38,24 @@ class NotasCreditoCompraController < ApplicationController
 
   def create
     @nota_credito_compra = NotaCreditoCompra.new(nota_credito_compra_params)
-    #@factura_compra = FacturaCompra.find(@nota_credito_compra.factura_compra_id)
 
-    #actualizar_cantidad_factura_compra(@nota_credito_compra)
-    #actualizar_estado_factura_compra(@factura_compra)
-
-    #if(@nota_credito_compra.condicion_pago.nombre == 'Credito')
-    #  AsientoContable.asentar_carga_factura_credito(@nota_credito_compra)
-    #end
+    # Al crear una nota de credito en base a una factura, se carga cantidad_credito en el detalle de la factura
+    # que representa la cantidad que se resta de la factura
+    actualizarCantidadCreditoFactura(@nota_credito_compra)
 
     if @nota_credito_compra.save
       update_list
+    end
+  end
+
+  def actualizarCantidadCreditoFactura(nota_credito)
+    nota_credito.nota_credito_compra_detalles.each do |n|
+      factura_detalle = FacturaCompraDetalle.find(n.factura_compra_detalle_id)
+      cantidad_credito = factura_detalle.cantidad_credito
+      factura_detalle.update(cantidad_credito: (cantidad_credito + n.cantidad))
+
+      # Resta del stock las cantidades de la nota de credito
+      DepositoStock.restar_deposito_stock(nota_credito, n)
     end
   end
 

@@ -1,41 +1,29 @@
 .modal-body
   .well
     button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
-    /Cabecera de la Factura
-    h3 Factura Nº  #{@factura_compra.numero}
+    /Cabecera
+    h3 Nota de Credito Nº  #{@nota_credito_compra.numero}
     .col-md-12
       .row
         .col-md-7
           strong Proveedor:
-          | #{'  '} #{@factura_compra.proveedor.nombre}
-        .col-md-3
-          strong Estado:
-          | #{'  '} #{@factura_compra.estado}
-      .row
-        .col-md-7
-          strong Deposito Destino:
-          | #{'  '} #{@factura_compra.deposito.nombre}
+          | #{'  '} #{@nota_credito_compra.proveedor.nombre}
         .col-md-4
           strong Fecha:
-          | #{'  '} #{Formatter.format_date(@factura_compra.fecha)}
+          | #{'  '} #{Formatter.format_date(@nota_credito_compra.fecha)}
+      .row
+        .col-md-7
+          strong Deposito Origen:
+          | #{'  '} #{@nota_credito_compra.factura_compra.deposito.nombre}
+        .col-md-4
+          strong Factura de Compra:
+          | #{'  '} #{@nota_credito_compra.factura_compra.numero}
       .row
         .col-md-7
           strong Usuario:
-          | #{'  '} #{@factura_compra.user.username}
-        .col-md-4
-          strong Orden de Compra:
-          | #{'  '} #{@factura_compra.orden_compra.numero}
-      .row
-        .col-md-7
-          strong Condicion de Pago:
-          | #{'  '} #{@factura_compra.condicion_pago.nombre}
-        .col-md-5
-          - if not @factura_compra.plazo_pago.blank?
-            strong Plazo de Pago:
-            | #{'  '} #{@factura_compra.plazo_pago.nombre}
+          | #{'  '} #{@nota_credito_compra.user.username}
 
-  /Detalles de la factura
-  /Tabs
+  /Detalles
   br
   .table-scroll
     table.table.table-condensed.table-striped
@@ -51,7 +39,7 @@
       tbody
         - total = 0
         - cont = 1
-        - @factura_compra.factura_compra_detalles.each do |p|
+        - @nota_credito_compra.nota_credito_compra_detalles.each do |p|
           tr
             td = cont
             td = p.componente.nombre
@@ -65,26 +53,18 @@
             - else
               td = p.componente.componente_categoria.nombre
             td.text-right = p.cantidad
-            td.text-right.monto = p.costo_unitario
-            td.text-right.monto #{p.costo_unitario * p.cantidad}
+            td.text-right.monto-s = p.costo_unitario
+            td.text-right.monto-s #{p.costo_unitario * p.cantidad}
             - cont += 1
-  .row
-    .row.col-md-9
-    strong.row.col-md-2.text-right Subtotales:
-    .row.col-md-2.subtotal.monto.text-right #{@factura_compra.total_factura - @factura_compra.total_iva}
-  .row
-    .row.col-md-9
-    strong.row.col-md-2.text-right Total Iva:
-    .row.col-md-2.total.monto.text-right #{@factura_compra.total_iva}
-  .row
     .row.col-md-9
     strong.row.col-md-2.text-right Total:
-    .row.col-md-2.total.monto.text-right #{@factura_compra.total_factura}
+    .row.col-md-2.total.monto-s.text-right #{@nota_credito_compra.total}
 
 /Botones Cancelar y generar
 .panel-footer
-  button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
-  = link_to '<i class="icon-print icon-large"></i> Imprimir Factura'.html_safe, factura_compra_path(@factura_compra.id, format: 'pdf'), class: 'btn btn-default pull-right'
+  button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cerrar
+  = link_to '<i class="icon-print icon-large"></i> Imprimir'.html_safe, nota_credito_compra_path(@nota_credito_compra.id, format: 'pdf'), class: 'btn btn-default pull-right'
 javascript:
-  facturasCompraUI.formatearMontos();
+  $('.monto-s').maskMoney({isDiv: true});
+  $('.monto-s').maskMoney('mask');
 
