@@ -4,4 +4,6 @@ class FacturaCompraDetalle < ActiveRecord::Base
   belongs_to :factura_compra
   belongs_to :componente
   belongs_to :orden_compra_detalle
+
+  has_many :nota_credito_compra_detalles
 end

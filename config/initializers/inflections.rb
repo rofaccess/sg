@@ -41,6 +41,8 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'asiento_modelo_detalle', 'asientos_modelo_detalle'
   inflect.irregular 'asiento_contable_detalle', 'asientos_contable_detalle'
   inflect.irregular 'nota_debito_compra', 'notas_debito_compra'
+  inflect.irregular 'nota_credito_compra', 'notas_credito_compra'
+  inflect.irregular 'nota_credito_compra_detalle', 'notas_credito_compra_detalle'
 
   inflect.uncountable %w( fish sheep )
 end

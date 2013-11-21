@@ -6,4 +6,5 @@ class Componente < Mercaderia
 	has_many :factura_compra_detalles
 	has_many :pedidos_cotizacion_detalles
 	has_many :orden_compra_detalles
+	has_many :nota_credito_compra_detalles
 end

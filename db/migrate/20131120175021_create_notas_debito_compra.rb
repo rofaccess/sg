@@ -13,6 +13,6 @@ class CreateNotasDebitoCompra < ActiveRecord::Migration
     end
 
     add_foreign_key(:notas_debito_compra, :personas, column: 'proveedor_id', options: 'ON DELETE RESTRICT')
-	add_foreign_key(:notas_debito_compra, :users, column: 'user_id', options: 'ON DELETE RESTRICT')
+	  add_foreign_key(:notas_debito_compra, :users, column: 'user_id', options: 'ON DELETE RESTRICT')
   end
 end

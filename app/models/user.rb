@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   has_many :pedido_cotizacions
   has_many :orden_devolucions
   has_many :nota_debito_compras
+  has_many :nota_credito_compras
   belongs_to :empleado
 
   accepts_nested_attributes_for :empleado

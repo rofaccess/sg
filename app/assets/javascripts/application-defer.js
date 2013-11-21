@@ -20,6 +20,7 @@
 //= require modules/asientosContableUI
 //= require modules/cuentasContableUI
 //= require modules/notasDebitoCompraUI
+//= require modules/notasCreditoCompraUI
 //
 $(function(){
 	// Inicializar el validador para los formularios cuando se abre un modal

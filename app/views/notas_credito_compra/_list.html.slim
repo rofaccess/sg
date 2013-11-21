@@ -1,0 +1,28 @@
+table.table.table-condensed
+  thead
+	tr
+	  th = sort_link(@search, :numero, "Numero", {}, method: :get, remote: true)
+	  th = sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
+	  th = sort_link(@search, :fecha, "Fecha", {}, method: :get, remote: true)
+	  th.text-right = sort_link(@search, :total, "Importe", {}, method: :get, remote: true)
+	  th.text-right = sort_link(@search, :factura_compra_id, "Factura de Compra", {}, method: :get, remote: true)
+	  th = sort_link(@search, :user_id, "Usuario", {}, method: :get, remote: true)
+	  th.hidden-print
+  tbody
+	- @notas_credito_compra.each do |p|
+	  tr [data-url="#{nota_credito_compra_path(p)}"]
+		td.show-nota-c = p.numero
+		td.show-nota-c = p.proveedor.nombre
+		td.show-nota-c = Formatter.format_date(p.fecha)
+		td.show-nota-c.monto.text-right = p.total
+		td.show-nota-c.text-right = p.factura_compra.numero
+		td.show-nota-c = p.user.username
+		td.hidden-print
+		  = link_to '<i class="icon-print icon-large"></i> '.html_safe, nota_credito_compra_path(p, format: 'pdf')
+		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, nota_credito_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
+
+/.hide.simbolo_moneda = @config.simbolo_moneda
+javascript:
+  $('.monto').maskMoney({isDiv: true});
+  $('.monto').maskMoney('mask');
+  //facturasCompraUI.formatearMontos();

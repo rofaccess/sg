@@ -3,7 +3,7 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     h4.modal-tittle = @nota_debito_compra.id.nil? ? 'Cargar Nota de Debito' : 'Editar Nota de Debito'
     - if @nota_debito_compra.id.nil?
-      - numero_class = 'numNotaPedido'
+      - numero_class = 'numNotaDebito'
     - else
       - numero_class = ''
   .modal-body

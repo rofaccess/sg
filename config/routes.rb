@@ -1,4 +1,10 @@
 Sg::Application.routes.draw do
+  resources :notas_credito_compra do
+    collection do
+      get 'check_numero'
+      post 'get_factura_compra'
+    end
+  end
   resources :notas_debito_compra do
     collection do
       get 'check_numero'
