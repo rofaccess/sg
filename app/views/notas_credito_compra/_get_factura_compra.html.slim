@@ -1,0 +1,60 @@
+= form_for @nota_credito_compra, html: {class: ''}, remote: true  do |f|
+  label.title-seccion Encabezado
+  .row
+    = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3', input_class: 'required numNotaCredito clear',max_length: Domain::NUMERO_DOC_COM})
+    = FormBuilder::text_field_v(f, :fecha, {col_class: 'col-md-3', label_text: 'Fecha',input_class: 'required date clear', max_length: Domain::FECHA})
+    = FormBuilder::text_field_v(f, :proveedor, {col_class: 'col-md-5', input_value: @factura_compra.proveedor.nombre, disabled: true})
+
+  / Formularios Ocultos
+  = f.hidden_field(:proveedor_id,value:"#{@factura_compra.proveedor_id}")
+  = f.hidden_field(:user_id, value: "#{current_user.id}")
+  = f.hidden_field(:factura_compra_id, value: "#{@factura_compra.id}")
+  = f.hidden_field(:total, class: "total-n")
+
+  label.title-seccion Detalles
+  .row
+    table.table-condensed.table-striped
+      thead
+        tr
+          th #
+          th Componente
+          th Marca
+          th Categoria
+          th.text-right.col-md-2 Cantidad
+          th.text-right Precio
+          th.text-right Total
+          th
+      tbody
+        - cont = 0
+        - @factura_compra.factura_compra_detalles.each do |o|
+          = f.fields_for :nota_credito_compra_detalles do |d|
+            - cont += 1
+            - cantidad = o.cantidad
+            tr.nota-c-detalle
+              td.hide.faltante = cantidad
+              td = cont
+              td = o.componente.nombre
+              td = o.componente.marca.nombre
+              td = o.componente.componente_categoria.nombre
+              td.cantidad = FormBuilder::text_field_v(d, :cantidad, {input_class: 'text-right required', label_class: 'hide', input_value: o.cantidad, max_length: Domain::CANTIDAD})
+              td.text-right.monto-modal #{o.costo_unitario}
+              td.precio.hide #{o.costo_unitario}
+              td.costo.text-right.monto-modal
+              td.text-right = link_to '<i class="icon-remove icon-large"></i> '.html_safe, '#', class: 'remover-detalle-nota-c link-icon'
+              = d.hidden_field(:componente_id, value: o.componente_id)
+              = d.hidden_field(:costo_unitario, value: o.costo_unitario)
+              = d.hidden_field(:factura_compra_detalle_id, value: o.id)
+
+  dl.dl-horizontal.pull-right
+    dt Total:
+    dd.monto-modal.total
+  br
+  br
+  .modal-footer
+    button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
+    = submit_tag 'Guardar', class: 'btn btn-success pull-right'
+.hide.simbolo_moneda = @config.simbolo_moneda
+javascript:
+  notasCreditoCompraUI.initInGetFacturaCompra();
+  $('.numNotaCredito').validCampoFranz('0123456789-/.');
+  $('.clear').clearInput();

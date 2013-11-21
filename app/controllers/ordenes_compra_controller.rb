@@ -111,6 +111,7 @@ class OrdenesCompraController < ApplicationController
     @pedido_compra = PedidoCompra.find(params[:orden_compra][:pedido_compra_id])
     pedidos = params[:pedido_cotizacion]
     total_requerido = 0
+    componentes = Array.new
     pedidos.each do |c, d|
       cotizacion = PedidoCotizacion.find(c)
       orden_compra = OrdenCompra.new( fecha_generado: DateTime.now,
@@ -124,6 +125,7 @@ class OrdenesCompraController < ApplicationController
         detalle = PedidoCotizacionDetalle.find(v)
         orden_compra.orden_compra_detalles.build(componente_id: detalle.componente_id, costo_unitario: detalle.costo_unitario, cantidad_requerida: detalle.cantidad_cotizada)
         total_requerido += detalle.cantidad_cotizada*detalle.costo_unitario
+        componentes.push(detalle.componente_id)
       end
 
       orden_compra.total_requerido = total_requerido
@@ -133,6 +135,14 @@ class OrdenesCompraController < ApplicationController
       end
     end
     @pedido_compra.update(estado: PedidosEstados::ORDENADO, fecha_ordenado: DateTime.now)
+
+    # Actualiza el stock de los componentes incluidos en el pedido pero no en la orden
+    @pedido_compra.pedido_compra_detalles.each do |d|
+      if not componentes.include?(d.componente_id)
+        deposito = DepositoStock.where("deposito_id = ? AND mercaderia_id = ?", @pedido_compra.deposito_id, d.componente_id).first
+        deposito.update(pedido_generado: "No")
+      end
+    end
 
   end
 

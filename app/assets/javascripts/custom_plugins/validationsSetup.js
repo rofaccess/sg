@@ -40,6 +40,30 @@ $.validator.addClassRules({
 			}
 		}
 	},
+	numNotaDebito: {
+		maxlength: 15,
+		remote: {
+			url: "/notas_debito_compra/check_numero",
+			type: "get",
+			data: {
+				proveedor_id: function(){
+					return $("#nota_debito_compra_proveedor_id").val();
+				}
+			}
+		}
+	},
+	numNotaCredito: {
+		maxlength: 15,
+		remote: {
+			url: "/notas_credito_compra/check_numero",
+			type: "get",
+			data: {
+				proveedor_id: function(){
+					return $("#nota_credito_compra_proveedor_id").val();
+				}
+			}
+		}
+	},
 	cantidadDocCom: {
 		maxlength: 5,
 		min: 1

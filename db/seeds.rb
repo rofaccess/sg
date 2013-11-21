@@ -110,8 +110,8 @@ if Configuracion.all.blank?
 	DepositoProductoTerminado.create(nombre: "Casa Central - Producto Terminado", disponible: true)
 
 	Componente.all.each do |c|
-		deposito1.deposito_stocks.create(mercaderia_id: c.id, existencia_min: 10, existencia_max: 20 , existencia: rand(5..20))
-		deposito2.deposito_stocks.create(mercaderia_id: c.id, existencia_min: 10, existencia_max: 20 , existencia: rand(5..20))
+		deposito1.deposito_stocks.create(mercaderia_id: c.id, existencia_min: 10, existencia_max: 20 , existencia: rand(1..20))
+		deposito2.deposito_stocks.create(mercaderia_id: c.id, existencia_min: 10, existencia_max: 20 , existencia: rand(1..20))
 	end
 
 	# Crear un ejercicio contable

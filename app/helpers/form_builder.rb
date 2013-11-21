@@ -78,10 +78,10 @@ module FormBuilder
         html << f.label(field_desde,"#{options.key?(:label_text) ? options[:label_text] : ''}", class: "control-label #{options.key?(:label_class) ? options[:label_class] : ''}")
         html << "<div class='row'>"
           html << "<div class='col-md-6'>"
-            html << f.text_field(field_desde, class: "form-control datepicker has-clear",value: "#{options.key?(:input_value) ? options[:input_value] : ''}", placeholder: "Desde", disabled: options.key?(:disabled) ? options[:disabled] : false, readonly: options.key?(:readonly) ? options[:readonly] : false)
+            html << f.text_field(field_desde, class: "form-control datepicker has-clear",value: "#{options.key?(:input_value) ? options[:input_value] : ''}", placeholder: "Desde", disabled: options.key?(:disabled) ? options[:disabled] : false, readonly: options.key?(:readonly) ? options[:readonly] : false, maxLength: "#{options.key?(:max_length) ? options[:max_length] : '150'}")
           html << "</div>"
           html << "<div class='col-md-6'>"
-            html << f.text_field(field_hasta, class: "form-control datepicker has-clear",value: "#{options.key?(:input_value) ? options[:input_value] : ''}", placeholder: "Hasta", disabled: options.key?(:disabled) ? options[:disabled] : false, readonly: options.key?(:readonly) ? options[:readonly] : false)
+            html << f.text_field(field_hasta, class: "form-control datepicker has-clear",value: "#{options.key?(:input_value) ? options[:input_value] : ''}", placeholder: "Hasta", disabled: options.key?(:disabled) ? options[:disabled] : false, readonly: options.key?(:readonly) ? options[:readonly] : false, maxLength: "#{options.key?(:max_length) ? options[:max_length] : '150'}")
           html << "</div>"
         html << "</div>"
       html << "</div>"
@@ -159,6 +159,42 @@ module FormBuilder
 
   # Opciones admisibles del hash option :col_class, :label_class, :input_class, :input_value, :placeholder, :label_text, :disabled, :readonly
   # Para el hash option no es necesario la llave cuando se usa el metodo
+  def self.collection_select_h(f, field, collection, value, text,option)
+    html = ""
+    html << "<div class='form-group #{option.key?(:col_class) ? option[:col_class] : ''}'>"
+      if f.nil?
+        html << label_tag(field, option.key?(:label_text) ? option[:label_text] : nil,
+                                 class: "control-label #{option.key?(:label_class) ? option[:label_class] : ''}")
+        html << "<div class='#{option.key?(:field_class) ? option[:field_class] : 'col-md-10'}'>"
+          html << select_tag(field, options_from_collection_for_select(collection, value, text, option.key?(:selected) ? option[:selected] : nil),
+                          {multiple: option.key?(:multiple) ? option[:multiple] : false,
+                           prompt: option.key?(:prompt) ? option[:prompt] : '',
+                           class: "form-control #{option.key?(:select_class) ? option[:select_class] : ''}",
+                           disabled: option.key?(:disabled) ? option[:disabled] : false,
+                           readonly: option.key?(:readonly) ? option[:readonly] : false})
+        html << "</div>"
+      else
+        html << f.label(field, "#{option.key?(:label_text) ? option[:label_text] : ''}",
+                               class: "control-label #{option.key?(:label_class) ? option[:label_class] : ''}")
+        html << "<div class='#{option.key?(:field_class) ? option[:field_class] : 'col-md-10'}'>"
+          html << f.collection_select(field, collection, value, text,
+                                    {prompt: option.key?(:prompt) ? option[:prompt] : ''},
+                                    {multiple: option.key?(:multiple) ? option[:multiple] : false,
+                                      class: "form-control #{option.key?(:select_class) ? option[:select_class] : ''}",
+                                      disabled: option.key?(:disabled) ? option[:disabled] : false,
+                                      readonly: option.key?(:readonly) ? option[:readonly] : false})
+        html << "</div>"
+      end
+      if option.key?(:btn)
+        html << "<div class='col-md-2'><a href='#{option[:btn]}' data-remote='true' class='btn btn-default btn-block'><i class='icon-plus'></i></a></div>"
+      end
+    html << "</div>"
+
+    html.html_safe
+  end
+
+  # Opciones admisibles del hash option :col_class, :label_class, :input_class, :input_value, :placeholder, :label_text, :disabled, :readonly
+  # Para el hash option no es necesario la llave cuando se usa el metodo
   def self.select(f, field, collection, option)
     html = ""
     html << "<div class='form-group #{option.key?(:col_class) ? option[:col_class] : ''}'>"
@@ -186,6 +222,42 @@ module FormBuilder
       if option.key?(:btn)
         html << "<div class='col-md-2'><a href='#{option[:btn]}' data-remote='true' class='btn btn-default btn-block'><i class='icon-plus'></i></a></div>"
       end
+    html << "</div>"
+
+    html.html_safe
+  end
+
+  # Opciones admisibles del hash option :col_class, :label_class, :input_class, :input_value, :placeholder, :label_text, :disabled, :readonly
+  # Para el hash option no es necesario la llave cuando se usa el metodo
+  def self.select_h(f, field, collection, option)
+    html = ""
+    html << "<div class='form-group #{option.key?(:col_class) ? option[:col_class] : ''}'>"
+    if f.nil?
+      html << label_tag(field, option.key?(:label_text) ? option[:label_text] : nil,
+                                 class: "control-label #{option.key?(:label_class) ? option[:label_class] : ''}")
+      html << "<div class='#{option.key?(:field_class) ? option[:field_class] : 'col-md-10'}'>"
+        html << select_tag(field, options_for_select(collection, option.key?(:selected) ? option[:selected] : nil),
+                           {multiple: option.key?(:multiple) ? option[:multiple] : false,
+                             prompt: option.key?(:prompt) ? option[:prompt] : '',
+                             class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}",
+                             disabled: option.key?(:disabled) ? option[:disabled] : false,
+                             readonly: option.key?(:readonly) ? option[:readonly] : false})
+      html << "</div>"
+    else
+      html << f.label(field, "#{option.key?(:label_text) ? option[:label_text] : ''}",
+                               class: "control-label #{option.key?(:label_class) ? option[:label_class] : ''}")
+      html << "<div class='#{option.key?(:field_class) ? option[:field_class] : 'col-md-10'}'>"
+        html << f.select(field, collection,
+                                    {prompt: option.key?(:prompt) ? option[:prompt] : ''},
+                                    {multiple: option.key?(:multiple) ? option[:multiple] : false,
+                                      class: "form-control #{option.key?(:select_class) ? option[:select_class] : ''}",
+                                      disabled: option.key?(:disabled) ? option[:disabled] : false,
+                                      readonly: option.key?(:readonly) ? option[:readonly] : false})
+      html << "</div>"
+    end
+    if option.key?(:btn)
+      html << "<div class='col-md-2'><a href='#{option[:btn]}' data-remote='true' class='btn btn-default btn-block'><i class='icon-plus'></i></a></div>"
+    end
     html << "</div>"
 
     html.html_safe
