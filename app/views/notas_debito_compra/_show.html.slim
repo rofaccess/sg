@@ -1,0 +1,27 @@
+.modal-body
+  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+  /Cabecera de la Nota
+  h3 Nota de Debito Nº  #{@nota_debito_compra.numero}
+  dl.dl-horizontal
+    dt Proveedor:
+    dd = @nota_debito_compra.proveedor.nombre
+    dt Numero:
+    dd = @nota_debito_compra.numero
+    dt Fecha:
+    dd = Formatter.format_date(@nota_debito_compra.fecha)
+    dt Total:
+    dd.monto = @nota_debito_compra.total
+    dt Motivo:
+    dd = @nota_debito_compra.motivo
+    dt Estado:
+    dd = @nota_debito_compra.estado
+
+
+/Botones Cancelar y generar
+.panel-footer
+  button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
+  = link_to '<i class="icon-print icon-large"></i> Imprimir'.html_safe, nota_debito_compra_path(@nota_debito_compra.id, format: 'pdf'), class: 'btn btn-default pull-right'
+
+javascript:
+  $('.monto').maskMoney({isDiv: true});
+  $('.monto').maskMoney('mask');

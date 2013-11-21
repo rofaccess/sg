@@ -1,4 +1,9 @@
 Sg::Application.routes.draw do
+  resources :notas_debito_compra do
+    collection do
+      get 'check_numero'
+    end
+  end
   resources :cuentas_contable do
     collection do
       get 'imprimir_listado'

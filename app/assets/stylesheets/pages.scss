@@ -22,7 +22,7 @@
   	.navbar-nav{
   		margin: 9.5px;
   		&>li{
-  			margin-left: 15px;
+  			margin-left: 10px;
   			&>a{
   				color: $nav-links;
   				padding: 5px 15px;
@@ -393,4 +393,8 @@ td{
     hr{
       margin-top: 0;
     }
+}
+
+.show-nota-d{
+  cursor: pointer;
 }
