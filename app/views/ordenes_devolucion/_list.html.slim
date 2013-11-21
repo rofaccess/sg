@@ -7,7 +7,6 @@ table.table.table-condensed
 	  th = sort_link(@search, :fecha_generado, "Fecha Generado", {}, method: :get, remote: true)
 	  th = sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
 	  th = sort_link(@search, :user_id, "Usuario", {}, method: :get, remote: true)
-	  th = sort_link(@search, :total_orden, "Total Orden", {}, method: :get, remote: true)
 	  th
   tbody
     - @ordenes_devolucion.each do |p|
@@ -18,7 +17,6 @@ table.table.table-condensed
 		td.show-pedido = Formatter.format_datetime(p.fecha_generado)
 		td.show-pedido = p.proveedor.nombre
 		td.show-pedido = p.user.username
-		td.show-pedido.monto-text = p.total_orden
 		td.hidden-print
 		  = link_to '<i class="icon-print icon-large"></i> '.html_safe, orden_devolucion_path(p, format: 'pdf')
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, orden_devolucion_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
