@@ -1,7 +1,7 @@
 = form_for @orden_devolucion, html: {class: ''}, remote: true  do |f|
   .row
-    = FormBuilder::text_field_v(f, :numero_factura, {col_class: 'col-md-3 to-hide',label_text: 'Numero Factura', input_class: 'required numFactura clear',max_length: Domain::NUMERO_DOC_COM})
-    = FormBuilder::text_field_v(f, :motivo, {col_class: 'col-md-8', label_text: 'Motivo',input_class: 'required clear', max_length: Domain::DESCRIPCION})
+    = FormBuilder::text_field_v(f, :numero_factura, {col_class: 'col-md-3 to-hide',label_text: 'Numero Factura', input_class: 'required clear',max_length: Domain::NUMERO_DOC_COM})
+    = FormBuilder::text_field_v(f, :motivo, {col_class: 'col-md-8', label_text: 'Motivo',input_class: ' clear', max_length: Domain::DESCRIPCION})
 
   = f.hidden_field(:total_orden,value:"80")
   = f.hidden_field(:total_iva,value:"10")
@@ -42,7 +42,7 @@
             td
               = detalle_form.text_field :cantidad_devuelta, value: p.cantidad_requerida.to_i, class: 'cantidad-field form-control text-right',maxLength: 5
             td
-              = detalle_form.text_field :motivo, value: '', class: 'required form-control text-right',maxLength: Domain::DESCRIPCION
+              = detalle_form.text_field :motivo, value: '', class: 'form-control text-right',maxLength: Domain::DESCRIPCION
             td.text-right = link_to '<i class="icon-remove icon-large"></i> '.html_safe, '#', class: 'remover-detalle-devolucion link-icon'
             = detalle_form.hidden_field(:componente_id, value: p.componente_id)
             = detalle_form.hidden_field(:costo_unitario, value: p.costo_unitario)
@@ -60,12 +60,12 @@ javascript:
   // Enmascarar los campos numericos
   $('.monto-field, .cantidad-field').maskMoney();
   $('.monto-field, .cantidad-field').maskMoney('mask');
+  //para que el campo numero factura acepte solo numeros.
+  $('#orden_devolucion_numero_factura').validCampoFranz('0123456789-/.');
+  $('.clear').clearInput();
   // Quitar los '.' de los numeros antes de enviar el formulario
   $('input[type="submit"]').click(function(e){
-    // Se eliminan todos los '.' de los campos
-   // $('.monto-field, .cantidad-field').each(function(){
-     // $(this).val($(this).val().replace(/\./g, ''));
-   // });
+    $('#new_orden_devolucion').validate();
     // Y se envia el formulario
     $(this).parents('form').submit();
     e.preventDefault();

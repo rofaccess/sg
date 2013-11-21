@@ -1,0 +1,4 @@
+| $("#list").html("#{escape_javascript(render partial: 'list', format: 'html')}");
+| $('#main-modal').modal('hide');
+| $('#paginator').html("#{escape_javascript(paginate(@notas_credito_compra, remote: true)) }");
+| $('#notas-credito-compra-size').text('#{@notas_credito_compra_size}');

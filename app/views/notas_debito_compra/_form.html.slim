@@ -1,0 +1,39 @@
+= form_for @nota_debito_compra, html: {class: 'form-horizontal nota-debito-form'}, remote: true do |f|
+  .modal-header
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    h4.modal-tittle = @nota_debito_compra.id.nil? ? 'Cargar Nota de Debito' : 'Editar Nota de Debito'
+    - if @nota_debito_compra.id.nil?
+      - numero_class = 'numNotaDebito'
+    - else
+      - numero_class = ''
+  .modal-body
+    = FormBuilder::collection_select_h(f, :proveedor_id, Proveedor.all, :id, :nombre,{label_class: 'col-md-2', label_text: 'Proveedor', select_class:'required select', field_class: 'col-md-10'})
+    = FormBuilder::text_field_h(f, :numero, {label_class: 'col-md-2', input_class: "required clear #{numero_class}", field_class: 'col-md-4', max_length: Domain::NUMERO_DOC_COM})
+    = FormBuilder::text_field_h(f, :fecha, {label_class: 'col-md-2', input_class: 'required date clear', field_class: 'col-md-3', max_length: Domain::FECHA})
+    = FormBuilder::text_field_h(f, :total, {label_class: 'col-md-2', input_class: 'required clear monto-field', field_class: 'col-md-4', max_length: Domain::MONTO})
+    = FormBuilder::text_field_h(f, :motivo, {label_class: 'col-md-2', input_class: 'required clear', field_class: 'col-md-10', max_length: Domain::DESCRIPCION})
+    = FormBuilder::select_h(f, :estado, ['Pendiente','Pagado'], {label_class: 'col-md-2', select_class: 'required', field_class: 'col-md-4', label_text: 'Estado'})
+    = f.hidden_field(:user_id, value: "#{current_user.id}")
+
+  .modal-footer
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+    = f.submit 'Guardar', class: 'btn btn-primary'
+
+javascript:
+  $('.clear').clearInput();
+  $('.date').datepicker();
+  $('.select').select2();
+  $('.nota-debito-form').validate();
+  $('#nota_debito_compra_numero').validCampoFranz('0123456789-/.');
+  $('.monto-field').maskMoney();
+  $('.monto-field').maskMoney('mask');
+  // Quitar los '.' de los numeros antes de enviar el formulario
+  $('input[type="submit"]').click(function(e){
+    // Se eliminan todos los '.' de los campos
+    $('.monto-field').each(function(){
+    $(this).val($(this).val().replace(/\./g, ''));
+  });
+  // Y se envia el formulario
+  $(this).parents('form').submit();
+    e.preventDefault();
+  });

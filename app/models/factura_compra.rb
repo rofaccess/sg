@@ -4,6 +4,7 @@ class FacturaCompra < ActiveRecord::Base
     acts_as_paranoid
 
 	has_many   :factura_compra_detalles
+	has_many   :nota_credito_compra_detalles
 	belongs_to :orden_compra
 	belongs_to :proveedor
 	belongs_to :condicion_pago

@@ -1,0 +1,3 @@
+| $("#list").html("#{escape_javascript(render partial: 'list', format: 'html')}");
+| $('#paginator').html("#{escape_javascript(paginate(@notas_debito_compra, remote: true)) }");
+| $('#notas-debito-compra-size').text('#{@notas_debito_compra_size}');

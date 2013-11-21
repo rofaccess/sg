@@ -1,0 +1,19 @@
+.modal-header
+  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+  .row
+	.col-md-4
+	  h4 Generar Nota de Credito
+	.col-md-6
+	  select class="form-control " id="factura_compra_id" name="factura_compra_id"
+	  	option value=""Seleccione una factura de compra...
+	  	- @facturas_compra.each do |o|
+	  		option value="#{o.id}" Factura Nº #{o.numero} [#{o.proveedor.nombre}] #{o.estado}
+	.col-md-1
+		a class="btn btn-default recargar_factura" href="#" id="recargar_factura" data-toggle="tooltip" data-original-title="Recargar"
+			i class="icon-refresh icon-large"
+.modal-body
+  .col-md-12
+	.alert.alert-warning.recargar-warning.hide
+	  = "Debe tener por lo menos un detalle para generar la nota de credito. "
+	  = link_to 'Recargar', '#', class: 'recargar_factura'
+	.detalles-factura-compra

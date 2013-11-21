@@ -19,6 +19,8 @@
 //= require modules/depositosUI
 //= require modules/asientosContableUI
 //= require modules/cuentasContableUI
+//= require modules/notasDebitoCompraUI
+//= require modules/notasCreditoCompraUI
 //= require modules/auditoriaUI
 //
 $(function(){

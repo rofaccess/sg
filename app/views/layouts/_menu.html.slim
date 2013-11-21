@@ -11,13 +11,13 @@ nav.navbar.navbar-default.navbar-custom.navbar-fixed-top.hidden-print [role="nav
     ul.nav.navbar-nav
       li [class="#{current_menu([pages_index_path])}"]
         = link_to 'Inicio', pages_index_path
-      li [class="#{current_menu([proveedores_path, pedidos_compra_path, facturas_compra_path, pedidos_cotizacion_path, ordenes_compra_path, ordenes_devolucion_path])} dropdown"]
+      li [class="#{current_menu([proveedores_path, pedidos_compra_path, facturas_compra_path, pedidos_cotizacion_path, ordenes_compra_path, ordenes_devolucion_path, notas_debito_compra_path, notas_credito_compra_path])} dropdown"]
         = link_to 'Compras'.html_safe, pedidos_compra_path
         ul.dropdown-menu
           //= render 'layouts/compras_sidemenu'
       li [class="#{current_menu([componentes_path, marcas_path, productos_path, depositos_path])}"]
         = link_to 'Stock', componentes_path
-      li [class="#{current_menu([asientos_contable_path,asientos_contable_path,cuentas_contable_path])}"]
+      li [class="#{current_menu([asientos_contable_path,asientos_modelo_path,cuentas_contable_path])}"]
         = link_to 'Contabilidad', asientos_contable_path
       - if can? :manage, User
         li [class="#{current_menu([usuarios_path])}"]
