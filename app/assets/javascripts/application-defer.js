@@ -21,6 +21,7 @@
 //= require modules/cuentasContableUI
 //= require modules/notasDebitoCompraUI
 //= require modules/notasCreditoCompraUI
+//= require modules/auditoriaUI
 //
 $(function(){
 	// Inicializar el validador para los formularios cuando se abre un modal

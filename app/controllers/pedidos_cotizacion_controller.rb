@@ -34,10 +34,8 @@ class PedidosCotizacionController < ApplicationController
   end
 
   def setupFechas
-      params[:q][:fecha_generado_lt] = params[:q][:fecha_generado_lt] + ' 23:59:59' unless params[:q][:fecha_generado_lt].blank?
-      params[:q][:fecha_cotizado_lt] = params[:q][:fecha_cotizado_lt] + ' 23:59:59' unless params[:q][:fecha_cotizado_lt].blank?
-
-
+    params[:q][:fecha_generado_lt] = params[:q][:fecha_generado_lt] + ' 23:59:59' unless params[:q][:fecha_generado_lt].blank?
+    params[:q][:fecha_cotizado_lt] = params[:q][:fecha_cotizado_lt] + ' 23:59:59' unless params[:q][:fecha_cotizado_lt].blank?
   end
 
   # GET /pedido_cotizacions/1
@@ -83,7 +81,7 @@ class PedidosCotizacionController < ApplicationController
       pedido_cotizacion.save
     end
 
-    @pedido_compra.update(estado: PedidosEstados::PROCESADO, fecha_procesado: DateTime.now)
+    @pedido_compra.update(estado: PedidosEstados::PROCESADO, fecha_procesado: DateTime.now) if @pedido_compra.estado != PedidosEstados::PROCESADO
 
   end
 

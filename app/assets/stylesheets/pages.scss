@@ -22,7 +22,7 @@
   	.navbar-nav{
   		margin: 9.5px;
   		&>li{
-  			margin-left: 10px;
+  			margin-left: 15px;
   			&>a{
   				color: $nav-links;
   				padding: 5px 15px;
@@ -192,6 +192,7 @@ body{
     margin-right: -500px;
     border-left: 1px solid #ccc;
     z-index: 1032;
+    overflow-y: scroll;
     &.side-form-show{
       margin-right: 0;
     }
@@ -395,6 +396,10 @@ td{
     }
 }
 
-.show-nota-d{
+.show-nota-d, .show-detalles-auditoria{
   cursor: pointer;
+}
+
+dl.no-margin{
+  margin: 0;
 }

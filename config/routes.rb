@@ -143,6 +143,9 @@ Sg::Application.routes.draw do
     collection do
       match 'buscar' => 'auditorias#buscar', via: [:get, :post], as: :search
     end
+    member do
+      post 'detalles'
+    end
   end
 
   #post 'localidades/get_estados/:id', to: 'localidades#get_estados', as: 'get_estados_localidades'

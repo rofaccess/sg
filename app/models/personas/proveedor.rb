@@ -1,6 +1,6 @@
 class Proveedor < Persona
 	paginates_per 15
-	has_paper_trail
+	has_paper_trail meta: {type_subclase: 'Proveedor'}
 	acts_as_paranoid
 
 	has_and_belongs_to_many :componente_categorias, join_table: 'componentes_categoria_proveedores'
