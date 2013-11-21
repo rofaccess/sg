@@ -1,0 +1,40 @@
+- model_anterior = @model.previous_version
+.modal-header
+  dl.no-margin
+    dt
+      strong Accion
+    dd = AuditoriaHelper::format_event(@version.event, @version.item_type, @version.item_id)
+    dt
+      strong Usuario
+    dd = User.with_deleted.find(@version.whodunnit).username
+    dt
+      strong Fecha y hora
+    dd = Formatter.format_datetime(@version.created_at)
+.modal-body
+  table.table
+    tbody
+      - row_class = @model.nombre != model_anterior.nombre ? 'warning' : ''
+      tr[class="#{row_class}"]
+        td
+          strong Nombre
+        td = @model.nombre
+      - row_class = @model.direccion != model_anterior.direccion ? 'warning' : ''
+      tr[class="#{row_class}"]
+        td
+          strong Direccion
+        td = @model.direccion
+      - row_class = @model.telefono1 != model_anterior.telefono1 ? 'warning' : ''
+      tr[class="#{row_class}"]
+        td
+          strong Telefono
+        td = @model.telefono1
+      - row_class = @model.email != model_anterior.email ? 'warning' : ''
+      tr[class="#{row_class}"]
+        td
+          strong Email
+        td = @model.email
+      - row_class = @model.simbolo_moneda != model_anterior.simbolo_moneda ? 'warning' : ''
+      tr[class="#{row_class}"]
+        td
+          strong Smbolo de moneda
+        td = @model.simbolo_moneda

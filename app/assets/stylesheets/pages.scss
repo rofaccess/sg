@@ -192,6 +192,7 @@ body{
     margin-right: -500px;
     border-left: 1px solid #ccc;
     z-index: 1032;
+    overflow-y: scroll;
     &.side-form-show{
       margin-right: 0;
     }
@@ -393,4 +394,12 @@ td{
     hr{
       margin-top: 0;
     }
+}
+
+.show-detalles-auditoria{
+  cursor: pointer;
+}
+
+dl.no-margin{
+  margin: 0;
 }

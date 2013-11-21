@@ -2,15 +2,16 @@ table.table
   thead
     tr
       th Fecha y hora
-      th Modulo
+      th Sección
       th Usuario
       th Accion
       //th Objeto
   tbody
     - @logs.each do |l|
-      tr
-        td = Formatter.format_datetime(l.created_at)
-        td = l.item_type.underscore.humanize
-        td = User.with_deleted.find(l.whodunnit).username
-        td = AuditoriaHelper::format_event(l.event, l.item_type, l.item_id)
-        //td = l.object
+      - if l.whodunnit != nil
+        tr.show-detalles-auditoria [data-url="#{detalles_auditoria_path(l)}" data-model="#{l.item_type}" data-model-id="#{l.item_id}" data-model-created_at="#{l.created_at}" data-model-type_subclase="#{l.type_subclase}"]
+          td = Formatter.format_datetime(l.created_at)
+          td = AuditoriaHelper::format_seccion(l.item_type, l.type_subclase)
+          td = User.with_deleted.find(l.whodunnit).username
+          td = AuditoriaHelper::format_event(l.event, l.item_type, l.item_id, l.id)
+          //td = l.object

@@ -62,7 +62,7 @@ class PedidosCompraController < ApplicationController
       end
 
       if pedido_cotizacion.save
-        @pedido_compra.update(estado: PedidosEstados::PROCESADO, fecha_procesado: DateTime.now)
+        @pedido_compra.update(estado: PedidosEstados::PROCESADO, fecha_procesado: DateTime.now) if @pedido_compra.estado != PedidosEstados::PROCESADO
         @pedidos_cotizacion = PedidoCotizacion.where(pedido_compra_id: @pedido_compra.id)
       end
     end

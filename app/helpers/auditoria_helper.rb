@@ -3,17 +3,17 @@ module AuditoriaHelper
   MENSAJES = {
     pedido_compra: {
       create: 'Se ha generado el pedido de compra N˚ VAR',
-      update: 'Se ha actualizado el pedido de compra N˚ VAR',
+      update: 'Se ha cambiado el estado del pedido de compra N˚ 1 a 2',
       destroy: 'Se ha eliminado el pedido de compra N˚ VAR',
     },
     pedido_cotizacion: {
-      create: 'Se ha generado el pedido de cotizacion N˚ VAR',
-      update: 'Se ha actualizado el pedido de cotizacion N˚ VAR',
-      destroy: 'Se ha eliminado el pedido de cotizacion N˚ VAR',
+      create: 'Se ha generado el pedido de cotización N˚ VAR',
+      update: 'Se ha actualizado el pedido de cotización N˚ VAR',
+      destroy: 'Se ha eliminado el pedido de cotización N˚ VAR',
     },
     orden_compra: {
       create: 'Se ha generado la orden de compra N˚ VAR',
-      update: 'Se ha actualizado la orden de compra N˚ VAR',
+      update: 'Se ha cambiado el estado de la orden de compra N˚ 1 a 2',
       destroy: 'Se ha eliminado la orden de compra N˚ VAR',
     },
     factura_compra: {
@@ -22,9 +22,9 @@ module AuditoriaHelper
       destroy: 'Se ha eliminado la factura de compra N˚ VAR',
     },
     orden_devolucion: {
-      create: 'Se ha generado la orden de devolucion N˚ VAR',
-      update: 'Se ha actualizado la orden de devolucion N˚ VAR',
-      destroy: 'Se ha eliminado la orden de devolucion N˚ VAR',
+      create: 'Se ha generado la orden de devolución N˚ VAR',
+      update: 'Se ha actualizado la orden de devolución N˚ VAR',
+      destroy: 'Se ha eliminado la orden de devolución N˚ VAR',
     },
     proveedor: {
       create: 'Se ha creado el proveedor VAR',
@@ -35,27 +35,70 @@ module AuditoriaHelper
       create: 'Se ha creado el usuario VAR',
       update: 'Se ha actualizado el usuario VAR',
       destroy: 'Se ha eliminado el usuario VAR',
+      login: 'El usuario ha ingresado al sistema',
+      logout: 'El usuario ha salido del sistema'
+    },
+    empleado: {
+      create: 'Se ha creado el empleado VAR',
+      update: 'Se ha actualizado el empleado VAR',
+      destroy: 'Se ha eliminado el empleado VAR'
     },
     configuracion: {
       create: '',
       update: 'Se ha actualizado la tabla de configuraciones',
       destroy: '',
+    },
+    auth: {
+
     }
   }
 
-  def self.format_event(event, model, id)
-    object = model.constantize.with_deleted.find(id)
+  SECCIONES = {
+    pedido_compra: 'Pedidos de Compra',
+    pedido_cotizacion: 'Pedidos de Cotización',
+    orden_compra: 'Ordenes de Compra',
+    factura_compra: 'Facturas de compras',
+    orden_devolucion: 'Ordenes de Devolución',
+    user: 'Usuarios',
+    persona: {
+      empleado: 'Empleados',
+      proveedor: 'Proveedores'
+    },
+    configuracion: 'Configuraciones',
+    auth: 'Autenticación'
+  }
+
+  def self.format_seccion(model, subclase)
+    subclase.nil? ? SECCIONES[model.underscore.to_sym] : SECCIONES[model.underscore.to_sym][subclase.underscore.to_sym]
+  end
+
+  def self.format_event(event, model, id, version)
+    mensaje = ''
+    model = 'User' if model == 'Auth'
+    version = PaperTrail::Version.find(version)
+
+    objecto = model.constantize.with_deleted.find(id)
     variable  = ''
     if model == 'User'
-      variable = object.username
-    elsif model == 'Proveedor'
-      variable = object.nombre
-    elsif model == 'Configuracion'
+      variable = objecto.username
+    elsif model == 'Persona'
+      variable = objecto.nombre
+      model = objecto.type
+    elsif model == 'Configuracion' || model == 'Auth'
       variable = ''
     else
-      variable = object.numero
+      variable = objecto.numero
     end
-    MENSAJES[model.underscore.to_sym][event.underscore.to_sym].gsub('VAR', variable)
+
+
+    if event == 'update' && (model == 'PedidoCompra' || model == 'OrdenCompra')
+      next_version = objecto.version_at(version.created_at)
+      mensaje = MENSAJES[model.underscore.to_sym][event.underscore.to_sym].gsub(/[12]/, '1' => variable, '2' => next_version.estado)
+
+    else
+      mensaje = MENSAJES[model.underscore.to_sym][event.underscore.to_sym].gsub('VAR', variable)
+    end
+    mensaje
   end
 
 end
