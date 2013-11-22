@@ -30,6 +30,7 @@ Sg::Application.routes.draw do
   resources :ordenes_devolucion do
     collection do
       post 'get_orden_compra'
+      get 'imprimir_listado'
     end
   end
 
