@@ -75,13 +75,23 @@ if Configuracion.all.blank?
 		Marca.create(nombre: m) if Marca.where(nombre: m).empty?
 	end
 
+	# Crear Depositos para materia prima y productos terminados
+	deposito1 = DepositoMateriaPrima.create(nombre: "Casa Central", descripcion: "Deposito de materias primas de la casa central")
+	deposito2 = DepositoMateriaPrima.create(nombre: "Sucursal Encarnacion", descripcion: "Deposito de materias primas de la sucursal Encarnacion")
+	DepositoProductoTerminado.create(nombre: "Casa Central", disponible: false, descripcion: "Deposito de productos de la casa central")
+
 	# Crear 5 componentes para cada categoria
 	componentes = ['P8H61-M LX','Core 2 Duo','7200 RPM 1TB','16" - e1660Sw','Mouse Verbatim 000023','AS-878 2x1 SubWoofer']
+	costos = [600000,550000,450000,1200000,35000,180000]
 	i = 1
 	componentes.each do |c|
-			costo = rand(200000..1000000)
-			Componente.create(nombre: c, costo: costo, iva_id: rand(1..2), componente_categoria_id: i, marca_id: i)
-			i += 1
+		exist_dep1 = rand(1..20)
+		exist_dep2 = rand(1..20)
+		comp = Componente.create(nombre: c, costo: costos[i-1], iva_id: rand(1..2), componente_categoria_id: i, marca_id: i, existencia_total: (exist_dep1 + exist_dep2))
+		# Cargar depositos
+		deposito1.deposito_stocks.create(mercaderia_id: comp.id, existencia_min: 10, existencia_max: 20 , existencia: exist_dep1)
+		deposito2.deposito_stocks.create(mercaderia_id: comp.id, existencia_min: 10, existencia_max: 20 , existencia: exist_dep2)
+		i += 1
 	end
 
 	# Agregar todas las categorias a 5 proveedores
@@ -102,16 +112,6 @@ if Configuracion.all.blank?
 		p.cuotas.to_i.times do |c|
 			PlazoPagoDetalle.create(plazo_pago_id: p.id, cant_dias: dias[c])
 		end
-	end
-
-	# Crear Depositos para materia prima y productos terminados
-	deposito1 = DepositoMateriaPrima.create(nombre: "Casa Central - Materia Prima", disponible: true)
-	deposito2 = DepositoMateriaPrima.create(nombre: "Sucursal Encarnacion - Materia Prima", disponible: true)
-	DepositoProductoTerminado.create(nombre: "Casa Central - Producto Terminado", disponible: true)
-
-	Componente.all.each do |c|
-		deposito1.deposito_stocks.create(mercaderia_id: c.id, existencia_min: 10, existencia_max: 20 , existencia: rand(1..20))
-		deposito2.deposito_stocks.create(mercaderia_id: c.id, existencia_min: 10, existencia_max: 20 , existencia: rand(1..20))
 	end
 
 	# Crear un ejercicio contable

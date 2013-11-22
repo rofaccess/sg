@@ -4,19 +4,18 @@
 .row.form-search.row-grid
   = render 'search'
   = link_to '<i class="icon-filter"></i> Filtrar'.html_safe, '#', class: 'btn btn-sm btn-default pull-right filtrar-link'
-/.row.form-filtrar.hide.row-grid
- / = search_form_for @search, method: :get, remote: true, class: 'form-filtros' do |f|
-  /  = FormBuilder::text_field_v(f, :numero_cont, {col_class: 'col-md-2', label_text: 'Numero', input_class: 'num-doc-com',max_length: Domain::NUMERO_DOC_COM})
-   / = FormBuilder::select(f, :estado_cont, ['Pendiente','Semifacturado', 'Facturado'], {col_class: 'col-md-2', label_text: 'Estado'})
-    /= FormBuilder::rango_fechas(f, :fecha_generado_gt, :fecha_generado_lt, {col_class: 'col-md-4', label_text: 'Fecha Generado'})
-    /= FormBuilder::rango_fechas(f, :fecha_procesado_gt, :fecha_procesado_lt, {col_class: 'col-md-4', label_text: 'Fecha Procesado'})
-    /= FormBuilder::collection_select_v(f, :proveedor_id_eq, Proveedor.all, :id, :nombre, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Proveedor'})
-    /= FormBuilder::collection_select_v(f, :pedido_compra_id_eq, PedidoCompra.all, :id, :numero, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Pedido de compra'})
-    /= FormBuilder::collection_select_v(f, :user_id_eq, User.all, :id, :username, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Usuario'})
-    /= f.submit 'Filtrar', class: 'btn btn-default pull-right'
-    /= f.submit 'Limpiar Filtros', type: 'reset', class: 'btn btn-link pull-right'
+.row.form-filtrar.hide.row-grid
+  = search_form_for @search, method: :get, remote: true, class: 'form-filtros' do |f|
+    = FormBuilder::text_field_v(f, :numero_cont, {col_class: 'col-md-2', label_text: 'Numero', input_class: 'num-doc-com',max_length: Domain::NUMERO_DOC_COM})
+    = FormBuilder::text_field_v(f, :numero_factura_cont, {col_class: 'col-md-2', label_text: 'Numero Factura', input_class: 'num-doc-com',max_length: Domain::NUMERO_DOC_COM})
+    = FormBuilder::rango_fechas(f, :fecha_generado_gt, :fecha_generado_lt, {col_class: 'col-md-4', label_text: 'Fecha Generado'})
+    = FormBuilder::collection_select_v(f, :orden_compra_id_eq, OrdenCompra.all, :id, :numero, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Orden de compra'})
+    = FormBuilder::collection_select_v(f, :proveedor_id_eq, Proveedor.all, :id, :nombre, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Proveedor'})
+    = FormBuilder::collection_select_v(f, :user_id_eq, User.all, :id, :username, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Usuario'})
+    = f.submit 'Filtrar', class: 'btn btn-default pull-right'
+    = f.submit 'Limpiar Filtros', type: 'reset', class: 'btn btn-link pull-right'
 
-  /= link_to '<i class="icon-angle-up icon-large"></i>'.html_safe, '#', class: 'esconder-filtros link-icon', title: 'Cerrar Filtros', data: {toggle: 'tooltip'}
+  = link_to '<i class="icon-angle-up icon-large"></i>'.html_safe, '#', class: 'esconder-filtros link-icon', title: 'Cerrar Filtros', data: {toggle: 'tooltip'}
 .row.search-message.row-grid
   h4.text-info.pull-left
     |Se han encontrado #{' '}

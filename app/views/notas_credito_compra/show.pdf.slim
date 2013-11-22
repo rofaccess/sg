@@ -12,34 +12,24 @@
         strong Direccion:
         | #{'  '} #{@config.direccion}
 
-h3 Factura N° #{@factura_compra.numero}
+h3 Nota de Credito N° #{@nota_credito_compra.numero}
 .row.pull-left style="padding-right: 60px"
   .col-md-12
     strong Proveedor:
-    | #{'  '} #{@factura_compra.proveedor.nombre}
+    | #{'  '} #{@nota_credito_compra.proveedor.nombre}
   .col-md-5
-    strong Deposito Destino:
-    | #{'  '} #{@factura_compra.deposito.nombre}
+    strong Deposito Origen:
+    | #{'  '} #{@nota_credito_compra.factura_compra.deposito.nombre}
   .col-md-3
     strong Usuario:
-    | #{'  '} #{@factura_compra.user.username}
-  .col-md-5
-    strong Condicion de Pago:
-    | #{'  '} #{@factura_compra.condicion_pago.nombre}
+    | #{'  '} #{@nota_credito_compra.user.username}
 .row.pull-left style="padding-right: 60px"
-  .col-md-3
-    strong Estado:
-    | #{'  '} #{@factura_compra.estado}
   .col-md-4
     strong Fecha:
-    | #{'  '} #{Formatter.format_date(@factura_compra.fecha)}
+    | #{'  '} #{Formatter.format_date(@nota_credito_compra.fecha)}
   .col-md-4
-    strong Orden de Compra:
-    | #{'  '} #{@factura_compra.orden_compra.numero}
-  .col-md-5
-    - if not @factura_compra.plazo_pago.blank?
-      strong Plazo de Pago:
-      | #{'  '} #{@factura_compra.plazo_pago.nombre}
+    strong Factura de Compra:
+    | #{'  '} #{@nota_credito_compra.factura_compra.numero}
 .row
 hr
 /Detalles de la factura
@@ -56,7 +46,7 @@ table.table.table-condensed.table-striped
   tbody
     - total = 0
     - cont = 1
-    - @factura_compra.factura_compra_detalles.each do |p|
+    - @nota_credito_compra.nota_credito_compra_detalles.each do |p|
       tr
         td = cont
         td = p.componente.nombre
@@ -76,14 +66,8 @@ table.table.table-condensed.table-striped
 
 .pull-right
   div
-    strong Subtotales:
-    .pull-right style="margin-left: 10px" = Formatter.to_money(@factura_compra.total_factura - @factura_compra.total_iva)
-  div
-    strong Total Iva:
-    .pull-right = Formatter.to_money(@factura_compra.total_iva)
-  div
     strong Total:
-    .pull-right = Formatter.to_money(@factura_compra.total_factura)
+    .pull-right = Formatter.to_money(@nota_credito_compra.total)
 
 
 

@@ -29,21 +29,22 @@
         - @factura_compra.factura_compra_detalles.each do |o|
           = f.fields_for :nota_credito_compra_detalles do |d|
             - cont += 1
-            - cantidad = o.cantidad
-            tr.nota-c-detalle
-              td.hide.faltante = cantidad
-              td = cont
-              td = o.componente.nombre
-              td = o.componente.marca.nombre
-              td = o.componente.componente_categoria.nombre
-              td.cantidad = FormBuilder::text_field_v(d, :cantidad, {input_class: 'text-right required', label_class: 'hide', input_value: o.cantidad, max_length: Domain::CANTIDAD})
-              td.text-right.monto-modal #{o.costo_unitario}
-              td.precio.hide #{o.costo_unitario}
-              td.costo.text-right.monto-modal
-              td.text-right = link_to '<i class="icon-remove icon-large"></i> '.html_safe, '#', class: 'remover-detalle-nota-c link-icon'
-              = d.hidden_field(:componente_id, value: o.componente_id)
-              = d.hidden_field(:costo_unitario, value: o.costo_unitario)
-              = d.hidden_field(:factura_compra_detalle_id, value: o.id)
+            - cantidad = o.cantidad - o.cantidad_credito
+            - if cantidad > 0
+              tr.nota-c-detalle
+                td.hide.faltante = cantidad
+                td = cont
+                td = o.componente.nombre
+                td = o.componente.marca.nombre
+                td = o.componente.componente_categoria.nombre
+                td.cantidad = FormBuilder::text_field_v(d, :cantidad, {input_class: 'text-right required', label_class: 'hide', input_value: cantidad, max_length: Domain::CANTIDAD})
+                td.text-right.monto-modal #{o.costo_unitario}
+                td.precio.hide #{o.costo_unitario}
+                td.costo.text-right.monto-modal
+                td.text-right = link_to '<i class="icon-remove icon-large"></i> '.html_safe, '#', class: 'remover-detalle-nota-c link-icon'
+                = d.hidden_field(:componente_id, value: o.componente_id)
+                = d.hidden_field(:costo_unitario, value: o.costo_unitario)
+                = d.hidden_field(:factura_compra_detalle_id, value: o.id)
 
   dl.dl-horizontal.pull-right
     dt Total:

@@ -24,9 +24,11 @@ table.table.table-condensed
         - else
           td = orden_detalle.componente.componente_categoria.nombre
         td.monto-text = orden_detalle.costo_unitario
-        td.monto-text = orden_detalle.cantidad_devuelta
-        td.monto-text = orden_detalle.motivo
+        td.text-right = orden_detalle.cantidad_devuelta
+        td = orden_detalle.motivo
 
 
 .panel-footer
-  h3.panel-title.text-right Total:
+  h3.panel-title.text-right Total Orden: #{@orden_devolucion.total_orden}
+
+

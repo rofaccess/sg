@@ -57,8 +57,16 @@ class OrdenesDevolucionController < ApplicationController
 
   def create
     @search =OrdenCompra.search(params[:q])
-    #@orden_compra = OrdenCompra.
+    total_orden = 0
+    total_iva = 0
     @orden_devolucion = OrdenDevolucion.new(orden_devolucion_params)
+    ordenes_devolucion_detalle = @orden_devolucion.orden_devolucion_detalles
+    ordenes_devolucion_detalle.each do |d|
+      total_orden += d.costo_unitario * d.cantidad_devuelta
+
+    end
+    @orden_devolucion.total_orden = total_orden
+    @orden_devolucion.total_iva = total_iva
     @orden_devolucion.fecha_generado = DateTime.now
     @orden_devolucion.save
 
