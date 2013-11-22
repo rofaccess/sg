@@ -72,6 +72,12 @@ class UsuariosController < ApplicationController
 
   end
 
+  def imprimir_listado
+    @search = User.search(params[:q])
+    @usuarios = @search.result.order('username')
+
+  end
+
   def destroy
   	unless current_user.id == @usuario.id
       @usuario.remove_role(:admin)
