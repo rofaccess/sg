@@ -2,6 +2,7 @@
   h3 Orden de devolucion N° #{@orden_devolucion.numero}
   h4 Proveedor: #{@orden_devolucion.proveedor.nombre}
   h5.extra Creado el: #{Formatter.format_date(@orden_devolucion.fecha_generado)}
+  h4 Motivo de la Orden: #{@orden_devolucion.motivo}
 table.table.table-condensed
   thead
     tr

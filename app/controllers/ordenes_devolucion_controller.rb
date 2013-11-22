@@ -97,7 +97,7 @@ class OrdenesDevolucionController < ApplicationController
   end
 
   def imprimir_listado
-    setupFechas
+    #setupFechas
     @search = OrdenDevolucion.search(params[:q])
     @ordenes_devolucion = @search.result.order('fecha_generado')
 

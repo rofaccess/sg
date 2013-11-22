@@ -21,7 +21,7 @@
     |Se han encontrado #{' '}
     span#ordenes-devolucion-size #{@ordenes_devolucion_size}
     |  registros
-  = link_to '<i class="icon-print icon-large"></i> Imprimir Listado'.html_safe, '#', class: 'btn btn-default pull-right imprimir-ordenes-compra'
+  = link_to '<i class="icon-print icon-large"></i> Imprimir Listado'.html_safe, imprimir_listado_ordenes_devolucion_path, class: 'btn btn-default pull-right imprimir-ordenes-devolucion'
 
 div id="list"
   = render 'list'

@@ -30,6 +30,7 @@ Sg::Application.routes.draw do
   resources :ordenes_devolucion do
     collection do
       post 'get_orden_compra'
+      get 'imprimir_listado'
     end
   end
 
@@ -95,10 +96,12 @@ Sg::Application.routes.draw do
   resources :usuarios do
     member do
       get 'edit_password'
+
     end
     collection do
       get 'check_username'
       get 'check_password'
+      get 'imprimir_listado'
       match 'buscar' => 'usuarios#buscar', via: [:get, :post], as: :search
     end
   end

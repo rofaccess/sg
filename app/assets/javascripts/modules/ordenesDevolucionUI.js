@@ -45,10 +45,10 @@ var ordenesDevolucionUI = (function(){
 
 
 
-			$('body').on('click', '.imprimir-ordenes-compra', function(e){
+			$('body').on('click', '.imprimir-ordenes-devolucion', function(e){
 				$.ajax({
 					url: $(this).attr('href'),
-					data: $('#orden_compra_search.form-filtros').serialize(),
+					data: $('#orden_devolucion_search.form-filtros').serialize(),
 					dataType: 'script'
 				});
 				e.preventDefault();
