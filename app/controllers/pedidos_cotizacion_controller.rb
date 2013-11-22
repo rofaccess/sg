@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class PedidosCotizacionController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_pedido_cotizacion, only: [:show, :edit, :update, :destroy, :imprimir_pedido]
@@ -91,21 +92,21 @@ class PedidosCotizacionController < ApplicationController
     @pedido_cotizacion.estado = PedidosEstados::COTIZADO
     @pedido_cotizacion.fecha_cotizado = DateTime.now
     if @pedido_cotizacion.update(pedido_cotizacion_params)
-      flash.notice = "Se ha actualizado los datos del pedido de cotizacion."
+      flash.notice = "Se ha actualizado los datos del pedido de cotizacion N˚ #{@pedido_cotizacion.numero}."
       index
-      render template: 'pedidos_cotizacion/show', formats: 'js'
     else
-      flash.alert = "No se ha actualizado los datos del pedido de cotizacion."
+      flash.alert = "No se ha actualizado los datos del pedido de cotizacion N˚ #{@pedido_cotizacion.numero}."
     end
   end
 
   # DELETE /pedido_cotizacions/1
   # DELETE /pedido_cotizacions/1.json
   def destroy
-    @pedido_cotizacion.destroy
-    respond_to do |format|
-      format.html { redirect_to pedidos_cotizacion_url }
-      format.json { head :no_content }
+    if @pedido_cotizacion.destroy
+      flash.notice = "Se ha eliminado el pedido de cotizacion N˚ #{@pedido_cotizacion.numero}."
+      index
+    else
+      flash.alert = "No se ha podido eliminar el pedido de cotizacion N˚ #{@pedido_cotizacion.numero}."
     end
   end
 

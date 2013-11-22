@@ -81,7 +81,7 @@ $.noty.defaults = {
         onClose: function() {},
         afterClose: function() {}
     },
-    buttons: false // an array of buttons
+    buttons: false
 };
 
 $.extend($.inputmask.defaults, {

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class FacturasCompraController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_sidemenu, only: [:index]
@@ -58,6 +59,7 @@ class FacturasCompraController < ApplicationController
     if params[:from_orden_abm]
       redirect_to update_list_ordenes_compra_path(recargar_modal: true, orden_compra_id: @orden_compra.id)
     else
+      flash.notice = "Se ha recibido la factura N˚ #{@factura_compra.numero}."
       update_list
     end
   end
@@ -107,9 +109,10 @@ class FacturasCompraController < ApplicationController
 
   def destroy
     if @factura_compra.destroy
-      redirect_to facturas_compra_path, notice: t('messages.pedido_compra_deleted')
+      flash.notice = "Se ha eliminado la factura de compra N˚ #{@factura_compra.numero}."
+      index
     else
-      redirect_to facturas_compra_path, alert: t('messages.pedido_compra_not_deleted')
+      flash.alert = "No se ha podido eliminar la factura de compra N˚ #{@factura_compra.numero}."
     end
   end
 

@@ -22,7 +22,7 @@ table.table.table-condensed
 		td.hidden-print
 		  = link_to '<i class="icon-print icon-large"></i> '.html_safe, orden_compra_path(p, format: 'pdf')
 		  - if p.estado == PedidosEstados::PENDIENTE
-		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, orden_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
+		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, orden_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete'), remote: true}
 
 javascript:
 	$('.monto-text').maskMoney({isDiv: true});

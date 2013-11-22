@@ -77,6 +77,7 @@ class PedidosCompraController < ApplicationController
 
   def create_test_data
     # Crea un pedido por cada deposito
+    pedidos = 0
     DepositoMateriaPrima.all.each do |d|
       pedido_compra = PedidoCompra.new(estado: "Pendiente", fecha_generado: DateTime.now, deposito_id: d.id)
       d.deposito_stocks.each do |d_s|
@@ -89,10 +90,12 @@ class PedidosCompraController < ApplicationController
           d_s.update(pedido_generado: "Si")
         end
       end
-      if not pedido_compra.pedido_compra_detalles.blank?
+      unless pedido_compra.pedido_compra_detalles.blank?
         pedido_compra.save
+        pedidos +=1
       end
     end
+    flash.notice = pedidos == 0 ? "No hay componentes que necesiten reponerse" : "Se han generado #{pedidos} pedidos de compra"
     update_list
   end
 

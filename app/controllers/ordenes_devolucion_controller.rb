@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class OrdenesDevolucionController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_orden_devolucion, only: [:show, :edit, :update, :destroy]
@@ -68,7 +69,11 @@ class OrdenesDevolucionController < ApplicationController
     @orden_devolucion.total_orden = total_orden
     @orden_devolucion.total_iva = total_iva
     @orden_devolucion.fecha_generado = DateTime.now
-    @orden_devolucion.save
+    if @orden_devolucion.save
+      flash.notice = "Se ha generado la orden de devolución N˚ #{@orden_devolucion.numero}."
+    else
+      flash.alert = "No se podido generar la orden de devolución."
+    end
 
     update_list
 
@@ -76,9 +81,11 @@ class OrdenesDevolucionController < ApplicationController
 
   def destroy
     if @orden_devolucion.destroy
-      redirect_to ordenes_devolucion_path, notice: t('messages.pedido_compra_deleted')
+      flash.notice = "Se ha eliminado la orden de devolución N˚ #{@orden_devolucion.numero}."
+      update_list
     else
-      redirect_to ordenes_devolucion_path, alert: t('messages.pedido_compra_not_deleted')
+      flash.alert = "No se ha podido eliminar la orden de devolución N˚ #{@orden_devolucion.numero}."
+      update_list
     end
   end
 

@@ -2,3 +2,4 @@
 | $('#add-modal').modal('hide');
 | $('#paginator').html("#{escape_javascript(paginate(@notas_debito_compra, remote: true)) }");
 | $('#notas-debito-compra-size').text('#{@notas_debito_compra_size}');
+| var n = noty({text: '#{notice}', type: 'success'});

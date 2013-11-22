@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class OrdenesCompraController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_orden_compra, only: [:show, :edit, :update, :destroy]
@@ -9,7 +10,6 @@ class OrdenesCompraController < ApplicationController
   def set_sidemenu
     @sidebar_layout = 'layouts/compras_sidemenu'
   end
-
 
   def index
     #formatear las fechas
@@ -63,8 +63,6 @@ class OrdenesCompraController < ApplicationController
   def setupFechas
       params[:q][:fecha_generado_lt] = params[:q][:fecha_generado_lt] + ' 23:59:59' unless params[:q][:fecha_generado_lt].blank?
       params[:q][:fecha_procesado_lt] = params[:q][:fecha_procesado_lt] + ' 23:59:59' unless params[:q][:fecha_procesado_lt].blank?
-
-
   end
 
   # GET /ordenes_compras/1/edit
@@ -143,14 +141,14 @@ class OrdenesCompraController < ApplicationController
         deposito.update(pedido_generado: "No")
       end
     end
-
   end
 
   def destroy
     if @orden_compra.destroy
-      redirect_to ordenes_compra_path, notice: t('messages.pedido_compra_deleted')
+      flash.notice = "Se ha eliminado la orden de compra N˚ #{@orden_compra.numero}."
+      index
     else
-      redirect_to ordenes_compra_path, alert: t('messages.pedido_compra_not_deleted')
+      flash.alert = "No se ha podido eliminar la orden de compra N˚ #{@orden_compra.numero}."
     end
   end
 
@@ -159,7 +157,6 @@ class OrdenesCompraController < ApplicationController
     setupFechas
     @search = OrdenCompra.search(params[:q])
     @ordenes_compra = @search.result.order('estado').order('fecha_generado')
-
   end
 
 
