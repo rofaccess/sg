@@ -24,10 +24,16 @@ class DepositoStock < ActiveRecord::Base
 	        deposito.update(existencia: cant_nueva)
 	      end
 
-	      # Actualiza la existencia_total en componentes
-		  componente = Componente.find(factura_compra_detalle.componente_id)
-		  exist_comp = componente.existencia_total
-		  componente.update(existencia_total: (exist_comp + factura_compra_detalle.cantidad))
+	      componente = Componente.find(factura_compra_detalle.componente_id)
+		  exist_total_actual = componente.existencia_total
+		  exist_total_nueva = exist_total_actual + factura_compra_detalle.cantidad
+
+		  costo_exist_total_actual = exist_total_actual * componente.costo
+		  costo_exist_total_nueva = factura_compra_detalle.cantidad * factura_compra_detalle.costo_unitario
+		  nuevo_costo = ((costo_exist_total_actual + costo_exist_total_nueva) / (exist_total_nueva + 0.0)).round
+
+	      # Actualiza la existencia_total del componente y el costo por el metodo PPP
+		  componente.update(existencia_total: exist_total_nueva, costo: nuevo_costo)
 	    end
   	end
 
@@ -37,9 +43,15 @@ class DepositoStock < ActiveRecord::Base
 		cant_dep = deposito.existencia
 		deposito.update(existencia: (cant_dep - nota_credito_detalle.cantidad))
 
-		# Actualiza la existencia_total en componentes
 		componente = Componente.find(nota_credito_detalle.componente_id)
-		exist_comp = componente.existencia_total
-		componente.update(existencia_total: (exist_comp - nota_credito_detalle.cantidad))
+		exist_total_actual = componente.existencia_total
+		exist_total_nueva = exist_total_actual - nota_credito_detalle.cantidad
+
+		costo_exist_total_actual = exist_total_actual * componente.costo
+		costo_exist_total_nueva = nota_credito_detalle.cantidad * nota_credito_detalle.costo_unitario
+		nuevo_costo = ((costo_exist_total_actual - costo_exist_total_nueva) / (exist_total_nueva + 0.0)).round
+
+	    # Actualiza la existencia_total del componente y el costo por el metodo PPP
+		componente.update(existencia_total: exist_total_nueva, costo: nuevo_costo)
   	end
 end
