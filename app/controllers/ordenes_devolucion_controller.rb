@@ -58,7 +58,7 @@ class OrdenesDevolucionController < ApplicationController
   def create
     @search =OrdenCompra.search(params[:q])
     total_orden = 0
-    total_iva = 0
+    #total_iva = 0
     @orden_devolucion = OrdenDevolucion.new(orden_devolucion_params)
     ordenes_devolucion_detalle = @orden_devolucion.orden_devolucion_detalles
     ordenes_devolucion_detalle.each do |d|
@@ -66,7 +66,7 @@ class OrdenesDevolucionController < ApplicationController
 
     end
     @orden_devolucion.total_orden = total_orden
-    @orden_devolucion.total_iva = total_iva
+    #@orden_devolucion.total_iva = total_iva
     @orden_devolucion.fecha_generado = DateTime.now
     @orden_devolucion.save
 
@@ -109,8 +109,8 @@ class OrdenesDevolucionController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def orden_devolucion_params
-      params.require(:orden_devolucion).permit(:numero, :numero_factura, :total_orden, :total_iva, :fecha_generado, :motivo, :orden_compra_id, :proveedor_id, :user_id,
-        orden_devolucion_detalles_attributes: [:componente_id, :cantidad_devuelta, :costo_unitario, :iva, :motivo, :orden_compra_detalle_id])
+      params.require(:orden_devolucion).permit(:numero, :numero_factura, :total_orden, :fecha_generado, :motivo, :orden_compra_id, :proveedor_id, :user_id,
+        orden_devolucion_detalles_attributes: [:componente_id, :cantidad_devuelta, :costo_unitario, :motivo, :orden_compra_detalle_id])
     end
 
 end
