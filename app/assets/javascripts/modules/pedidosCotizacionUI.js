@@ -29,7 +29,7 @@ var pedidosCotizacionUI = (function(){
 				});
 			});
 
-			$('body').on('click', '.show-pedido', function(e){
+			$('body').on('click', '.show-pedido-cotizacion', function(e){
 				$.get($(this).parents('tr').data('url'), {}, function(){}, 'script');
 			});
 

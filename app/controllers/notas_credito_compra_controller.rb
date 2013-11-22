@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class NotasCreditoCompraController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_sidemenu, only: [:index]
@@ -44,6 +45,7 @@ class NotasCreditoCompraController < ApplicationController
     actualizarCantidadCreditoFactura(@nota_credito_compra)
 
     if @nota_credito_compra.save
+      flash.notice = "Se ha creado la nota de credito N˚ #{@nota_credito_compra.numero}."
       update_list
     end
   end
@@ -83,9 +85,11 @@ class NotasCreditoCompraController < ApplicationController
 
   def destroy
     if @nota_credito_compra.destroy
-      redirect_to notas_credito_compra_path, notice: t('messages.pedido_compra_deleted')
+      flash.notice = "Se ha eliminado la nota de credito N˚ #{@nota_credito_compra.numero}."
+      update_list
     else
-      redirect_to notas_credito_compra_path, alert: t('messages.pedido_compra_not_deleted')
+      flash.alert = "No se ha podido eliminar la nota de crédito N˚ #{@nota_credito_compra.numero}."
+      update_list
     end
   end
 

@@ -19,7 +19,7 @@ table.table.table-condensed
 		td.show-nota-c = p.user.username
 		td.hidden-print
 		  = link_to '<i class="icon-print icon-large"></i> '.html_safe, nota_credito_compra_path(p, format: 'pdf')
-		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, nota_credito_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
+		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, nota_credito_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete'), remote: true}
 
 /.hide.simbolo_moneda = @config.simbolo_moneda
 javascript:
