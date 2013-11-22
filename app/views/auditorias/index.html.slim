@@ -5,7 +5,7 @@
 .row.form-filtrar.row-grid
   = search_form_for @search, url: search_auditorias_path, method: :post, remote: true, class: 'form-filtros' do |f|
     = FormBuilder::rango_fechas(f, :created_at_gt, :created_at_lt, {col_class: 'col-md-4', label_text: 'Fecha'})
-    = FormBuilder::select(f, :item_type_eq, [['Pedido de Compra', 'PedidoCompra'], ['Pedido de Cotizacion', 'PedidoCotizacion'], ['Orden de Compra', 'OrdenCompra'], ['Orden de Devolucion', 'OrdenDevolucion'], ['Facturas Recibidas', 'FacturaCompra'], ['Proveedores', 'Proveedor'], ['Empleados', 'Empleado'], ['Usuarios', 'User'], ['Configuraciones', 'Configuracion'], ['Autenticación', 'Auth']], {col_class: 'col-md-2', label_text: 'Modulo'})
+    = FormBuilder::select(f, :item_type_eq, [['Pedido de Compra', 'PedidoCompra'], ['Pedido de Cotizacion', 'PedidoCotizacion'], ['Orden de Compra', 'OrdenCompra'], ['Orden de Devolucion', 'OrdenDevolucion'], ['Facturas Recibidas', 'FacturaCompra'], ['Notas de débito', 'NotaDebitoCompra'], ['Notas de Crédito', 'NotaCreditoCompra'], ['Proveedores', 'Proveedor'], ['Empleados', 'Empleado'], ['Usuarios', 'User'], ['Configuraciones', 'Configuracion'], ['Autenticación', 'Auth']], {col_class: 'col-md-2', label_text: 'Modulo'})
     = FormBuilder::collection_select_v(f, :whodunnit_eq, User.all, :id, :username, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Usuario'})
 
     .filter-actions.pull-right.col-md-3

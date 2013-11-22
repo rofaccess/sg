@@ -3,7 +3,7 @@
   dl.no-margin
     dt
       strong Accion
-    dd = AuditoriaHelper::format_event(@version.event, @version.item_type, @version.item_id)
+    dd = AuditoriaHelper::format_event(@version.event, @version.item_type, @version.item_id, @version.id)
     dt
       strong Usuario
     dd = User.with_deleted.find(@version.whodunnit).username

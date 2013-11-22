@@ -43,6 +43,16 @@ module AuditoriaHelper
       update: 'Se ha actualizado el empleado VAR',
       destroy: 'Se ha eliminado el empleado VAR'
     },
+    nota_credito_compra: {
+      create: 'Se ha creado la nota de crédito N˚ VAR',
+      update: 'Se ha actualizado la nota de crédito N˚ VAR',
+      destroy: 'Se ha eliminado la nota de crédito N˚ VAR'
+    },
+    nota_debito_compra: {
+      create: 'Se ha creado la nota de debito N˚ VAR',
+      update: 'Se ha actualizado la nota de debito N˚ VAR',
+      destroy: 'Se ha eliminado la nota de débito N˚ VAR'
+    },
     configuracion: {
       create: '',
       update: 'Se ha actualizado la tabla de configuraciones',
@@ -59,6 +69,8 @@ module AuditoriaHelper
     orden_compra: 'Ordenes de Compra',
     factura_compra: 'Facturas de compras',
     orden_devolucion: 'Ordenes de Devolución',
+    nota_credito_compra: 'Notas de crédito',
+    nota_debito_compra: 'Notas de débito',
     user: 'Usuarios',
     persona: {
       empleado: 'Empleados',
