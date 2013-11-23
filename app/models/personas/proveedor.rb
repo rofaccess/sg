@@ -9,4 +9,5 @@ class Proveedor < Persona
 	has_many :orden_devolucions
 	has_many :nota_debito_compras
 	has_many :nota_credito_compras
+	has_many :compra_cuenta_corrientes
 end

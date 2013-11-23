@@ -16,7 +16,7 @@ class FacturasCompraController < ApplicationController
     @search = FacturaCompra.search(params[:q])
     @facturas_compra_size = @search.result.size
     if @search.sorts.empty?
-      @facturas_compra = @search.result.order('fecha desc').order('estado desc').page(params[:page])
+      @facturas_compra = @search.result.order('fecha').page(params[:page])
     else
       @facturas_compra = @search.result.page(params[:page])
     end
@@ -48,14 +48,16 @@ class FacturasCompraController < ApplicationController
     @factura_compra = FacturaCompra.new(factura_compra_params)
     @orden_compra = OrdenCompra.find(@factura_compra.orden_compra_id)
 
-    actualizar_cantidad_orden_compra(@factura_compra)
-    actualizar_estado_orden_compra(@orden_compra)
+    @factura_compra.save
 
     if(@factura_compra.condicion_pago.nombre == 'Credito')
+      CompraCuentaCorriente.actualizar_cuenta_corriente(@factura_compra)
       AsientoContable.asentar_carga_factura_credito(@factura_compra)
     end
 
-    @factura_compra.save
+    actualizar_cantidad_orden_compra(@factura_compra)
+    actualizar_estado_orden_compra(@orden_compra)
+
     if params[:from_orden_abm]
       redirect_to update_list_ordenes_compra_path(recargar_modal: true, orden_compra_id: @orden_compra.id)
     else

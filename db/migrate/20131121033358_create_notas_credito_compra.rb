@@ -11,7 +11,7 @@ class CreateNotasCreditoCompra < ActiveRecord::Migration
     end
 
     add_foreign_key(:notas_credito_compra, :personas, column: 'proveedor_id', options: 'ON DELETE RESTRICT')
-	add_foreign_key(:notas_credito_compra, :users, column: 'user_id', options: 'ON DELETE RESTRICT')
+	  add_foreign_key(:notas_credito_compra, :users, column: 'user_id', options: 'ON DELETE RESTRICT')
     add_foreign_key(:notas_credito_compra, :facturas_compra, column: 'factura_compra_id', options: 'ON DELETE RESTRICT')
   end
 end
