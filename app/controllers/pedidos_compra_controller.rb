@@ -79,7 +79,7 @@ class PedidosCompraController < ApplicationController
     # Crea un pedido por cada deposito
     pedidos = 0
     DepositoMateriaPrima.all.each do |d|
-      pedido_compra = PedidoCompra.new(estado: "Pendiente", fecha_generado: DateTime.now, deposito_id: d.id)
+      pedido_compra = PedidoCompra.new(estado: PedidosEstados::PENDIENTE, fecha_generado: DateTime.now, deposito_id: d.id)
       d.deposito_stocks.each do |d_s|
         ex = d_s.existencia
         min = d_s.existencia_min

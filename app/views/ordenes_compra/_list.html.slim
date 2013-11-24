@@ -13,14 +13,14 @@ table.table.table-condensed
     - @ordenes_compra.each do |p|
 	  tr [data-url="#{orden_compra_path(p)}" class="#{p.estado == PedidosEstados::PENDIENTE ? 'success' : ''}"]
 		td.show-pedido = p.numero
-		td.show-pedido = p.estado
+		td.show-pedido = PedidosEstados::ESTADOS[p.estado]
 		td.show-pedido = Formatter.format_datetime(p.fecha_generado)
 		td.show-pedido = Formatter.format_datetime(p.fecha_procesado)
 		td.show-pedido = p.proveedor.nombre
 		td.show-pedido = p.pedido_compra.numero
 		td.show-pedido = p.user.username
 		td.hidden-print
-		  = link_to '<i class="icon-print icon-large"></i> '.html_safe, orden_compra_path(p, format: 'pdf')
+		  = link_to '<i class="icon-print icon-large"></i> '.html_safe, orden_compra_path(p, format: 'pdf'), target: '_blank'
 		  - if p.estado == PedidosEstados::PENDIENTE
 		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, orden_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete'), remote: true}
 

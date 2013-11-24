@@ -8,7 +8,7 @@
 	  	option value=""Seleccione una factura de compra...
 	  	- @facturas_compra.each do |o|
 	  	  - if not o.factura_compra_detalles.sum('cantidad') == o.factura_compra_detalles.sum('cantidad_credito')
-	  		option value="#{o.id}" Factura Nº #{o.numero} [#{o.proveedor.nombre}] #{o.estado}
+	  		option value="#{o.id}" Factura Nº #{o.numero} [#{o.proveedor.nombre}] #{PedidosEstados::ESTADOS[o.estado]}
 	.col-md-1
 		a class="btn btn-default recargar_factura" href="#" id="recargar_factura" data-toggle="tooltip" data-original-title="Recargar"
 			i class="icon-refresh icon-large"

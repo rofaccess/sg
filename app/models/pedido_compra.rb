@@ -50,7 +50,7 @@ class PedidoCompra < ActiveRecord::Base
   end
 
   def pedidos_cotizados
-    self.pedido_cotizacions.where(estado: 'Cotizado')
+    self.pedido_cotizacions.where(estado: PedidosEstados::COTIZADO)
   end
 
   def self.procesados

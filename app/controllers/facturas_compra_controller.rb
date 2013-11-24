@@ -34,7 +34,7 @@ class FacturasCompraController < ApplicationController
   end
 
   def new
-    @ordenes_compra = OrdenCompra.where.not(estado: 'Facturado')
+    @ordenes_compra = OrdenCompra.where.not(estado: PedidosEstados::FACTURADO)
   end
 
   def get_orden_compra

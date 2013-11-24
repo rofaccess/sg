@@ -14,7 +14,7 @@
     dt Motivo:
     dd = @nota_debito_compra.motivo
     dt Estado:
-    dd = @nota_debito_compra.estado
+    dd = PedidosEstados::ESTADOS[@nota_debito_compra.estado]
 
 
 /Botones Cancelar y generar

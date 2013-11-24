@@ -7,7 +7,7 @@
 .row.form-filtrar.hide.row-grid
   = search_form_for @search, method: :get, remote: true, class: 'form-filtros' do |f|
     = FormBuilder::text_field_v(f, :numero_eq, {col_class: 'col-md-2', label_text: 'Numero', input_class: 'num-doc-com',max_length: Domain::NUMERO_DOC_COM})
-    = FormBuilder::select(f, :estado_cont, ['Pendiente','Pagado'], {col_class: 'col-md-2', label_text: 'Estado'})
+    = FormBuilder::select(f, :estado_cont, [['Pendiente', PedidosEstados::PENDIENTE], ['Pagado', PedidosEstados::PAGADO]], {col_class: 'col-md-2', label_text: 'Estado'})
     = FormBuilder::rango_fechas(f, :fecha_gt, :fecha_lt, {col_class: 'col-md-4', label_text: 'Fecha', max_length: Domain::FECHA})
     = FormBuilder::collection_select_v(f, :proveedor_id_eq, Proveedor.all, :id, :nombre, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Proveedor'})
     = FormBuilder::collection_select_v(f, :user_id_eq, User.all, :id, :username, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Usuario'})

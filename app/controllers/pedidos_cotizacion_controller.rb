@@ -20,7 +20,7 @@ class PedidosCotizacionController < ApplicationController
     @search = PedidoCotizacion.search(params[:q])
     @pedidos_cotizacion_size = @search.result.size
     if @search.sorts.empty?
-      @pedidos_cotizacion = @search.result.order('fecha_generado desc').order('estado desc').page(params[:page])
+      @pedidos_cotizacion = @search.result.order('fecha_generado desc').order('estado asc').page(params[:page])
     else
       @pedidos_cotizacion = @search.result.page(params[:page])
     end
@@ -46,7 +46,7 @@ class PedidosCotizacionController < ApplicationController
 
   # GET /pedido_cotizacions/new
   def new
-    @pedidos_compra = PedidoCompra.where(estado: 'Pendiente')
+    @pedidos_compra = PedidoCompra.where(estado: PedidosEstados::PENDIENTE)
     @pedido_cotizacion = PedidoCotizacion.new
   end
 

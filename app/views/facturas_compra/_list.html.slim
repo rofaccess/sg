@@ -18,7 +18,7 @@ table.table.table-condensed
 		td.show-factura = p.proveedor.nombre
 		td.show-factura = Formatter.format_date(p.fecha)
 		td.show-factura.monto.text-right = p.total_factura
-		td.show-factura = p.estado
+		td.show-factura = PedidosEstados::ESTADOS[p.estado]
 		td.show-factura.text-right = p.orden_compra.numero
 		td.show-factura = p.user.username
 		td.hidden-print

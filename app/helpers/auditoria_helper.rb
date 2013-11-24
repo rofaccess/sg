@@ -105,7 +105,7 @@ module AuditoriaHelper
 
     if event == 'update' && (model == 'PedidoCompra' || model == 'OrdenCompra')
       next_version = objecto.version_at(version.created_at)
-      mensaje = MENSAJES[model.underscore.to_sym][event.underscore.to_sym].gsub(/[12]/, '1' => variable, '2' => next_version.estado)
+      mensaje = MENSAJES[model.underscore.to_sym][event.underscore.to_sym].gsub(/[12]/, '1' => variable, '2' => PedidosEstados::ESTADOS[next_version.estado])
 
     else
       mensaje = MENSAJES[model.underscore.to_sym][event.underscore.to_sym].gsub('VAR', variable)

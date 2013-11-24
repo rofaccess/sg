@@ -19,7 +19,7 @@ table.table.table-condensed
         td.show-pedido-cotizacion = pedido_cotizacion.numero
         td.show-pedido-cotizacion = pedido_cotizacion.proveedor.nombre
         - unless defined? short_view
-          td.show-pedido-cotizacion = pedido_cotizacion.estado
+          td.show-pedido-cotizacion = PedidosEstados::ESTADOS[pedido_cotizacion.estado]
           td.show-pedido-cotizacion = Formatter.format_date(pedido_cotizacion.fecha_generado)
         - unless defined? short_view
           td.show-pedido-cotizacion = Formatter.format_date(pedido_cotizacion.fecha_cotizado)
