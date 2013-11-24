@@ -105,6 +105,13 @@ class PedidosCompraController < ApplicationController
   end
 
   def destroy
+    # Si se elimina un pedido pendiente, los componentes de sus detalles en el deposito se liberan para poderse crear de nuevo el pedido
+    @pedido_compra.pedido_compra_detalles.each do |d|
+      stock = DepositoStock.where("deposito_id = ? AND mercaderia_id = ?", @pedido_compra.deposito_id, d.componente_id).first
+      if not stock.blank?
+        stock.update(pedido_generado: 'No')
+      end
+    end
     if @pedido_compra.destroy
       redirect_to pedidos_compra_path, notice: t('messages.pedido_compra_deleted')
     else

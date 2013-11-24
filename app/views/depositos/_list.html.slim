@@ -17,4 +17,6 @@ table.table.table-condensed
 			td.show-deposito No
 		td.show-deposito = p.type
 		td.hidden-print
+		  - if p.type == 'DepositoMateriaPrima'
+		    = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_deposito_materia_prima_path(p), remote: true
 		  = link_to '<i class="icon-print icon-large"></i> '.html_safe, deposito_path(p, format: 'pdf')

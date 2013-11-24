@@ -10,7 +10,7 @@ class DepositosController < ApplicationController
     @search = Deposito.search(params[:q])
     @depositos_size = @search.result.size
     if @search.sorts.empty?
-      @depositos = @search.result.order('nombre').page(params[:page])
+      @depositos = @search.result.order('type').page(params[:page])
     else
       @depositos = @search.result.page(params[:page])
     end
@@ -18,7 +18,7 @@ class DepositosController < ApplicationController
 
   def imprimir_listado
     @search = Deposito.search(params[:q])
-    @depositos = @search.result.order('nombre')
+    @depositos = @search.result.order('type')
 
   end
 
@@ -65,5 +65,7 @@ class DepositosController < ApplicationController
   end
 
   def deposito_params
+    params.require(:deposito).permit(:id,
+        deposito_stocks_attributes: [:existencia, :existencia_min, :existencia_max, :id, :mercaderia_id])
   end
 end

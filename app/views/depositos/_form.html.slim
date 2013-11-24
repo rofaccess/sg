@@ -1,0 +1,40 @@
+.modal-header
+  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+  h4 Editar Deposito
+.modal-body
+  .col-md-12
+    - if not @deposito.blank?
+      = form_for @deposito, html: {class: 'form-horizontal deposito_form'}, remote: true do |f|
+        label.title-seccion Encabezado
+        = FormBuilder::text_field_h(f, :nombre, {disabled: true,label_class:'col-md-2'})
+        = f.hidden_field(:id)
+        label.title-seccion Detalles
+        .table-scroll
+          table.table
+            thead
+              tr
+                th.col-md-1 #
+                th.col-md-5 Mercaderia
+                th Existencia
+                th Existencia Minima
+                th Existencia Maxima
+                th Pedido Generado
+            tbody
+              - cont = 0
+              = f.fields_for :deposito_stocks do |d|
+                - cont += 1
+                tr
+                  td = cont
+                  td style='padding-right:40px' = FormBuilder::collection_select_v(d, :mercaderia_id, Componente.all, :id, :nombre, {disabled: true ,label_class: 'hide'})
+                  td style='padding-right:40px' = FormBuilder::text_field_v(d, :existencia, {input_class: 'text-right required cantidad', label_class: 'hide', max_length: Domain::CANTIDAD})
+                  td style='padding-right:40px' = FormBuilder::text_field_v(d, :existencia_min, {input_class: 'text-right required cantidad cantidad-nueva', label_class: 'hide', max_length: Domain::CANTIDAD})
+                  td style='padding-right:40px' = FormBuilder::text_field_v(d, :existencia_max, {input_class: 'text-right required cantidad', label_class: 'hide', max_length: Domain::CANTIDAD})
+                  td style='padding-right:40px' = FormBuilder::text_field_v(d, :pedido_generado, {label_class: 'hide', max_length: 2, disabled: true})
+        .modal-footer
+            button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
+            = submit_tag 'Guardar', class: 'btn btn-success pull-right'
+
+javascript:
+  $('.clear').clearInput();
+  $('.deposito-form').validate();
+  $('.cantidad').numberOnly();
