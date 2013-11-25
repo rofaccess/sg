@@ -16,16 +16,23 @@ class OrdenesCompraController < ApplicationController
     if defined? params[:q][:fecha_generado_lt]
       setupFechas
     end
-
-    @search = OrdenCompra.search(params[:q])
     @orden_compra = OrdenCompra.new
-    @ordenes_compra_size = @search.result.size
+    resultados_ordenes(true)
+
+  end
+
+  def resultados_ordenes(paginate)
+    @search = OrdenCompra.search(params[:q])
     if @search.sorts.empty?
-      @ordenes_compra = @search.result.order('estado').page(params[:page])
+      @ordenes_compra = @search.result.order('fecha_generado desc').order('estado')
     else
-      @ordenes_compra = @search.result.page(params[:page])
+      @ordenes_compra = @search.result
     end
 
+    if paginate
+      @ordenes_compra = @ordenes_compra.page(params[:page])
+      @ordenes_compra_size = @search.result.size
+    end
 
   end
 
@@ -160,10 +167,10 @@ class OrdenesCompraController < ApplicationController
 
 
   def imprimir_listado
-    setupFechas
-    @search = OrdenCompra.search(params[:q])
-    @ordenes_compra = @search.result.order('estado').order('fecha_generado')
-
+    if defined? params[:q][:fecha_generado_lt]
+      setupFechas
+    end
+    resultados_ordenes(false)
     respond_to do |format|
       format.pdf { render :pdf => "orden_compra",
                           :layout => 'pdf.html',

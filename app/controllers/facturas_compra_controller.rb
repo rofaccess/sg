@@ -13,20 +13,35 @@ class FacturasCompraController < ApplicationController
       setupFechas
     end
 
+    resultados_facturas(true)
+  end
+
+  def resultados_facturas(paginate)
     @search = FacturaCompra.search(params[:q])
-    @facturas_compra_size = @search.result.size
     if @search.sorts.empty?
-      @facturas_compra = @search.result.order('fecha desc').order('estado desc').page(params[:page])
+      @facturas_compra = @search.result.order('fecha desc').order('estado desc')
     else
-      @facturas_compra = @search.result.page(params[:page])
+      @facturas_compra = @search.result
+    end
+
+    if paginate
+      @facturas_compra = @facturas_compra.page(params[:page])
+      @facturas_compra_size = @search.result.size
     end
   end
 
   def imprimir_listado
-    setupFechas
-    @search = FacturaCompra.search(params[:q])
-    @facturas_compra = @search.result.order('estado').order('fecha')
-
+    if defined? params[:q][:fecha_lt]
+      setupFechas
+    end
+    resultados_facturas(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "facturas",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   def setupFechas

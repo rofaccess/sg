@@ -11,19 +11,27 @@ class PedidosCompraController < ApplicationController
   def index
     @simbolo_moneda = Configuracion.find(1).simbolo_moneda
     #formatear las fechas
+    @pedido_compra = PedidoCompra.new
+    resultados_pedidos(true)
+  end
+
+  def resultados_pedidos(paginate)
     if defined? params[:q][:fecha_generado_lt]
       params[:q][:fecha_generado_lt] = params[:q][:fecha_generado_lt] + ' 23:59:59' unless params[:q][:fecha_generado_lt].blank?
       params[:q][:fecha_procesado_lt] = params[:q][:fecha_procesado_lt] + ' 23:59:59' unless params[:q][:fecha_procesado_lt].blank?
       params[:q][:fecha_ordenado_lt] = params[:q][:fecha_ordenado_lt] + ' 23:59:59' unless params[:q][:fecha_ordenado_lt].blank?
     end
 
-   	@search = PedidoCompra.search(params[:q])
-    @pedido_compra = PedidoCompra.new
-    @pedidos_compra_size = @search.result.size
+    @search = PedidoCompra.search(params[:q])
+
     if @search.sorts.empty?
-      @pedidos_compra = @search.result.order('fecha_generado desc').page(params[:page])
+      @pedidos_compra = @search.result.order('fecha_generado desc')
     else
-      @pedidos_compra = @search.result.page(params[:page])
+      @pedidos_compra = @search.result
+    end
+    if paginate
+      @pedidos_compra_size = @search.result.size
+      @pedidos_compra = @pedidos_compra.page(params[:page])
     end
   end
 
@@ -69,10 +77,14 @@ class PedidosCompraController < ApplicationController
   end
 
   def imprimir_listado
-    @search = PedidoCompra.search(params[:q])
-
-    @pedidos_compra = @search.result.order('fecha_generado').order('estado')
-
+    resultados_pedidos(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "pedidos_compra",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   def create_test_data

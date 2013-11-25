@@ -27,5 +27,8 @@ table.table.table-condensed
         td.show-pedido-cotizacion = pedido_cotizacion.pedido_compra.numero
         - unless defined? short_view
           td.hidden-print
-            = link_to '<i class="icon-print icon-large"></i> '.html_safe, imprimir_pedido_pedido_cotizacion_path(pedido_cotizacion), remote: true
+            = imprimir_link_show(pedido_cotizacion_path(pedido_cotizacion, format: 'pdf'))
             = link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_cotizacion, method: 'delete', data: {confirm: t('messages.confirm_delete'), remote: true}
+
+javascript:
+    configImprimir("#{params[:q].nil? ? '' : '?'+params[:q].to_query('q')}");

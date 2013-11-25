@@ -39,3 +39,6 @@ table.table.table-condensed
 		  td.hidden-print
 
 .hide.simbolo_moneda = @config.simbolo_moneda
+
+javascript:
+  	configImprimir("#{params[:q].nil? ? '' : '?'+params[:q].to_query('q')}");

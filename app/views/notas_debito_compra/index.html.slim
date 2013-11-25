@@ -22,7 +22,7 @@
     |Se han encontrado #{' '}
     span#notas-debito-compra-size #{@notas_debito_compra_size}
     |  registros
-  = link_to '<i class="icon-print icon-large"></i> Imprimir'.html_safe, "", class: 'btn btn-default pull-right imprimir-notas-debito-compra'
+  = imprimir_link(imprimir_listado_notas_debito_compra_path(format: 'pdf'))
 
 #list
   = render 'list'
