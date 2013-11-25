@@ -5,7 +5,6 @@ class CreateOrdenesDevolucionDetalle < ActiveRecord::Migration
       t.integer  :componente_id                   ,null: false
       t.integer  :cantidad_devuelta               ,null: false, default: 0
       t.decimal  :costo_unitario                  ,default: 0
-      t.string   :iva                             ,default: 0
       t.string   :motivo                          ,default: '' ,limit: Domain::DESCRIPCION
       t.integer :orden_compra_detalle_id         ,null: false
 

@@ -5,8 +5,9 @@ class FacturaCompra < ActiveRecord::Base
 
 	has_many   :factura_compra_detalles
 	has_many   :nota_credito_compra_detalles
+	has_many   :compra_cuenta_corriente_facturas
 	belongs_to :orden_compra
-	belongs_to :proveedor
+	belongs_to :proveedor, with_deleted: true
 	belongs_to :condicion_pago
 	belongs_to :plazo_pago, with_deleted: true
 	belongs_to :user

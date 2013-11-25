@@ -2,3 +2,4 @@
 | $('#paginator').html("#{escape_javascript(paginate(@ordenes_devolucion, remote: true)) }");
 | $('#main-modal').modal('hide');
 | var n = noty({text: '#{notice}', type: 'success'});
+| $('#ordenes-devolucion-size').text('#{@ordenes_devolucion_size}');

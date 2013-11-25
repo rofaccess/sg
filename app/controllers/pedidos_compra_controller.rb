@@ -9,7 +9,6 @@ class PedidosCompraController < ApplicationController
   end
 
   def index
-    @simbolo_moneda = Configuracion.find(1).simbolo_moneda
     #formatear las fechas
     @pedido_compra = PedidoCompra.new
     resultados_pedidos(true)
@@ -117,10 +116,18 @@ class PedidosCompraController < ApplicationController
   end
 
   def destroy
+    # Si se elimina un pedido pendiente, los componentes de sus detalles en el deposito se liberan para poderse crear de nuevo el pedido
+    @pedido_compra.pedido_compra_detalles.each do |d|
+      stock = DepositoStock.where("deposito_id = ? AND mercaderia_id = ?", @pedido_compra.deposito_id, d.componente_id).first
+      if not stock.blank?
+        stock.update(pedido_generado: 'No')
+      end
+    end
     if @pedido_compra.destroy
-      redirect_to pedidos_compra_path, notice: t('messages.pedido_compra_deleted')
+      flash.notice = "Se ha eliminado el pedido de compra N˚ #{@pedido_compra.numero}."
+      index
     else
-      redirect_to pedidos_compra_path, alert: t('messages.pedido_compra_not_deleted')
+      flash.alert = "No se ha podido eliminar el pedido de compra N˚ #{@pedido_compra.numero}."
     end
   end
 

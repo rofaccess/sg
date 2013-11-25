@@ -78,7 +78,7 @@ if Configuracion.all.blank?
 	# Crear Depositos para materia prima y productos terminados
 	deposito1 = DepositoMateriaPrima.create(nombre: "Casa Central", descripcion: "Deposito de materias primas de la casa central")
 	deposito2 = DepositoMateriaPrima.create(nombre: "Sucursal Encarnacion", descripcion: "Deposito de materias primas de la sucursal Encarnacion")
-	DepositoProductoTerminado.create(nombre: "Casa Central", disponible: false, descripcion: "Deposito de productos de la casa central")
+	#DepositoProductoTerminado.create(nombre: "Casa Central", disponible: false, descripcion: "Deposito de productos de la casa central")
 
 	# Crear 5 componentes para cada categoria
 	componentes = ['P8H61-M LX','Core 2 Duo','7200 RPM 1TB','16" - e1660Sw','Mouse Verbatim 000023','AS-878 2x1 SubWoofer']

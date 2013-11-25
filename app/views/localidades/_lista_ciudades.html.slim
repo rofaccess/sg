@@ -5,4 +5,4 @@ ul.localidades-lista
       	span = c.nombre
       	.actions
       	  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, "#", data: {id: c.id, tipo: 'ciudad'}, remote: true, class: 'editar-localidad'
-		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, "#{localidades_path}/#{c.id}/eliminar?tipo_localidad=ciudad", remote: true, method: 'delete', confirm: t('messages.confirm_delete')
+		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, "#{localidades_path}/#{c.id}/eliminar?tipo_localidad=ciudad", remote: true, method: 'delete', confirm: "¿Desea eliminar la ciudad #{c.nombre}?"

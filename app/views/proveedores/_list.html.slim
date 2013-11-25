@@ -25,7 +25,7 @@ table.table.table-condensed
 		  	|Ningun Telefono
 		td.hidden-print
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_proveedor_path(p), remote: true
-		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, proveedor_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete'), remote: true}
+		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, proveedor_path(p), method: 'delete', data: {confirm: "¿Desea eliminar el proveedor #{p.nombre}?"}, remote: true
 
 javascript:
   	configImprimir("#{params[:q].nil? ? '' : '?'+params[:q].to_query('q')}");

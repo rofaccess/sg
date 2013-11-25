@@ -28,7 +28,7 @@ table.table.table-condensed
 		td = p.existencia_total
 		td
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_componente_path(p), remote: true
-		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, componente_path(p), method: 'delete', confirm: t('messages.confirm_delete')
+		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, componente_path(p), method: 'delete', data: {confirm: "¿Desea eliminar el componente #{p.nombre}?"}, remote: true
 javascript:
   // Enmascarar los campos numericos
   $('.monto-text, .cantidad-text').maskMoney({isDiv: true});

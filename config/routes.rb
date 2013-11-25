@@ -1,4 +1,5 @@
 Sg::Application.routes.draw do
+  resources :depositos_materia_prima
   resources :notas_credito_compra do
     collection do
       get 'check_numero'
