@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class PedidosCompraController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_pedido_compra, only: [:show, :update, :destroy]
