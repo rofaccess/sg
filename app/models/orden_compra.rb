@@ -6,8 +6,8 @@ class OrdenCompra < ActiveRecord::Base
     has_paper_trail
     acts_as_paranoid
 
-	belongs_to :user
-	belongs_to :proveedor
+	belongs_to :user, with_deleted: true
+	belongs_to :proveedor, with_deleted: true
 	belongs_to :pedido_cotizacion
 	has_many   :orden_devolucions
 	belongs_to :pedido_compra

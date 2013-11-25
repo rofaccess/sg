@@ -6,7 +6,7 @@ class PedidoCotizacion < ActiveRecord::Base
 
   has_many :pedido_cotizacion_detalles, dependent: :destroy
   belongs_to :pedido_compra
-  belongs_to :proveedor
+  belongs_to :proveedor, with_deleted: true
   has_many :orden_compras
   belongs_to :user
 

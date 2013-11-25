@@ -24,7 +24,7 @@ table.table.table-condensed
 		td.hidden-print
 		  /= link_to '<i class="icon-print icon-large"></i> '.html_safe, imprimir_factura_factura_compra_path(p), remote: true
 		  = link_to '<i class="icon-print icon-large"></i> '.html_safe, factura_compra_path(p, format: 'pdf')
-		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, factura_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete'), remote: true}
+		  /= link_to '<i class="icon-trash icon-large"></i>'.html_safe, factura_compra_path(p), method: 'delete', data: {confirm: "¿Desea eliminar la factura Nº #{p.numero}?"}, remote: true
 
 /.hide.simbolo_moneda = @config.simbolo_moneda
 javascript:

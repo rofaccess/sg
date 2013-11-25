@@ -144,6 +144,7 @@ class OrdenesCompraController < ApplicationController
   end
 
   def destroy
+    @orden_compra.pedido_compra.update(estado: PedidosEstados::PROCESADO)
     if @orden_compra.destroy
       flash.notice = "Se ha eliminado la orden de compra N˚ #{@orden_compra.numero}."
       index

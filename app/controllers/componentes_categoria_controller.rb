@@ -63,10 +63,11 @@ class ComponentesCategoriaController < ApplicationController
   # DELETE /componentes_categorias/1
   # DELETE /componentes_categorias/1.json
   def destroy
-    @componente_categoria.destroy
-    respond_to do |format|
-      format.html { redirect_to componentes_categoria_url }
-      format.json { head :no_content }
+    if @componente_categoria.destroy
+      flash.notice = "Se ha eliminado la categoria #{@componente_categoria.nombre}."
+      index
+    else
+      flash.alert = "No se ha podido eliminar la categoria #{@componente_categoria.nombre}."
     end
   end
 

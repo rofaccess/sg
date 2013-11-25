@@ -8,7 +8,7 @@ class OrdenDevolucion < ActiveRecord::Base
     acts_as_paranoid
 
     belongs_to :user
-	belongs_to :proveedor
+	belongs_to :proveedor, with_deleted: true
 	belongs_to :orden_compra
 	has_many   :orden_devolucion_detalles
 

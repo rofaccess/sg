@@ -9,7 +9,6 @@ class PedidosCompraController < ApplicationController
   end
 
   def index
-    @simbolo_moneda = Configuracion.find(1).simbolo_moneda
     #formatear las fechas
     if defined? params[:q][:fecha_generado_lt]
       params[:q][:fecha_generado_lt] = params[:q][:fecha_generado_lt] + ' 23:59:59' unless params[:q][:fecha_generado_lt].blank?
@@ -113,9 +112,10 @@ class PedidosCompraController < ApplicationController
       end
     end
     if @pedido_compra.destroy
-      redirect_to pedidos_compra_path, notice: t('messages.pedido_compra_deleted')
+      flash.notice = "Se ha eliminado el pedido de compra N˚ #{@pedido_compra.numero}."
+      index
     else
-      redirect_to pedidos_compra_path, alert: t('messages.pedido_compra_not_deleted')
+      flash.alert = "No se ha podido eliminar el pedido de compra N˚ #{@pedido_compra.numero}."
     end
   end
 

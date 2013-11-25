@@ -66,9 +66,10 @@ class ComponentesController < ApplicationController
   # DELETE /componentes/1.json
   def destroy
     if @componente.destroy
-      redirect_to componentes_path, notice: t('messages.proveedor_deleted')
+      flash.notice = "Se ha eliminado el componente #{@componente.nombre}."
+      index
     else
-      redirect_to componentes_path, alert: t('messages.proveedor_not_deleted')
+      flash.alert = "No se ha podido eliminar el componente #{@componente.nombre}."
     end
   end
 
