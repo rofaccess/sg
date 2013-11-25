@@ -16,7 +16,7 @@
   = f.hidden_field(:proveedor_id,value:"#{@orden_compra.proveedor_id}")
   = f.hidden_field(:deposito_id,value:"#{@orden_compra.pedido_compra.deposito_id}")
   = f.hidden_field(:user_id, value: "#{current_user.id}")
-  = f.hidden_field(:estado, value: "Pendiente")
+  = f.hidden_field(:estado, value: PedidosEstados::PENDIENTE)
   = f.hidden_field(:orden_compra_id, value: "#{@orden_compra.id}")
   = f.hidden_field(:total_factura, class: "total-f")
   = f.hidden_field(:total_iva, class: "total-i")

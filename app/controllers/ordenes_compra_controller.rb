@@ -16,15 +16,24 @@ class OrdenesCompraController < ApplicationController
     if defined? params[:q][:fecha_generado_lt]
       setupFechas
     end
-
-    @search = OrdenCompra.search(params[:q])
     @orden_compra = OrdenCompra.new
-    @ordenes_compra_size = @search.result.size
+    resultados_ordenes(true)
+
+  end
+
+  def resultados_ordenes(paginate)
+    @search = OrdenCompra.search(params[:q])
     if @search.sorts.empty?
-      @ordenes_compra = @search.result.order('estado').page(params[:page])
+      @ordenes_compra = @search.result.order('fecha_generado desc').order('estado')
     else
-      @ordenes_compra = @search.result.page(params[:page])
+      @ordenes_compra = @search.result
     end
+
+    if paginate
+      @ordenes_compra = @ordenes_compra.page(params[:page])
+      @ordenes_compra_size = @search.result.size
+    end
+
   end
 
   # GET /ordenes_compras/1
@@ -46,7 +55,7 @@ class OrdenesCompraController < ApplicationController
 
   # GET /ordenes_compras/new
   def new
-    @pedidos_compra = PedidoCompra.where(estado: 'Procesado')
+    @pedidos_compra = PedidoCompra.where(estado: PedidosEstados::PROCESADO)
     @orden_compra = OrdenCompra.new
   end
 
@@ -129,10 +138,14 @@ class OrdenesCompraController < ApplicationController
       orden_compra.total_requerido = total_requerido
 
       if orden_compra.orden_compra_detalles.size > 0
-        orden_compra.save
+        if orden_compra.save
+          @pedido_compra.pedido_cotizacions.each do |c|
+            c.update(estado: PedidosEstados::ORDENADO)
+          end
+        end
       end
     end
-    @pedido_compra.update(estado: PedidosEstados::ORDENADO, fecha_ordenado: DateTime.now)
+    @pedido_compra.update(estado: PedidosEstados::ORDENADO, fecha_ordenado: DateTime.now) if @pedido_compra.estado != PedidosEstados::ORDENADO
 
     # Actualiza el stock de los componentes incluidos en el pedido pero no en la orden
     @pedido_compra.pedido_compra_detalles.each do |d|
@@ -155,9 +168,17 @@ class OrdenesCompraController < ApplicationController
 
 
   def imprimir_listado
-    setupFechas
-    @search = OrdenCompra.search(params[:q])
-    @ordenes_compra = @search.result.order('estado').order('fecha_generado')
+    if defined? params[:q][:fecha_generado_lt]
+      setupFechas
+    end
+    resultados_ordenes(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "orden_compra",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
 

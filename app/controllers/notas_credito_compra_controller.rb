@@ -13,12 +13,36 @@ class NotasCreditoCompraController < ApplicationController
       setupFechas
     end
 
+    resultados_notas(true)
+  end
+
+  def resultados_notas(paginate)
     @search = NotaCreditoCompra.search(params[:q])
-    @notas_credito_compra_size = @search.result.size
     if @search.sorts.empty?
-      @notas_credito_compra = @search.result.order('fecha desc').page(params[:page])
+      @notas_credito_compra = @search.result.order('fecha desc')
     else
-      @notas_credito_compra = @search.result.page(params[:page])
+      @notas_credito_compra = @search.result
+    end
+
+    if paginate
+      @notas_credito_compra_size = @search.result.size
+      @notas_credito_compra = @notas_credito_compra.page(params[:page])
+    end
+
+  end
+
+  def imprimir_listado
+    #formatear las fechas
+    if defined? params[:q][:fecha_lt]
+      setupFechas
+    end
+    resultados_notas(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "notas",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
     end
   end
 

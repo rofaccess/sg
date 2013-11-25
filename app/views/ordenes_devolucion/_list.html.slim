@@ -24,3 +24,4 @@ table.table.table-condensed
 javascript:
 	$('.monto-text').maskMoney({isDiv: true});
     $('.monto-text').maskMoney('mask');
+    configImprimir("#{params[:q].nil? ? '' : '?'+params[:q].to_query('q')}");

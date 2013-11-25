@@ -23,7 +23,7 @@
     |Se han encontrado #{' '}
     span#pedidos-cotizacion-size #{@usuarios.size}
     |  registros
-  = link_to '<i class="icon-print icon-large"></i> Imprimir Listado'.html_safe, imprimir_listado_usuarios_path, class: 'btn btn-default pull-right imprimir-usuarios'
+  = imprimir_link(imprimir_listado_usuarios_path(format: 'pdf'))
 
 #list
   = render 'list'

@@ -1,5 +1,5 @@
 .well
-  span[class="label #{estado_label} pull-right"] #{@orden_compra.estado}
+  span[class="label #{estado_label} pull-right"] #{PedidosEstados::ESTADOS[@orden_compra.estado]}
   h3 Orden de compra N° #{@orden_compra.numero}
   h4 Proveedor: #{@orden_compra.proveedor.nombre}
   h5.extra Creado el: #{Formatter.format_date(@orden_compra.fecha_generado)}

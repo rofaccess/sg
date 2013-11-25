@@ -16,7 +16,7 @@ h3 Factura N° #{@factura_compra.numero}
     dt Fecha:
     dd = Formatter.format_date(@factura_compra.fecha)
     dt Estado:
-    dd = @factura_compra.estado
+    dd = PedidosEstados::ESTADOS[@factura_compra.estado]
     dt Importe:
     dd = @factura_compra.total_factura
   dl.col-md-4

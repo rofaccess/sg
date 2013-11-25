@@ -7,7 +7,7 @@
       .row
         dl.col-md-2
           dt Estado
-          dd = @pedido_compra.estado
+          dd = PedidosEstados::ESTADOS[@pedido_compra.estado]
         dl.col-md-3
           dt Generado
           dd #{Formatter.format_datetime(@pedido_compra.fecha_generado)}
@@ -38,7 +38,7 @@
         - @pedidos_cotizacion.each do |p|
           - cont += 1
           li class=""
-            a href="#dropdown1#{cont}" tabindex="-1" data-toggle="tab" #{p.numero}  [#{p.proveedor.nombre}]  #{p.estado}
+            a href="#dropdown1#{cont}" tabindex="-1" data-toggle="tab" #{p.numero}  [#{p.proveedor.nombre}]  #{PedidosEstados::ESTADOS[p.estado]}
   br
   /Tabs Content
   div id="myTabContent" class="tab-content"

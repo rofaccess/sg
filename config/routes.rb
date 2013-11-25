@@ -3,11 +3,13 @@ Sg::Application.routes.draw do
   resources :notas_credito_compra do
     collection do
       get 'check_numero'
+      get 'imprimir_listado'
       post 'get_factura_compra'
     end
   end
   resources :notas_debito_compra do
     collection do
+      get 'imprimir_listado'
       get 'check_numero'
     end
   end
@@ -146,6 +148,7 @@ Sg::Application.routes.draw do
   resources :auditorias, only: [:index] do
     collection do
       match 'buscar' => 'auditorias#buscar', via: [:get, :post], as: :search
+      get 'imprimir_listado'
     end
     member do
       post 'detalles'

@@ -7,13 +7,19 @@ class ProveedoresController < ApplicationController
   def set_sidemenu
     @sidebar_layout = 'layouts/compras_sidemenu'
   end
+
   def index
+    resultados_proveedores(true)
+  end
+
+  def resultados_proveedores(paginate)
     @search = Proveedor.search(params[:q])
     if @search.sorts.empty?
-      @proveedores = @search.result.order('nombre').page(params[:page])
+      @proveedores = @search.result.order('nombre')
     else
-      @proveedores = @search.result.page(params[:page])
+      @proveedores = @search.result
     end
+    @proveedores = @proveedores.page(params[:page]) if paginate
   end
 
   def edit
@@ -79,8 +85,14 @@ class ProveedoresController < ApplicationController
   end
 
   def imprimir_todos
-    @search = Proveedor.search(params[:q])
-    @proveedores = @search.result.order('nombre')
+    resultados_proveedores(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "proveedores",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   def nueva_ciudad

@@ -113,6 +113,10 @@ function showSpinner(target){
   return spinner;
 }
 
+function configImprimir (params) {
+  $('#imprimir-link').attr('href', $('#imprimir-link').data('url') + params.replace('amp;',''));
+}
+
 $(function(){
 
 });

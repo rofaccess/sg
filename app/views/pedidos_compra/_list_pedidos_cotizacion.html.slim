@@ -22,7 +22,7 @@
             td = pedido_cotizacion.proveedor.nombre
             /short_view  es?
             - unless defined? short_view
-              td = pedido_cotizacion.estado
+              td = PedidosEstados::ESTADOS[pedido_cotizacion.estado]
             td = Formatter.format_datetime(pedido_cotizacion.fecha_generado)
             - unless defined? short_view
               td = Formatter.format_datetime(pedido_cotizacion.fecha_cotizado)

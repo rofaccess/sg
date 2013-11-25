@@ -7,7 +7,7 @@
 	  select class="form-control " id="orden_compra_id" name="orden_compra_id"
 	  	option value=""Seleccione una orden de compra...
 	  	- @ordenes_compra.each do |o|
-	  		option value="#{o.id}" Orden #{o.numero} [#{o.proveedor.nombre}] #{o.estado}
+	  		option value="#{o.id}" Orden #{o.numero} [#{o.proveedor.nombre}] #{PedidosEstados::ESTADOS[o.estado]}
 	.col-md-1
 		a class="btn btn-default recargar_orden" href="#" id="recargar_orden" data-toggle="tooltip" data-original-title="Recargar"
 			i class="icon-refresh icon-large"

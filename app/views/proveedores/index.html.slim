@@ -1,16 +1,16 @@
 .row.row-page-title
   h2 Proveedores
   = link_to 'Agregar Proveedor', new_proveedor_path, class: 'btn btn-primary', remote: true
-  .btn-group.pull-right.print-link
-  	button.btn.btn-default.dropdown-toggle [type="button" data-toggle="dropdown"]
-  	  i.icon-print
-  	  | #{" Imprimir Listado "}
-  	  span.caret
-  	ul.dropdown-menu
-  	  li
-  	    = link_to 'Listado Actual', '#', class: 'listado-actual'
-  	  li
-  	    = link_to 'Listar Todos', imprimir_todos_proveedores_path, class: '', remote: true
+  //.btn-group.pull-right.print-link
+  	//button.btn.btn-default.dropdown-toggle [type="button" data-toggle="dropdown"]
+  	  //i.icon-print
+  	  //| #{" Imprimir Listado "}
+  	  //span.caret
+  	//ul.dropdown-menu
+  	  //li
+  	    //= link_to 'Listado Actual', '#', class: 'listado-actual'
+  	  //li
+  = link_to '<i class="icon-print"></i> Imprimir'.html_safe, imprimir_todos_proveedores_path(format: 'pdf'), class: 'pull-right btn btn-default print-link', id: 'imprimir-link', target: '_blank', data: {url: imprimir_todos_proveedores_path(format: 'pdf')}
 
 .row
   = render 'search'

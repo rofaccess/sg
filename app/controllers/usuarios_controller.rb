@@ -9,7 +9,12 @@ class UsuariosController < ApplicationController
   end
 
   def index
-  	@search = User.search(params[:q])
+    resultados_usuarios(true)
+    authorize! :read, User
+  end
+
+  def resultados_usuarios(paginate)
+    @search = User.search(params[:q])
     @usuarios = @search.result
 
     unless params[:user_roles_filtro].nil?
@@ -20,9 +25,10 @@ class UsuariosController < ApplicationController
       end
     end
 
-    @usuarios = @usuarios.page(params[:page])
+    if paginate
+      @usuarios = @usuarios.page(params[:page])
+    end
 
-    authorize! :read, User
   end
 
   def buscar
@@ -79,9 +85,14 @@ class UsuariosController < ApplicationController
   end
 
   def imprimir_listado
-    @search = User.search(params[:q])
-    @usuarios = @search.result.order('username')
-
+    resultados_usuarios(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "usuarios",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   def destroy

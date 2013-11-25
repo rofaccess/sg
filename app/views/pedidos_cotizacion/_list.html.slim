@@ -19,7 +19,7 @@ table.table.table-condensed
         td.show-pedido-cotizacion = pedido_cotizacion.numero
         td.show-pedido-cotizacion = pedido_cotizacion.proveedor.nombre
         - unless defined? short_view
-          td.show-pedido-cotizacion = pedido_cotizacion.estado
+          td.show-pedido-cotizacion = PedidosEstados::ESTADOS[pedido_cotizacion.estado]
           td.show-pedido-cotizacion = Formatter.format_date(pedido_cotizacion.fecha_generado)
         - unless defined? short_view
           td.show-pedido-cotizacion = Formatter.format_date(pedido_cotizacion.fecha_cotizado)
@@ -27,5 +27,8 @@ table.table.table-condensed
         td.show-pedido-cotizacion = pedido_cotizacion.pedido_compra.numero
         - unless defined? short_view
           td.hidden-print
-            = link_to '<i class="icon-print icon-large"></i> '.html_safe, imprimir_pedido_pedido_cotizacion_path(pedido_cotizacion), remote: true
-            = link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_cotizacion_path(pedido_cotizacion), method: 'delete', data: {confirm: "¿Desea eliminar el Pedido de Cotizacion Nº #{pedido_cotizacion.numero}?"}, remote: true
+            = imprimir_link_show(pedido_cotizacion_path(pedido_cotizacion, format: 'pdf'))
+            = link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_cotizacion, method: 'delete', data: {confirm: ¿Desea eliminar el Pedido de Cotizacion Nº #{pedido_cotizacion.numero}?", remote: true}
+
+javascript:
+    configImprimir("#{params[:q].nil? ? '' : '?'+params[:q].to_query('q')}");

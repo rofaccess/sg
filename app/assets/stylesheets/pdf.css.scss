@@ -1,3 +1,18 @@
 #content-wrapper-pdf{
 	margin-top: 10px;
 }
+
+dl{
+  		dt{
+  			float: left;
+  			width: 105px;
+  		}
+ }
+
+#header-impresion{
+	padding: 0;
+	dl.contacto-info{
+		font-size: 12px;
+		width: 350px;
+	}
+}

@@ -16,15 +16,25 @@ class OrdenesDevolucionController < ApplicationController
     if defined? params[:q][:fecha_generado_lt]
       setupFechas
     end
-
-    @search = OrdenDevolucion.search(params[:q])
     @orden_devolucion = OrdenDevolucion.new
-    @ordenes_devolucion_size = @search.result.size
+
+    resultados_ordenes(true)
+  end
+
+  def resultados_ordenes(paginate)
+    @search = OrdenDevolucion.search(params[:q])
+
     if @search.sorts.empty?
-      @ordenes_devolucion = @search.result.order('fecha_generado').page(params[:page])
+      @ordenes_devolucion = @search.result.order('fecha_generado')
     else
-      @ordenes_devolucion = @search.result.page(params[:page])
+      @ordenes_devolucion = @search.result
     end
+
+    if paginate
+      @ordenes_devolucion_size = @search.result.size
+      @ordenes_devolucion = @ordenes_devolucion.page(params[:page])
+    end
+
   end
 
   def show
@@ -42,7 +52,7 @@ class OrdenesDevolucionController < ApplicationController
   end
 
   def new
-    @ordenes_compra = OrdenCompra.where(estado: 'Pendiente')
+    @ordenes_compra = OrdenCompra.where(estado: PedidosEstados::PENDIENTE)
     @orden_devolucion = OrdenDevolucion.new
   end
 
@@ -97,10 +107,17 @@ class OrdenesDevolucionController < ApplicationController
   end
 
   def imprimir_listado
-    #setupFechas
-    @search = OrdenDevolucion.search(params[:q])
-    @ordenes_devolucion = @search.result.order('fecha_generado')
-
+    if defined? params[:q][:fecha_generado_lt]
+      setupFechas
+    end
+    resultados_ordenes(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "ordenes_devolucion",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   def update_list

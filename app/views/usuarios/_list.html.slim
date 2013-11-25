@@ -27,3 +27,5 @@ table.table.table-condensed
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_usuario_path(u), remote: true
 		  - unless current_user.id == u.id
 		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, usuario_path(u), method: 'delete', data: {confirm: "¿Desea eliminar el usuario #{u.username}?"}, remote: true
+javascript:
+	configImprimir("#{params[:q].nil? ? '' : '?'+params[:q].to_query('q')}");
