@@ -23,7 +23,7 @@
     |Se han encontrado #{' '}
     span#asientos-contable-size #{@asientos_contable_size}
     |  registros
-  = link_to '<i class="icon-print icon-large"></i> Imprimir Listado'.html_safe, imprimir_listado_asientos_contable_path, class: 'btn btn-default pull-right imprimir-asientos-contable'
+  = imprimir_link(imprimir_listado_asientos_contable_path(format: 'pdf'))
 
 #list
   = render 'list'

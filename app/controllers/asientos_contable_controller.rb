@@ -12,20 +12,36 @@ class AsientosContableController < ApplicationController
       setupFechas
     end
 
+    resultados_asientos(true)
+  end
+
+  def resultados_asientos(paginate)
     @search = AsientoContable.search(params[:q])
-    @asientos_contable_size = @search.result.size
     if @search.sorts.empty?
-      @asientos_contable = @search.result.order('numero').page(params[:page])
+      @asientos_contable = @search.result.order('numero')
     else
-      @asientos_contable = @search.result.page(params[:page])
+      @asientos_contable = @search.result
+    end
+
+    if paginate
+      @asientos_contable_size = @search.result.size
+      @asientos_contable = @asientos_contable.page(params[:page])
     end
   end
 
   def imprimir_listado
-    setupFechas
-    @search = AsientoContable.search(params[:q])
-    @asientos_contable = @search.result.order('numero')
+    if defined? params[:q][:fecha_lt]
+      setupFechas
+    end
+    resultados_asientos(false)
 
+    respond_to do |format|
+      format.pdf { render :pdf => "asientos",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   def setupFechas
