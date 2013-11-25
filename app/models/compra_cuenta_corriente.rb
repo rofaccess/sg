@@ -1,5 +1,5 @@
 class CompraCuentaCorriente < ActiveRecord::Base
-	belongs_to :proveedor
+	belongs_to :proveedor, with_deleted: true
 	has_many   :compra_cuenta_corriente_facturas
 
 	def self.actualizar_cuenta_corriente(factura)

@@ -10,7 +10,7 @@ class FacturaCompra < ActiveRecord::Base
 	belongs_to :proveedor, with_deleted: true
 	belongs_to :condicion_pago
 	belongs_to :plazo_pago, with_deleted: true
-	belongs_to :user
+	belongs_to :user, with_deleted: true
 	belongs_to :deposito
 
 	accepts_nested_attributes_for :factura_compra_detalles

@@ -7,7 +7,7 @@ class OrdenDevolucion < ActiveRecord::Base
     has_paper_trail
     acts_as_paranoid
 
-    belongs_to :user
+    belongs_to :user, with_deleted: true
 	belongs_to :proveedor, with_deleted: true
 	belongs_to :orden_compra
 	has_many   :orden_devolucion_detalles

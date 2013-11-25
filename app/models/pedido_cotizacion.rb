@@ -8,7 +8,7 @@ class PedidoCotizacion < ActiveRecord::Base
   belongs_to :pedido_compra
   belongs_to :proveedor, with_deleted: true
   has_many :orden_compras
-  belongs_to :user
+  belongs_to :user, with_deleted: true
 
   accepts_nested_attributes_for :pedido_cotizacion_detalles
 
