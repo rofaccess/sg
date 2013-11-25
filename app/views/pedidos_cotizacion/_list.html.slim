@@ -28,7 +28,7 @@ table.table.table-condensed
         - unless defined? short_view
           td.hidden-print
             = imprimir_link_show(pedido_cotizacion_path(pedido_cotizacion, format: 'pdf'))
-            = link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_cotizacion, method: 'delete', data: {confirm: ¿Desea eliminar el Pedido de Cotizacion Nº #{pedido_cotizacion.numero}?", remote: true}
+            = link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_cotizacion, method: 'delete', data: {confirm: "¿Desea eliminar el Pedido de Cotizacion Nº #{pedido_cotizacion.numero}?", remote: true}
 
 javascript:
     configImprimir("#{params[:q].nil? ? '' : '?'+params[:q].to_query('q')}");
