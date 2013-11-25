@@ -19,8 +19,9 @@ table.table.table-condensed
 		td.show-pedido = p.user.username
 		td.hidden-print
 		  = link_to '<i class="icon-print icon-large"></i> '.html_safe, orden_devolucion_path(p, format: 'pdf')
-		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, orden_devolucion_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete')}
+		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, orden_devolucion_path(p), method: 'delete', data: {confirm: "¿Desea eliminar la orden de devolucion Nº #{p.numero}?"}, remote: true
 
 javascript:
 	$('.monto-text').maskMoney({isDiv: true});
     $('.monto-text').maskMoney('mask');
+    configImprimir("#{params[:q].nil? ? '' : '?'+params[:q].to_query('q')}");

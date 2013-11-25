@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class PedidosCotizacionController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_pedido_cotizacion, only: [:show, :edit, :update, :destroy, :imprimir_pedido]
@@ -16,21 +17,35 @@ class PedidosCotizacionController < ApplicationController
       setupFechas
     end
 
+    resultados_pedidos(true)
+  end
+
+  def resultados_pedidos(paginate)
     @search = PedidoCotizacion.search(params[:q])
-    @pedidos_cotizacion_size = @search.result.size
     if @search.sorts.empty?
-      @pedidos_cotizacion = @search.result.order('fecha_generado desc').order('estado desc').page(params[:page])
+      @pedidos_cotizacion = @search.result.order('fecha_generado desc').order('estado asc')
     else
-      @pedidos_cotizacion = @search.result.page(params[:page])
+      @pedidos_cotizacion = @search.result
+    end
+    if paginate
+      @pedidos_cotizacion_size = @search.result.size
+      @pedidos_cotizacion = @pedidos_cotizacion.page(params[:page])
     end
   end
 
-
   def imprimir_listado
-    setupFechas
-    @search = PedidoCotizacion.search(params[:q])
-    @pedidos_cotizacion = @search.result.order('estado').order('fecha_generado')
-
+    #formatear las fechas
+    if defined? params[:q][:fecha_generado_lt]
+      setupFechas
+    end
+    resultados_pedidos(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "pedidos_cotizaciones",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   def setupFechas
@@ -41,11 +56,19 @@ class PedidosCotizacionController < ApplicationController
   # GET /pedido_cotizacions/1
   # GET /pedido_cotizacions/1.json
   def show
+    respond_to do |format|
+      format.js  {render 'show'}
+      format.pdf { render :pdf => "pedido_cotizacion",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   # GET /pedido_cotizacions/new
   def new
-    @pedidos_compra = PedidoCompra.where(estado: 'Pendiente')
+    @pedidos_compra = PedidoCompra.where(estado: PedidosEstados::PENDIENTE)
     @pedido_cotizacion = PedidoCotizacion.new
   end
 
@@ -91,21 +114,21 @@ class PedidosCotizacionController < ApplicationController
     @pedido_cotizacion.estado = PedidosEstados::COTIZADO
     @pedido_cotizacion.fecha_cotizado = DateTime.now
     if @pedido_cotizacion.update(pedido_cotizacion_params)
-      flash.notice = "Se ha actualizado los datos del pedido de cotizacion."
+      flash.notice = "Se ha actualizado los datos del pedido de cotizacion N˚ #{@pedido_cotizacion.numero}."
       index
-      render template: 'pedidos_cotizacion/show', formats: 'js'
     else
-      flash.alert = "No se ha actualizado los datos del pedido de cotizacion."
+      flash.alert = "No se ha actualizado los datos del pedido de cotizacion N˚ #{@pedido_cotizacion.numero}."
     end
   end
 
   # DELETE /pedido_cotizacions/1
   # DELETE /pedido_cotizacions/1.json
   def destroy
-    @pedido_cotizacion.destroy
-    respond_to do |format|
-      format.html { redirect_to pedidos_cotizacion_url }
-      format.json { head :no_content }
+    if @pedido_cotizacion.destroy
+      flash.notice = "Se ha eliminado el pedido de cotizacion N˚ #{@pedido_cotizacion.numero}."
+      index
+    else
+      flash.alert = "No se ha podido eliminar el pedido de cotizacion N˚ #{@pedido_cotizacion.numero}."
     end
   end
 

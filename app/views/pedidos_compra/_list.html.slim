@@ -9,33 +9,36 @@ table.table.table-condensed
 	  th.hidden-print
   tbody
 	- @pedidos_compra.each do |p|
-	  - if p.estado == "Pendiente"
+	  - if p.estado == PedidosEstados::PENDIENTE
 		tr.success [data-url="#{pedido_compra_path(p)}"]
 		  td.show-ped-comp = p.numero
-		  td.show-ped-comp = p.estado
+		  td.show-ped-comp = PedidosEstados::ESTADOS[p.estado]
 		  td.show-ped-comp = Formatter.format_datetime(p.fecha_generado)
 		  td.show-ped-comp
 		  td.show-ped-comp
 		  td.hidden-print
 			/= link_to '<i class="icon-ok icon-large"></i>'.html_safe, create_pedido_cotizacion_pedido_compra_path(p), remote: true, data: {confirm: t('messages.confirm_generar_pedido_cotizacion')}
-			= link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_compra_path(p), method: 'delete', data: {confirm: t('messages.confirm_delete_pedido_compra')}
+			= link_to '<i class="icon-trash icon-large"></i>'.html_safe, pedido_compra_path(p), method: 'delete', data: {confirm: "¿Desea eliminar el Pedido de Compra Nº #{p.numero}?"}, remote: true
 
-	  - if p.estado == "Procesado"
+	  - if p.estado == PedidosEstados::PROCESADO
 		tr.active [data-url="#{pedido_compra_path(p)}"]
 		  td.show-ped-comp = p.numero
-		  td.show-ped-comp = p.estado
+		  td.show-ped-comp = PedidosEstados::ESTADOS[p.estado]
 		  td.show-ped-comp = Formatter.format_datetime(p.fecha_generado)
 		  td.show-ped-comp = Formatter.format_datetime(p.fecha_procesado)
 		  td.show-ped-comp
 		  td.hidden-print
 
-	  - if p.estado == "Ordenado"
+	  - if p.estado == PedidosEstados::ORDENADO
 		tr [data-url="#{pedido_compra_path(p)}"]
 		  td.show-ped-comp = p.numero
-		  td.show-ped-comp = p.estado
+		  td.show-ped-comp = PedidosEstados::ESTADOS[p.estado]
 		  td.show-ped-comp = Formatter.format_datetime(p.fecha_generado)
 		  td.show-ped-comp = Formatter.format_datetime(p.fecha_procesado)
 		  td.show-ped-comp = Formatter.format_datetime(p.fecha_ordenado)
 		  td.hidden-print
 
 .hide.simbolo_moneda = @config.simbolo_moneda
+
+javascript:
+  	configImprimir("#{params[:q].nil? ? '' : '?'+params[:q].to_query('q')}");

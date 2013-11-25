@@ -14,13 +14,13 @@
     dt Motivo:
     dd = @nota_debito_compra.motivo
     dt Estado:
-    dd = @nota_debito_compra.estado
+    dd = PedidosEstados::ESTADOS[@nota_debito_compra.estado]
 
 
 /Botones Cancelar y generar
 .panel-footer
   button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
-  = link_to '<i class="icon-print icon-large"></i> Imprimir'.html_safe, nota_debito_compra_path(@nota_debito_compra.id, format: 'pdf'), class: 'btn btn-default pull-right'
+  = link_to '<i class="icon-print icon-large"></i> Imprimir'.html_safe, nota_debito_compra_path(@nota_debito_compra.id, format: 'pdf'), class: 'btn btn-default pull-right', target: '_blank'
 
 javascript:
   $('.monto').maskMoney({isDiv: true});

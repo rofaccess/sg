@@ -1,0 +1,23 @@
+= render partial: 'compartido/header_impresion', formats: 'html'
+h3 Pedido de cotizacion N° #{@pedido_cotizacion.numero}
+dl
+  dt Proveedor:
+  dd = @pedido_cotizacion.proveedor.nombre
+table.table.table-condensed
+  thead
+    tr
+      th Componente
+      th Marca
+      th Cantidad Requerida
+      th Cantidad Cotizada
+      th Precio Unitario
+  tbody
+    - @pedido_cotizacion.pedido_cotizacion_detalles.each do |p|
+      tr
+        td = p.componente.nombre
+        td = p.componente.marca.nil? ? '' : p.componente.marca.nombre
+        td.text-right = p.cantidad_requerida
+        td
+          input[type="text"]
+        td
+          input[type="text"]

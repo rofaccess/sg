@@ -15,3 +15,6 @@ table.table
           td = User.with_deleted.find(l.whodunnit).username
           td = AuditoriaHelper::format_event(l.event, l.item_type, l.item_id, l.id)
           //td = l.object
+
+javascript:
+  configImprimir("#{params[:q].nil? ? '' : '?'+params[:q].to_query('q')}");

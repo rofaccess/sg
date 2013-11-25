@@ -54,18 +54,21 @@ class MarcasController < ApplicationController
   def update
     if @marca.update(marca_params)
       update_list
+      flash.notice = "Se ha actualizado la marca #{@marca.nombre}."
+      index
     else
-      redirect_to componentes_path, alert: t('messages.marca_not_updated')
+      flash.alert = "No se ha podido actualizar la marca #{@marca.nombre}."
     end
   end
 
   # DELETE /marcas/1
   # DELETE /marcas/1.json
   def destroy
-    @marca.destroy
-    respond_to do |format|
-      format.html { redirect_to marcas_url }
-      format.json { head :no_content }
+    if @marca.destroy
+      flash.notice = "Se ha eliminado la marca #{@marca.nombre}."
+      index
+    else
+      flash.alert = "No se ha podido eliminar la marca #{@marca.nombre}."
     end
   end
 

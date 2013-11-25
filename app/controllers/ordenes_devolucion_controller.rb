@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class OrdenesDevolucionController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_orden_devolucion, only: [:show, :edit, :update, :destroy]
@@ -15,15 +16,25 @@ class OrdenesDevolucionController < ApplicationController
     if defined? params[:q][:fecha_generado_lt]
       setupFechas
     end
-
-    @search = OrdenDevolucion.search(params[:q])
     @orden_devolucion = OrdenDevolucion.new
-    @ordenes_devolucion_size = @search.result.size
+
+    resultados_ordenes(true)
+  end
+
+  def resultados_ordenes(paginate)
+    @search = OrdenDevolucion.search(params[:q])
+
     if @search.sorts.empty?
-      @ordenes_devolucion = @search.result.order('fecha_generado').page(params[:page])
+      @ordenes_devolucion = @search.result.order('fecha_generado')
     else
-      @ordenes_devolucion = @search.result.page(params[:page])
+      @ordenes_devolucion = @search.result
     end
+
+    if paginate
+      @ordenes_devolucion_size = @search.result.size
+      @ordenes_devolucion = @ordenes_devolucion.page(params[:page])
+    end
+
   end
 
   def show
@@ -41,7 +52,7 @@ class OrdenesDevolucionController < ApplicationController
   end
 
   def new
-    @ordenes_compra = OrdenCompra.where(estado: 'Pendiente')
+    @ordenes_compra = OrdenCompra.where(estado: PedidosEstados::PENDIENTE)
     @orden_devolucion = OrdenDevolucion.new
   end
 
@@ -58,7 +69,7 @@ class OrdenesDevolucionController < ApplicationController
   def create
     @search =OrdenCompra.search(params[:q])
     total_orden = 0
-    total_iva = 0
+    #total_iva = 0
     @orden_devolucion = OrdenDevolucion.new(orden_devolucion_params)
     ordenes_devolucion_detalle = @orden_devolucion.orden_devolucion_detalles
     ordenes_devolucion_detalle.each do |d|
@@ -66,9 +77,13 @@ class OrdenesDevolucionController < ApplicationController
 
     end
     @orden_devolucion.total_orden = total_orden
-    @orden_devolucion.total_iva = total_iva
+    #@orden_devolucion.total_iva = total_iva
     @orden_devolucion.fecha_generado = DateTime.now
-    @orden_devolucion.save
+    if @orden_devolucion.save
+      flash.notice = "Se ha generado la orden de devolución N˚ #{@orden_devolucion.numero}."
+    else
+      flash.alert = "No se podido generar la orden de devolución."
+    end
 
     update_list
 
@@ -76,9 +91,11 @@ class OrdenesDevolucionController < ApplicationController
 
   def destroy
     if @orden_devolucion.destroy
-      redirect_to ordenes_devolucion_path, notice: t('messages.pedido_compra_deleted')
+      flash.notice = "Se ha eliminado la orden de devolución N˚ #{@orden_devolucion.numero}."
+      update_list
     else
-      redirect_to ordenes_devolucion_path, alert: t('messages.pedido_compra_not_deleted')
+      flash.alert = "No se ha podido eliminar la orden de devolución N˚ #{@orden_devolucion.numero}."
+      update_list
     end
   end
 
@@ -90,10 +107,17 @@ class OrdenesDevolucionController < ApplicationController
   end
 
   def imprimir_listado
-    #setupFechas
-    @search = OrdenDevolucion.search(params[:q])
-    @ordenes_devolucion = @search.result.order('fecha_generado')
-
+    if defined? params[:q][:fecha_generado_lt]
+      setupFechas
+    end
+    resultados_ordenes(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "ordenes_devolucion",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   def update_list
@@ -109,8 +133,8 @@ class OrdenesDevolucionController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def orden_devolucion_params
-      params.require(:orden_devolucion).permit(:numero, :numero_factura, :total_orden, :total_iva, :fecha_generado, :motivo, :orden_compra_id, :proveedor_id, :user_id,
-        orden_devolucion_detalles_attributes: [:componente_id, :cantidad_devuelta, :costo_unitario, :iva, :motivo, :orden_compra_detalle_id])
+      params.require(:orden_devolucion).permit(:numero, :numero_factura, :total_orden, :fecha_generado, :motivo, :orden_compra_id, :proveedor_id, :user_id,
+        orden_devolucion_detalles_attributes: [:componente_id, :cantidad_devuelta, :costo_unitario, :motivo, :orden_compra_detalle_id])
     end
 
 end

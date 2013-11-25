@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class NotasDebitoCompraController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_sidemenu, only: [:index]
@@ -12,12 +13,36 @@ class NotasDebitoCompraController < ApplicationController
       setupFechas
     end
 
+    resultados_notas(true)
+
+  end
+
+  def resultados_notas(paginate)
     @search = NotaDebitoCompra.search(params[:q])
-    @notas_debito_compra_size = @search.result.size
     if @search.sorts.empty?
-      @notas_debito_compra = @search.result.order('fecha desc').order('estado desc').page(params[:page])
+      @notas_debito_compra = @search.result.order('fecha desc').order('estado desc')
     else
-      @notas_debito_compra = @search.result.page(params[:page])
+      @notas_debito_compra = @search.result
+    end
+
+    if paginate
+      @notas_debito_compra_size = @search.result.size
+      @notas_debito_compra = @notas_debito_compra.page(params[:page])
+    end
+  end
+
+  def imprimir_listado
+    #formatear las fechas
+    if defined? params[:q][:fecha_lt]
+      setupFechas
+    end
+    resultados_notas(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "notas",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
     end
   end
 
@@ -32,6 +57,7 @@ class NotasDebitoCompraController < ApplicationController
   def create
     @nota_debito_compra = NotaDebitoCompra.new(nota_debito_compra_params)
     if @nota_debito_compra.save
+      flash.notice = "Se ha creado la nota de débito N˚ #{@nota_debito_compra.numero}."
       update_list
     end
   end
@@ -54,6 +80,7 @@ class NotasDebitoCompraController < ApplicationController
 
   def update
     if @nota_debito_compra.update(nota_debito_compra_params)
+      flash.notice = "Se ha actualizado la nota de débito N˚ #{@nota_debito_compra.numero}."
       update_list
     end
   end
@@ -63,9 +90,11 @@ class NotasDebitoCompraController < ApplicationController
 
   def destroy
     if @nota_debito_compra.destroy
-      redirect_to notas_debito_compra_path, notice: t('messages.debito_compra_deleted')
+      flash.notice = "Se ha eliminado la nota de débito N˚ #{@nota_debito_compra.numero}."
+      update_list
     else
-      redirect_to notas_debito_compra_path, alert: t('messages.debito_compra_not_deleted')
+      flash.alert = "No se ha podido eliminar la nota de débito N˚ #{@nota_debito_compra.numero}."
+      update_list
     end
   end
 

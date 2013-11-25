@@ -58,6 +58,6 @@
 /Botones Cancelar y generar
 .panel-footer
   button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
-  = link_to '<i class="icon-print icon-large"></i> Imprimir Stock del Deposito'.html_safe, deposito_path(@deposito.id, format: 'pdf'), class: 'btn btn-default pull-right'
+  = link_to '<i class="icon-print icon-large"></i> Imprimir'.html_safe, deposito_path(@deposito.id, format: 'pdf'), class: 'btn btn-default pull-right', target: '_blank'
 
 

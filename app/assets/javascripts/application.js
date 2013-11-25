@@ -81,7 +81,7 @@ $.noty.defaults = {
         onClose: function() {},
         afterClose: function() {}
     },
-    buttons: false // an array of buttons
+    buttons: false
 };
 
 $.extend($.inputmask.defaults, {
@@ -111,6 +111,10 @@ function showSpinner(target){
   var target_ = document.getElementById(target);
   var spinner = new Spinner(opts).spin(target_);
   return spinner;
+}
+
+function configImprimir (params) {
+  $('#imprimir-link').attr('href', $('#imprimir-link').data('url') + params.replace('amp;',''));
 }
 
 $(function(){

@@ -10,7 +10,7 @@
           | #{'  '} #{@factura_compra.proveedor.nombre}
         .col-md-3
           strong Estado:
-          | #{'  '} #{@factura_compra.estado}
+          | #{'  '} #{PedidosEstados::ESTADOS[@factura_compra.estado]}
       .row
         .col-md-7
           strong Deposito Destino:

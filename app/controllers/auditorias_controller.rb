@@ -8,6 +8,10 @@ class AuditoriasController < ApplicationController
   end
 
   def index
+    resultados_auditorias(true)
+  end
+
+  def resultados_auditorias(paginate)
     if defined? params[:q][:item_type_eq]
       if params[:q][:item_type_eq] == 'Empleado'
         params[:q][:item_type_eq] = ""
@@ -17,8 +21,24 @@ class AuditoriasController < ApplicationController
         params[:q] = params[:q].merge(type_subclase_eq: "Proveedor")
       end
     end
-  	@search = PaperTrail::Version.search(params[:q])
-  	@logs = @search.result.order('created_at desc').page(params[:page]).per(25)
+    @search = PaperTrail::Version.search(params[:q])
+    @logs = @search.result.order('created_at desc')
+
+    if paginate
+      @logs = @logs.page(params[:page]).per(25)
+    end
+
+  end
+
+  def imprimir_listado
+    resultados_auditorias(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "auditorias",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   def buscar

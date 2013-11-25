@@ -43,6 +43,9 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'nota_debito_compra', 'notas_debito_compra'
   inflect.irregular 'nota_credito_compra', 'notas_credito_compra'
   inflect.irregular 'nota_credito_compra_detalle', 'notas_credito_compra_detalle'
+  inflect.irregular 'compra_cuenta_corriente', 'compras_cuenta_corriente'
+  inflect.irregular 'compra_cuenta_corriente_factura', 'compras_cuenta_corriente_factura'
+  inflect.irregular 'compra_cuenta_corriente_cuota', 'compras_cuenta_corriente_cuota'
 
   inflect.uncountable %w( fish sheep )
 end

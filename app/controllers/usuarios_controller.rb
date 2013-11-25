@@ -9,7 +9,12 @@ class UsuariosController < ApplicationController
   end
 
   def index
-  	@search = User.search(params[:q])
+    resultados_usuarios(true)
+    authorize! :read, User
+  end
+
+  def resultados_usuarios(paginate)
+    @search = User.search(params[:q])
     @usuarios = @search.result
 
     unless params[:user_roles_filtro].nil?
@@ -20,9 +25,10 @@ class UsuariosController < ApplicationController
       end
     end
 
-    @usuarios = @usuarios.page(params[:page])
+    if paginate
+      @usuarios = @usuarios.page(params[:page])
+    end
 
-    authorize! :read, User
   end
 
   def buscar
@@ -50,8 +56,11 @@ class UsuariosController < ApplicationController
         @usuario.add_role :admin if params[:user_roles][:is_admin] == '1'
         @usuario.add_role :operador if params[:user_roles][:is_operador] == '1'
       end
-  	  update_list
+      flash.notice = "Se ha creado el usuario #{@usuario.username}."
+    else
+      flash.notice = "No se ha podido crear el usuario."
   	end
+    update_list
   end
 
   def edit
@@ -64,7 +73,10 @@ class UsuariosController < ApplicationController
       @usuario.add_role :operador if !(@usuario.has_role? :operador) && params[:user_roles][:is_operador] == '1'
       @usuario.remove_role :admin if (@usuario.has_role? :admin) && params[:user_roles][:is_admin] == '0'
       @usuario.remove_role :operador if (@usuario.has_role? :operador) && params[:user_roles][:is_operador] == '0'
-  	end
+  	  flash.notice = "Se ha actualizado el usuario #{@usuario.username}."
+    else
+      flash.notice = "No se ha podido actualizar el usuario."
+    end
   	update_list
   end
 
@@ -73,9 +85,14 @@ class UsuariosController < ApplicationController
   end
 
   def imprimir_listado
-    @search = User.search(params[:q])
-    @usuarios = @search.result.order('username')
-
+    resultados_usuarios(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "usuarios",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   def destroy
@@ -83,9 +100,9 @@ class UsuariosController < ApplicationController
       @usuario.remove_role(:admin)
       @usuario.remove_role(:operador)
   	  if @usuario.destroy
-  	    flash.notice = "Se ha eliminado el usuario"
+  	    flash.notice = "Se ha eliminado el usuario #{@usuario.username}"
   	  else
-  	    flash.alert = "No se ha eliminado el usuario"
+  	    flash.alert = "No se ha eliminado el usuario #{@usuario.username}"
   	  end
     end
     update_list

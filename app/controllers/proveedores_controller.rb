@@ -7,13 +7,19 @@ class ProveedoresController < ApplicationController
   def set_sidemenu
     @sidebar_layout = 'layouts/compras_sidemenu'
   end
+
   def index
+    resultados_proveedores(true)
+  end
+
+  def resultados_proveedores(paginate)
     @search = Proveedor.search(params[:q])
     if @search.sorts.empty?
-      @proveedores = @search.result.order('nombre').page(params[:page])
+      @proveedores = @search.result.order('nombre')
     else
-      @proveedores = @search.result.page(params[:page])
+      @proveedores = @search.result
     end
+    @proveedores = @proveedores.page(params[:page]) if paginate
   end
 
   def edit
@@ -30,6 +36,7 @@ class ProveedoresController < ApplicationController
       @proveedor.componente_categorias << ComponenteCategoria.find(v) unless v.empty?
     end
     if @proveedor.save
+      flash.notice = "Se ha creado el proveedor #{@proveedor.nombre}."
   		update_list
   	end
   end
@@ -54,18 +61,20 @@ class ProveedoresController < ApplicationController
      @proveedor.componente_categorias << ComponenteCategoria.find(n) unless n.empty? || old_cat.include?(n)
     end
     if @proveedor.update(proveedor_params)
-      update_list
+      flash.notice = "Se ha actualizado el proveedor #{@proveedor.nombre}."
     else
-      redirect_to proveedores_path, alert: t('messages.proveedor_not_saved')
+      flash.notice = "No se ha actualizado el proveedor #{@proveedor.nombre}."
     end
+    update_list
   end
 
   def destroy
     if @proveedor.destroy
-      redirect_to proveedores_path, notice: t('messages.proveedor_deleted')
+      flash.notice = "Se ha eliminado el proveedor #{@proveedor.nombre}."
     else
-      redirect_to proveedores_path, alert: t('messages.proveedor_not_deleted')
+      flash.alert = "No se ha podido eliminar el proveedor #{@proveedor.nombre}."
     end
+    update_list
   end
 
   def load_test_data
@@ -76,8 +85,14 @@ class ProveedoresController < ApplicationController
   end
 
   def imprimir_todos
-    @search = Proveedor.search(params[:q])
-    @proveedores = @search.result.order('nombre')
+    resultados_proveedores(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "proveedores",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   def nueva_ciudad

@@ -4,7 +4,6 @@ class CreateOrdenesDevolucion < ActiveRecord::Migration
       t.string   :numero                  ,default: '' ,limit: Domain::NUMERO_DOC_COM ,null: false
       t.string   :numero_factura                  ,default: '' ,limit: Domain::NUMERO_DOC_COM ,null: false
       t.decimal  :total_orden             ,default: 0  ,null: false
-      t.decimal  :total_iva               ,default: 0  ,null: false
       t.datetime :fecha_generado          ,null: false
       t.string   :motivo                  ,default: '' ,limit: Domain::DESCRIPCION
       t.integer  :orden_compra_id       ,null: false

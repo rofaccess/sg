@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class PedidosCompraController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_pedido_compra, only: [:show, :update, :destroy]
@@ -9,21 +10,28 @@ class PedidosCompraController < ApplicationController
   end
 
   def index
-    @simbolo_moneda = Configuracion.find(1).simbolo_moneda
     #formatear las fechas
+    @pedido_compra = PedidoCompra.new
+    resultados_pedidos(true)
+  end
+
+  def resultados_pedidos(paginate)
     if defined? params[:q][:fecha_generado_lt]
       params[:q][:fecha_generado_lt] = params[:q][:fecha_generado_lt] + ' 23:59:59' unless params[:q][:fecha_generado_lt].blank?
       params[:q][:fecha_procesado_lt] = params[:q][:fecha_procesado_lt] + ' 23:59:59' unless params[:q][:fecha_procesado_lt].blank?
       params[:q][:fecha_ordenado_lt] = params[:q][:fecha_ordenado_lt] + ' 23:59:59' unless params[:q][:fecha_ordenado_lt].blank?
     end
 
-   	@search = PedidoCompra.search(params[:q])
-    @pedido_compra = PedidoCompra.new
-    @pedidos_compra_size = @search.result.size
+    @search = PedidoCompra.search(params[:q])
+
     if @search.sorts.empty?
-      @pedidos_compra = @search.result.order('fecha_generado desc').page(params[:page])
+      @pedidos_compra = @search.result.order('fecha_generado desc')
     else
-      @pedidos_compra = @search.result.page(params[:page])
+      @pedidos_compra = @search.result
+    end
+    if paginate
+      @pedidos_compra_size = @search.result.size
+      @pedidos_compra = @pedidos_compra.page(params[:page])
     end
   end
 
@@ -69,16 +77,21 @@ class PedidosCompraController < ApplicationController
   end
 
   def imprimir_listado
-    @search = PedidoCompra.search(params[:q])
-
-    @pedidos_compra = @search.result.order('fecha_generado').order('estado')
-
+    resultados_pedidos(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "pedidos_compra",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   def create_test_data
     # Crea un pedido por cada deposito
+    pedidos = 0
     DepositoMateriaPrima.all.each do |d|
-      pedido_compra = PedidoCompra.new(estado: "Pendiente", fecha_generado: DateTime.now, deposito_id: d.id)
+      pedido_compra = PedidoCompra.new(estado: PedidosEstados::PENDIENTE, fecha_generado: DateTime.now, deposito_id: d.id)
       d.deposito_stocks.each do |d_s|
         ex = d_s.existencia
         min = d_s.existencia_min
@@ -89,10 +102,12 @@ class PedidosCompraController < ApplicationController
           d_s.update(pedido_generado: "Si")
         end
       end
-      if not pedido_compra.pedido_compra_detalles.blank?
+      unless pedido_compra.pedido_compra_detalles.blank?
         pedido_compra.save
+        pedidos +=1
       end
     end
+    flash.notice = pedidos == 0 ? "No hay componentes que necesiten reponerse" : "Se han generado #{pedidos} pedidos de compra"
     update_list
   end
 
@@ -102,10 +117,18 @@ class PedidosCompraController < ApplicationController
   end
 
   def destroy
+    # Si se elimina un pedido pendiente, los componentes de sus detalles en el deposito se liberan para poderse crear de nuevo el pedido
+    @pedido_compra.pedido_compra_detalles.each do |d|
+      stock = DepositoStock.where("deposito_id = ? AND mercaderia_id = ?", @pedido_compra.deposito_id, d.componente_id).first
+      if not stock.blank?
+        stock.update(pedido_generado: 'No')
+      end
+    end
     if @pedido_compra.destroy
-      redirect_to pedidos_compra_path, notice: t('messages.pedido_compra_deleted')
+      flash.notice = "Se ha eliminado el pedido de compra N˚ #{@pedido_compra.numero}."
+      index
     else
-      redirect_to pedidos_compra_path, alert: t('messages.pedido_compra_not_deleted')
+      flash.alert = "No se ha podido eliminar el pedido de compra N˚ #{@pedido_compra.numero}."
     end
   end
 

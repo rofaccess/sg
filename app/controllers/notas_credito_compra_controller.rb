@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class NotasCreditoCompraController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_sidemenu, only: [:index]
@@ -12,12 +13,36 @@ class NotasCreditoCompraController < ApplicationController
       setupFechas
     end
 
+    resultados_notas(true)
+  end
+
+  def resultados_notas(paginate)
     @search = NotaCreditoCompra.search(params[:q])
-    @notas_credito_compra_size = @search.result.size
     if @search.sorts.empty?
-      @notas_credito_compra = @search.result.order('fecha desc').page(params[:page])
+      @notas_credito_compra = @search.result.order('fecha desc')
     else
-      @notas_credito_compra = @search.result.page(params[:page])
+      @notas_credito_compra = @search.result
+    end
+
+    if paginate
+      @notas_credito_compra_size = @search.result.size
+      @notas_credito_compra = @notas_credito_compra.page(params[:page])
+    end
+
+  end
+
+  def imprimir_listado
+    #formatear las fechas
+    if defined? params[:q][:fecha_lt]
+      setupFechas
+    end
+    resultados_notas(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "notas",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
     end
   end
 
@@ -44,6 +69,7 @@ class NotasCreditoCompraController < ApplicationController
     actualizarCantidadCreditoFactura(@nota_credito_compra)
 
     if @nota_credito_compra.save
+      flash.notice = "Se ha creado la nota de credito N˚ #{@nota_credito_compra.numero}."
       update_list
     end
   end
@@ -83,9 +109,11 @@ class NotasCreditoCompraController < ApplicationController
 
   def destroy
     if @nota_credito_compra.destroy
-      redirect_to notas_credito_compra_path, notice: t('messages.pedido_compra_deleted')
+      flash.notice = "Se ha eliminado la nota de credito N˚ #{@nota_credito_compra.numero}."
+      update_list
     else
-      redirect_to notas_credito_compra_path, alert: t('messages.pedido_compra_not_deleted')
+      flash.alert = "No se ha podido eliminar la nota de crédito N˚ #{@nota_credito_compra.numero}."
+      update_list
     end
   end
 

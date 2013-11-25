@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class FacturasCompraController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_sidemenu, only: [:index]
@@ -12,20 +13,35 @@ class FacturasCompraController < ApplicationController
       setupFechas
     end
 
+    resultados_facturas(true)
+  end
+
+  def resultados_facturas(paginate)
     @search = FacturaCompra.search(params[:q])
-    @facturas_compra_size = @search.result.size
     if @search.sorts.empty?
-      @facturas_compra = @search.result.order('fecha desc').order('estado desc').page(params[:page])
+      @facturas_compra = @search.result.order('fecha desc').order('estado desc')
     else
-      @facturas_compra = @search.result.page(params[:page])
+      @facturas_compra = @search.result
+    end
+
+    if paginate
+      @facturas_compra = @facturas_compra.page(params[:page])
+      @facturas_compra_size = @search.result.size
     end
   end
 
   def imprimir_listado
-    setupFechas
-    @search = FacturaCompra.search(params[:q])
-    @facturas_compra = @search.result.order('estado').order('fecha')
-
+    if defined? params[:q][:fecha_lt]
+      setupFechas
+    end
+    resultados_facturas(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "facturas",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   def setupFechas
@@ -33,7 +49,7 @@ class FacturasCompraController < ApplicationController
   end
 
   def new
-    @ordenes_compra = OrdenCompra.where.not(estado: 'Facturado')
+    @ordenes_compra = OrdenCompra.where.not(estado: PedidosEstados::FACTURADO)
   end
 
   def get_orden_compra
@@ -47,17 +63,20 @@ class FacturasCompraController < ApplicationController
     @factura_compra = FacturaCompra.new(factura_compra_params)
     @orden_compra = OrdenCompra.find(@factura_compra.orden_compra_id)
 
-    actualizar_cantidad_orden_compra(@factura_compra)
-    actualizar_estado_orden_compra(@orden_compra)
+    @factura_compra.save
 
     if(@factura_compra.condicion_pago.nombre == 'Credito')
+      CompraCuentaCorriente.actualizar_cuenta_corriente(@factura_compra)
       AsientoContable.asentar_carga_factura_credito(@factura_compra)
     end
 
-    @factura_compra.save
+    actualizar_cantidad_orden_compra(@factura_compra)
+    actualizar_estado_orden_compra(@orden_compra)
+
     if params[:from_orden_abm]
       redirect_to update_list_ordenes_compra_path(recargar_modal: true, orden_compra_id: @orden_compra.id)
     else
+      flash.notice = "Se ha recibido la factura N˚ #{@factura_compra.numero}."
       update_list
     end
   end
@@ -107,9 +126,10 @@ class FacturasCompraController < ApplicationController
 
   def destroy
     if @factura_compra.destroy
-      redirect_to facturas_compra_path, notice: t('messages.pedido_compra_deleted')
+      flash.notice = "Se ha eliminado la factura de compra N˚ #{@factura_compra.numero}."
+      index
     else
-      redirect_to facturas_compra_path, alert: t('messages.pedido_compra_not_deleted')
+      flash.alert = "No se ha podido eliminar la factura de compra N˚ #{@factura_compra.numero}."
     end
   end
 

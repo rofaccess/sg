@@ -7,7 +7,7 @@
 .row.form-filtrar.hide.row-grid
   = search_form_for @search, method: :get, remote: true, class: 'form-filtros' do |f|
     = FormBuilder::text_field_v(f, :numero_cont, {col_class: 'col-md-2', label_text: 'Numero', input_class:'num-doc-com', max_length: Domain::NUMERO_DOC_COM})
-    = FormBuilder::select(f, :estado_cont, ['Pendiente','Procesado', 'Ordenado'], {col_class: 'col-md-2', label_text: 'Estado'})
+    = FormBuilder::select(f, :estado_cont, [['Pendiente',PedidosEstados::PENDIENTE],['Procesado',PedidosEstados::PROCESADO], ['Ordenado',PedidosEstados::ORDENADO]], {col_class: 'col-md-2', label_text: 'Estado'})
     = FormBuilder::rango_fechas(f, :fecha_generado_gt, :fecha_generado_lt, {col_class: 'col-md-4', label_text: 'Fecha Generado'})
     = FormBuilder::rango_fechas(f, :fecha_procesado_gt, :fecha_procesado_lt, {col_class: 'col-md-4', label_text: 'Fecha Procesado'})
     = FormBuilder::rango_fechas(f, :fecha_ordenado_gt, :fecha_ordenado_lt, {col_class: 'col-md-4', label_text: 'Fecha Ordenado'})
@@ -20,7 +20,9 @@
     |Se han encontrado #{' '}
     span#pedidos-compra-size #{@pedidos_compra_size}
     |  registros
-  = link_to '<i class="icon-print icon-large"></i> Imprimir Listado'.html_safe, imprimir_listado_pedidos_compra_path, class: 'btn btn-default pull-right imprimir-pedidos-compra'
+
+  = imprimir_link(imprimir_listado_pedidos_compra_path(format: 'pdf'))
+
 div id="list"
   = render 'list'
 
