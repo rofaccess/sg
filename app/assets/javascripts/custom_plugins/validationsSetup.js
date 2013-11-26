@@ -2,6 +2,7 @@
 jQuery.validator.setDefaults({
 	errorElement:	'span',
 	errorClass:		'text-warning',
+	onfocusout: function(element) { $(element).valid(); },
 	highlight: function(element){
 		$(element).closest('.form-group').addClass('has-warning');
 	},
@@ -70,6 +71,14 @@ $.validator.addClassRules({
 	},
 	passwordConfirmation: {
 		equalTo: '#user_password'
+	},
+	customRange: {
+		customRange: true
 	}
+});
+
+$.validator.addMethod('customRange', function(value, element){
+
+	return true;
 });
 
