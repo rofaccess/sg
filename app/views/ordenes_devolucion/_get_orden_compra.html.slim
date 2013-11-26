@@ -40,7 +40,7 @@
           td = p.costo_unitario
           = f.fields_for :orden_devolucion_detalles, p do |detalle_form|
             td
-              = detalle_form.text_field :cantidad_devuelta, value: p.cantidad_requerida.to_i, class: 'cantidad-field form-control text-right',maxLength: 5
+              = detalle_form.text_field :cantidad_devuelta, value: p.cantidad_requerida.to_i, class: 'cantidad-field form-control text-right',maxLength: Domain::CANTIDAD
             td
               = detalle_form.text_field :motivo, value: '', class: 'form-control text-right',maxLength: Domain::DESCRIPCION
             td.text-right = link_to '<i class="icon-remove icon-large"></i> '.html_safe, '#', class: 'remover-detalle-devolucion link-icon'
