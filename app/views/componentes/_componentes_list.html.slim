@@ -3,7 +3,7 @@ table.table.table-condensed
 	tr
 	  th = sort_link(@search, :nombre, {}, method: :get, remote: true)
 	  th = sort_link(@search, :marca_id, {}, method: :get, remote: true)
-	  th = sort_link(@search, :componente_categoria_id, 'Categoria', {}, method: :get, remote: true)
+	  th = sort_link(@search, :componente_categoria_id, "Categoria", {}, method: :get, remote: true)
 	  th = sort_link(@search, :costo, {}, method: :get, remote: true)
 	  th = sort_link(@search, :iva, {}, method: :get, remote: true)
 	  th = sort_link(@search, :existencia_total, {}, method: :get, remote: true)
