@@ -25,7 +25,9 @@
           th.text-right Cantidad Cotizada
           th.text-right Costo Unitario
       tbody
+        -cont = 0
         - @pedido_cotizacion.pedido_cotizacion_detalles.each do |pedido_detalle|
+          -cont += 1
           tr
             td = pedido_detalle.componente.nombre
             td = pedido_detalle.cantidad_requerida
@@ -34,7 +36,8 @@
               td
                 = detalle_form.text_field :cantidad_cotizada, class: 'cantidad-field pull-right form-control',maxLength: Domain::CANTIDAD
               td
-                = detalle_form.text_field :costo_unitario, value: pedido_detalle.costo_unitario.to_i, class: 'monto-field pull-right form-control',maxLength: Domain::MONTO
+                = detalle_form.text_field :costo_unitario, value: pedido_detalle.costo_unitario.to_i, class: 'monto-field pull-right form-control', maxLength: Domain::MONTO
+
     .row
       .col-md-12
         button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cancelar
