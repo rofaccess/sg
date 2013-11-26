@@ -8,7 +8,7 @@
 	  .row
 	    .col-md-12
 	      p
-	      = FormBuilder::text_field_h(f, :nombre,{input_class: 'required clear', max_length: Domain::NOMBRE})
+	      = FormBuilder::text_field_h(f, :nombre,{input_class: 'required clear', max_length: Domain::NOMBRE, autofocus: true})
 	      - unless defined? provider_abm
 	        button.btn.btn-default.close-add-form [type="button"] Cancelar
 	      - else

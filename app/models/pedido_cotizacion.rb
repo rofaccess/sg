@@ -5,7 +5,7 @@ class PedidoCotizacion < ActiveRecord::Base
   acts_as_paranoid
 
   has_many :pedido_cotizacion_detalles, dependent: :destroy
-  belongs_to :pedido_compra
+  belongs_to :pedido_compra, with_deleted: true
   belongs_to :proveedor, with_deleted: true
   has_many :orden_compras
   belongs_to :user, with_deleted: true

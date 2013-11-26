@@ -7,7 +7,7 @@
       = form_for @asiento_modelo, html: {class: 'form-horizontal'}, remote: true do |f|
         label.title-seccion Encabezado
         = FormBuilder::text_field_h(f, :origen, {disabled: true,label_class:'col-md-2'})
-        = FormBuilder::text_field_h(f, :concepto,{input_class: 'required shortString clear',label_class:'col-md-2', max_length: Domain::DESCRIPCION})
+        = FormBuilder::text_field_h(f, :concepto,{input_class: 'required shortString clear',label_class:'col-md-2', max_length: Domain::DESCRIPCION, autofocus: true})
         label.title-seccion Detalles
         .table-scroll
           table.table

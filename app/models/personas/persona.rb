@@ -1,5 +1,5 @@
 class Persona < ActiveRecord::Base
-	belongs_to :ciudad
+	belongs_to :ciudad, with_deleted: true
 	has_many   :telefonos
 	acts_as_paranoid
 

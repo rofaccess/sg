@@ -1,8 +1,8 @@
 class PedidoCompraDetalle < ActiveRecord::Base
   acts_as_paranoid
 
-  belongs_to 	:pedido_compra
-  belongs_to 	:componente
+  belongs_to 	:pedido_compra, with_deleted: true
+  belongs_to 	:componente, with_deleted: true
   has_many 	:pedido_cotizacion_detalles
 
   # Retorna los pedido_cotizacion_detalles de pedidos ya cotizados

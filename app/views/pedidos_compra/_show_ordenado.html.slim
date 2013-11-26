@@ -3,24 +3,24 @@
   button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
   p.lead
     strong Pedido de Compra  #{@pedido_compra.numero}
-    i
-      .row
-        dl.col-md-2
-          dt Estado
-          dd = PedidosEstados::ESTADOS[@pedido_compra.estado]
-        dl.col-md-3
-          dt Generado
-          dd #{Formatter.format_datetime(@pedido_compra.fecha_generado)}
-        dl.col-md-3
-          dt Procesado
-          dd #{Formatter.format_datetime(@pedido_compra.fecha_procesado)}
-        dl.col-md-3
-          dt Ordenado
-          dd #{Formatter.format_datetime(@pedido_compra.fecha_ordenado)}
-        dl.col-md-3
-          dt Deposito
-          dd = @pedido_compra.deposito.nombre
-
+    .row
+      .col-md-2
+        dt Estado
+        dd = PedidosEstados::ESTADOS[@pedido_compra.estado]
+      .col-md-3
+        dt Generado
+        dd #{Formatter.format_datetime(@pedido_compra.fecha_generado)}
+      .col-md-3
+        dt Procesado
+        dd #{Formatter.format_datetime(@pedido_compra.fecha_procesado)}
+      .col-md-3
+        dt Ordenado
+        dd #{Formatter.format_datetime(@pedido_compra.fecha_ordenado)}
+      .col-md-3
+        br
+        dt Deposito
+        dd = @pedido_compra.deposito.nombre
+  br
   /Detalles del Pedido de compra
   /Tabs
   ul id="myTab" class="nav nav-tabs"

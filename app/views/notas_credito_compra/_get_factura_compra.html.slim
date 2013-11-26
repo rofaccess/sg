@@ -1,7 +1,7 @@
 = form_for @nota_credito_compra, html: {class: ''}, remote: true  do |f|
   label.title-seccion Encabezado
   .row
-    = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3', input_class: 'required numNotaCredito clear',max_length: Domain::NUMERO_DOC_COM})
+    = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3', input_class: 'required numNotaCredito clear',max_length: Domain::NUMERO_DOC_COM, autofocus: true})
     = FormBuilder::text_field_v(f, :fecha, {col_class: 'col-md-3', label_text: 'Fecha',input_class: 'required date clear', max_length: Domain::FECHA})
     = FormBuilder::text_field_v(f, :proveedor, {col_class: 'col-md-5', input_value: @factura_compra.proveedor.nombre, disabled: true})
 
