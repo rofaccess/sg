@@ -84,7 +84,7 @@ class OrdenesCompraController < ApplicationController
     @search =OrdenCompra.search(params[:q])
     @pedido_compra = PedidoCompra.find(params[:pedido_compra_id])
     mejores_precios = @pedido_compra.get_mejores_precios
-    cotizaciones = @pedido_compra.pedido_cotizacions.where(estado: 'Cotizado')
+    cotizaciones = @pedido_compra.pedido_cotizacions.where(estado: PedidosEstados::COTIZADO)
     cotizaciones.each do |c|
       total = 0
       c.pedido_cotizacion_detalles.each do |d|

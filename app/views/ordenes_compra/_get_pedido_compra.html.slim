@@ -7,7 +7,7 @@
       | No hay pedidos de cotizacion cotizados para el pedido de compra N #{@pedido_compra.numero}
   - else
     .alert.alert-info.info-inicial
-      | Hay #{@pedido_compra.pedido_cotizacions.where(estado: 'Cotizado').size} cotizaciones para el pedido de compra seleccionado
+      | Hay #{@pedido_compra.pedido_cotizacions.where(estado: PedidosEstados::COTIZADO).size} cotizaciones para el pedido de compra seleccionado
       <!-- span.fecha Generado el #{@pedido_compra.created_at} -->
   - unless @mejores_precios.nil?
     table.table

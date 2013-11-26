@@ -111,8 +111,10 @@ class PedidosCotizacionController < ApplicationController
   # PATCH/PUT /pedido_cotizacions/1
   # PATCH/PUT /pedido_cotizacions/1.json
   def update
-    @pedido_cotizacion.estado = PedidosEstados::COTIZADO
-    @pedido_cotizacion.fecha_cotizado = DateTime.now
+    if @pedido_cotizacion.estado == PedidosEstados::PENDIENTE
+      @pedido_cotizacion.estado = PedidosEstados::COTIZADO
+      @pedido_cotizacion.fecha_cotizado = DateTime.now
+    end
     if @pedido_cotizacion.update(pedido_cotizacion_params)
       flash.notice = "Se ha actualizado los datos del pedido de cotizacion N˚ #{@pedido_cotizacion.numero}."
       index
