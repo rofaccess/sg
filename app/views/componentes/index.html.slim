@@ -2,10 +2,21 @@
   h2 Componentes
   = link_to 'Agregar Componentes', new_componente_path, class: 'btn btn-primary', remote: true
 
-row
+.row.form-search.row-grid
   = render 'search'
+  = link_to '<i class="icon-filter"></i> Filtrar'.html_safe, '#', class: 'btn btn-sm btn-default pull-right filtrar-link'
+.row.form-filtrar.hide.row-grid
+  = search_form_for @search, method: :get, remote: true, class: 'form-filtros' do |f|
+    = FormBuilder::text_field_v(f, :nombre_cont, {col_class: 'col-md-2', label_text: 'Nombre', max_length: Domain::NOMBRE})
+    = FormBuilder::collection_select_v(f, :marca_id_eq, Marca.all, :id, :nombre, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Marca'})
+    = FormBuilder::collection_select_v(f, :componente_categoria_id_eq, ComponenteCategoria.all, :id, :nombre, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Categoria'})
+    .filter-actions.pull-right.col-md-3
+      = f.submit 'Filtrar', class: 'btn btn-default pull-right'
+      = f.submit 'Limpiar Filtros', type: 'reset', class: 'btn btn-link pull-right'
 
-div id="componentes-list"
+  = link_to '<i class="icon-angle-up icon-large"></i>'.html_safe, '#', class: 'esconder-filtros link-icon', title: 'Cerrar Filtros', data: {toggle: 'tooltip'}
+
+#list
   = render 'componentes_list'
 
 div id="paginator"
@@ -13,3 +24,6 @@ div id="paginator"
 
 #add-form.col-md-4
   = render 'componentes/form'
+
+javascript:
+  $('.custom-select').select2();
