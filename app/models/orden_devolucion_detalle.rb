@@ -4,7 +4,7 @@ class OrdenDevolucionDetalle < ActiveRecord::Base
 
   acts_as_paranoid
 
-  belongs_to :orden_devolucion
-  belongs_to :componente
+  belongs_to :orden_devolucion, with_deleted: true
+  belongs_to :componente, with_deleted: true
 
 end

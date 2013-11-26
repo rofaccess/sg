@@ -1,6 +1,6 @@
 class DepositoStock < ActiveRecord::Base
 	belongs_to :deposito
-	belongs_to :mercaderia
+	belongs_to :mercaderia, with_deleted: true
 
 	# Suma al stock
   	def self.actualizar_deposito_stock(factura_compra, factura_compra_detalle, orden_compra_detalle)

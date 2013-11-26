@@ -3,4 +3,5 @@ class Mercaderia < ActiveRecord::Base
 
 	belongs_to :iva, with_deleted: true
 	has_many   :deposito_stocks
+	acts_as_paranoid
 end

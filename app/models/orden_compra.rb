@@ -8,9 +8,9 @@ class OrdenCompra < ActiveRecord::Base
 
 	belongs_to :user, with_deleted: true
 	belongs_to :proveedor, with_deleted: true
-	belongs_to :pedido_cotizacion
+	belongs_to :pedido_cotizacion, with_deleted: true
 	has_many   :orden_devolucions
-	belongs_to :pedido_compra
+	belongs_to :pedido_compra, with_deleted: true
 	has_many   :orden_compra_detalles
 	has_many   :factura_compras
 

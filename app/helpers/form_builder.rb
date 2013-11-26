@@ -27,7 +27,7 @@ module FormBuilder
     html << "<div class='form-group'>"
       html << f.label(field, "#{option.key?(:label_text) ? option[:label_text] : ''}", class: "control-label #{option.key?(:label_class) ? option[:label_class] : 'col-md-2'}")
       html << "<div class='#{option.key?(:field_class) ? option[:field_class] : 'col-md-10'}'>"
-        html << f.text_field(field, class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}", placeholder: "#{option.key?(:placeholder) ? option[:placeholder] : ''}", disabled: option.key?(:disabled) ? option[:disabled] : false, readonly: option.key?(:readonly) ? option[:readonly] : false, maxLength: "#{option.key?(:max_length) ? option[:max_length] : '150'}")
+        html << f.text_field(field, class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}", placeholder: "#{option.key?(:placeholder) ? option[:placeholder] : ''}", disabled: option.key?(:disabled) ? option[:disabled] : false, readonly: option.key?(:readonly) ? option[:readonly] : false, maxLength: "#{option.key?(:max_length) ? option[:max_length] : '150'}", autofocus: option.key?(:autofocus) ? option[:autofocus] : false)
       html << "</div>"
       if option.key?(:btn)
         html << "<div class='col-md-2'><a href='#{option[:btn]}' data-remote='true' data-url='' class='btn btn-default btn-block'><i class='icon-plus'></i></a></div>"
@@ -59,9 +59,9 @@ module FormBuilder
       html << "<div class='form-group #{option.key?(:col_class) ? option[:col_class] : ''}'>"
         html << f.label(field,"#{option.key?(:label_text) ? option[:label_text] : ''}", class: "control-label #{option.key?(:label_class) ? option[:label_class] : ''}")
         if option.key?(:input_value)
-          html << f.text_field(field, class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}",value: "#{option.key?(:input_value) ? option[:input_value] : ''}", placeholder: "#{option.key?(:placeholder) ? option[:placeholder] : ''}", disabled: option.key?(:disabled) ? option[:disabled] : false, readonly: option.key?(:readonly) ? option[:readonly] : false, maxLength: "#{option.key?(:max_length) ? option[:max_length] : '150'}")
+          html << f.text_field(field, class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}",value: "#{option.key?(:input_value) ? option[:input_value] : ''}", placeholder: "#{option.key?(:placeholder) ? option[:placeholder] : ''}", disabled: option.key?(:disabled) ? option[:disabled] : false, readonly: option.key?(:readonly) ? option[:readonly] : false, maxLength: "#{option.key?(:max_length) ? option[:max_length] : '150'}", autofocus: option.key?(:autofocus) ? option[:autofocus] : false)
         else
-          html << f.text_field(field, class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}",placeholder: "#{option.key?(:placeholder) ? option[:placeholder] : ''}", disabled: option.key?(:disabled) ? option[:disabled] : false, readonly: option.key?(:readonly) ? option[:readonly] : false, maxLength: "#{option.key?(:max_length) ? option[:max_length] : '150'}")
+          html << f.text_field(field, class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}",placeholder: "#{option.key?(:placeholder) ? option[:placeholder] : ''}", disabled: option.key?(:disabled) ? option[:disabled] : false, readonly: option.key?(:readonly) ? option[:readonly] : false, maxLength: "#{option.key?(:max_length) ? option[:max_length] : '150'}", autofocus: option.key?(:autofocus) ? option[:autofocus] : false)
         end
         if option.key?(:btn)
           html << "<div class='col-md-2'><a href='#{option[:btn]}' data-remote='true' data-url='' class='btn btn-default btn-block'><i class='icon-plus'></i></a></div>"
@@ -137,7 +137,8 @@ module FormBuilder
                            prompt: option.key?(:prompt) ? option[:prompt] : '',
                            class: "form-control #{option.key?(:select_class) ? option[:select_class] : ''}",
                            disabled: option.key?(:disabled) ? option[:disabled] : false,
-                           readonly: option.key?(:readonly) ? option[:readonly] : false})
+                           readonly: option.key?(:readonly) ? option[:readonly] : false,
+                           autofocus: option.key?(:autofocus) ? option[:autofocus] : false})
       else
         html << f.label(field, "#{option.key?(:label_text) ? option[:label_text] : ''}",
                                class: "control-label #{option.key?(:label_class) ? option[:label_class] : ''}")
@@ -147,7 +148,8 @@ module FormBuilder
                                     {multiple: option.key?(:multiple) ? option[:multiple] : false,
                                       class: "form-control #{option.key?(:select_class) ? option[:select_class] : ''}",
                                       disabled: option.key?(:disabled) ? option[:disabled] : false,
-                                      readonly: option.key?(:readonly) ? option[:readonly] : false})
+                                      readonly: option.key?(:readonly) ? option[:readonly] : false,
+                                      autofocus: option.key?(:autofocus) ? option[:autofocus] : false})
       end
       if option.key?(:btn)
         html << "<div class='col-md-2'><a href='#{option[:btn]}' data-remote='true' class='btn btn-default btn-block'><i class='icon-plus'></i></a></div>"
@@ -171,7 +173,8 @@ module FormBuilder
                            prompt: option.key?(:prompt) ? option[:prompt] : '',
                            class: "form-control #{option.key?(:select_class) ? option[:select_class] : ''}",
                            disabled: option.key?(:disabled) ? option[:disabled] : false,
-                           readonly: option.key?(:readonly) ? option[:readonly] : false})
+                           readonly: option.key?(:readonly) ? option[:readonly] : false,
+                           autofocus: option.key?(:autofocus) ? option[:autofocus] : false})
         html << "</div>"
       else
         html << f.label(field, "#{option.key?(:label_text) ? option[:label_text] : ''}",
@@ -182,7 +185,8 @@ module FormBuilder
                                     {multiple: option.key?(:multiple) ? option[:multiple] : false,
                                       class: "form-control #{option.key?(:select_class) ? option[:select_class] : ''}",
                                       disabled: option.key?(:disabled) ? option[:disabled] : false,
-                                      readonly: option.key?(:readonly) ? option[:readonly] : false})
+                                      readonly: option.key?(:readonly) ? option[:readonly] : false,
+                                      autofocus: option.key?(:autofocus) ? option[:autofocus] : false})
         html << "</div>"
       end
       if option.key?(:btn)
@@ -207,7 +211,8 @@ module FormBuilder
                            prompt: option.key?(:prompt) ? option[:prompt] : '',
                            class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}",
                            disabled: option.key?(:disabled) ? option[:disabled] : false,
-                           readonly: option.key?(:readonly) ? option[:readonly] : false})
+                           readonly: option.key?(:readonly) ? option[:readonly] : false,
+                           autofocus: option.key?(:autofocus) ? option[:autofocus] : false})
       else
         html << f.label(field, "#{option.key?(:label_text) ? option[:label_text] : ''}",
                                class: "control-label #{option.key?(:label_class) ? option[:label_class] : ''}")
@@ -217,7 +222,8 @@ module FormBuilder
                                     {multiple: option.key?(:multiple) ? option[:multiple] : false,
                                       class: "form-control #{option.key?(:select_class) ? option[:select_class] : ''}",
                                       disabled: option.key?(:disabled) ? option[:disabled] : false,
-                                      readonly: option.key?(:readonly) ? option[:readonly] : false})
+                                      readonly: option.key?(:readonly) ? option[:readonly] : false,
+                                      autofocus: option.key?(:autofocus) ? option[:autofocus] : false})
       end
       if option.key?(:btn)
         html << "<div class='col-md-2'><a href='#{option[:btn]}' data-remote='true' class='btn btn-default btn-block'><i class='icon-plus'></i></a></div>"
@@ -241,7 +247,8 @@ module FormBuilder
                              prompt: option.key?(:prompt) ? option[:prompt] : '',
                              class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}",
                              disabled: option.key?(:disabled) ? option[:disabled] : false,
-                             readonly: option.key?(:readonly) ? option[:readonly] : false})
+                             readonly: option.key?(:readonly) ? option[:readonly] : false,
+                             autofocus: option.key?(:autofocus) ? option[:autofocus] : false})
       html << "</div>"
     else
       html << f.label(field, "#{option.key?(:label_text) ? option[:label_text] : ''}",
@@ -252,7 +259,8 @@ module FormBuilder
                                     {multiple: option.key?(:multiple) ? option[:multiple] : false,
                                       class: "form-control #{option.key?(:select_class) ? option[:select_class] : ''}",
                                       disabled: option.key?(:disabled) ? option[:disabled] : false,
-                                      readonly: option.key?(:readonly) ? option[:readonly] : false})
+                                      readonly: option.key?(:readonly) ? option[:readonly] : false,
+                                      autofocus: option.key?(:autofocus) ? option[:autofocus] : false})
       html << "</div>"
     end
     if option.key?(:btn)

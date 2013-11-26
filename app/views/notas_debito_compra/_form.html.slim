@@ -7,7 +7,7 @@
     - else
       - numero_class = ''
   .modal-body
-    = FormBuilder::collection_select_h(f, :proveedor_id, Proveedor.all, :id, :nombre,{label_class: 'col-md-2', label_text: 'Proveedor', select_class:'required select', field_class: 'col-md-10'})
+    = FormBuilder::collection_select_h(f, :proveedor_id, Proveedor.all, :id, :nombre,{label_class: 'col-md-2', label_text: 'Proveedor', select_class:'required select', field_class: 'col-md-10', autofocus: true})
     = FormBuilder::text_field_h(f, :numero, {label_class: 'col-md-2', input_class: "required clear #{numero_class}", field_class: 'col-md-4', max_length: Domain::NUMERO_DOC_COM})
     = FormBuilder::text_field_h(f, :fecha, {label_class: 'col-md-2', input_class: 'required date clear', field_class: 'col-md-3', max_length: Domain::FECHA})
     = FormBuilder::text_field_h(f, :total, {label_class: 'col-md-2', input_class: 'required clear monto-field', field_class: 'col-md-4', max_length: Domain::MONTO})

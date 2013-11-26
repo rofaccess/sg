@@ -3,9 +3,9 @@ class PedidoCotizacionDetalle < ActiveRecord::Base
 
   acts_as_paranoid
 
-  belongs_to :pedido_cotizacion
-  belongs_to :componente
-  belongs_to :pedido_compra_detalle
+  belongs_to :pedido_cotizacion, with_deleted: true
+  belongs_to :componente, with_deleted: true
+  belongs_to :pedido_compra_detalle, with_deleted: true
 
   def proveedores
   	PedidoCotizacionDetalle.includes(:pedido_cotizacion).where('pedidos_cotizacion.estado = ?', PedidosEstados::COTIZADO).where('costo_unitario <> ?', 0).where(pedido_compra_detalle: self.pedido_compra_detalle, componente_id: self.componente_id)

@@ -3,7 +3,7 @@
     = hidden_field_tag(:from_orden_abm, 'true')
   label.title-seccion Encabezado
   .row
-    = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3', input_class: 'required numFactura clear',max_length: Domain::NUMERO_DOC_COM})
+    = FormBuilder::text_field_v(f, :numero, {col_class: 'col-md-3', input_class: 'required numFactura clear',max_length: Domain::NUMERO_DOC_COM, autofocus: true})
     = FormBuilder::text_field_v(f, :fecha, {col_class: 'col-md-3', label_text: 'Fecha',input_class: 'required date datepicker clear', max_length: Domain::FECHA})
     = FormBuilder::text_field_v(f, :proveedor, {col_class: 'col-md-5', input_value: @orden_compra.proveedor.nombre, disabled: true})
   .row
@@ -56,7 +56,7 @@
                   td = o.componente.marca.nombre
                 td = o.componente.componente_categoria.nombre
                 td.text-right.faltante.hide = cantidad
-                td.cantidad = FormBuilder::text_field_v(d, :cantidad, {input_class: 'text-right required cantidadDocCom', input_value: cantidad, label_class: 'hide', max_length: '5'})
+                td.cantidad = FormBuilder::text_field_v(d, :cantidad, {input_class: 'text-right required cantidadDocCom', input_value: cantidad, label_class: 'hide', max_length: Domain::CANTIDAD})
                 /td.cantidad = d.text_field(:cantidad, class: 'form-control text-right required cantidadDocCom', value: cantidad)
                 td.text-right.monto #{o.costo_unitario}
                 td.precio.hide #{o.costo_unitario}

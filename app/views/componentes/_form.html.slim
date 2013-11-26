@@ -5,7 +5,7 @@
   .row
     .col-md-12
       p
-      = FormBuilder::text_field_h(f, :nombre,{input_class: 'required clear', max_length: Domain::NOMBRE})
+      = FormBuilder::text_field_h(f, :nombre,{input_class: 'required clear', max_length: Domain::NOMBRE, autofocus: true})
       = FormBuilder::text_field_h(f, :costo,{input_class: 'required clear monto-field', max_length: Domain::MONTO})
       = FormBuilder::collection_select(f, :marca_id, Marca.all, :id, :nombre, '',nil, 'col-md-8 with-btn', '', nil, false, [true, nueva_marca_componentes_path])
       = FormBuilder::collection_select(f, :componente_categoria_id, ComponenteCategoria.all, :id, :nombre, '', nil, 'col-md-8 with-btn', 'required', nil, false, [true, nueva_categoria_componentes_path])

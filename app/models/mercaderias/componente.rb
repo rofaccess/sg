@@ -1,7 +1,7 @@
 class Componente < Mercaderia
 	paginates_per 15
-	belongs_to :marca
-	belongs_to :componente_categoria
+	belongs_to :marca, with_deleted: true
+	belongs_to :componente_categoria, with_deleted: true
 	has_many :pedidos_compra_detalle
 	has_many :factura_compra_detalles
 	has_many :pedidos_cotizacion_detalles

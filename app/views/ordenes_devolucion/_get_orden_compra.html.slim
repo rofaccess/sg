@@ -1,7 +1,7 @@
 = form_for @orden_devolucion, html: {class: ''}, remote: true  do |f|
   label.title-seccion Encabezado
   .row
-    = FormBuilder::text_field_v(f, :numero_factura, {col_class: 'col-md-3 to-hide',label_text: 'Numero Factura', input_class: 'required clear',max_length: Domain::NUMERO_DOC_COM})
+    = FormBuilder::text_field_v(f, :numero_factura, {col_class: 'col-md-3 to-hide',label_text: 'Numero Factura', input_class: 'required clear',max_length: Domain::NUMERO_DOC_COM, autofocus: true})
     = FormBuilder::text_field_v(f, :motivo, {col_class: 'col-md-8', label_text: 'Motivo',input_class: ' clear', max_length: Domain::DESCRIPCION})
 
 
