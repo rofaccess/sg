@@ -2,7 +2,7 @@
   button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
   /Cabecera de la Nota
   h3 Nota de Debito Nº  #{@nota_debito_compra.numero}
-  dl.dl-horizontal
+  dl
     dt Proveedor:
     dd = @nota_debito_compra.proveedor.nombre
     dt Numero:
@@ -11,10 +11,11 @@
     dd = Formatter.format_date(@nota_debito_compra.fecha)
     dt Total:
     dd.monto = @nota_debito_compra.total
+  dl.dl-vertical
     dt Motivo:
     dd = @nota_debito_compra.motivo
-    dt Estado:
-    dd = PedidosEstados::ESTADOS[@nota_debito_compra.estado]
+    /dt Estado:
+    /dd = PedidosEstados::ESTADOS[@nota_debito_compra.estado]
 
 
 /Botones Cancelar y generar

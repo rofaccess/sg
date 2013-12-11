@@ -53,6 +53,20 @@ var ordenesDevolucionUI = (function(){
 				});
 				e.preventDefault();
 			});
+		},
+
+		//Al cambiar cantidad, multiplica por precio y actualiza total
+		onChangeCantidad: function(){
+			$('td.cantidad input').keyup(function(){
+		    	$('table tbody tr').each(function() {
+		      		var cantidad = parseInt ($('td.cantidad input', this).val());
+		      		var faltante = parseInt ($('td.faltante', this).text());
+		      		if ((cantidad > faltante)||(cantidad < 1)) {
+		      			cantidad = faltante;
+		      			$('td.cantidad input', this).val(cantidad);
+		      		}
+		    	});
+		  	});
 		}
 	};
 }());

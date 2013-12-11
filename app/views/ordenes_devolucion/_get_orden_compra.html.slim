@@ -2,9 +2,7 @@
   label.title-seccion Encabezado
   .row
     = FormBuilder::text_field_v(f, :numero_factura, {col_class: 'col-md-3 to-hide',label_text: 'Numero Factura', input_class: 'required clear',max_length: Domain::NUMERO_DOC_COM, autofocus: true})
-    = FormBuilder::text_field_v(f, :motivo, {col_class: 'col-md-8', label_text: 'Motivo',input_class: ' clear', max_length: Domain::DESCRIPCION})
-
-
+    = FormBuilder::text_area_v(f, :motivo, {col_class: 'col-md-9', label_text: 'Motivo',input_class: ' clear', max_length: Domain::DESCRIPCION, rows: "2"})
 
   = f.hidden_field(:orden_compra_id, value: "#{@orden_compra.id}")
   = f.hidden_field(:proveedor_id,value:"#{@orden_compra.proveedor_id}")
@@ -21,12 +19,12 @@
         th Componente
         th Marca
         th Categoria
-        th Costo Uni.
-        th.text-right Cantidad Devuelta
-        th.text-right Motivo
+        th.text-right Costo
+        th.text-right.col-md-1 Cantidad
+        th Motivo
     tbody
       - @orden_compra.orden_compra_detalles.each do |p|
-
+        - cantidad = p.cantidad_requerida
         tr.devolucion-detalle
           td = p.componente.nombre
           - if p.componente.marca.blank?
@@ -37,12 +35,12 @@
             td Sin Categoria
           - else
             td = p.componente.componente_categoria.nombre
-          td = p.costo_unitario
-          = f.fields_for :orden_devolucion_detalles, p do |detalle_form|
-            td
-              = detalle_form.text_field :cantidad_devuelta, value: p.cantidad_requerida.to_i, class: 'cantidad-field form-control text-right',maxLength: Domain::CANTIDAD
-            td
-              = detalle_form.text_field :motivo, value: '', class: 'form-control text-right',maxLength: Domain::DESCRIPCION
+          td.text-right.monto = p.costo_unitario
+          = f.fields_for :orden_devolucion_detalles,p do |detalle_form|
+            td.text-right.faltante.hide = cantidad
+            td.cantidad = FormBuilder::text_field_v(detalle_form, :cantidad_devuelta, {input_class: 'text-right required', input_value: cantidad, label_class: 'hide', max_length: Domain::CANTIDAD})
+            /td = FormBuilder::text_area_v(detalle_form, :motivo, {col_class: 'col-md-3', label_text: 'Motivo',input_class: ' clear', max_length: Domain::DESCRIPCION, rows: "3"})
+            td = detalle_form.text_area :motivo, value: '', class: 'form-control',maxLength: Domain::DESCRIPCION,  rows: "3"
             td.text-right = link_to '<i class="icon-remove icon-large"></i> '.html_safe, '#', class: 'remover-detalle-devolucion link-icon'
 
             = detalle_form.hidden_field(:componente_id, value: p.componente_id)
@@ -59,9 +57,10 @@
       = f.submit 'Generar Orden de Devolucion', class: 'btn btn-primary pull-right'
 
 javascript:
+  ordenesDevolucionUI.onChangeCantidad();
   // Enmascarar los campos numericos
-  $('.monto-field, .cantidad-field').maskMoney();
-  $('.monto-field, .cantidad-field').maskMoney('mask');
+  $('.monto').maskMoney({isDiv: true});
+  $('.monto').maskMoney('mask');
   //para que el campo numero factura acepte solo numeros.
   $('#orden_devolucion_numero_factura').validCampoFranz('0123456789-/.');
   $('.clear').clearInput();

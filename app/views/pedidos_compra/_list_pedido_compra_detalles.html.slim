@@ -4,11 +4,11 @@
       tr
         th #
         th Componente
+        th Categoria
+        th Marca
         th.text-right Cantidad
         th.text-right Costo Unitario
         th.text-right Subtotal
-        th Categoria
-        th Marca
     tbody
       - total = 0
       - cont = 1
@@ -17,14 +17,6 @@
         tr
           td = cont
           td = p.componente.nombre
-          td.text-right = p.cantidad
-
-          - if p.componente.costo.blank?
-            td Sin Costo
-          - else
-            td.text-right.monto = p.componente.costo
-            - total += (p.componente.costo * p.cantidad)
-          td.text-right.monto = total
           - if p.componente.componente_categoria.blank?
             td Sin Categoria
           - else
@@ -34,6 +26,15 @@
             td Sin Marca
           - else
             td = p.componente.marca.nombre
+
+          td.text-right = p.cantidad
+
+          - if p.componente.costo.blank?
+            td Sin Costo
+          - else
+            td.text-right.monto = p.componente.costo
+            - total += (p.componente.costo * p.cantidad)
+          td.text-right.monto = total
           - cont += 1
           - total_pedido += total
 /Muestra el total del pedido
