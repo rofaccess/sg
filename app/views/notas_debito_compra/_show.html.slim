@@ -13,7 +13,9 @@
     dd.monto = @nota_debito_compra.total
   dl.dl-vertical
     dt Motivo:
-    dd = @nota_debito_compra.motivo
+    /dd = @nota_debito_compra.motivo
+    textarea class="form-control" rows="3" disabled= true = @nota_debito_compra.motivo
+
     /dt Estado:
     /dd = PedidosEstados::ESTADOS[@nota_debito_compra.estado]
 

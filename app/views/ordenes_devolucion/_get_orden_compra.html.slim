@@ -2,7 +2,7 @@
   label.title-seccion Encabezado
   .row
     = FormBuilder::text_field_v(f, :numero_factura, {col_class: 'col-md-3 to-hide',label_text: 'Numero Factura', input_class: 'required clear',max_length: Domain::NUMERO_DOC_COM, autofocus: true})
-    = FormBuilder::text_area_v(f, :motivo, {col_class: 'col-md-9', label_text: 'Motivo',input_class: ' clear', max_length: Domain::DESCRIPCION, rows: "2"})
+    = FormBuilder::text_area_v(f, :motivo, {col_class: 'col-md-9', label_text: 'Motivo', max_length: Domain::DESCRIPCION, rows: "2",input_class: 'required clear'})
 
   = f.hidden_field(:orden_compra_id, value: "#{@orden_compra.id}")
   = f.hidden_field(:proveedor_id,value:"#{@orden_compra.proveedor_id}")
