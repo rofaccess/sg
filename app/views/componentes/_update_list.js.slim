@@ -1,2 +1,4 @@
-| $("#componentes-list").html("#{escape_javascript(render partial: 'componentes_list', format: 'html')}");
+| var n = noty({text: '#{notice}', type: 'success'});
+| $("#list").html("#{escape_javascript(render partial: 'list', format: 'html')}");
 | SideFormUI.closeForm();
+| $('#componentes-size').text('#{@componentes_size}');

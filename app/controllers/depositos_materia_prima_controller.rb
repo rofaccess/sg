@@ -20,9 +20,10 @@ class DepositosMateriaPrimaController < DepositosController
       end
 
     if @deposito.update(deposito_params)
+      flash.notice = "Se ha actualizado el deposito #{@deposito.nombre}."
       update_list
     else
-      redirect_to componentes_path, alert: t('messages.marca_not_updated')
+      flash.alert = "No se ha podido actualizar el deposito #{@deposito.nombre}."
     end
   end
 

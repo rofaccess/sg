@@ -12,6 +12,7 @@ class ComponentesController < ApplicationController
   # GET /componentes.json
   def index
     @search = Componente.search(params[:q])
+    @componentes_size = @search.result.size
     @componente = Componente.new
     if @search.sorts.empty?
       @componentes = @search.result.order('nombre').page(params[:page])
@@ -56,9 +57,10 @@ class ComponentesController < ApplicationController
   def update
 
     if @componente.update(componente_params)
+      flash.notice = "Se ha actualizado los datos del componente #{@componente.nombre}."
       update_list
     else
-        redirect_to componentes_path, alert: t('messages.proveedor_not_saved')
+        flash.alert = "No se ha podido actualizar el componente #{@componente.nombre}."
     end
   end
 
