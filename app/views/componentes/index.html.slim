@@ -15,8 +15,16 @@
 
   = link_to '<i class="icon-angle-up icon-large"></i>'.html_safe, '#', class: 'esconder-filtros link-icon', title: 'Cerrar Filtros', data: {toggle: 'tooltip'}
 
+.row.search-message.row-grid
+  h4.text-info.pull-left
+    |Se han encontrado #{' '}
+    span#componentes-size #{@componentes_size}
+    |  registros
+
+  = imprimir_link(imprimir_listado_pedidos_compra_path(format: 'pdf'))
+
 #list
-  = render 'componentes_list'
+  = render 'list'
 
 div id="paginator"
   = paginate @componentes, remote: true

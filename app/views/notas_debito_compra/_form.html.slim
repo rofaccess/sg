@@ -11,8 +11,9 @@
     = FormBuilder::text_field_h(f, :numero, {label_class: 'col-md-2', input_class: "required clear #{numero_class}", field_class: 'col-md-4', max_length: Domain::NUMERO_DOC_COM})
     = FormBuilder::text_field_h(f, :fecha, {label_class: 'col-md-2', input_class: 'required date clear', field_class: 'col-md-3', max_length: Domain::FECHA})
     = FormBuilder::text_field_h(f, :total, {label_class: 'col-md-2', input_class: 'required clear monto-field', field_class: 'col-md-4', max_length: Domain::MONTO})
-    = FormBuilder::text_field_h(f, :motivo, {label_class: 'col-md-2', input_class: 'required clear', field_class: 'col-md-10', max_length: Domain::DESCRIPCION})
-    = FormBuilder::select_h(f, :estado, [['Pendiente', PedidosEstados::PENDIENTE], ['Pagado', PedidosEstados::PAGADO]], {label_class: 'col-md-2', select_class: 'required', field_class: 'col-md-4', label_text: 'Estado'})
+    /= FormBuilder::text_field_h(f, :motivo, {label_class: 'col-md-2', input_class: 'required clear', field_class: 'col-md-10', max_length: Domain::DESCRIPCION})
+    = FormBuilder::text_area_h(f, :motivo, {label_class: 'col-md-2', input_class: 'required clear', field_class: 'col-md-10', max_length: Domain::DESCRIPCION, rows: "3"})
+    /= FormBuilder::select_h(f, :estado, [['Pendiente', PedidosEstados::PENDIENTE], ['Pagado', PedidosEstados::PAGADO]], {label_class: 'col-md-2', select_class: 'required', field_class: 'col-md-4', label_text: 'Estado'})
     = f.hidden_field(:user_id, value: "#{current_user.id}")
 
   .modal-footer

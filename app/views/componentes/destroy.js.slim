@@ -1,2 +1,3 @@
 | var n = noty({text: '#{notice}', type: 'success'});
-| $("#componentes-list").html("#{escape_javascript(render partial: 'componentes_list', format: 'html')}");
+| $("#list").html("#{escape_javascript(render partial: 'list', format: 'html')}");
+| $('#componentes-size').text('#{@componentes_size}');

@@ -5,7 +5,8 @@
     h4.modal-title = @iva.id.nil? ? 'Agregar Iva' : 'Editar Iva'
   .modal-body
     = hidden_field_tag 'tipo_resource', 'iva'
-    = FormBuilder::text_field_h(f, :descripcion, {input_class: 'required clear', field_class:'col-md-6', max_length: Domain::DESCRIPCION})
+    /= FormBuilder::text_field_h(f, :descripcion, {input_class: 'required clear', field_class:'col-md-6', max_length: Domain::DESCRIPCION})
+    = FormBuilder::text_area_h(f, :descripcion, {label_class: 'col-md-2', input_class: 'required clear', field_class: 'col-md-10', max_length: Domain::DESCRIPCION, rows: "3"})
   	= FormBuilder::text_field_h(f, :valor, {input_class: 'required clear', field_class:'col-md-2', max_length: Domain::IVA})
   .modal-footer
     button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cancelar

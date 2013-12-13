@@ -116,7 +116,7 @@ var facturasCompraUI = (function(){
 		      		var precio = parseInt($('td.precio', this).text().replace(/^[^\d.]*/, ''));
 		      		var cantidad = parseInt ($('td.cantidad input', this).val());
 		      		var faltante = parseInt ($('td.faltante', this).text());
-		      		if (cantidad > faltante) {
+		      		if ((cantidad > faltante)||(cantidad < 1)) {
 		      			cantidad = faltante;
 		      			$('td.cantidad input', this).val(cantidad);
 		      		}

@@ -72,16 +72,39 @@ module FormBuilder
 
   # Opciones admisibles del hash option :col_class, :label_class, :input_class, :input_value, :placeholder, :label_text, :disabled, :readonly
   # Para el hash option no es necesario la llave cuando se usa el metodo
+  def self.text_area_v(f, field, option)
+    html = ""
+      html << "<div class='form-group #{option.key?(:col_class) ? option[:col_class] : ''}'>"
+        html << f.label(field,"#{option.key?(:label_text) ? option[:label_text] : ''}", class: "control-label #{option.key?(:label_class) ? option[:label_class] : ''}")
+        html << f.text_area(field, cols: "#{option.key?(:cols) ? option[:cols] : '10'}", rows: "#{option.key?(:rows) ? option[:rows] : '10'}",class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}",placeholder: "#{option.key?(:placeholder) ? option[:placeholder] : ''}", disabled: option.key?(:disabled) ? option[:disabled] : false, readonly: option.key?(:readonly) ? option[:readonly] : false, maxLength: "#{option.key?(:max_length) ? option[:max_length] : '150'}", autofocus: option.key?(:autofocus) ? option[:autofocus] : false)
+      html << "</div>"
+    html.html_safe
+  end
+
+  def self.text_area_h(f, field, option)
+    html = ""
+    html << "<div class='form-group'>"
+      html << f.label(field, "#{option.key?(:label_text) ? option[:label_text] : ''}", class: "control-label #{option.key?(:label_class) ? option[:label_class] : 'col-md-2'}")
+      html << "<div class='#{option.key?(:field_class) ? option[:field_class] : 'col-md-10'}'>"
+        html << f.text_area(field, cols: "#{option.key?(:cols) ? option[:cols] : '10'}", rows: "#{option.key?(:rows) ? option[:rows] : '10'}",class: "form-control #{option.key?(:input_class) ? option[:input_class] : ''}",placeholder: "#{option.key?(:placeholder) ? option[:placeholder] : ''}", disabled: option.key?(:disabled) ? option[:disabled] : false, readonly: option.key?(:readonly) ? option[:readonly] : false, maxLength: "#{option.key?(:max_length) ? option[:max_length] : '150'}", autofocus: option.key?(:autofocus) ? option[:autofocus] : false)
+      html << "</div>"
+    html << "</div>"
+
+    html.html_safe
+  end
+
+  # Opciones admisibles del hash option :col_class, :label_class, :input_class, :input_value, :placeholder, :label_text, :disabled, :readonly
+  # Para el hash option no es necesario la llave cuando se usa el metodo
   def self.rango_fechas(f, field_desde, field_hasta, options)
     html = ""
       html << "<div class='form-group rango-fechas #{options.key?(:col_class) ? options[:col_class] : ''}'>"
         html << f.label(field_desde,"#{options.key?(:label_text) ? options[:label_text] : ''}", class: "control-label #{options.key?(:label_class) ? options[:label_class] : ''}")
         html << "<div class='row'>"
           html << "<div class='col-md-6'>"
-            html << f.text_field(field_desde, class: "form-control datepicker has-clear",value: "#{options.key?(:input_value) ? options[:input_value] : ''}", placeholder: "Desde", disabled: options.key?(:disabled) ? options[:disabled] : false, readonly: options.key?(:readonly) ? options[:readonly] : false, maxLength: "#{options.key?(:max_length) ? options[:max_length] : '150'}")
+            html << f.text_field(field_desde, class: "form-control datepicker has-clear",value: "#{options.key?(:input_value) ? options[:input_value] : ''}", placeholder: "Desde", disabled: options.key?(:disabled) ? options[:disabled] : false, readonly: options.key?(:readonly) ? options[:readonly] : false, maxLength: "#{options.key?(:max_length) ? options[:max_length] : Domain::FECHA}")
           html << "</div>"
           html << "<div class='col-md-6'>"
-            html << f.text_field(field_hasta, class: "form-control datepicker has-clear",value: "#{options.key?(:input_value) ? options[:input_value] : ''}", placeholder: "Hasta", disabled: options.key?(:disabled) ? options[:disabled] : false, readonly: options.key?(:readonly) ? options[:readonly] : false, maxLength: "#{options.key?(:max_length) ? options[:max_length] : '150'}")
+            html << f.text_field(field_hasta, class: "form-control datepicker has-clear",value: "#{options.key?(:input_value) ? options[:input_value] : ''}", placeholder: "Hasta", disabled: options.key?(:disabled) ? options[:disabled] : false, readonly: options.key?(:readonly) ? options[:readonly] : false, maxLength: "#{options.key?(:max_length) ? options[:max_length] : Domain::FECHA}")
           html << "</div>"
         html << "</div>"
       html << "</div>"

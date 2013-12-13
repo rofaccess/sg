@@ -21,6 +21,6 @@
             td = orden_compra.proveedor.nombre
             td = PedidosEstados::ESTADOS[orden_compra.estado]
             td = Formatter.format_datetime(orden_compra.fecha_generado)
-            td = orden_compra.total_requerido
+            td.monto = orden_compra.total_requerido
             td = orden_compra.user.username
             - cont += 1
