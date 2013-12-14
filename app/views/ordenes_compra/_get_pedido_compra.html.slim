@@ -1,15 +1,16 @@
 .alert.alert-warning.recargar-warning.hide
   = "Debe seleccionar por lo menos un detalle para generar la orden de compra. "
-  = link_to 'Recargar Detalles', '#', class: 'recargar-detalles'
+  = link_to 'Recargar Detalles', '#', class: 'recargar-detalles', data: {pedido_id: @pedido_compra.id}
 .orden-detalles
   - if @mejores_precios.nil?
     .alert.alert-warning
       | No hay pedidos de cotizacion cotizados para el pedido de compra N #{@pedido_compra.numero}
   - else
     .alert.alert-info.info-inicial
-      | Hay #{@pedido_compra.pedido_cotizacions.where(estado: PedidosEstados::COTIZADO).size} cotizaciones para el pedido de compra seleccionado
+      | Hay #{@pedido_compra.pedido_cotizacions.where(estado: PedidosEstados::COTIZADO).size} cotizaciones para el pedido de compra N˚ #{@pedido_compra.numero}
       <!-- span.fecha Generado el #{@pedido_compra.created_at} -->
   - unless @mejores_precios.nil?
+    = hidden_field_tag 'orden_compra[pedido_compra_id]', @pedido_compra.id
     table.table
       thead
         tr
@@ -41,9 +42,7 @@
                 - if @mejores_precios[d.id].size > 1
                   span.badge.badge-warning [data-toggle = "tooltip" data-original-title = "Hay #{@mejores_precios[d.id].size} proveedores con el mejor precio"] = @mejores_precios[d.id].size
               td = link_to '<i class="icon-remove icon-large"></i> '.html_safe, '#', class: 'remover-detalle-orden link-icon'
-    button.btn.btn-default [type="button" data-dismiss="modal"] Cancelar
-    = submit_tag 'Generar Orden de compra', class: 'btn btn-primary pull-right'
-
     javascript:
       $('.monto-text').maskMoney({isDiv: true});
       $('.monto-text').maskMoney('mask');
+      $('#new_orden_compra').find('input:submit').removeClass('disabled');

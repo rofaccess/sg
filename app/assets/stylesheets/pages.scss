@@ -171,6 +171,10 @@ body{
   }
 }
 
+tr.disabled{
+  opacity: 0.5;
+}
+
 // Content wrapper style
 
 #content-wrapper{

@@ -7,18 +7,14 @@ var ordenesCompraUI = (function(){
 				dataType: 'html',
 				data: {id: id},
 				success: function(response){
-					$('#main-modal .detalles-pedido-compra').html(response);
+					$('#main-modal #seleccion-pedidos').html(response);
 				}
 			});
 		},
 
 		init: function(){
-			$('body').on('change', '#orden_compra_pedido_compra_id', function(e){
-				ordenesCompraUI.cargarPedidosDetalles($(this).val());
-			});
-
-			$('body').on('click', '.recargar-detalles', function(e){
-				ordenesCompraUI.cargarPedidosDetalles($('#orden_compra_pedido_compra_id').val());
+			$('body').on('click', '.orden_compra_pedido_compra_detalles, .recargar-detalles', function(e){
+				ordenesCompraUI.cargarPedidosDetalles($(this).data('pedido-id'));
 				e.preventDefault();
 			});
 
@@ -38,11 +34,33 @@ var ordenesCompraUI = (function(){
 
 			$('body').on('click', '.remover-detalle-orden', function(e){
 				$(this).parents('tr.cotizacion-detalle').remove();
+				$('#new_orden_compra').find('input:submit').addClass('disabled');
 				if($('.cotizacion-detalle').length == 0){
 					$('.orden-detalles').addClass('hide');
 					$('.recargar-warning').addClass('show');
 				}
 				e.preventDefault();
+			});
+
+			$('body').on('click', '#orden_compra_seleccionar_todo', function(e){
+				var submitBtn = $('#new_orden_compra').find('input:submit');
+				if($(this).is(':checked')){
+					$('.pedido-compra-id-check').attr('checked', true);
+					submitBtn.removeClass('disabled');
+				}else{
+					$('.pedido-compra-id-check').attr('checked', false);
+					submitBtn.addClass('disabled');
+				}
+
+			});
+
+			$('body').on('change', '.pedido-compra-id-check', function(e){
+				var submitBtn = $('#new_orden_compra').find('input:submit');
+				if($('.pedido-compra-id-check').is(':checked')){
+					submitBtn.removeClass('disabled');
+				}else{
+					submitBtn.addClass('disabled');
+				}
 			});
 
 			$('body').on('click', '.orden-automatica', function(e){

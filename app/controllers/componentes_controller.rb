@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class ComponentesController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_sidemenu, only: [:index]

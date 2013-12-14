@@ -1,10 +1,43 @@
-.modal-header
-  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
-  h4.modal-title Generar Orden de Compra
-.modal-body
-  .row
-    = form_for @orden_compra, url: orden_personalizado_ordenes_compra_path, html: {class: 'form-horizontal'}, remote: true do |f|
-      .col-md-12
-        = FormBuilder::collection_select(f, :pedido_compra_id, @pedidos_compra, :id, :numero, 'Seleccione un pedido de compra...', nil, 'col-md-8', '')
-      .col-md-12
-        .detalles-pedido-compra
+= form_for @orden_compra, url: orden_personalizado_ordenes_compra_path, html: {class: 'form-horizontal'}, remote: true do |f|
+  .modal-header
+    button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+    h4.modal-title Generar Orden de Compra
+  .modal-body
+    #seleccion-pedidos.col-md-12
+      - if @pedidos_compra.size > 0
+        .alert.alert-info
+          | Hay #{@pedidos_compra.size} pedidos de compra cotizados. Seleccione los pedidos para los cuales desae generar las ordenes de compra.
+          //= FormBuilder::collection_select(f, :pedido_compra_id, @pedidos_compra, :id, :numero, 'Seleccione un pedido de compra...', nil, 'col-md-8', '')
+        table.table
+          thead
+            tr
+              th
+                = check_box_tag 'seleccionar_todo', 0, false, id: 'orden_compra_seleccionar_todo'
+              th Pedido de compra
+              th
+          tbody
+            - @pedidos_compra.each do |p|
+              - if p.pedidos_cotizados.size > 0
+                tr
+                  td
+                    = check_box_tag 'pedido_compra_ids[]', p.id, false, class: 'pedido-compra-id-check'
+                  td
+                    | N˚ #{p.numero}
+                  td
+                    a.orden_compra_pedido_compra_detalles [href="#" data-pedido-id="#{p.id}" data-toggle="tooltip" data-original-title="Ver detalles del pedido."]
+                      i.icon-list
+              - else
+                tr.disabled [data-toggle="tooltip" data-original-title="No hay pedidos de cotizacion cotizados para este pedido de compra."]
+                  td
+                    = check_box_tag 'pedido_compra_ids[]', p.id, false, disabled: true
+                  td
+                    | N˚ #{p.numero}
+                  td
+                    a[href="javascript:void(0);"]
+                      i.icon-list
+      - else
+        .alert.alert-warning
+          | No hay pedidos de compra cotizados pendientes.
+  .modal-footer
+    button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cancelar
+    = submit_tag 'Generar Ordenes de compra', class: 'btn btn-primary pull-right disabled'
