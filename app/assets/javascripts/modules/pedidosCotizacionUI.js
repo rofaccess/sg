@@ -42,6 +42,15 @@ var pedidosCotizacionUI = (function(){
 				e.preventDefault();
 			});
 
+			$('body').on('change', '.checkbox-pedido-compra', function(e){
+				var submitBtn = $(this).parents('#new_pedido_cotizacion').find('input[type="submit"]');
+				if($('.checkbox-pedido-compra').is(':checked')){
+					submitBtn.removeClass('disabled');
+				}else{
+					submitBtn.addClass('disabled');
+				}
+			});
+
 		}
 	};
 }());

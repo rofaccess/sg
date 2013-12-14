@@ -1,2 +1,3 @@
-| $('#main-modal .modal-body').html('#{escape_javascript(render 'pedidos_generados', formats: 'html')}');
+| $('#add-modal').modal('hide');
+| var n = noty({text: '#{notice}', type: 'success'});
 | $.get('#{pedidos_cotizacion_path}', {}, function(){}, 'script');

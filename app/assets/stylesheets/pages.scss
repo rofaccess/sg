@@ -72,6 +72,10 @@
     background-color: darken($navbar-link-active-start, 20);
     border-color: darken($navbar-link-active-end, 10);
   }
+  &.disabled{
+    background-color: lighten($navbar-link-active-start, 10);
+    border-color: lighten($navbar-link-active-end, 20);
+  }
 }
 //Wrapper
 body{

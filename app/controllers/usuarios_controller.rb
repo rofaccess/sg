@@ -1,4 +1,6 @@
 class UsuariosController < ApplicationController
+  before_filter :authenticate_user!
+
   before_action :set_usuario, only: [:edit, :update, :destroy, :edit_password]
   before_action :authorize, only: [:new, :create, :edit, :update, :destroy]
   respond_to :html, :js

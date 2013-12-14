@@ -84,28 +84,34 @@ class PedidosCotizacionController < ApplicationController
   # POST /pedido_cotizacions
   # POST /pedido_cotizacions.json
   def create
-    @pedido_compra = PedidoCompra.find(params[:pedido_cotizacion][:pedido_compra_id])
-    categorias = @pedido_compra.get_componente_categorias
-    proveedores = ComponenteCategoria.get_proveedores(categorias)
+    pedidos_compra = params[:pedidos_compra_ids]
+    pedidos_cotizaciones_count = 0
+    pedidos_compra.each do |pedido_id|
+      @pedido_compra = PedidoCompra.find(pedido_id)
+      categorias = @pedido_compra.get_componente_categorias
+      proveedores = ComponenteCategoria.get_proveedores(categorias)
 
-    # Se genera un pedido de cotizacion para cada proveedor
-    proveedores.each do |p|
-      proveedor = Proveedor.find(p)
-      pedido_cotizacion = PedidoCotizacion.new( proveedor_id: p,
-                                                pedido_compra_id: @pedido_compra.id,
-                                                fecha_generado: DateTime.now,
-                                                estado: PedidosEstados::PENDIENTE,
-                                                user_id: current_user.id)
+      # Se genera un pedido de cotizacion para cada proveedor
+      proveedores.each do |p|
+        proveedor = Proveedor.find(p)
+        pedido_cotizacion = PedidoCotizacion.new( proveedor_id: p,
+                                                  pedido_compra_id: @pedido_compra.id,
+                                                  fecha_generado: DateTime.now,
+                                                  estado: PedidosEstados::PENDIENTE,
+                                                  user_id: current_user.id)
 
-      @pedido_compra.pedido_compra_detalles.each do |d|
-        pedido_cotizacion.pedido_cotizacion_detalles.build(componente_id: d.componente_id, cantidad_requerida: d.cantidad, pedido_compra_detalle_id: d.id) if proveedor.componente_categorias.exists?(d.componente.componente_categoria_id)
+        @pedido_compra.pedido_compra_detalles.each do |d|
+          pedido_cotizacion.pedido_cotizacion_detalles.build(componente_id: d.componente_id, cantidad_requerida: d.cantidad, pedido_compra_detalle_id: d.id) if proveedor.componente_categorias.exists?(d.componente.componente_categoria_id)
+        end
+
+        pedido_cotizacion.save
+        pedidos_cotizaciones_count +=1
       end
 
-      pedido_cotizacion.save
+      @pedido_compra.update(estado: PedidosEstados::PROCESADO, fecha_procesado: DateTime.now) if @pedido_compra.estado != PedidosEstados::PROCESADO
+
     end
-
-    @pedido_compra.update(estado: PedidosEstados::PROCESADO, fecha_procesado: DateTime.now) if @pedido_compra.estado != PedidosEstados::PROCESADO
-
+    flash.notice = "Se ha generado #{pedidos_cotizaciones_count} pedidos de cotizaciones."
   end
 
   # PATCH/PUT /pedido_cotizacions/1

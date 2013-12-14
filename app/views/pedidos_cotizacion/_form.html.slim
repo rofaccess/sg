@@ -1,11 +1,25 @@
-.modal-header
-  button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
-  h4.modal-title Generar Pedido de Cotizacion
-.modal-body
-  .row
-    = form_for @pedido_cotizacion, html: {class: 'form-horizontal'}, remote: true do |f|
+= form_for @pedido_cotizacion, html: {class: 'form-horizontal'}, remote: true do |f|
+  .modal-header
+    button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+    h4.modal-title Generar Pedidos de Cotizaciones
+  .modal-body
+    .row
       .col-md-12
-        = FormBuilder::collection_select(f, :pedido_compra_id, @pedidos_compra, :id, :numero, 'Seleccione un pedido de compra...', nil, 'col-md-8', '')
+        - if @pedidos_compra.size > 0
+          .alert.alert-info
+            | Hay #{@pedidos_compra.size} pedidos de compra pendientes. Seleccione los pedidos para los cuales desea generar pedidos de cotizacion.
+          = link_to 'Seleccionar todos', '#', id: 'seleccionar-todos', onClick: "$('.checkbox-pedido-compra').attr('checked', true); $('#deseleccionar-todos').show(); $(this).hide(); $(this).parents('#new_pedido_cotizacion').find('input:submit').removeClass('disabled');"
+          = link_to 'Deseleccionar todos', '#', id: 'deseleccionar-todos', onClick: "$('.checkbox-pedido-compra').attr('checked', false); $('#seleccionar-todos').show(); $(this).hide(); $(this).parents('#new_pedido_cotizacion').find('input:submit').addClass('disabled');", style: 'display: none;'
+          - @pedidos_compra.each do |p|
+            .checkbox
+              label
+                = check_box_tag 'pedidos_compra_ids[]', p.id, false, class: 'checkbox-pedido-compra'
+                = p.numero
+        - else
+          .alert.alert-warning
+            | No hay pedidos de compra pendientes.
 
-      .col-md-12
-        .detalles-pedido-compra
+  .modal-footer
+    button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cancelar
+    - if @pedidos_compra.size > 0
+      = f.submit 'Generar', class: 'btn btn-primary disabled'
