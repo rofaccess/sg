@@ -14,7 +14,7 @@ class CreateMercaderias < ActiveRecord::Migration
     end
 
     add_index :mercaderias, :codigo, unique: true
-    add_index :mercaderias, :nombre, unique: true
+    #add_index :mercaderias, :nombre, unique: true
     add_foreign_key(:mercaderias, :marcas, column: 'marca_id', options: 'ON DELETE RESTRICT')
   	add_foreign_key(:mercaderias, :componentes_categoria, column: 'componente_categoria_id', options: 'ON DELETE RESTRICT')
  	  add_foreign_key(:mercaderias, :ivas, column: 'iva_id', options: 'ON DELETE RESTRICT')

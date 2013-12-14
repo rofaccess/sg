@@ -8,7 +8,7 @@ table.table
     - @ivas.each do |i|
       tr
         td = i.descripcion
-        td = i.valor
+        td #{i.valor} %
         td
           = link_to editar_facturacion_configuracion_path(i, tipo_resource: 'iva'), remote: true do
             i.icon-edit.icon-large

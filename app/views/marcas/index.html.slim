@@ -5,6 +5,11 @@
 .col-md-6
 	row
 	  = render 'search'
+	.row.search-message.row-grid
+  	  h4.text-info.pull-left
+	    |Se han encontrado #{' '}
+	    span#marcas-size #{@marcas_size}
+	    |  registros
 
 	div id="list"
 	  = render 'list'

@@ -6,7 +6,7 @@
   .modal-body
     = hidden_field_tag 'tipo_resource', 'plazo_pago'
     = FormBuilder::text_field_h(f, :nombre, {input_class: 'required clear',label_class: 'col-md-3', field_class:'col-md-6', max_length: Domain::NOMBRE})
-    = FormBuilder::text_field_h(f, :cuotas, {input_class: 'required clear',label_class: 'col-md-3', field_class:'col-md-2', max_length: Domain::CUOTA})
+    /= FormBuilder::text_field_h(f, :cuotas, {input_class: 'required clear',label_class: 'col-md-3', field_class:'col-md-2', max_length: Domain::CUOTA})
     .form-group
       label.control-label.col-md-3 Dias de plazos
       .col-md-8

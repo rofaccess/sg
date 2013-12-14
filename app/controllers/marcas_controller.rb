@@ -11,6 +11,7 @@ class MarcasController < ApplicationController
   # GET /marcas.json
   def index
     @search = Marca.search(params[:q])
+    @marcas_size = @search.result.size
     if @search.sorts.empty?
       @marcas = @search.result.order('nombre').page(params[:page])
     else
@@ -36,11 +37,17 @@ class MarcasController < ApplicationController
   # POST /marcas.json
   def create
     @marca = Marca.new(marca_params)
-
-    if @marca.save
-      update_list
+    mar = Marca.find_by_nombre(@marca.nombre)
+    if mar.blank?
+      if @marca.save
+        flash.notice= "Se ha creado la marca #{@marca.nombre}."
+        update_list
+      else
+        flash.alert = "No se ha podido crear la marca #{@marca.nombre}."
+      end
     else
-      redirect_to componentes_path, alert: t('messages.marca_not_saved')
+      flash.notice = "No se ha podido crear la marca #{@marca.nombre}, porque ya existe"
+      update_list
     end
   end
 
@@ -52,12 +59,22 @@ class MarcasController < ApplicationController
   # PATCH/PUT /marcas/1
   # PATCH/PUT /marcas/1.json
   def update
-    if @marca.update(marca_params)
-      update_list
-      flash.notice = "Se ha actualizado la marca #{@marca.nombre}."
-      index
+    mar = Marca.find_by_nombre((Marca.new(marca_params)).nombre)
+    if mar.blank?
+      if @marca.update(marca_params)
+        flash.notice = "Se ha actualizado la marca #{@marca.nombre}."
+        update_list
+      else
+        flash.alert = "No se ha podido actualizar la marca #{@marca.nombre}."
+      end
     else
-      flash.alert = "No se ha podido actualizar la marca #{@marca.nombre}."
+      if mar.nombre == @marca.nombre
+        flash.notice = "Se ha actualizado la marca #{@marca.nombre}."
+        update_list
+      else
+        flash.notice = "No se ha podido actualizar la marca #{mar.nombre}, porque el nombre especificado ya existe"
+        update_list
+      end
     end
   end
 

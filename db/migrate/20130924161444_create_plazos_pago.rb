@@ -8,6 +8,6 @@ class CreatePlazosPago < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :plazos_pago, :nombre, unique: true
+    #add_index :plazos_pago, :nombre, unique: true
   end
 end

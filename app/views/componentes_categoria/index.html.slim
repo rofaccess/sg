@@ -6,6 +6,12 @@
 	row
 	  = render 'search'
 
+	.row.search-message.row-grid
+  	  h4.text-info.pull-left
+	    |Se han encontrado #{' '}
+	    span#componentes-categoria-size #{@componentes_categoria_size}
+	    |  registros
+
 	div id="list"
 	  = render 'list'
 
