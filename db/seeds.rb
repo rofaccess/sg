@@ -61,7 +61,7 @@ if Configuracion.all.blank?
 	end
 
 	# Crear ivas
-	Iva.create([{ valor: '10'}, { valor: '5'}])
+	Iva.create([{ valor: '10', descripcion: 'Aplicado a todas las mercaderias'}, { valor: '5', descripcion: 'Exceptuando algunas mercaderias'}])
 
 	# Crear 5 categorias de componentes
 	categorias = ['Placa Madre','Procesador','HDD','Monitor','Teclados y Mouses','Parlantes']

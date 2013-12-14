@@ -39,6 +39,8 @@ class ComponentesController < ApplicationController
   # POST /componentes.json
   def create
     @componente = Componente.new(componente_params)
+    comp = Componente.find_by_nombre(@componente.nombre)
+    if comp.blank?
       if @componente.save
         DepositoStock.cargar_deposito_stock(@componente.id)
         flash.notice = "Se ha creado el componente #{@componente.nombre}."
@@ -46,6 +48,10 @@ class ComponentesController < ApplicationController
       else
         flash.notice = "No se ha podido crear el componente #{@componente.nombre}."
       end
+    else
+      flash.notice = "No se ha podido crear el componente #{@componente.nombre} porque el nombre especificado ya existe"
+      update_list
+    end
   end
 
   def update_list
@@ -56,12 +62,22 @@ class ComponentesController < ApplicationController
   # PATCH/PUT /componentes/1
   # PATCH/PUT /componentes/1.json
   def update
-
-    if @componente.update(componente_params)
-      flash.notice = "Se ha actualizado los datos del componente #{@componente.nombre}."
-      update_list
-    else
+    componente = Componente.find_by_nombre((Componente.new(componente_params)).nombre)
+    if componente.blank?
+      if @componente.update(componente_params)
+        flash.notice = "Se ha actualizado los datos del componente #{@componente.nombre}."
+        update_list
+      else
         flash.alert = "No se ha podido actualizar el componente #{@componente.nombre}."
+      end
+    else
+      if componente.nombre == @componente.nombre
+        flash.notice = "Se ha actualizado los datos del componente #{@componente.nombre}."
+        update_list
+      else
+        flash.notice = "No se ha podido actualizar el componente #{@componente.nombre}, porque el nombre especificado ya existe"
+        update_list
+      end
     end
   end
 

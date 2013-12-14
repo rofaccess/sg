@@ -7,6 +7,6 @@ class CreateIvas < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :ivas, :valor, unique: true
+    #add_index :ivas, :valor, unique: true
   end
 end

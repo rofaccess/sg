@@ -11,6 +11,7 @@ class ComponentesCategoriaController < ApplicationController
   # GET /componentes_categorias.json
   def index
     @search = ComponenteCategoria.search(params[:q])
+    @componentes_categoria_size = @search.result.size
     @componentes_categoria = ComponenteCategoria.new
     if @search.sorts.empty?
       @componentes_categoria = @search.result.order('nombre').page(params[:page])
@@ -37,11 +38,17 @@ class ComponentesCategoriaController < ApplicationController
   # POST /componentes_categorias.json
   def create
     @componente_categoria = ComponenteCategoria.new(componente_categoria_params)
-
-    if @componente_categoria.save
+    categoria = ComponenteCategoria.find_by_nombre(@componente_categoria.nombre)
+    if categoria.blank?
+      if @componente_categoria.save
+        flash.notice= "Se ha creado la categoria #{@componente_categoria.nombre}."
         update_list
+      else
+        flash.alert = "No se ha podido crear la categoria #{@componente_categoria.nombre}."
+      end
     else
-        redirect_to componentes_categorias_path, alert: t('messages.componente_categoria_not_saved')
+      flash.notice = "No se ha podido crear la categoria #{@componente_categoria.nombre}, porque ya existe"
+      update_list
     end
   end
 
@@ -53,10 +60,22 @@ class ComponentesCategoriaController < ApplicationController
   # PATCH/PUT /componentes_categorias/1
   # PATCH/PUT /componentes_categorias/1.json
   def update
-    if @componente_categoria.update(componente_categoria_params)
-      update_list
+    categoria = ComponenteCategoria.find_by_nombre((ComponenteCategoria.new(componente_categoria_params)).nombre)
+    if categoria.blank?
+      if @componente_categoria.update(componente_categoria_params)
+        flash.notice = "Se ha actualizado la categoria #{@componente_categoria.nombre}."
+        update_list
+      else
+        flash.alert = "No se ha podido actualizar la categoria #{@componente_categoria.nombre}."
+      end
     else
-      redirect_to componentes_categoria_path, alert: t('messages.componente_categoria_not_update')
+      if categoria.nombre == @componente_categoria.nombre
+        flash.notice = "Se ha actualizado la categoria #{@componente_categoria.nombre}."
+        update_list
+      else
+        flash.notice = "No se ha podido actualizar la categoria #{@componente_categoria.nombre} porque el nombre especificado ya existe"
+        update_list
+      end
     end
   end
 

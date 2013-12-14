@@ -6,6 +6,6 @@ class CreateComponentesCategoria < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :componentes_categoria, :nombre, unique: true
+    #add_index :componentes_categoria, :nombre, unique: true
   end
 end

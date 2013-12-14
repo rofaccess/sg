@@ -1,2 +1,3 @@
 | $("#list").html("#{escape_javascript(render partial: 'list', format: 'html')}");
 | $('#paginator').html("#{escape_javascript(paginate(@componentes_categoria, remote: true)) }");
+| $('#componentes-categoria-size').text('#{@componentes_categoria_size}');

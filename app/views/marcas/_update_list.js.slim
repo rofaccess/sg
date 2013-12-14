@@ -6,4 +6,5 @@
 - else
   | $("#list").html("#{escape_javascript(render partial: 'list', format: 'html')}");
   | SideFormUI.closeForm();
-
+| var n = noty({text: '#{notice}', type: 'success'});
+| $('#marcas-size').text('#{@marcas_size}');

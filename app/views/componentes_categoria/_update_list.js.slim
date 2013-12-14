@@ -11,3 +11,5 @@
 - else
   | $("#list").html("#{escape_javascript(render partial: 'list', format: 'html')}");
   | SideFormUI.closeForm();
+| var n = noty({text: '#{notice}', type: 'success'});
+| $('#componentes-categoria-size').text('#{@componentes_categoria_size}');
