@@ -56,4 +56,15 @@ class PedidoCompra < ActiveRecord::Base
   def self.procesados
     PedidoCompra.where(estado: PedidosEstados::PROCESADO)
   end
+
+  def self.get_pedido_pendiente_procesado_con_componente(componente_id)
+    pedidos_compra = PedidoCompra.where('estado = ? OR estado = ?', PedidosEstados::PENDIENTE,PedidosEstados::PROCESADO)
+    pedidos_compra.each do |pedido|
+      pedido_compra_detalle = PedidoCompraDetalle.where('pedido_compra_id = ? AND componente_id = ?', pedido.id, componente_id).first
+      if not pedido_compra_detalle.blank?
+        return pedido
+      end
+    end
+    return nil
+  end
 end

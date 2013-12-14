@@ -56,6 +56,7 @@ class NotasDebitoCompraController < ApplicationController
 
   def create
     @nota_debito_compra = NotaDebitoCompra.new(nota_debito_compra_params)
+    CompraCuentaCorriente.actualizar_monto_debito(@nota_debito_compra.proveedor_id,@nota_debito_compra.total)
     if @nota_debito_compra.save
       flash.notice = "Se ha creado la nota de débito N˚ #{@nota_debito_compra.numero}."
       update_list

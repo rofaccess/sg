@@ -1,7 +1,7 @@
 .panel.panel-default
   .panel-heading
     h3.panel-title Pedido de compra N° #{@pedido_compra.numero}
-    span.fecha Generado el #{@pedido_compra.created_at}
+    span.fecha Generado el #{Formatter.format_datetime(@pedido_compra.created_at)}
   .panel-body
     .row.table-scroll
       table.table.table-condensed

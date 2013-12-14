@@ -66,9 +66,11 @@ class NotasCreditoCompraController < ApplicationController
 
     # Al crear una nota de credito en base a una factura, se carga cantidad_credito en el detalle de la factura
     # que representa la cantidad que se resta de la factura
-    actualizarCantidadCreditoFactura(@nota_credito_compra)
-
-    if @nota_credito_compra.save
+    if actualizarCantidadCreditoFactura(@nota_credito_compra)
+      flash.notice = "No se ha podido crear la nota de credito, porque al menos un componente ya no existe en la base de datos"
+      update_list
+    elsif @nota_credito_compra.save
+      CompraCuentaCorriente.actualizar_monto_credito(@nota_credito_compra.proveedor_id,@nota_credito_compra.total)
       flash.notice = "Se ha creado la nota de credito N˚ #{@nota_credito_compra.numero}."
       update_list
     end
@@ -76,6 +78,11 @@ class NotasCreditoCompraController < ApplicationController
 
   def actualizarCantidadCreditoFactura(nota_credito)
     nota_credito.nota_credito_compra_detalles.each do |n|
+      if Componente.find_by_id(n.componente_id).blank?
+        #flash.notice = "No se ha podido crear la nota de crédito N˚ #{nota_credito.numero}, porque el componente #{n.componente.nombre} ya no existe"
+        #update_list
+        return true
+      end
       factura_detalle = FacturaCompraDetalle.find(n.factura_compra_detalle_id)
       cantidad_credito = factura_detalle.cantidad_credito
       factura_detalle.update(cantidad_credito: (cantidad_credito + n.cantidad))
@@ -83,6 +90,7 @@ class NotasCreditoCompraController < ApplicationController
       # Resta del stock las cantidades de la nota de credito
       DepositoStock.restar_deposito_stock(nota_credito, n)
     end
+    return false
   end
 
   def update_list

@@ -43,4 +43,28 @@ class CompraCuentaCorriente < ActiveRecord::Base
 			cta_cte.update(saldo: (saldo_anterior + factura.total_factura))
 		end
 	end
+
+	def self.actualizar_monto_credito(proveedor_id, monto)
+		cta_cte = CompraCuentaCorriente.find_by(proveedor_id: proveedor_id)
+		if cta_cte.blank?
+			CompraCuentaCorriente.create(proveedor_id: proveedor_id,
+										 fecha_creacion: DateTime.now,
+										 monto_credito: monto)
+		else
+			monto_credito = cta_cte.monto_credito
+			cta_cte.update(monto_credito: (monto + monto_credito))
+		end
+	end
+
+	def self.actualizar_monto_debito(proveedor_id, monto)
+		cta_cte = CompraCuentaCorriente.find_by(proveedor_id: proveedor_id)
+		if cta_cte.blank?
+			CompraCuentaCorriente.create(proveedor_id: proveedor_id,
+									     fecha_creacion: DateTime.now,
+										 monto_debito: monto)
+		else
+			monto_debito = cta_cte.monto_debito
+			cta_cte.update(monto_debito: (monto + monto_debito))
+		end
+	end
 end

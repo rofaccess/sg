@@ -67,6 +67,34 @@ class ComponentesController < ApplicationController
   # DELETE /componentes/1
   # DELETE /componentes/1.json
   def destroy
+    # Verifica  los  pedidos_compra pendientes
+    pedido = PedidoCompra.get_pedido_pendiente_procesado_con_componente(@componente.id)
+    if pedido == nil
+      # Verifica  las ordenes pendientes
+      orden = OrdenCompra.get_orden_pendiente_semifacturado_con_componente(@componente.id)
+      if orden == nil
+
+        # Verifica los deposito_stock
+        deposito_stock = DepositoStock.find_by_mercaderia_id(@componente.id)
+        if(deposito_stock.existencia == 0)
+          DepositoStock.destroy_depositos_stock(@componente.id)
+          destroy_aux
+        else
+          flash.notice = "No se ha podido eliminar el componente #{@componente.nombre}, porque en el deposito #{deposito_stock.deposito.nombre} hay #{deposito_stock.existencia} en stock."
+          index
+        end
+
+      else
+        flash.notice = "No se ha podido eliminar el componente #{@componente.nombre}, porque figura en la orden de compra #{PedidosEstados::ESTADOS[orden.estado]} Nº #{orden.numero}"
+        index
+      end
+    else
+      flash.notice = "No se ha podido eliminar el componente #{@componente.nombre}, porque figura en el pedido de compra #{PedidosEstados::ESTADOS[pedido.estado]} Nº #{pedido.numero}"
+      index
+    end
+  end
+
+  def destroy_aux
     if @componente.destroy
       flash.notice = "Se ha eliminado el componente #{@componente.nombre}."
       index

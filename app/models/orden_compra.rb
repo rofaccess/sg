@@ -22,4 +22,17 @@ class OrdenCompra < ActiveRecord::Base
   	def total_requerido_f
   		Formatter.to_money(self.total_requerido)
 	end
+
+	def self.get_orden_pendiente_semifacturado_con_componente(componente_id)
+	    ordenes_compra = OrdenCompra.where('estado = ? OR estado = ?', PedidosEstados::PENDIENTE,PedidosEstados::SEMIFACTURADO)
+	    ordenes_compra.each do |orden|
+	      orden_compra_detalle = OrdenCompraDetalle.where('orden_compra_id = ? AND componente_id = ?', orden.id, componente_id).first
+	      if not orden_compra_detalle.blank?
+	        if orden_compra_detalle.cantidad_requerida > orden_compra_detalle.cantidad_recibida
+	        	return orden
+	      	end
+	      end
+	    end
+	    return nil
+  	end
 end

@@ -63,11 +63,17 @@ class ComponentesCategoriaController < ApplicationController
   # DELETE /componentes_categorias/1
   # DELETE /componentes_categorias/1.json
   def destroy
-    if @componente_categoria.destroy
-      flash.notice = "Se ha eliminado la categoria #{@componente_categoria.nombre}."
-      index
+    componente = Componente.find_by_componente_categoria_id(@componente_categoria.id)
+    if(componente.blank?)
+      if @componente_categoria.destroy
+        flash.notice = "Se ha eliminado la categoria #{@componente_categoria.nombre}."
+        index
+      else
+        flash.alert = "No se ha podido eliminar la categoria #{@componente_categoria.nombre}."
+      end
     else
-      flash.alert = "No se ha podido eliminar la categoria #{@componente_categoria.nombre}."
+      flash.notice = "No se ha podido eliminar #{@componente_categoria.nombre}, porque el componente #{componente.nombre} pertenece a esta categoria."
+      index
     end
   end
 

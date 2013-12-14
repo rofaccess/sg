@@ -54,4 +54,12 @@ class DepositoStock < ActiveRecord::Base
 	    # Actualiza la existencia_total del componente y el costo por el metodo PPP
 		componente.update(existencia_total: exist_total_nueva, costo: nuevo_costo)
   	end
+
+  	# Destruye cada deposito_stock que contenga la mercaderia especificada
+  	def self.destroy_depositos_stock(mercaderia_id)
+  		depositos_stock = DepositoStock.where('mercaderia_id = ?', mercaderia_id)
+  		depositos_stock.each do |stock|
+        	stock.destroy
+      	end
+  	end
 end

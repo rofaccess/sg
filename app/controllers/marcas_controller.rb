@@ -64,11 +64,17 @@ class MarcasController < ApplicationController
   # DELETE /marcas/1
   # DELETE /marcas/1.json
   def destroy
-    if @marca.destroy
-      flash.notice = "Se ha eliminado la marca #{@marca.nombre}."
-      index
+    componente = Componente.find_by_marca_id(@marca.id)
+    if(componente.blank?)
+      if @marca.destroy
+        flash.notice = "Se ha eliminado la marca #{@marca.nombre}."
+        index
+      else
+        flash.alert = "No se ha podido eliminar la marca #{@marca.nombre}."
+      end
     else
-      flash.alert = "No se ha podido eliminar la marca #{@marca.nombre}."
+      flash.notice = "No se ha podido eliminar #{@marca.nombre}, porque el componente #{componente.nombre} pertenece a esta marca."
+      index
     end
   end
 
