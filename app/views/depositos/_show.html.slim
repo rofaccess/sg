@@ -10,7 +10,7 @@
           | #{'  '} #{@deposito.type}
         .col-md-4
           strong Disponible:
-          | #{'  '} #{@deposito.disponible}
+          | #{'  '} #{@deposito.disponible ? 'Si' : 'No'}
       .row
         .col-md-5
           strong Nombre

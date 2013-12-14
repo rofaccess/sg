@@ -1,2 +1,3 @@
 | $("#list").html("#{escape_javascript(render partial: 'list', format: 'html')}");
 | $('#paginator').html("#{escape_javascript(paginate(@proveedores, remote: true)) }");
+| $('#proveedores-size').text('#{@proveedores_size}');

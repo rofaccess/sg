@@ -20,7 +20,7 @@ table.table.table-condensed
 		/td.show-nota-d = PedidosEstados::ESTADOS[p.estado]
 		td.show-nota-d = p.user.username
 		td.hidden-print
-		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_nota_debito_compra_path(p), remote: true
+		  /= link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_nota_debito_compra_path(p), remote: true
 		  = imprimir_link_show(nota_debito_compra_path(p, format: 'pdf'))
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, nota_debito_compra_path(p), method: 'delete', data: {confirm: "¿Desea eliminar la nota de debito Nº #{p.numero}?"}, remote: true
 

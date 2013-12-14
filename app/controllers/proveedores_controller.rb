@@ -14,6 +14,7 @@ class ProveedoresController < ApplicationController
 
   def resultados_proveedores(paginate)
     @search = Proveedor.search(params[:q])
+    @proveedores_size = @search.result.size
     if @search.sorts.empty?
       @proveedores = @search.result.order('nombre')
     else

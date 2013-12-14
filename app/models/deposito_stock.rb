@@ -62,4 +62,19 @@ class DepositoStock < ActiveRecord::Base
         	stock.destroy
       	end
   	end
+
+  	def self.cargar_deposito_stock(componente_id)
+  		depositos = DepositoMateriaPrima.all
+  		depositos.all.each do |deposito|
+
+	    	deposito_stock = DepositoStock.where("deposito_id = ? AND mercaderia_id = ?", deposito.id, componente_id).first
+	    	if deposito_stock.blank?
+	      		# Carga el deposito_stock por primera vez
+	      		DepositoStock.create( deposito_id: deposito.id,
+	                    			  mercaderia_id: componente_id,
+	                                  existencia_min: 10,
+	                                  existencia_max: 20)
+	    	end
+	    end
+  	end
 end

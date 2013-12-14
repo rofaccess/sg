@@ -10,10 +10,16 @@
   	  //li
   	    //= link_to 'Listado Actual', '#', class: 'listado-actual'
   	  //li
-  = link_to '<i class="icon-print"></i> Imprimir'.html_safe, imprimir_todos_proveedores_path(format: 'pdf'), class: 'pull-right btn btn-default print-link', id: 'imprimir-link', target: '_blank', data: {url: imprimir_todos_proveedores_path(format: 'pdf')}
 
-.row
+.row.form-search.row-grid
   = render 'search'
+
+.row.search-message.row-grid
+  h4.text-info.pull-left
+    |Se han encontrado #{' '}
+    span#proveedores-size #{@proveedores_size}
+    |  registros
+  = link_to '<i class="icon-print"></i> Imprimir'.html_safe, imprimir_todos_proveedores_path(format: 'pdf'), class: 'pull-right btn btn-default print-link', id: 'imprimir-link', target: '_blank', data: {url: imprimir_todos_proveedores_path(format: 'pdf')}
 
 #list
   = render 'list'

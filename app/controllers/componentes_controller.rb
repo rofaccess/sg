@@ -15,7 +15,7 @@ class ComponentesController < ApplicationController
     @componentes_size = @search.result.size
     @componente = Componente.new
     if @search.sorts.empty?
-      @componentes = @search.result.order('nombre').page(params[:page])
+      @componentes = @search.result.order('id desc').page(params[:page])
     else
       @componentes = @search.result.page(params[:page])
     end
@@ -39,11 +39,12 @@ class ComponentesController < ApplicationController
   # POST /componentes.json
   def create
     @componente = Componente.new(componente_params)
-
       if @componente.save
+        DepositoStock.cargar_deposito_stock(@componente.id)
+        flash.notice = "Se ha creado el componente #{@componente.nombre}."
         update_list
       else
-        redirect_to componentes_path, alert: t('messages.proveedor_not_saved')
+        flash.notice = "No se ha podido crear el componente #{@componente.nombre}."
       end
   end
 

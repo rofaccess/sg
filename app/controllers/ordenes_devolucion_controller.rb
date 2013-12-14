@@ -52,7 +52,8 @@ class OrdenesDevolucionController < ApplicationController
   end
 
   def new
-    @ordenes_compra = OrdenCompra.where(estado: PedidosEstados::PENDIENTE)
+    #@ordenes_compra = OrdenCompra.where(estado: PedidosEstados::PENDIENTE)
+    @ordenes_compra = OrdenCompra.all
     @orden_devolucion = OrdenDevolucion.new
   end
 
