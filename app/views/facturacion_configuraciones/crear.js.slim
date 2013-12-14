@@ -1,3 +1,4 @@
 | $('#add-modal').modal('hide');
 - resource_list = @tipo_resource == 'iva' ? 'iva_list' : 'plazos_list'
 | $('##{resource_list}').html("#{escape_javascript(render partial: resource_list, partials: 'html')}");
+| var n = noty({text: '#{notice}', type: 'success'});

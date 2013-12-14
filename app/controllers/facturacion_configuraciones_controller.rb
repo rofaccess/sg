@@ -32,11 +32,23 @@ class FacturacionConfiguracionesController < ApplicationController
 
   def crear
     get_resources
-
-  	if @resource.save
-  	  flash.notice = "Se ha creado exitosamente."
-  	else
-  	  flash.alert = "No ha creado."
+  	if @tipo_resource == 'plazo_pago'
+      if @resource.plazo_pago_detalles.size >  0
+        if @resource.save
+          @resource.update(cuotas: @resource.plazo_pago_detalles.size)
+          flash.notice = "Se ha creado el plazo #{@resource.nombre}"
+        else
+          flash.alert = "El plazo no se ha creado."
+        end
+      else
+        flash.notice = "El plazo de pago #{@resource.nombre} no se ha creado porque debe tener por lo menos una cuota."
+      end
+    elsif @tipo_resource == 'iva'
+  	  if @resource.save
+        flash.notice = "Se ha creado el iva #{@resource.valor} %."
+      else
+        flash.alert = "El iva no se ha creado."
+      end
   	end
   end
 
@@ -53,11 +65,26 @@ class FacturacionConfiguracionesController < ApplicationController
 
   def actualizar
     get_resources
-  	if @resource.update(resource_params)
-  	  flash.notice = "Se ha actualizado exitosamente."
-  	else
-  	  flash.alert = "No se ha podido actualizar."
-  	end
+
+    if @tipo_resource == 'plazo_pago'
+      if @resource.plazo_pago_detalles.size >  0
+        if @resource.update(resource_params)
+          @resource.update(cuotas: @resource.plazo_pago_detalles.size)
+          flash.notice = "Se ha actualizado el plazo #{@resource.nombre}"
+        else
+          flash.alert = "El plazo no se ha actualizado."
+        end
+      else
+        flash.notice = "El plazo de pago #{@resource.nombre} no se ha actualizado porque debe tener por lo menos una cuota."
+      end
+    elsif @tipo_resource == 'iva'
+      if @resource.update(resource_params)
+        flash.notice = "Se ha actualizado el iva #{@resource.valor} %."
+      else
+        flash.alert = "El iva no se ha actualizado."
+      end
+    end
+
     render 'crear'
   end
 
@@ -99,7 +126,7 @@ class FacturacionConfiguracionesController < ApplicationController
   	if tipo == 'iva'
   		params.require(:iva).permit(:valor, :descripcion)
   	elsif tipo == 'plazo_pago'
-  		params.require(:plazo_pago).permit(:nombre, :cuotas, :descripcion,
+  		params.require(:plazo_pago).permit(:id,:nombre, :cuotas, :descripcion,
         plazo_pago_detalles_attributes: [:id, :cant_dias, :_destroy])
   	end
   end

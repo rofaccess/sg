@@ -1,7 +1,7 @@
 .row.row-grid
   .nested-fields
     .field.col-md-4
-      = f.text_field :cant_dias, class: 'form-control clear cant-dias', maxLength: Domain::CANT_DIAS
+      = f.text_field :cant_dias, class: 'form-control clear cant-dias required', maxLength: Domain::CANT_DIAS
     = link_to_remove_association f, class: 'btn btn-default' do
       i.icon-trash.icon-large
 javascript:
