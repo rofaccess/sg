@@ -36,7 +36,10 @@
               td
                 = detalle_form.text_field :cantidad_cotizada, class: 'cantidad-field pull-right form-control',maxLength: Domain::CANTIDAD
               td
+
                 = detalle_form.text_field :costo_unitario, value: pedido_detalle.costo_unitario.to_i, class: 'monto-field pull-right form-control', maxLength: Domain::MONTO
+              td
+                strong.text-right #{@config.simbolo_moneda}
 
     .row
       .col-md-12
@@ -58,3 +61,4 @@ javascript:
     $(this).parents('form').submit();
     e.preventDefault();
   });
+

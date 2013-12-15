@@ -51,7 +51,8 @@ var pedidosCotizacionUI = (function(){
 				}
 			});
 
-		}
+		},
+
 	};
 }());
 
