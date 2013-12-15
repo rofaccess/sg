@@ -128,7 +128,9 @@ class ComponentesController < ApplicationController
   end
 
   def imprimir_listado
-    resultados_componentes(false)
+    @componentes = Componente.all
+    @search = Componente.search(params[:q])
+ #   resultados_componentes(false)
     respond_to do |format|
       format.pdf { render :pdf => "componentes",
                           :layout => 'pdf.html',
