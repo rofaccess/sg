@@ -93,6 +93,7 @@ Sg::Application.routes.draw do
     collection do
       get 'nueva_marca'
       get 'nueva_categoria'
+      get 'imprimir_listado'
     end
   end
 

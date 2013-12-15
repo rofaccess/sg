@@ -127,6 +127,17 @@ class ComponentesController < ApplicationController
 
   end
 
+  def imprimir_listado
+    resultados_componentes(false)
+    respond_to do |format|
+      format.pdf { render :pdf => "componentes",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
+  end
+
   def nueva_categoria
     @componente_categoria = ComponenteCategoria.new
   end
