@@ -10,8 +10,8 @@ table.table.table-condensed
       th Marca
       th Categoria
       th Costo Uni.
-      th.text-right Cantidad Devuelta
-      th.text-right Motivo
+      th Cantidad Devuelta
+      th Motivo
   tbody
     - @orden_devolucion.orden_devolucion_detalles.each do |orden_detalle|
       tr
@@ -24,12 +24,16 @@ table.table.table-condensed
           td Sin Categoria
         - else
           td = orden_detalle.componente.componente_categoria.nombre
-        td.monto-text = orden_detalle.costo_unitario
-        td.text-right = orden_detalle.cantidad_devuelta
+        td.monto = orden_detalle.costo_unitario
+        td = orden_detalle.cantidad_devuelta
         td = orden_detalle.motivo
 
 
-.panel-footer
-  h3.panel-title.text-right Total Orden: #{@orden_devolucion.total_orden}
+div.alert.alert-info.alert-dismissable.text-right.h3
+  |TOTAL ORDEN:  #{' '}
+  strong.h3.monto #{@orden_devolucion.total_orden}
+
+javascript:
+  ordenesDevolucionUI.formatearMontos();
 
 
