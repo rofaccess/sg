@@ -85,6 +85,7 @@
 .panel-footer
   button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
   = link_to '<i class="icon-print icon-large"></i> Imprimir Factura'.html_safe, factura_compra_path(@factura_compra.id, format: 'pdf'), class: 'btn btn-default pull-right'
+
 javascript:
   facturasCompraUI.formatearMontos();
 

@@ -24,6 +24,8 @@ table.table.table-condensed
 		  - if p.estado == PedidosEstados::PENDIENTE
 		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, orden_compra_path(p), method: 'delete', data: {confirm: "¿Desea eliminar la orden de compra Nº #{p.numero}?"}, remote: true
 
+.hide.simbolo_moneda = @config.simbolo_moneda
+
 javascript:
 	$('.monto-text').maskMoney({isDiv: true});
     $('.monto-text').maskMoney('mask');

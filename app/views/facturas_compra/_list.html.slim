@@ -5,9 +5,9 @@ table.table.table-condensed
 	  th = sort_link(@search, :condicion_pago_id, "Condicion de Pago", {}, method: :get, remote: true)
 	  th = sort_link(@search, :proveedor_id, "Proveedor", {}, method: :get, remote: true)
 	  th = sort_link(@search, :fecha, "Fecha", {}, method: :get, remote: true)
-	  th.text-right = sort_link(@search, :total_factura, "Importe", {}, method: :get, remote: true)
+	  th = sort_link(@search, :total_factura, "Importe", {}, method: :get, remote: true)
 	  th = sort_link(@search, :estado, "Estado", {}, method: :get, remote: true)
-	  th.text-right = sort_link(@search, :orden_compra_id, "Orden de Compra", {}, method: :get, remote: true)
+	  th = sort_link(@search, :orden_compra_id, "Orden de Compra", {}, method: :get, remote: true)
 	  th = sort_link(@search, :user_id, "Usuario", {}, method: :get, remote: true)
 	  th.hidden-print
   tbody
@@ -17,18 +17,18 @@ table.table.table-condensed
 		td.show-factura = p.condicion_pago.nombre
 		td.show-factura = p.proveedor.nombre
 		td.show-factura = Formatter.format_date(p.fecha)
-		td.show-factura.monto.text-right = p.total_factura
+		td.show-factura.monto = p.total_factura
 		td.show-factura = PedidosEstados::ESTADOS[p.estado]
-		td.show-factura.text-right = p.orden_compra.numero
+		td.show-factura = p.orden_compra.numero
 		td.show-factura = p.user.username
 		td.hidden-print
 		  /= link_to '<i class="icon-print icon-large"></i> '.html_safe, imprimir_factura_factura_compra_path(p), remote: true
 		  = link_to '<i class="icon-print icon-large"></i> '.html_safe, factura_compra_path(p, format: 'pdf'), target: '_blank'
 		  /= link_to '<i class="icon-trash icon-large"></i>'.html_safe, factura_compra_path(p), method: 'delete', data: {confirm: "¿Desea eliminar la factura Nº #{p.numero}?"}, remote: true
 
-/.hide.simbolo_moneda = @config.simbolo_moneda
+.hide.simbolo_moneda = @config.simbolo_moneda
 javascript:
-  $('.monto').maskMoney({isDiv: true});
-  $('.monto').maskMoney('mask');
+  //$('.monto').maskMoney({isDiv: true});
+  //$('.monto').maskMoney('mask');
   configImprimir("#{params[:q].nil? ? '' : '?'+params[:q].to_query('q')}");
-  //facturasCompraUI.formatearMontos();
+  facturasCompraUI.formatearMontos();

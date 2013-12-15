@@ -12,6 +12,7 @@ var ordenesCompraUI = (function(){
 			});
 		},
 
+
 		init: function(){
 			$('body').on('click', '.orden_compra_pedido_compra_detalles, .recargar-detalles', function(e){
 				ordenesCompraUI.cargarPedidosDetalles($(this).data('pedido-id'));
@@ -81,6 +82,16 @@ var ordenesCompraUI = (function(){
 				var url = $(this).attr('href');
 				$(this).attr('href', url+'?'+data);
 			});
+		},
+
+		//Todos los montos en la UI de Pedido de compra se formatean como moneda
+		formatearMontos: function(){
+			$('.monto').each(function() {
+				$(this).text().replace(/^[^\d]*/, '');
+    			$(this).number( true, 0,  ',', '.' );
+    			var monto = $(this).text();
+    			$(this).text($('.simbolo_moneda').text()+ ' ' + monto);
+  			});
 		}
 	};
 }());

@@ -28,8 +28,12 @@ table.table.table-condensed
           td = orden_detalle.componente.componente_categoria.nombre
         td.monto-text = orden_detalle.cantidad_requerida
         td.monto-text = orden_detalle.cantidad_recibida
-        td.monto-text = orden_detalle.costo_unitario_f
-        td.monto-text = Formatter.to_money(orden_detalle.cantidad_recibida * orden_detalle.costo_unitario)
+        td.monto.text-right = orden_detalle.costo_unitario_f
+        td.monto.text-right = Formatter.to_money(orden_detalle.cantidad_recibida * orden_detalle.costo_unitario)
 
-.panel-footer
-  h3.panel-title.text-right Total: #{@orden_compra.total_requerido_f}
+div.alert.alert-info.alert-dismissable.text-right.h3
+  |TOTAL:  #{' '}
+  strong.h3.monto #{@orden_compra.total_requerido_f}
+
+javascript:
+  ordenesCompraUI.formatearMontos();
