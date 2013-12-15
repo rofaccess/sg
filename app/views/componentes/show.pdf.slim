@@ -1,0 +1,29 @@
+= render partial: 'compartido/header_impresion', formats: 'html'
+h3 Componente:  #{@componente.nombre}
+
+table.table.table-condensed
+  thead
+    tr
+      th Nombre
+      th Marca
+      th Categoria
+      th Costo
+      th Iva
+      th Existencia
+  tbody
+    tr
+      td = @componente.nombre
+      td = @componente.marca.nil? ? '' : @componente.marca.nombre
+      td = @componente.componente_categoria.nombre
+      td.monto-text = @componente.costo
+      - if @componente.iva.blank?
+        td Sin Iva
+      - else
+        td #{@componente.iva.valor} %
+      td.cantidad-text.text-right = @componente.existencia_total
+      td
+
+javascript:
+  // Enmascarar los campos numericos
+  $('.monto-text, .cantidad-text').maskMoney({isDiv: true});
+  $('.monto-text, .cantidad-text').maskMoney('mask');

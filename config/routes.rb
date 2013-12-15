@@ -89,7 +89,6 @@ Sg::Application.routes.draw do
   end
 
   resources :componentes do
-
     collection do
       get 'nueva_marca'
       get 'nueva_categoria'

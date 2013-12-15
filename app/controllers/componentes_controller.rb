@@ -12,19 +12,21 @@ class ComponentesController < ApplicationController
   # GET /componentes
   # GET /componentes.json
   def index
-    @search = Componente.search(params[:q])
-    @componentes_size = @search.result.size
     @componente = Componente.new
-    if @search.sorts.empty?
-      @componentes = @search.result.order('id desc').page(params[:page])
-    else
-      @componentes = @search.result.page(params[:page])
-    end
+    resultados_componentes(true)
   end
 
   # GET /componentes/1
   # GET /componentes/1.json
   def show
+    respond_to do |format|
+      format.js  {render 'show'}
+      format.pdf { render :pdf => "componente",
+                          :layout => 'pdf.html',
+                          :header => { :right => '[page] de [topage]',
+                                        :left => "Impreso el  #{Formatter.format_date(DateTime.now)} por #{current_user.username}" }
+                  }
+    end
   end
 
   # GET /componentes/new
@@ -121,6 +123,20 @@ class ComponentesController < ApplicationController
     end
   end
 
+  def resultados_componentes(paginate)
+    @search = Componente.search(params[:q])
+    if @search.sorts.empty?
+      @componentes = @search.result.order('id desc').page(params[:page])
+    else
+      @componentes = @search.result.page(params[:page])
+    end
+    if paginate
+      @componentes_size = @search.result.size
+      @componentes = @componentes.page(params[:page])
+    end
+
+  end
+
   def nueva_marca
 
     @marca = Marca.new
@@ -128,9 +144,7 @@ class ComponentesController < ApplicationController
   end
 
   def imprimir_listado
-    @componentes = Componente.all
-    @search = Componente.search(params[:q])
- #   resultados_componentes(false)
+    resultados_componentes(false)
     respond_to do |format|
       format.pdf { render :pdf => "componentes",
                           :layout => 'pdf.html',
