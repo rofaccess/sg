@@ -1,7 +1,7 @@
 .modal-body
   .well
     button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
-    /Cabecera
+    //Cabecera
     h3 Nota de Credito Nº  #{@nota_credito_compra.numero}
     .col-md-12
       .row
@@ -23,7 +23,7 @@
           strong Usuario:
           | #{'  '} #{@nota_credito_compra.user.username}
 
-  /Detalles
+  //Detalles
   br
   .table-scroll
     table.table.table-condensed.table-striped
@@ -33,11 +33,10 @@
           th Componente
           th Marca
           th Categoria
-          th.text-right Cantidad
-          th.text-right Costo Unitario
-          th.text-right Total
+          th Cantidad
+          th Costo Unitario
+          th Total
       tbody
-        - total = 0
         - cont = 1
         - @nota_credito_compra.nota_credito_compra_detalles.each do |p|
           tr
@@ -52,19 +51,22 @@
               td Sin Categoria
             - else
               td = p.componente.componente_categoria.nombre
-            td.text-right = p.cantidad
-            td.text-right.monto-s = p.costo_unitario
-            td.text-right.monto-s #{p.costo_unitario * p.cantidad}
+            td = p.cantidad
+            td.monto-modal = p.costo_unitario
+            td.monto-modal = (p.costo_unitario * p.cantidad)
             - cont += 1
-    .row.col-md-9
-    strong.row.col-md-2.text-right Total:
-    .row.col-md-2.total.monto-s.text-right #{@nota_credito_compra.total}
 
-/Botones Cancelar y generar
+    div.alert.alert-info.alert-dismissable.text-right.h3
+      |TOTAL NOTA:  #{' '}
+      strong.h3.monto-modal #{@nota_credito_compra.total}
+//Botones Cancelar y generar
 .panel-footer
   button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cerrar
   = link_to '<i class="icon-print icon-large"></i> Imprimir'.html_safe, nota_credito_compra_path(@nota_credito_compra.id, format: 'pdf'), class: 'btn btn-default pull-right'
+
+
 javascript:
-  $('.monto-s').maskMoney({isDiv: true});
-  $('.monto-s').maskMoney('mask');
+  notasCreditoCompraUI.formatearMontos();
+  //$('.monto-s').maskMoney({isDiv: true});
+  //$('.monto-s').maskMoney('mask');
 
