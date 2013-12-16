@@ -13,6 +13,16 @@ var notasDebitoCompraUI = (function(){
 			$('body').on('click', '.show-nota-d', function(e){
 				$.get($(this).parents('tr').data('url'), {}, function(){}, 'script');
 			});
+		},
+
+		//Todos los montos  se formatean como moneda
+		formatearMontos: function(){
+			$('.monto').each(function() {
+				$(this).text().replace(/^[^\d]*/, '');
+    			$(this).number( true, 0,  ',', '.' );
+    			var monto = $(this).text();
+    			$(this).text($('.simbolo_moneda').text()+ ' ' + monto);
+  			});
 		}
 
 	};

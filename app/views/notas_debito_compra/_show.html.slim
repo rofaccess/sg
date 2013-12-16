@@ -26,5 +26,6 @@
   = link_to '<i class="icon-print icon-large"></i> Imprimir'.html_safe, nota_debito_compra_path(@nota_debito_compra.id, format: 'pdf'), class: 'btn btn-default pull-right', target: '_blank'
 
 javascript:
-  $('.monto').maskMoney({isDiv: true});
-  $('.monto').maskMoney('mask');
+  notasDebitoCompraUI.formatearMontos();
+  //$('.monto').maskMoney({isDiv: true});
+  //$('.monto').maskMoney('mask');
