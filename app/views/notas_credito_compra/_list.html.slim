@@ -22,6 +22,7 @@ table.table.table-condensed
 		  /= link_to '<i class="icon-trash icon-large"></i>'.html_safe, nota_credito_compra_path(p), method: 'delete', data: {confirm: "¿Desea eliminar la nota de credito Nº #{p.numero}?"}, remote: true
 
 .hide.simbolo_moneda = @config.simbolo_moneda
+
 javascript:
   notasCreditoCompraUI.formatearMontos();
 

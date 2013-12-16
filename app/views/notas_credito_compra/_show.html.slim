@@ -24,41 +24,38 @@
           | #{'  '} #{@nota_credito_compra.user.username}
 
   //Detalles
-  br
-  .table-scroll
-    table.table.table-condensed.table-striped
-      thead
-        tr.text-muted
-          th #
-          th Componente
-          th Marca
-          th Categoria
-          th Cantidad
-          th Costo Unitario
-          th Total
-      tbody
-        - cont = 1
-        - @nota_credito_compra.nota_credito_compra_detalles.each do |p|
-          tr
-            td = cont
-            td = p.componente.nombre
-            - if p.componente.marca.blank?
-              td Sin Marca
-            - else
-              td = p.componente.marca.nombre
 
-            - if p.componente.componente_categoria.blank?
-              td Sin Categoria
-            - else
-              td = p.componente.componente_categoria.nombre
-            td = p.cantidad
-            td.monto-modal = p.costo_unitario
-            td.monto-modal = (p.costo_unitario * p.cantidad)
-            - cont += 1
-
-    div.alert.alert-info.alert-dismissable.text-right.h3
-      |TOTAL NOTA:  #{' '}
-      strong.h3.monto-modal #{@nota_credito_compra.total}
+  table.table.table-condensed.table-striped
+    thead
+      tr.text-muted
+        th #
+        th Componente
+        th Marca
+        th Categoria
+        th Cantidad
+        th Costo Unitario
+        th Total
+    tbody
+      - cont = 1
+      - @nota_credito_compra.nota_credito_compra_detalles.each do |p|
+        tr
+          td = cont
+          td = p.componente.nombre
+          - if p.componente.marca.blank?
+            td Sin Marca
+          - else
+            td = p.componente.marca.nombre
+          - if p.componente.componente_categoria.blank?
+            td Sin Categoria
+          - else
+            td = p.componente.componente_categoria.nombre
+          td = p.cantidad
+          td.monto-modal = p.costo_unitario
+          td.monto-modal = (p.costo_unitario * p.cantidad)
+          - cont += 1
+  div.alert.alert-info.alert-dismissable.text-right.h3
+    |TOTAL NOTA:  #{' '}
+    strong.h3.monto-modal #{@nota_credito_compra.total}
 //Botones Cancelar y generar
 .panel-footer
   button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cerrar

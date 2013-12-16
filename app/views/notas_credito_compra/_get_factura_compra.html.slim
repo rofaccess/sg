@@ -20,7 +20,7 @@
           th Componente
           th Marca
           th Categoria
-          th.text-right.col-md-2 Cantidad
+          th.text-right.col-md-1 Cantidad
           th.text-right Precio
           th.text-right Total
           th
@@ -45,16 +45,18 @@
                 = d.hidden_field(:componente_id, value: o.componente_id)
                 = d.hidden_field(:costo_unitario, value: o.costo_unitario)
                 = d.hidden_field(:factura_compra_detalle_id, value: o.id)
-
-  dl.dl-horizontal.pull-right
-    dt Total:
-    dd.monto-modal.total
-  br
-  br
+    br
+    br
+    div.alert.alert-info.alert-dismissable.text-right.h4
+      dl.dl-horizontal.pull-right
+        dt Total:
+        dd.monto-modal.total
+      br
+      br
   .modal-footer
     button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
     = submit_tag 'Guardar', class: 'btn btn-success pull-right'
-.hide.simbolo_moneda = @config.simbolo_moneda
+
 javascript:
   notasCreditoCompraUI.initInGetFacturaCompra();
   $('.numNotaCredito').validCampoFranz('0123456789-/.');
