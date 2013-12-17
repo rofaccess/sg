@@ -58,6 +58,11 @@ module AuditoriaHelper
       update: 'Se ha actualizado la tabla de configuraciones',
       destroy: '',
     },
+    componente: {
+      create: 'Se ha creado el componente VAR',
+      update: 'Se ha actualizado el componente VAR',
+      destroy: 'Se ha eliminado el componente VAR',
+    },
     auth: {
 
     }
@@ -75,6 +80,9 @@ module AuditoriaHelper
     persona: {
       empleado: 'Empleados',
       proveedor: 'Proveedores'
+    },
+    mercaderia: {
+      componente: 'Componentes'
     },
     configuracion: 'Configuraciones',
     auth: 'Autenticación'
@@ -94,6 +102,9 @@ module AuditoriaHelper
     if model == 'User'
       variable = objecto.username
     elsif model == 'Persona'
+      variable = objecto.nombre
+      model = objecto.type
+    elsif model == 'Mercaderia'
       variable = objecto.nombre
       model = objecto.type
     elsif model == 'Configuracion' || model == 'Auth'

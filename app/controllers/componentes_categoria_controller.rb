@@ -12,7 +12,7 @@ class ComponentesCategoriaController < ApplicationController
   def index
     @search = ComponenteCategoria.search(params[:q])
     @componentes_categoria_size = @search.result.size
-    @componentes_categoria = ComponenteCategoria.new
+    @componente_categoria = ComponenteCategoria.new
     if @search.sorts.empty?
       @componentes_categoria = @search.result.order('nombre').page(params[:page])
     else
@@ -38,17 +38,11 @@ class ComponentesCategoriaController < ApplicationController
   # POST /componentes_categorias.json
   def create
     @componente_categoria = ComponenteCategoria.new(componente_categoria_params)
-    categoria = ComponenteCategoria.find_by_nombre(@componente_categoria.nombre)
-    if categoria.blank?
-      if @componente_categoria.save
-        flash.notice= "Se ha creado la categoria #{@componente_categoria.nombre}."
-        update_list
-      else
-        flash.alert = "No se ha podido crear la categoria #{@componente_categoria.nombre}."
-      end
-    else
-      flash.notice = "No se ha podido crear la categoria #{@componente_categoria.nombre}, porque ya existe"
+    if @componente_categoria.save
+      flash.notice= "Se ha creado la categoria #{@componente_categoria.nombre}."
       update_list
+    else
+      flash.alert = "No se ha podido crear la categoria #{@componente_categoria.nombre}."
     end
   end
 
@@ -60,22 +54,11 @@ class ComponentesCategoriaController < ApplicationController
   # PATCH/PUT /componentes_categorias/1
   # PATCH/PUT /componentes_categorias/1.json
   def update
-    categoria = ComponenteCategoria.find_by_nombre((ComponenteCategoria.new(componente_categoria_params)).nombre)
-    if categoria.blank?
-      if @componente_categoria.update(componente_categoria_params)
-        flash.notice = "Se ha actualizado la categoria #{@componente_categoria.nombre}."
-        update_list
-      else
-        flash.alert = "No se ha podido actualizar la categoria #{@componente_categoria.nombre}."
-      end
+    if @componente_categoria.update(componente_categoria_params)
+      flash.notice = "Se ha actualizado la categoria #{@componente_categoria.nombre}."
+      update_list
     else
-      if categoria.nombre == @componente_categoria.nombre
-        flash.notice = "Se ha actualizado la categoria #{@componente_categoria.nombre}."
-        update_list
-      else
-        flash.notice = "No se ha podido actualizar la categoria #{@componente_categoria.nombre} porque el nombre especificado ya existe"
-        update_list
-      end
+      flash.alert = "No se ha podido actualizar la categoria #{@componente_categoria.nombre}."
     end
   end
 
@@ -94,6 +77,15 @@ class ComponentesCategoriaController < ApplicationController
       flash.notice = "No se ha podido eliminar #{@componente_categoria.nombre}, porque el componente #{componente.nombre} pertenece a esta categoria."
       index
     end
+  end
+
+  def check_nombre
+    componente_categoria = ComponenteCategoria.where(nombre: params[:componente_categoria][:nombre])
+    componente_categoria_exist = false
+    if componente_categoria.blank? || componente_categoria.first.id == params[:componente_categoria_id].to_i
+      componente_categoria_exist = true
+    end
+    render json: componente_categoria_exist
   end
 
   private

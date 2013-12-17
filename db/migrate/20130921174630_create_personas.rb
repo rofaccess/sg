@@ -17,7 +17,7 @@ class CreatePersonas < ActiveRecord::Migration
       t.timestamps
     end
 
-  add_index :personas, :email, unique: true
+  #add_index :personas, :email, unique: true
   add_foreign_key(:personas, :ciudades, column: 'ciudad_id', options: 'ON DELETE RESTRICT')
   end
 end

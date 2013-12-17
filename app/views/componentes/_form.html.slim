@@ -11,6 +11,8 @@
       = FormBuilder::collection_select(f, :componente_categoria_id, ComponenteCategoria.all, :id, :nombre, '', nil, 'col-md-8 with-btn', 'required', nil, false, [true, nueva_categoria_componentes_path])
       = FormBuilder::collection_select(f, :iva_id, Iva.all, :id, :valor, '', nil, 'col-md-8 with-btn required', 'required', nil, false)
 
+      = hidden_field_tag :componente_id, @componente.id
+
       button.btn.btn-default.close-add-form [type="button"] Cancelar
       = f.submit 'Guardar', class: 'btn btn-primary'
 
@@ -45,4 +47,38 @@
               // Y se envia el formulario
               $(this).parents('form').submit();
               e.preventDefault();
+            });
+            $(function(){
+              var componenteForm = "#{@componente.id.nil? ? '#new_componente' : '#edit_componente_'+ @componente.id.to_s}";
+              // Validador del formulario
+              $(componenteForm).validate({
+                rules: {
+                  'componente[nombre]':{
+                    remote: {
+                      url: "/componentes/check_nombre",
+                      type: "get",
+                      data: {
+                        componente_id: $('#componente_id').val()
+                      }
+                    }
+                 }
+                },
+                messages: {
+                  'componente[nombre]': 'El nombre de componente ya existe en el sistema.'
+                }
+              });
+
+              //Evento para el submit
+              //$('#new_user_submit').click(function(e){
+                // Controlar que sea valido y se este seleccionado algun rol
+                //if(!$(userForm).valid()){return false;}
+                //if($('#user_roles').find('input:checked').length == 0){
+                  //$('#user_roles .alert').addClass('show');
+                  //return false;
+                //}
+                // enciar el formulario
+                //$(userForm).submit();
+                //e.preventDefault();
+              //});
+
             });
