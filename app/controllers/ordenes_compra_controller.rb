@@ -104,6 +104,8 @@ class OrdenesCompraController < ApplicationController
           end
         end
 
+        orden_compra.total_requerido = total_requerido
+
         if orden_compra.orden_compra_detalles.size > 0
           if orden_compra.save
             ordenes_cont +=1
