@@ -4,9 +4,9 @@ table.table.table-condensed
 	  th = sort_link(@search, :nombre, {}, method: :get, remote: true)
 	  th = sort_link(@search, :marca_id, {}, method: :get, remote: true)
 	  th = sort_link(@search, :componente_categoria_id, "Categoria", {}, method: :get, remote: true)
-	  th.text-right = sort_link(@search, :costo, {}, method: :get, remote: true)
+	  th = sort_link(@search, :costo, {}, method: :get, remote: true)
 	  th = sort_link(@search, :iva, {}, method: :get, remote: true)
-	  th.text-right = sort_link(@search, :existencia_total, {}, method: :get, remote: true)
+	  th.text-align: center = sort_link(@search, :existencia_total, {}, method: :get, remote: true)
 	  th
   tbody
 	- @componentes.each do |p|
@@ -20,17 +20,26 @@ table.table.table-condensed
 			td Sin Categoria
 		- else
 		  	td = p.componente_categoria.nombre
-		td.monto-text = p.costo
+		td.monto = p.costo
 		- if p.iva.blank?
 			td Sin Iva
 		- else
 		  	td #{p.iva.valor} %
-		td.text-right = p.existencia_total
+		td.text-align: center = p.existencia_total
 		td
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_componente_path(p), remote: true
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, componente_path(p), method: 'delete', data: {confirm: "¿Desea eliminar el componente #{p.nombre}?"}, remote: true
+
 		  /= imprimir_link_show(componente_path(p, format: 'pdf'))
+
+.hide.simbolo_moneda = @config.simbolo_moneda
 javascript:
+  $('.monto').each(function() {
+      $(this).text().replace(/^[^\d]*/, '');
+      $(this).number( true, 0,  ',', '.' );
+      var monto = $(this).text();
+      $(this).text($('.simbolo_moneda').text()+ ' ' + monto);
+  });
   // Enmascarar los campos numericos
   $('.monto-text, .cantidad-text').maskMoney({isDiv: true});
   $('.monto-text, .cantidad-text').maskMoney('mask');
