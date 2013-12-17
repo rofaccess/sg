@@ -19,6 +19,12 @@ class AuditoriasController < ApplicationController
       elsif params[:q][:item_type_eq] == 'Proveedor'
         params[:q][:item_type_eq] = ""
         params[:q] = params[:q].merge(type_subclase_eq: "Proveedor")
+      elsif params[:q][:item_type_eq] == 'Componente'
+        params[:q][:item_type_eq] = ""
+        params[:q] = params[:q].merge(type_subclase_eq: "Componente")
+      elsif params[:q][:item_type_eq] == 'DepositoMateriaPrima'
+        params[:q][:item_type_eq] = ""
+        params[:q] = params[:q].merge(type_subclase_eq: "DepositoMateriaPrima")
       end
     end
     @search = PaperTrail::Version.search(params[:q])

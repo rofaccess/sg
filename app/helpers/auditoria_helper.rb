@@ -58,6 +58,31 @@ module AuditoriaHelper
       update: 'Se ha actualizado la tabla de configuraciones',
       destroy: '',
     },
+    deposito_materia_prima: {
+      create: 'Se ha creado el deposito VAR',
+      update: 'Se ha actualizado el deposito VAR',
+      destroy: 'Se ha eliminado el deposito VAR',
+    },
+    deposito_producto_terminado: {
+      create: 'Se ha creado el deposito VAR',
+      update: 'Se ha actualizado el deposito VAR',
+      destroy: 'Se ha eliminado el deposito VAR',
+    },
+    componente: {
+      create: 'Se ha creado el componente VAR',
+      update: 'Se ha actualizado el componente VAR',
+      destroy: 'Se ha eliminado el componente VAR',
+    },
+    marca: {
+      create: 'Se ha creado la marca VAR',
+      update: 'Se ha actualizado la marca VAR',
+      destroy: 'Se ha eliminado la marca VAR',
+    },
+    componente_categoria: {
+      create: 'Se ha creado la categoria VAR',
+      update: 'Se ha actualizado la categoria VAR',
+      destroy: 'Se ha eliminado la categoria VAR',
+    },
     auth: {
 
     }
@@ -76,6 +101,15 @@ module AuditoriaHelper
       empleado: 'Empleados',
       proveedor: 'Proveedores'
     },
+    mercaderia: {
+      componente: 'Componentes'
+    },
+    deposito: {
+      deposito_materia_prima: 'Despositos de Materia Prima',
+      deposito_producto_terminado: 'Despositos de Producto Terminado'
+    },
+    marca: 'Marcas',
+    componente_categoria: 'Categorias de Componente',
     configuracion: 'Configuraciones',
     auth: 'Autenticación'
   }
@@ -93,7 +127,17 @@ module AuditoriaHelper
     variable  = ''
     if model == 'User'
       variable = objecto.username
+    elsif model == 'Marca'
+      variable = objecto.nombre
+    elsif model == 'ComponenteCategoria'
+      variable = objecto.nombre
     elsif model == 'Persona'
+      variable = objecto.nombre
+      model = objecto.type
+    elsif model == 'Mercaderia'
+      variable = objecto.nombre
+      model = objecto.type
+    elsif model == 'Deposito'
       variable = objecto.nombre
       model = objecto.type
     elsif model == 'Configuracion' || model == 'Auth'

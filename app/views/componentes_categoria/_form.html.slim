@@ -1,18 +1,38 @@
-- if not @componente_categoria.blank?
-	= form_for @componente_categoria, html: {class: 'form-horizontal'}, remote: true do |f|
-	  - unless defined? provider_abm
-	    button.close.close-add-form [type="button" aria-hidden="true"] &times;
-	    h3 = @componente_categoria.id.nil? ? 'Agregar Categoria' : 'Editar Categoria'
-	  -else
-	    = hidden_field_tag 'select_categoria', 'true'
-	  .row
-	    .col-md-12
-	      p
-	      = FormBuilder::text_field_h(f, :nombre,{input_class: 'required clear', max_length: Domain::NOMBRE, autofocus: true})
-	      - unless defined? provider_abm
-	        button.btn.btn-default.close-add-form [type="button"] Cancelar
-	      - else
-	        button.btn.btn-default [type="button" data-dismiss="modal" aria-hidden="true"] Cancelar
-	      = f.submit 'Guardar', class: 'btn btn-primary'
+= form_for @componente_categoria, html: {class: 'form-horizontal'}, remote: true do |f|
+	- unless defined? provider_abm
+	  button.close.close-add-form [type="button" aria-hidden="true"] &times;
+	  h3 = @componente_categoria.id.nil? ? 'Agregar Categoria' : 'Editar Categoria'
+	- else
+	  = hidden_field_tag 'select_categoria', 'true'
+	.row
+	  .col-md-12
+	    p
+	    = FormBuilder::text_field_h(f, :nombre,{input_class: 'required clear', max_length: Domain::NOMBRE, autofocus: true})
+	    = hidden_field_tag :componente_categoria_id, @componente_categoria.id
+	    - unless defined? provider_abm
+	      button.btn.btn-default.close-add-form [type="button"] Cancelar
+	    - else
+	      button.btn.btn-default [type="button" data-dismiss="modal" aria-hidden="true"] Cancelar
+	    = f.submit 'Guardar', class: 'btn btn-primary'
 javascript:
   $('.clear').clearInput();
+  $(function(){
+    var componenteCategoriaForm = "#{@componente_categoria.id.nil? ? '#new_componente_categoria' : '#edit_componente_categoria_'+ @componente_categoria.id.to_s}";
+    // Validador del formulario
+    $(componenteCategoriaForm).validate({
+      rules: {
+        'componente_categoria[nombre]':{
+          remote: {
+            url: "/componentes_categoria/check_nombre",
+            type: "get",
+            data: {
+              componente_categoria_id: $('#componente_categoria_id').val()
+            }
+          }
+        }
+      },
+      messages: {
+        'componente_categoria[nombre]': 'El nombre de categoria ya existe en el sistema.'
+      }
+    });
+  });

@@ -10,6 +10,7 @@ class MarcasController < ApplicationController
   # GET /marcas
   # GET /marcas.json
   def index
+    @marca = Marca.new
     @search = Marca.search(params[:q])
     @marcas_size = @search.result.size
     if @search.sorts.empty?
@@ -37,17 +38,11 @@ class MarcasController < ApplicationController
   # POST /marcas.json
   def create
     @marca = Marca.new(marca_params)
-    mar = Marca.find_by_nombre(@marca.nombre)
-    if mar.blank?
-      if @marca.save
-        flash.notice= "Se ha creado la marca #{@marca.nombre}."
-        update_list
-      else
-        flash.alert = "No se ha podido crear la marca #{@marca.nombre}."
-      end
-    else
-      flash.notice = "No se ha podido crear la marca #{@marca.nombre}, porque ya existe"
+    if @marca.save
+      flash.notice= "Se ha creado la marca #{@marca.nombre}."
       update_list
+    else
+      flash.alert = "No se ha podido crear la marca #{@marca.nombre}."
     end
   end
 
@@ -59,22 +54,11 @@ class MarcasController < ApplicationController
   # PATCH/PUT /marcas/1
   # PATCH/PUT /marcas/1.json
   def update
-    mar = Marca.find_by_nombre((Marca.new(marca_params)).nombre)
-    if mar.blank?
-      if @marca.update(marca_params)
-        flash.notice = "Se ha actualizado la marca #{@marca.nombre}."
-        update_list
-      else
-        flash.alert = "No se ha podido actualizar la marca #{@marca.nombre}."
-      end
+    if @marca.update(marca_params)
+      flash.notice = "Se ha actualizado la marca #{@marca.nombre}."
+      update_list
     else
-      if mar.nombre == @marca.nombre
-        flash.notice = "Se ha actualizado la marca #{@marca.nombre}."
-        update_list
-      else
-        flash.notice = "No se ha podido actualizar la marca #{mar.nombre}, porque el nombre especificado ya existe"
-        update_list
-      end
+      flash.alert = "No se ha podido actualizar la marca #{@marca.nombre}."
     end
   end
 
@@ -93,6 +77,15 @@ class MarcasController < ApplicationController
       flash.notice = "No se ha podido eliminar #{@marca.nombre}, porque el componente #{componente.nombre} pertenece a esta marca."
       index
     end
+  end
+
+  def check_nombre
+    marca = Marca.where(nombre: params[:marca][:nombre])
+    marca_exist = false
+    if marca.blank? || marca.first.id == params[:marca_id].to_i
+      marca_exist = true
+    end
+    render json: marca_exist
   end
 
   private

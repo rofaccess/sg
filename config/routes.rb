@@ -93,6 +93,7 @@ Sg::Application.routes.draw do
       get 'nueva_marca'
       get 'nueva_categoria'
       get 'imprimir_listado'
+      get 'check_nombre'
     end
   end
 
@@ -109,9 +110,17 @@ Sg::Application.routes.draw do
     end
   end
 
-  resources :marcas
+  resources :marcas do
+    collection do
+      get 'check_nombre'
+    end
+  end
 
-  resources :componentes_categoria
+  resources :componentes_categoria do
+    collection do
+      get 'check_nombre'
+    end
+  end
 
   resources :configuraciones
 

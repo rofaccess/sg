@@ -29,10 +29,10 @@ table.table.table-condensed
 		td
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_componente_path(p), remote: true
 		  = link_to '<i class="icon-trash icon-large"></i>'.html_safe, componente_path(p), method: 'delete', data: {confirm: "¿Desea eliminar el componente #{p.nombre}?"}, remote: true
-		  = imprimir_link_show(componente_path(p, format: 'pdf'))
+
+		  /= imprimir_link_show(componente_path(p, format: 'pdf'))
 
 .hide.simbolo_moneda = @config.simbolo_moneda
-
 javascript:
   $('.monto').each(function() {
       $(this).text().replace(/^[^\d]*/, '');

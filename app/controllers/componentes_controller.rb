@@ -42,18 +42,12 @@ class ComponentesController < ApplicationController
   # POST /componentes.json
   def create
     @componente = Componente.new(componente_params)
-    comp = Componente.find_by_nombre(@componente.nombre)
-    if comp.blank?
-      if @componente.save
-        DepositoStock.cargar_deposito_stock(@componente.id)
-        flash.notice = "Se ha creado el componente #{@componente.nombre}."
-        update_list
-      else
-        flash.notice = "No se ha podido crear el componente #{@componente.nombre}."
-      end
-    else
-      flash.notice = "No se ha podido crear el componente #{@componente.nombre} porque el nombre especificado ya existe"
+    if @componente.save
+      DepositoStock.cargar_deposito_stock(@componente.id)
+      flash.notice = "Se ha creado el componente #{@componente.nombre}."
       update_list
+    else
+      flash.notice = "No se ha podido crear el componente #{@componente.nombre}."
     end
   end
 
@@ -65,22 +59,11 @@ class ComponentesController < ApplicationController
   # PATCH/PUT /componentes/1
   # PATCH/PUT /componentes/1.json
   def update
-    componente = Componente.find_by_nombre((Componente.new(componente_params)).nombre)
-    if componente.blank?
-      if @componente.update(componente_params)
-        flash.notice = "Se ha actualizado los datos del componente #{@componente.nombre}."
-        update_list
-      else
-        flash.alert = "No se ha podido actualizar el componente #{@componente.nombre}."
-      end
+    if @componente.update(componente_params)
+      flash.notice = "Se ha actualizado los datos del componente #{@componente.nombre}."
+      update_list
     else
-      if componente.nombre == @componente.nombre
-        flash.notice = "Se ha actualizado los datos del componente #{@componente.nombre}."
-        update_list
-      else
-        flash.notice = "No se ha podido actualizar el componente #{@componente.nombre}, porque el nombre especificado ya existe"
-        update_list
-      end
+      flash.alert = "No se ha podido actualizar el componente #{@componente.nombre}."
     end
   end
 
@@ -160,6 +143,15 @@ class ComponentesController < ApplicationController
 
   def load_test_data
 
+  end
+
+  def check_nombre
+    componente = Componente.where(nombre: params[:componente][:nombre])
+    componente_exist = false
+    if componente.blank? || componente.first.id == params[:componente_id].to_i
+      componente_exist = true
+    end
+    render json: componente_exist
   end
 
   private
