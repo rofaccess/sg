@@ -5,6 +5,7 @@ class ComponenteCategoria < ActiveRecord::Base
 
 	validates :nombre, presence: true
 	acts_as_paranoid
+	has_paper_trail
 
 	#Retornar los proveedores que pertenezcan a categoris dadas
 	def self.get_proveedores(categorias)

@@ -3,6 +3,8 @@ class AsientoModelo < ActiveRecord::Base
 
 	accepts_nested_attributes_for :asiento_modelo_detalles
 
+	#has_paper_trail
+
 	# Obiene cada valor que podria intervenir en el modelo factura
 	def self.filtrar_valores_carga_factura_credito
 		valores = ["Monto sin Iva"]
