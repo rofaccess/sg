@@ -23,8 +23,11 @@ table.table.table-condensed.table-bordered
 			  	td.text-center = a_d.cuenta_contable.nombre
 			  	td
 			  	td.monto.text-right = a_d.monto
-/.hide.simbolo_moneda = @config.simbolo_moneda
+
+.hide.simbolo_moneda = @config.simbolo_moneda
+
 javascript:
+  asientosContableUI.formatearMontos();
   //facturasCompraUI.formatearMontos();
-  $('.monto').maskMoney({isDiv: true});
-  $('.monto').maskMoney('mask');
+  //$('.monto').maskMoney({isDiv: true});
+  //$('.monto').maskMoney('mask');
