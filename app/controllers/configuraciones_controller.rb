@@ -2,7 +2,7 @@ class ConfiguracionesController < ApplicationController
   before_action :set_configuracion, only: [:show, :edit, :update, :destroy]
   before_action :set_sidemenu
   respond_to :html, :js
-  load_and_authorize_resource
+  authorize_resource
 
   def set_sidemenu
     @sidebar_layout = 'layouts/configuraciones_sidemenu'

@@ -3,7 +3,7 @@ class AsientosModeloController < ApplicationController
   before_action :set_sidemenu, only: [:index]
   before_action :set_asiento_modelo, only: [:show, :edit, :update, :destroy]
   respond_to :html, :js
-  load_and_authorize_resource
+  authorize_resource
   def set_sidemenu
     @sidebar_layout = 'layouts/contabilidad_sidemenu'
   end

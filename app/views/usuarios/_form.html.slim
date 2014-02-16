@@ -18,7 +18,7 @@
       - if @usuario.id.nil?
         | Complete los siguientes campos para especificar una contraseña; sino por defecto la contraseña del ususario por será igual a su nombre de usuario.
       - else
-        | Complete los dos siguentes campos si quiere cambiar la contraseña al ususario.
+        | Complete los dos siguentes campos si quiere cambiar la contraseña al usuario.
     = FormBuilder::password_field(f, :password, {label_text: 'Contraseña', input_class: '',label_class: 'col-md-3', field_class:'col-md-9', min_length: 3, max_length: 50})
     = FormBuilder::password_field(f, :password_confirmation, {label_text: 'Confirmación de Contraseña', input_class: 'passwordConfirmation',label_class: 'col-md-3', field_class:'col-md-9', min_length: 3, max_length: 50})
     label.title-seccion Roles
@@ -26,14 +26,18 @@
       #user_roles.col-md-offset-3.col-md-9
         .alert.alert-warning.hide
           | Debe seleccionar por lo menos un role.
-        .checkbox
-          label
-            = check_box :user_roles, :is_admin, {checked: (@usuario.has_role? :admin), disabled: (current_user.id == @usuario.id)}
-            | Administrador
-        .checkbox
-          label
-            = check_box :user_roles, :is_operador, {checked: (@usuario.has_role? :operador)}
-            | Operador
+        / .checkbox
+        /   label
+        /     = check_box :user_roles, :is_admin, {checked: (@usuario.has_role? :admin), disabled: (current_user.id == @usuario.id)}
+        /     | Administrador
+        / .checkbox
+        /   label
+        /     = check_box :user_roles, :is_operador, {checked: (@usuario.has_role? :operador)}
+        /     | Operador
+        - for role in Role.find(:all)
+          div
+            = check_box_tag "user[role_ids][]", role.id, @usuario.roles.include?(role)
+            = role.name
   .modal-footer
     button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cancelar
     button#new_user_submit.btn.btn-primary.pull-right [type="button"] Guardar

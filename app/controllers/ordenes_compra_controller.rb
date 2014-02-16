@@ -4,7 +4,7 @@ class OrdenesCompraController < ApplicationController
   before_action :set_orden_compra, only: [:show, :edit, :update, :destroy]
   before_action :set_sidemenu, only: [:index]
   respond_to :html, :js, :pdf
-  load_and_authorize_resource
+  authorize_resource
 
   # GET /ordenes_compras
   # GET /ordenes_compras.json

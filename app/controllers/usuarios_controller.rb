@@ -56,12 +56,13 @@ class UsuariosController < ApplicationController
     end
 
     if @usuario.save
-      if params[:user_roles][:is_admin] == '0' && params[:user_roles][:is_operador] == '0'
-        @usuario.add_role :operador
-      else
-        @usuario.add_role :admin if params[:user_roles][:is_admin] == '1'
-        @usuario.add_role :operador if params[:user_roles][:is_operador] == '1'
-      end
+      #if params[:user_roles][:is_admin] == '0' && params[:user_roles][:is_operador] == '0'
+      #  @usuario.add_role :operador
+      #else
+      #  @usuario.add_role :admin if params[:user_roles][:is_admin] == '1'
+      #  @usuario.add_role :operador if params[:user_roles][:is_operador] == '1'
+      #end
+      @usuario.role_ids = params[:user][:role_ids]
       flash.notice = "Se ha creado el usuario #{@usuario.username}."
     else
       flash.notice = "No se ha podido crear el usuario."
@@ -75,11 +76,12 @@ class UsuariosController < ApplicationController
 
   def update
   	if @usuario.update_without_password(usuario_params)
-      @usuario.add_role :admin if !(@usuario.has_role? :admin) && params[:user_roles][:is_admin] == '1'
-      @usuario.add_role :operador if !(@usuario.has_role? :operador) && params[:user_roles][:is_operador] == '1'
-      @usuario.remove_role :admin if (@usuario.has_role? :admin) && params[:user_roles][:is_admin] == '0'
-      @usuario.remove_role :operador if (@usuario.has_role? :operador) && params[:user_roles][:is_operador] == '0'
-  	  flash.notice = "Se ha actualizado el usuario #{@usuario.username}."
+      # @usuario.add_role :admin if !(@usuario.has_role? :admin) && params[:user_roles][:is_admin] == '1'
+      # @usuario.add_role :operador if !(@usuario.has_role? :operador) && params[:user_roles][:is_operador] == '1'
+      # @usuario.remove_role :admin if (@usuario.has_role? :admin) && params[:user_roles][:is_admin] == '0'
+      # @usuario.remove_role :operador if (@usuario.has_role? :operador) && params[:user_roles][:is_operador] == '0'
+  	  @usuario.role_ids = params[:user][:role_ids]
+      flash.notice = "Se ha actualizado el usuario #{@usuario.username}."
     else
       flash.notice = "No se ha podido actualizar el usuario."
     end
@@ -103,8 +105,8 @@ class UsuariosController < ApplicationController
 
   def destroy
   	unless current_user.id == @usuario.id
-      @usuario.remove_role(:admin)
-      @usuario.remove_role(:operador)
+      #@usuario.remove_role(:admin)
+      #@usuario.remove_role(:operador)
   	  if @usuario.destroy
   	    flash.notice = "Se ha eliminado el usuario #{@usuario.username}"
   	  else

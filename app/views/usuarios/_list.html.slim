@@ -6,8 +6,9 @@ table.table.table-condensed
 	  th = sort_link(@search, :empleado_documento_id_num, "Nro de cédula", {}, method: :get, remote: true)
 	  th Direccion
 	  th Email
-	  th.admin-col Administrador
-	  th.operador-col Operador
+	  th Roles
+	  /th.admin-col Administrador
+	  /th.operador-col Operador
 	  th.hidden-print
   tbody
 	- @usuarios.each do |u|
@@ -17,12 +18,16 @@ table.table.table-condensed
 		td = u.empleado.documento_id_num
 		td = u.empleado.direccion
 		td = u.empleado.email
-		td.text-center
-		  - if u.has_role? :admin
-		    i.icon-check.icon-large.text-success
-		td.text-center
-		  - if u.has_role? :operador
-		    i.icon-check.icon-large.text-success
+		td
+		  - u.roles.each do |ur|
+	        = ur.name	
+	        br     
+		/ td.text-center
+		/   - if u.has_role? :admin
+		/     i.icon-check.icon-large.text-success
+		/ td.text-center
+		/   - if u.has_role? :operador
+		/     i.icon-check.icon-large.text-success
 		td.hidden-print
 		  = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_usuario_path(u), remote: true
 		  - unless current_user.id == u.id

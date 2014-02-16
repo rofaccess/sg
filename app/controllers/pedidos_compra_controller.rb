@@ -4,7 +4,7 @@ class PedidosCompraController < ApplicationController
   before_action :set_pedido_compra, only: [:show, :update, :destroy]
   before_action :set_sidemenu, only: [:index]
   respond_to :html, :js
-  load_and_authorize_resource
+  authorize_resource
 
   def set_sidemenu
     @sidebar_layout = 'layouts/compras_sidemenu'

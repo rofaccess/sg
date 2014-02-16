@@ -64,6 +64,9 @@ class Ability
     if @rol[:interfaces].include?('Usuarios')
       can :manage, User
     end 
+    if @rol[:interfaces].include?('Roles')
+      can :manage, Role
+    end
     if @rol[:interfaces].include?('Auditoria')
       # No se como hacer referencia
     end   

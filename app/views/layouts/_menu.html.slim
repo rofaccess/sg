@@ -23,7 +23,7 @@ nav.navbar.navbar-default.navbar-custom.navbar-fixed-top.hidden-print [role="nav
         li [class="#{current_menu([asientos_contable_path,asientos_modelo_path,cuentas_contable_path, pages_contabilidad_path])}"]
           = link_to 'Contabilidad', pages_contabilidad_path        
       - if @rol[:secciones].include?('Configuracion')
-        li [class="#{current_menu([configuraciones_path, localidades_path, facturacion_configuraciones_path, usuarios_path, pages_configuracion_path])}"]
+        li [class="#{current_menu([configuraciones_path, localidades_path, facturacion_configuraciones_path, usuarios_path, pages_configuracion_path, roles_path])}"]
           = link_to 'Configuración', pages_configuracion_path
       - if @rol[:secciones].include?('Auditoria')
         li [class="#{current_menu([auditorias_path])}"]
@@ -31,8 +31,8 @@ nav.navbar.navbar-default.navbar-custom.navbar-fixed-top.hidden-print [role="nav
     ul.nav.navbar-nav.navbar-right
       li.dropdown
         a [href="#" class="dropdown-toggle" data-toggle="dropdown"]
-          i.icon-user
-          = current_user.email
+          i.icon-user #{" "}
+          = current_user.username
           b.caret
         ul.dropdown-menu
           li

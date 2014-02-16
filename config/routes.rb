@@ -1,4 +1,10 @@
 Sg::Application.routes.draw do
+  resources :roles do
+    collection do
+      get 'check_nombre'
+    end
+  end
+
   resources :depositos_materia_prima
   resources :notas_credito_compra do
     collection do

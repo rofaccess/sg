@@ -1,0 +1,43 @@
+= form_for @role, html: {class: 'form-horizontal role-form'}, remote: true  do |f|
+  .modal-header
+    button.close [type="button" aria-hidden="true" data-dismiss="modal"] &times;
+    h4 = @role.id.nil? ? 'Agregar Rol' : 'Editar Rol'
+
+  .modal-body
+    .col-md-12
+      p
+      = FormBuilder::text_field_h(f, :name,{input_class: 'required clear', max_length: Domain::NOMBRE, autofocus: true, label_text: 'Nombre'})
+      label.title-seccion Interfaces Accessibles del Rol
+      - for interfaz in Interfaz.find(:all)
+          div
+            = check_box_tag "role[interfaz_ids][]", interfaz.id, @role.interfaces.include?(interfaz)
+            = interfaz.nombre
+      = hidden_field_tag :role_id, @role.id
+
+      
+
+  .modal-footer
+    button.btn.btn-default [type="button pull pull-right" data-dismiss="modal"] Cancelar
+    = submit_tag 'Guardar', class: 'btn btn-success pull-right'
+
+javascript:
+  $(function(){
+    var roleForm = "#{@role.id.nil? ? '#new_role' : '#edit_role_'+ @role.id.to_s}";
+    // Validador del formulario
+    $(roleForm).validate({
+      rules: {
+        'role[name]':{
+          remote: {
+            url: "/roles/check_nombre",
+            type: "get",
+            data: {
+              role_id: $('#role_id').val()
+            }
+          }
+        }
+      },
+      messages: {
+        'role[name]': 'El nombre de rol ya existe en el sistema.'
+      }
+    });
+  });
