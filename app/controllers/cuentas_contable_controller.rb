@@ -3,6 +3,7 @@ class CuentasContableController < ApplicationController
   before_action :set_sidemenu, only: [:index]
   before_action :set_cuenta_contable, only: [:show, :edit, :update, :destroy]
   respond_to :html, :js
+  load_and_authorize_resource
   def set_sidemenu
     @sidebar_layout = 'layouts/contabilidad_sidemenu'
   end

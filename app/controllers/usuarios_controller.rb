@@ -1,6 +1,6 @@
 class UsuariosController < ApplicationController
   before_filter :authenticate_user!
-
+  before_action :set_sidemenu, only: [:index]
   before_action :set_usuario, only: [:edit, :update, :destroy, :edit_password]
   before_action :authorize, only: [:new, :create, :edit, :update, :destroy]
   respond_to :html, :js
@@ -8,6 +8,10 @@ class UsuariosController < ApplicationController
 
   def authorize
     authorize! :manage, User
+  end
+
+  def set_sidemenu
+    @sidebar_layout = 'layouts/configuraciones_sidemenu'
   end
 
   def index

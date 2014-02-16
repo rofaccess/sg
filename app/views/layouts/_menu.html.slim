@@ -11,23 +11,23 @@ nav.navbar.navbar-default.navbar-custom.navbar-fixed-top.hidden-print [role="nav
     ul.nav.navbar-nav
       li [class="#{current_menu([pages_index_path])}"]
         = link_to 'Inicio', pages_index_path
-      li [class="#{current_menu([proveedores_path, pedidos_compra_path, facturas_compra_path, pedidos_cotizacion_path, ordenes_compra_path, ordenes_devolucion_path, notas_debito_compra_path, notas_credito_compra_path])} dropdown"]
-        = link_to 'Compras'.html_safe, pedidos_compra_path
+      - if @rol[:secciones].include?('Compras')
+        li [class="#{current_menu([proveedores_path, pedidos_compra_path, facturas_compra_path, pedidos_cotizacion_path, ordenes_compra_path, ordenes_devolucion_path, notas_debito_compra_path, notas_credito_compra_path, pages_compras_path])} dropdown"]
+          = link_to 'Compras'.html_safe, pages_compras_path
         ul.dropdown-menu
           //= render 'layouts/compras_sidemenu'
-      li [class="#{current_menu([componentes_path, marcas_path, productos_path, depositos_path])}"]
-        = link_to 'Stock', depositos_path
-      li [class="#{current_menu([asientos_contable_path,asientos_modelo_path,cuentas_contable_path])}"]
-        = link_to 'Contabilidad', asientos_contable_path
-      - if can? :manage, User
-        li [class="#{current_menu([usuarios_path])}"]
-          = link_to 'Usuarios', usuarios_path
-      - if can? :manage, :all
+      - if @rol[:secciones].include?('Stock')    
+        li [class="#{current_menu([componentes_path, marcas_path, productos_path, depositos_path, pages_stock_path])}"]
+          = link_to 'Stock', pages_stock_path
+      - if @rol[:secciones].include?('Contabilidad')
+        li [class="#{current_menu([asientos_contable_path,asientos_modelo_path,cuentas_contable_path, pages_contabilidad_path])}"]
+          = link_to 'Contabilidad', pages_contabilidad_path        
+      - if @rol[:secciones].include?('Configuracion')
+        li [class="#{current_menu([configuraciones_path, localidades_path, facturacion_configuraciones_path, usuarios_path, pages_configuracion_path])}"]
+          = link_to 'Configuración', pages_configuracion_path
+      - if @rol[:secciones].include?('Auditoria')
         li [class="#{current_menu([auditorias_path])}"]
-          = link_to 'Auditoría', auditorias_path
-      - if can? :manage, :all
-        li [class="#{current_menu([configuraciones_path, localidades_path, facturacion_configuraciones_path])}"]
-          = link_to 'Configuración', configuraciones_path
+          = link_to 'Auditoría', auditorias_path    
     ul.nav.navbar-nav.navbar-right
       li.dropdown
         a [href="#" class="dropdown-toggle" data-toggle="dropdown"]

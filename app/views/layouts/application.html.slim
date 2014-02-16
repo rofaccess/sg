@@ -7,7 +7,7 @@ html
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = csrf_meta_tags
   body
-  	- if user_signed_in?
+  	- if user_signed_in?      
       = render 'layouts/menu'
     #container.hidden-print
       - unless @sidebar_layout.nil?

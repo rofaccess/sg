@@ -4,6 +4,7 @@ class PedidosCotizacionController < ApplicationController
   before_action :set_pedido_cotizacion, only: [:show, :edit, :update, :destroy, :imprimir_pedido]
   before_action :set_sidemenu, only: [:index]
   respond_to :html, :js
+  load_and_authorize_resource
 
   def set_sidemenu
     @sidebar_layout = 'layouts/compras_sidemenu'

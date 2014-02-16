@@ -169,6 +169,12 @@ Sg::Application.routes.draw do
   resources :productos
 
   devise_for :users, controllers: {passwords: 'passwords'}
+
+  get "pages/compras"
+  get "pages/stock"
+  get "pages/contabilidad"
+  get "pages/configuracion"
+
   get "pages/index"
 
   get 'pages/no_autorizado'

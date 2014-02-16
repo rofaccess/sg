@@ -4,6 +4,7 @@ class NotasDebitoCompraController < ApplicationController
   before_action :set_sidemenu, only: [:index]
   before_action :set_nota_debito_compra, only: [:show, :edit, :update, :destroy]
   respond_to :html, :js
+  load_and_authorize_resource
   def set_sidemenu
     @sidebar_layout = 'layouts/compras_sidemenu'
   end
