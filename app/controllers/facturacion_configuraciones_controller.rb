@@ -1,10 +1,11 @@
 class FacturacionConfiguracionesController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_resource, only: [:editar, :actualizar, :eliminar]
-  before_action :authorize, only: [:nuevo, :index, :crear, :editar, :actualizar, :eliminar]
+  #before_action :authorize, only: [:nuevo, :index, :crear, :editar, :actualizar, :eliminar]
   before_action :set_sidemenu, only: [:index]
   before_action :nuevo_resource, only: [:crear]
   respond_to :html, :js
+  #authorize_resource
 
   def authorize
     authorize! :manage, User

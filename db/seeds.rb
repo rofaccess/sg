@@ -9,11 +9,11 @@
 # Crea un usuario admin
 u = User.where(username: 'admin')
 if u.blank?
-	e = Empleado.create(nombre: 'Juan', apellido: 'Perez')
+	e = Empleado.create(nombre: 'Juan', apellido: 'Perez', documento_id_num: '5.234.232')
 	u = User.create(username: 'admin', password: 'admin', password_confirmation: 'admin', empleado_id: e.id)
 	u.add_role :admin
 elsif u.first.empleado_id.nil?
-	e = Empleado.create(nombre: 'Juan', apellido: 'Perez')
+	e = Empleado.create(nombre: 'Juan', apellido: 'Perez', documento_id_num: '5.234.232')
 	u.first.empleado_id = e.id
 	u.first.save
 	u.first.add_role :admin
@@ -21,7 +21,7 @@ end
 
 if Configuracion.all.blank?
 	# Generar registro de configuracion
-	Configuracion.create(nombre: 'SG', simbolo_moneda: 'Gs.', direccion: 'Lomas Valentinas 524 c/ Mallorquin', telefono1: '071 205698', telefono2: '071 204356', email: 'sg_dev@sistema.com')
+	Configuracion.create(nombre: 'SG', simbolo_moneda: 'Gs.', direccion: 'Lomas Valentinas 524 c/ Mallorquin', telefono1: '071 205698', telefono2: '071 204356', email: 'sg_dev@sistema.com', usuario_admin_id: u.id)
 
 	# Crear 10 paises
 	for i in 1..10
@@ -141,4 +141,30 @@ if Configuracion.all.blank?
 								 {valor: 'Iva 10%'      , cuenta_contable_id: 10, tipo_partida_doble: 'Debe', asiento_modelo_id: 1},
 								 {valor: 'Iva 5%'       , cuenta_contable_id: 11, tipo_partida_doble: 'Debe', asiento_modelo_id: 1},
 								 {valor: 'Monto Total'  , cuenta_contable_id: 15, tipo_partida_doble: 'Haber', asiento_modelo_id: 1}])
+
+	Interfaz.create([{nombre: 'Pedidos de Compra', seccion: 'Compras'},
+		             {nombre: 'Pedidos de Cotizacion', seccion: 'Compras'},
+		             {nombre: 'Ordenes de Compra', seccion: 'Compras'},
+		             {nombre: 'Facturas Recibidas', seccion: 'Compras'},
+		             {nombre: 'Devoluciones', seccion: 'Compras'},
+		             {nombre: 'Notas de Credito', seccion: 'Compras'},
+		             {nombre: 'Notas de Debito', seccion: 'Compras'},
+		             {nombre: 'Proveedores', seccion: 'Compras'},
+		             {nombre: 'Depositos', seccion: 'Stock'},
+		             {nombre: 'Componentes', seccion: 'Stock'},
+		             {nombre: 'Marcas', seccion: 'Stock'},
+		             {nombre: 'Categorias', seccion: 'Stock'},
+		             {nombre: 'Asientos Contables', seccion: 'Contabilidad'},
+		             {nombre: 'Asientos Modelo', seccion: 'Contabilidad'},
+		             {nombre: 'Cuentas Contables', seccion: 'Contabilidad'},
+		             {nombre: 'Datos de la Empresa', seccion: 'Configuracion'},
+		             {nombre: 'Localidades', seccion: 'Configuracion'},
+		             {nombre: 'Facturacion', seccion: 'Configuracion'},
+		             {nombre: 'Usuarios', seccion: 'Configuracion'},
+		             {nombre: 'Roles', seccion: 'Configuracion'},
+		             {nombre: 'Auditoria', seccion: 'Auditoria'}])
+
+	Interfaz.all.each do |int|
+		RolInterfaz.create(role_id: 1, interfaz_id: int.id)
+	end	
 end

@@ -4,6 +4,7 @@ class OrdenesDevolucionController < ApplicationController
   before_action :set_orden_devolucion, only: [:show, :edit, :update, :destroy]
   before_action :set_sidemenu, only: [:index]
   respond_to :html, :js, :pdf
+  authorize_resource
 
   # GET /ordenes_devolucion
   # GET /ordenes_devolucion.json

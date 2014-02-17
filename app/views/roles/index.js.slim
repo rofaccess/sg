@@ -1,0 +1,3 @@
+| $("#list").html("#{escape_javascript(render partial: 'list', format: 'html')}");
+| $('#paginator').html("#{escape_javascript(paginate(@roles, remote: true)) }");
+| $('#roles-size').text('#{@roles_size}');

@@ -1,0 +1,25 @@
+table.table.table-condensed
+  thead
+	tr
+	  th Nombre
+	  th Interfaz
+	  th Seccion
+	  th
+  tbody
+	- @roles.each do |r|
+	  tr
+	    td = r.name
+	    td
+	      - r.interfaces.each do |ri|
+	        = ri.nombre	
+	        br 
+	    td
+	      - r.interfaces.each do |ri|
+	        = ri.seccion	
+	        br 
+		td
+		  - if not r.name == 'admin'
+		    = link_to '<i class="icon-edit icon-large"></i> '.html_safe, edit_role_path(r), remote: true
+		    = link_to '<i class="icon-trash icon-large"></i>'.html_safe, role_path(r), method: 'delete', data: {confirm: "¿Desea eliminar el rol #{r.name}?"}, remote: true
+
+

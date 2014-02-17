@@ -3,6 +3,7 @@ class ComponentesCategoriaController < ApplicationController
   before_action :set_sidemenu, only: [:index]
   before_action :set_componente_categoria, only: [:show, :edit, :update, :destroy]
   respond_to :html, :js
+  authorize_resource
 
   def set_sidemenu
     @sidebar_layout = 'layouts/stock_sidemenu'

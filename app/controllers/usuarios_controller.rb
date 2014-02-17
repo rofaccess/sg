@@ -1,6 +1,6 @@
 class UsuariosController < ApplicationController
   before_filter :authenticate_user!
-
+  before_action :set_sidemenu, only: [:index]
   before_action :set_usuario, only: [:edit, :update, :destroy, :edit_password]
   before_action :authorize, only: [:new, :create, :edit, :update, :destroy]
   respond_to :html, :js
@@ -8,6 +8,10 @@ class UsuariosController < ApplicationController
 
   def authorize
     authorize! :manage, User
+  end
+
+  def set_sidemenu
+    @sidebar_layout = 'layouts/configuraciones_sidemenu'
   end
 
   def index
@@ -20,11 +24,13 @@ class UsuariosController < ApplicationController
     @usuarios = @search.result
 
     unless params[:user_roles_filtro].nil?
-      if params[:user_roles_filtro] == 'Administrador'
-        @usuarios = @usuarios.with_role(:admin)
-      elsif params[:user_roles_filtro] == 'Operador'
-        @usuarios = @usuarios.with_role(:operador)
-      end
+      # if params[:user_roles_filtro] == 'Administrador'
+      #   @usuarios = @usuarios.with_role(:admin)
+      # elsif params[:user_roles_filtro] == 'Operador'
+      #   @usuarios = @usuarios.with_role(:operador)
+      # end 
+      @usuarios = @usuarios.with_role(Role.find(params[:user_roles_filtro]).name)
+      
     end
 
     if paginate
@@ -52,12 +58,13 @@ class UsuariosController < ApplicationController
     end
 
     if @usuario.save
-      if params[:user_roles][:is_admin] == '0' && params[:user_roles][:is_operador] == '0'
-        @usuario.add_role :operador
-      else
-        @usuario.add_role :admin if params[:user_roles][:is_admin] == '1'
-        @usuario.add_role :operador if params[:user_roles][:is_operador] == '1'
-      end
+      #if params[:user_roles][:is_admin] == '0' && params[:user_roles][:is_operador] == '0'
+      #  @usuario.add_role :operador
+      #else
+      #  @usuario.add_role :admin if params[:user_roles][:is_admin] == '1'
+      #  @usuario.add_role :operador if params[:user_roles][:is_operador] == '1'
+      #end
+      @usuario.role_ids = params[:user][:role_ids]
       flash.notice = "Se ha creado el usuario #{@usuario.username}."
     else
       flash.notice = "No se ha podido crear el usuario."
@@ -71,11 +78,14 @@ class UsuariosController < ApplicationController
 
   def update
   	if @usuario.update_without_password(usuario_params)
-      @usuario.add_role :admin if !(@usuario.has_role? :admin) && params[:user_roles][:is_admin] == '1'
-      @usuario.add_role :operador if !(@usuario.has_role? :operador) && params[:user_roles][:is_operador] == '1'
-      @usuario.remove_role :admin if (@usuario.has_role? :admin) && params[:user_roles][:is_admin] == '0'
-      @usuario.remove_role :operador if (@usuario.has_role? :operador) && params[:user_roles][:is_operador] == '0'
-  	  flash.notice = "Se ha actualizado el usuario #{@usuario.username}."
+      # @usuario.add_role :admin if !(@usuario.has_role? :admin) && params[:user_roles][:is_admin] == '1'
+      # @usuario.add_role :operador if !(@usuario.has_role? :operador) && params[:user_roles][:is_operador] == '1'
+      # @usuario.remove_role :admin if (@usuario.has_role? :admin) && params[:user_roles][:is_admin] == '0'
+      # @usuario.remove_role :operador if (@usuario.has_role? :operador) && params[:user_roles][:is_operador] == '0'
+  	  unless @config.usuario_admin_id == @usuario.id
+        @usuario.role_ids = params[:user][:role_ids]
+      end
+      flash.notice = "Se ha actualizado el usuario #{@usuario.username}."
     else
       flash.notice = "No se ha podido actualizar el usuario."
     end
@@ -99,8 +109,8 @@ class UsuariosController < ApplicationController
 
   def destroy
   	unless current_user.id == @usuario.id
-      @usuario.remove_role(:admin)
-      @usuario.remove_role(:operador)
+      #@usuario.remove_role(:admin)
+      #@usuario.remove_role(:operador)
   	  if @usuario.destroy
   	    flash.notice = "Se ha eliminado el usuario #{@usuario.username}"
   	  else

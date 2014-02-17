@@ -1,6 +1,6 @@
 class AuditoriasController < ApplicationController
   before_filter :authenticate_user!
-  before_action :authorize, only: [:index]
+  #before_action :authorize, only: [:index]
   respond_to :html, :js
 
   def authorize

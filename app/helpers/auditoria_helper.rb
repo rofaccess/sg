@@ -55,7 +55,7 @@ module AuditoriaHelper
     },
     configuracion: {
       create: '',
-      update: 'Se ha actualizado la tabla de configuraciones',
+      update: 'Se han actualizado los Datos de la Empresa',
       destroy: '',
     },
     deposito_materia_prima: {
@@ -96,6 +96,7 @@ module AuditoriaHelper
     orden_devolucion: 'Ordenes de Devolución',
     nota_credito_compra: 'Notas de crédito',
     nota_debito_compra: 'Notas de débito',
+    configuracion: 'Configuracion',
     user: 'Usuarios',
     persona: {
       empleado: 'Empleados',

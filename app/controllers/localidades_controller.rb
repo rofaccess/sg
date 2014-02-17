@@ -3,6 +3,7 @@ class LocalidadesController < ApplicationController
   before_action :set_localidad, only: [:editar, :actualizar, :eliminar]
   before_action :set_sidemenu, only: [:index]
   before_action :nueva_localidad, only: [:crear]
+  #load_and_authorize_resource
   respond_to :html, :js
 
   def set_sidemenu

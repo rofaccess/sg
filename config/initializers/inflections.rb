@@ -46,6 +46,9 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'compra_cuenta_corriente', 'compras_cuenta_corriente'
   inflect.irregular 'compra_cuenta_corriente_factura', 'compras_cuenta_corriente_factura'
   inflect.irregular 'compra_cuenta_corriente_cuota', 'compras_cuenta_corriente_cuota'
+  inflect.irregular 'interfaz', 'interfaces'
+  inflect.irregular 'rol_interfaz', 'roles_interfaces'
+  inflect.irregular 'user_role', 'users_roles'
 
   inflect.uncountable %w( fish sheep )
 end

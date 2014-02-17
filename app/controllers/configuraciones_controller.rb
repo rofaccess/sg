@@ -2,6 +2,7 @@ class ConfiguracionesController < ApplicationController
   before_action :set_configuracion, only: [:show, :edit, :update, :destroy]
   before_action :set_sidemenu
   respond_to :html, :js
+  authorize_resource
 
   def set_sidemenu
     @sidebar_layout = 'layouts/configuraciones_sidemenu'
@@ -10,7 +11,7 @@ class ConfiguracionesController < ApplicationController
   # GET /configuraciones
   # GET /configuraciones.json
   def index
-    authorize! :manage, :all
+    #authorize! :manage, :all
     @configuracion= Configuracion.first
     redirect_to edit_configuracion_path(@configuracion.id)
     #@configuraciones = Configuracion.all
@@ -32,7 +33,7 @@ class ConfiguracionesController < ApplicationController
   # GET /configuraciones/1/edit
   def edit
     #@configuracion= Configuracion.first
-    authorize! :manage, :all
+    #authorize! :manage, :all
   end
 
   # POST /configuraciones
