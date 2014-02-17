@@ -9,11 +9,11 @@
 # Crea un usuario admin
 u = User.where(username: 'admin')
 if u.blank?
-	e = Empleado.create(nombre: 'Juan', apellido: 'Perez')
+	e = Empleado.create(nombre: 'Juan', apellido: 'Perez', documento_id_num: '5.234.232')
 	u = User.create(username: 'admin', password: 'admin', password_confirmation: 'admin', empleado_id: e.id)
 	u.add_role :admin
 elsif u.first.empleado_id.nil?
-	e = Empleado.create(nombre: 'Juan', apellido: 'Perez')
+	e = Empleado.create(nombre: 'Juan', apellido: 'Perez', documento_id_num: '5.234.232')
 	u.first.empleado_id = e.id
 	u.first.save
 	u.first.add_role :admin
@@ -21,7 +21,7 @@ end
 
 if Configuracion.all.blank?
 	# Generar registro de configuracion
-	Configuracion.create(nombre: 'SG', simbolo_moneda: 'Gs.', direccion: 'Lomas Valentinas 524 c/ Mallorquin', telefono1: '071 205698', telefono2: '071 204356', email: 'sg_dev@sistema.com')
+	Configuracion.create(nombre: 'SG', simbolo_moneda: 'Gs.', direccion: 'Lomas Valentinas 524 c/ Mallorquin', telefono1: '071 205698', telefono2: '071 204356', email: 'sg_dev@sistema.com', usuario_admin_id: u.id)
 
 	# Crear 10 paises
 	for i in 1..10

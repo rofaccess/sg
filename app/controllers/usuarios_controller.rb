@@ -24,11 +24,13 @@ class UsuariosController < ApplicationController
     @usuarios = @search.result
 
     unless params[:user_roles_filtro].nil?
-      if params[:user_roles_filtro] == 'Administrador'
-        @usuarios = @usuarios.with_role(:admin)
-      elsif params[:user_roles_filtro] == 'Operador'
-        @usuarios = @usuarios.with_role(:operador)
-      end
+      # if params[:user_roles_filtro] == 'Administrador'
+      #   @usuarios = @usuarios.with_role(:admin)
+      # elsif params[:user_roles_filtro] == 'Operador'
+      #   @usuarios = @usuarios.with_role(:operador)
+      # end 
+      @usuarios = @usuarios.with_role(Role.find(params[:user_roles_filtro]).name)
+      
     end
 
     if paginate
@@ -80,7 +82,9 @@ class UsuariosController < ApplicationController
       # @usuario.add_role :operador if !(@usuario.has_role? :operador) && params[:user_roles][:is_operador] == '1'
       # @usuario.remove_role :admin if (@usuario.has_role? :admin) && params[:user_roles][:is_admin] == '0'
       # @usuario.remove_role :operador if (@usuario.has_role? :operador) && params[:user_roles][:is_operador] == '0'
-  	  @usuario.role_ids = params[:user][:role_ids]
+  	  unless @config.usuario_admin_id == @usuario.id
+        @usuario.role_ids = params[:user][:role_ids]
+      end
       flash.notice = "Se ha actualizado el usuario #{@usuario.username}."
     else
       flash.notice = "No se ha podido actualizar el usuario."

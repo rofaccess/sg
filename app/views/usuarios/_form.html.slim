@@ -8,7 +8,7 @@
     = f.fields_for :empleado do |e|
       = FormBuilder::text_field_h(e, :nombre, {input_class: 'required clear',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::NOMBRE})
       = FormBuilder::text_field_h(e, :apellido, {input_class: 'required clear',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::NOMBRE})
-      = FormBuilder::text_field_h(e, :documento_id_num, {label_text: 'Nro. de Cédula', input_class: 'required clear',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::NUMERO_DOC_COM})
+      = FormBuilder::text_field_h(e, :documento_id_num, {label_text: 'Nro. de Cédula', input_class: 'required clear document',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::NUMERO_DOC_COM})
       = FormBuilder::text_field_h(e, :direccion, {input_class: 'clear',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::DIRECCION})
       = FormBuilder::text_field_h(e, :email, {input_class: 'clear email',label_class: 'col-md-3', field_class:'col-md-9', max_length: Domain::EMAIL})
     label.title-seccion Usuario del sistema
@@ -21,6 +21,7 @@
         | Complete los dos siguentes campos si quiere cambiar la contraseña al usuario.
     = FormBuilder::password_field(f, :password, {label_text: 'Contraseña', input_class: '',label_class: 'col-md-3', field_class:'col-md-9', min_length: 3, max_length: 50})
     = FormBuilder::password_field(f, :password_confirmation, {label_text: 'Confirmación de Contraseña', input_class: 'passwordConfirmation',label_class: 'col-md-3', field_class:'col-md-9', min_length: 3, max_length: 50})
+    
     label.title-seccion Roles
     .form-group
       #user_roles.col-md-offset-3.col-md-9
@@ -36,7 +37,7 @@
         /     | Operador
         - for role in Role.find(:all)
           div
-            = check_box_tag "user[role_ids][]", role.id, @usuario.roles.include?(role)
+            = check_box_tag "user[role_ids][]", role.id, @usuario.roles.include?(role), disabled: (@config.usuario_admin_id == @usuario.id)
             = role.name
   .modal-footer
     button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cancelar
@@ -62,6 +63,8 @@ javascript:
   			'user[username]': 'El nombre de usuario ya existe en el sistema.'
   		}
     });
+
+    $('.document').validCampoFranz('0123456789.');
 
     //Evento para el submit
     $('#new_user_submit').click(function(e){

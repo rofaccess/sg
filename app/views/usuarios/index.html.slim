@@ -10,7 +10,8 @@
     = FormBuilder::text_field_v(f, :empleado_apellido_cont, {col_class: 'col-md-2', label_text: 'Apellido', input_class: '',max_length: Domain::NOMBRE})
     = FormBuilder::text_field_v(f, :username_cont, {col_class: 'col-md-2', label_text: 'Usuario', input_class: '',max_length: Domain::NOMBRE})
     = FormBuilder::text_field_v(f, :empleado_documento_id_num_cont, {col_class: 'col-md-2', label_text: 'Nro de Cédula', input_class: '',max_length: Domain::NUMERO_DOC_COM})
-    = FormBuilder::select(nil, :user_roles_filtro, ['Administrador','Operador'], {col_class: 'col-md-2', label_text: 'Rol'})
+    /= FormBuilder::select(nil, :user_roles_filtro, ['Administrador','Operador'], {col_class: 'col-md-2', label_text: 'Rol'})
+    = FormBuilder::collection_select_v(nil, :user_roles_filtro, Role.all, :id, :name, {select_class: 'custom-select',col_class: 'col-md-2', label_text: 'Rol'})
 
     .filter-actions.pull-right.col-md-3
       = f.submit 'Filtrar', class: 'btn btn-default pull-right'
