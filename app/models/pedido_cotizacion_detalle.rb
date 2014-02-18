@@ -2,6 +2,7 @@ class PedidoCotizacionDetalle < ActiveRecord::Base
   include Formatter
 
   acts_as_paranoid
+  has_paper_trail
 
   belongs_to :pedido_cotizacion, with_deleted: true
   belongs_to :componente, with_deleted: true

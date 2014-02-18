@@ -123,6 +123,8 @@ class PedidosCotizacionController < ApplicationController
       @pedido_cotizacion.fecha_cotizado = DateTime.now
     end
     if @pedido_cotizacion.update(pedido_cotizacion_params)
+      CustomLogging.create(item_type: 'PedidoCotizacion', item_id: @pedido_cotizacion.id, event: 'update', whodunnit: current_user.id, object: YAML::dump(@pedido_cotizacion.attributes), created_at: DateTime.now)
+
       flash.notice = "Se ha actualizado los datos del pedido de cotizacion N˚ #{@pedido_cotizacion.numero}."
       index
     else

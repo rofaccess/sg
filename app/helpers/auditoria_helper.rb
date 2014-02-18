@@ -83,6 +83,19 @@ module AuditoriaHelper
       update: 'Se ha actualizado la categoria VAR',
       destroy: 'Se ha eliminado la categoria VAR',
     },
+    asiento_contable: {
+      create: 'Se ha generado un asiento automatico para VAR'
+    },
+    iva: {
+      create: 'Se ha creado el tipo de IVA VAR',
+      update: 'Se ha modificado el de IVA VAR',
+      destroy: 'Se ha eliminado el IVA VAR'
+    },
+    plazo_pago: {
+      create: 'Se ha creado el plazo de pago VAR',
+      update: 'Se ha modificado el plazo de pago VAR',
+      destroy: 'Se ha eliminado el plazo de pago VAR'
+    },
     auth: {
 
     }
@@ -97,7 +110,10 @@ module AuditoriaHelper
     nota_credito_compra: 'Notas de crédito',
     nota_debito_compra: 'Notas de débito',
     configuracion: 'Configuracion',
+    asiento_contable: 'Asiento Contable',
     user: 'Usuarios',
+    iva: 'IVA',
+    plazo_pago: 'Plazo de Pago',
     persona: {
       empleado: 'Empleados',
       proveedor: 'Proveedores'
@@ -124,32 +140,38 @@ module AuditoriaHelper
     model = 'User' if model == 'Auth'
     version = PaperTrail::Version.find(version)
 
-    objecto = model.constantize.with_deleted.find(id)
+    objeto = model.constantize.with_deleted.find(id)
     variable  = ''
     if model == 'User'
-      variable = objecto.username
+      variable = objeto.username
     elsif model == 'Marca'
-      variable = objecto.nombre
+      variable = objeto.nombre
     elsif model == 'ComponenteCategoria'
-      variable = objecto.nombre
+      variable = objeto.nombre
     elsif model == 'Persona'
-      variable = objecto.nombre
-      model = objecto.type
+      variable = objeto.nombre
+      model = objeto.type
     elsif model == 'Mercaderia'
-      variable = objecto.nombre
-      model = objecto.type
+      variable = objeto.nombre
+      model = objeto.type
     elsif model == 'Deposito'
-      variable = objecto.nombre
-      model = objecto.type
+      variable = objeto.nombre
+      model = objeto.type
     elsif model == 'Configuracion' || model == 'Auth'
       variable = ''
+    elsif model == 'AsientoContable'
+      variable = objeto.concepto
+    elsif model == 'Iva'
+      variable = objeto.valor
+    elsif model == 'PlazoPago'
+      variable = objeto.nombre
     else
-      variable = objecto.numero
+      variable = objeto.numero
     end
 
 
     if event == 'update' && (model == 'PedidoCompra' || model == 'OrdenCompra')
-      next_version = objecto.version_at(version.created_at)
+      next_version = objeto.version_at(version.created_at)
       mensaje = MENSAJES[model.underscore.to_sym][event.underscore.to_sym].gsub(/[12]/, '1' => variable, '2' => PedidosEstados::ESTADOS[next_version.estado])
 
     else

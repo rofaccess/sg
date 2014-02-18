@@ -1,0 +1,44 @@
+- model_anterior = @model.previous_version
+.modal-header
+  dl.no-margin
+    dt
+      strong Accion
+    dd = AuditoriaHelper::format_event(@version.event, @version.item_type, @version.item_id, @version.id)
+    dt
+      strong Usuario
+    dd = User.with_deleted.find(@version.whodunnit).username
+    dt
+      strong Fecha y hora
+    dd = Formatter.format_datetime(@version.created_at)
+.modal-body
+  h4 Detalles del Pedido de cotizacion
+  - @pedido_cotizacion = @model
+  table.table.table-condensed
+    thead
+      tr
+        th Componente
+        th Cantidad
+        th.text-right Cantidad Cotizada
+        th.text-right Costo Unitario
+    tbody
+      - @pedido_cotizacion.pedido_cotizacion_detalles.each do |pedido_detalle|
+        - version_actual = pedido_detalle.version_at(@version.created_at)
+        - cantidad_cotizada_class = ''
+        - precio_class = ''
+        - unless PaperTrail::Version.where(item_type: 'PedidoCotizacionDetalle', created_at: Time.zone.local_to_utc(@version.created_at), item_id: pedido_detalle.id).size == 0
+          - version_anterior = version_actual.previous_version
+          - cantidad_cotizada_class = version_actual.cantidad_cotizada != version_anterior.cantidad_cotizada ? 'warning' : ''
+          - precio_class = version_actual.costo_unitario != version_anterior.costo_unitario ? 'warning' : ''
+        - else
+          - version_actual = pedido_detalle
+        tr
+          td = version_actual.componente.nombre
+          td.monto-text = version_actual.cantidad_requerida
+          td[class="#{cantidad_cotizada_class} monto-text"] = version_actual.cantidad_cotizada
+          td[class="#{precio_class} monto-text"] = version_actual.costo_unitario
+        - version_actual = nil
+.modal-footer
+  button.btn.btn-default.pull-left [type="button" data-dismiss="modal"] Cerrar
+javascript:
+  $('.monto-text').maskMoney({isDiv: true});
+  $('.monto-text').maskMoney('mask');

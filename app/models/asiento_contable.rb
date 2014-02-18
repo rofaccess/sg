@@ -3,6 +3,8 @@ class AsientoContable < ActiveRecord::Base
 	protokoll :numero, pattern: '#####'
 	has_many :asiento_contable_detalles
 	belongs_to :ejercicio_contable
+    acts_as_paranoid
+	has_paper_trail
 
 	# Se usa este metodo cuando la factura que se carga tiene condicion credito
 	def self.asentar_carga_factura_credito(factura_compra)
