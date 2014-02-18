@@ -34,7 +34,7 @@
             = pedido_form.fields_for :pedido_cotizacion_detalles, pedido_detalle do |detalle_form|
               - pedido_detalle.cantidad_cotizada = pedido_detalle.cantidad_requerida if pedido_detalle.cantidad_cotizada == 0
               td
-                = detalle_form.text_field :cantidad_cotizada, class: 'cantidad-field pull-right form-control',maxLength: Domain::CANTIDAD
+                = detalle_form.text_field :cantidad_cotizada, class: 'cantidad-field pull-right form-control pedido_cotizacion_cantidad', maxLength: Domain::CANTIDAD, data: {'max-value'=> pedido_detalle.cantidad_requerida}
               td
 
                 = detalle_form.text_field :costo_unitario, value: pedido_detalle.costo_unitario.to_i, class: 'monto-field pull-right form-control', maxLength: Domain::MONTO

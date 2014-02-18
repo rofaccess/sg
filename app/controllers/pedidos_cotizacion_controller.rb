@@ -118,7 +118,15 @@ class PedidosCotizacionController < ApplicationController
   # PATCH/PUT /pedido_cotizacions/1
   # PATCH/PUT /pedido_cotizacions/1.json
   def update
-    if @pedido_cotizacion.estado == PedidosEstados::PENDIENTE
+    # Evitar que se cambie el estado si todos los precios son 0
+    precios_actualizados = false
+    pedido_cotizacion_params[:pedido_cotizacion_detalles_attributes].each do |d|
+      unless precios_actualizados
+        precios_actualizados = true if d[1]['costo_unitario'].to_i > 0
+      end
+    end
+
+    if @pedido_cotizacion.estado == PedidosEstados::PENDIENTE && precios_actualizados
       @pedido_cotizacion.estado = PedidosEstados::COTIZADO
       @pedido_cotizacion.fecha_cotizado = DateTime.now
     end
