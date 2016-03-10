@@ -68,7 +68,7 @@ gem 'rolify', '3.2.0'
 gem 'foreigner', '1.4.2'
 
 # Object-based searching. The successor to MetaSearch.
-gem 'ransack', '1.0.0'
+gem "ransack", github: "activerecord-hackery/ransack", branch: "rails-4"
 
 # A Scope & Engine based, clean, powerful, customizable and sophisticated paginator for Rails
 gem 'kaminari', '0.14.1'
@@ -87,4 +87,6 @@ gem 'wkhtmltopdf-binary'
 # Gema para soft delete
 gem "acts_as_paranoid", git: 'https://github.com/PeteMichaud/acts_as_paranoid.git', branch: 'rails4'
 
-gem 'paper_trail', '>= 3.0.0.rc1'
+gem 'paper_trail', '~> 4.0.0.beta'
+
+gem 'eventmachine', :git => 'git://github.com/eventmachine/eventmachine.git', :branch => 'master'
