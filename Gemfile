@@ -1,15 +1,18 @@
 source 'http://rubygems.org'
 
+gem 'rake', '12.0.0'
+gem 'rdoc', '4.0.0'
+
 # Gema para generar datos falsos aleatorios
 gem 'faker', '1.2.0'
 
-#gem 'pg'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
 #gem 'sqlite3'
+gem 'pg', '0.19.0'
 # Use mysql as the database for Active Record
-gem 'mysql2', '0.3.14'
+# gem 'mysql2', '0.3.14'
 
 gem 'thin', '1.5.1'
 
@@ -34,7 +37,7 @@ gem 'jquery-rails', '2.1.3'
 gem 'jquery-ui-rails', '4.0.4'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+gem 'turbolinks', '2.2.0'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
@@ -68,7 +71,7 @@ gem 'rolify', '3.2.0'
 gem 'foreigner', '1.4.2'
 
 # Object-based searching. The successor to MetaSearch.
-gem "ransack", github: "activerecord-hackery/ransack", branch: "rails-4"
+gem 'ransack'
 
 # A Scope & Engine based, clean, powerful, customizable and sophisticated paginator for Rails
 gem 'kaminari', '0.14.1'
@@ -80,13 +83,13 @@ gem 'protokoll', git: 'git://github.com/celsodantas/protokoll.git', branch: 'rai
 gem "cocoon"
 
 # Gema para generar pdf
-gem 'wicked_pdf'
+gem 'wicked_pdf', '1.0.0'
 
 gem 'wkhtmltopdf-binary'
 
 # Gema para soft delete
 gem "acts_as_paranoid", git: 'https://github.com/PeteMichaud/acts_as_paranoid.git', branch: 'rails4'
 
-gem 'paper_trail', '~> 4.0.0.beta'
+gem 'paper_trail', '~> 3.0.6'
 
 gem 'eventmachine', :git => 'git://github.com/eventmachine/eventmachine.git', :branch => 'master'
