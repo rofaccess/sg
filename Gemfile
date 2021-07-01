@@ -83,7 +83,7 @@ gem 'protokoll', git: 'git://github.com/celsodantas/protokoll.git', branch: 'rai
 gem "cocoon"
 
 # Gema para generar pdf
-gem 'wicked_pdf', '1.0.0'
+gem 'wicked_pdf', '0.9.10'
 
 gem 'wkhtmltopdf-binary'
 
