@@ -6,14 +6,45 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
+  2.0.0
 
 * System dependencies
+Instalar la versión 1.12.5 de bundler
+  > gem install bundler --version 1.12.5
+
+Instalar las gemas
+  > bundle install
 
 * Configuration
+Indicar en el Gemfile que tipo de base de datos usar comentando y descomentando los correspondientes adaptadores de base de datos, ya sea pg, mysql o sqlite3
 
-* Database creation
+Se debe crear el archivo config/database.yml con el siguiente contenido:
+
+  development:
+    adapter: postgresql
+    database: sg_development
+    pool: 5
+  test:
+    adapter: postgresql
+    database: sg_test
+    pool: 5
+  production:
+    adapter: postgresql
+    database: sg_production
+    pool: 5
+
+* Database creation:
+  
+  Crear la base de datos
+    > rake db:create
+  
+  Ejecutar las migraciones
+    > rake db:migrate
 
 * Database initialization
+  
+  Inicializar datos de prueba, usuario admin contraseña admin
+    > rake db:seed
 
 * How to run the test suite
 
