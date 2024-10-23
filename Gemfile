@@ -1,7 +1,9 @@
 source 'http://rubygems.org'
 
 gem 'rake', '12.0.0'
-gem 'rdoc', '4.0.0'
+
+# Fue necesario especificar una versión compatible de esta gema
+gem 'concurrent-ruby', '1.1.8'
 
 # Gema para generar datos falsos aleatorios
 gem 'faker', '1.2.0'
@@ -29,7 +31,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+# Con esta gema se evita instalar nodejs
+gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '2.1.3'
@@ -62,7 +65,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 # Flexible authentication solution for Rails
-gem 'devise', '3.0.0'
+gem 'devise', '3.5.10'
 
 gem 'cancan', '1.6.10'
 gem 'rolify', '3.2.0'
@@ -77,19 +80,22 @@ gem 'ransack'
 gem 'kaminari', '0.14.1'
 
 
-gem 'protokoll', git: 'git://github.com/celsodantas/protokoll.git', branch: 'rails4'
+gem 'protokoll', '2.0.1'
 
 # Dynamic nested forms using jQuery made easy; works with formtastic, simple_form or default forms
 gem "cocoon"
 
 # Gema para generar pdf
-gem 'wicked_pdf', '0.9.10'
+gem 'wicked_pdf'
 
 gem 'wkhtmltopdf-binary'
 
 # Gema para soft delete
-gem "acts_as_paranoid", git: 'https://github.com/PeteMichaud/acts_as_paranoid.git', branch: 'rails4'
+gem "acts_as_paranoid"
 
-gem 'paper_trail', '~> 3.0.6'
+gem 'paper_trail', '~> 3.0.9'
 
-gem 'eventmachine', :git => 'git://github.com/eventmachine/eventmachine.git', :branch => 'master'
+gem 'eventmachine'
+
+# Fue necesario especificar una versión compatible de esta gema
+gem 'execjs', '2.5.0'

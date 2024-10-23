@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  pool: 5
+  host: db # El servicio db especificado en infra.yaml
+  username: postgres # Usuario por defecto de postgres
+  password: postgres # Password especificado en infra.yaml
+
+development:
+  <<: *default
+  database: sg_development
+
+test:
+  <<: *default
+  database: sg_test
+
+production:
+  <<: *default
+  database: sg_production

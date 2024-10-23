@@ -15,8 +15,8 @@
 /log/*.log
 /tmp
 
-/Gemfile.lock
-/db/schema.rb
-/config/database.yml
+#/Gemfile.lock
+#/db/schema.rb
+#/config/database.yml
 /public/system/configuraciones
 .idea/
