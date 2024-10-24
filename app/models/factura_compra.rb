@@ -1,7 +1,8 @@
 class FacturaCompra < ActiveRecord::Base
+	self.skip_time_zone_conversion_for_attributes = [:fecha]
 	paginates_per 15
-    has_paper_trail
-    acts_as_paranoid
+	has_paper_trail
+	acts_as_paranoid
 
 	has_many   :factura_compra_detalles
 	has_many   :nota_credito_compra_detalles
@@ -17,10 +18,10 @@ class FacturaCompra < ActiveRecord::Base
 
 	def self.filtrar(orden_compra_id = nil)
       orden_compra_id.nil? ? FacturaCompra.all : FacturaCompra.where(orden_compra_id: orden_compra_id)
-  	end
+	end
 
   	# Obtiene cada valor monetario que interviene en una factura que se va a cargar
-  	def self.filtrar_valores_carga_factura_credito(factura_compra)
+	def self.filtrar_valores_carga_factura_credito(factura_compra)
 		monto_total = factura_compra.total_factura
 		monto_sin_iva = monto_total - factura_compra.total_iva
 		valores = {"Monto sin Iva" => monto_sin_iva, "Monto Total" => monto_total}

@@ -3,14 +3,14 @@ class AsientoContable < ActiveRecord::Base
 	protokoll :numero, pattern: '#####'
 	has_many :asiento_contable_detalles
 	belongs_to :ejercicio_contable
-    acts_as_paranoid
+	acts_as_paranoid
 	has_paper_trail
 
 	# Se usa este metodo cuando la factura que se carga tiene condicion credito
 	def self.asentar_carga_factura_credito(factura_compra)
 	  asiento_modelo = AsientoModelo.find_by(origen: 'Carga de Factura Compra, Condicion Credito')
 	  valores = FacturaCompra.filtrar_valores_carga_factura_credito(factura_compra)
-	  ejercicio_contable = EjercicioContable.where("year = ? AND abierto = ?", DateTime.now.year, true).first
+	  ejercicio_contable = EjercicioContable.where("year = ? AND abierto = ?", DateTime.now.year.to_s, true).first
 
 	  asiento_contable = AsientoContable.new( ejercicio_contable_id: ejercicio_contable.id,
 	  										  concepto: asiento_modelo.concepto,

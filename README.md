@@ -2,14 +2,16 @@
 Aplicación RoR desarrollada en la asignatura Sistemas de Gestión
 
 ## Ejecución
-Iniciar la aplicación
-````sh
-$ docker compose up
-````
 
 Inicializar la base de datos (crear base de datos, ejecutar migraciones y seed)
 ````sh
-$ docker compose exec -it dev rake db:setup
+$ docker compose run --rm dev rake db:setup # Cuando el contenedor todavía no existe
+$ docker compose exec -it dev rake db:setup # Una vez que el contenedor ya está levantado
+````
+
+Iniciar la aplicación
+````sh
+$ docker compose up
 ````
 
 Acceder a http://localhost:3000

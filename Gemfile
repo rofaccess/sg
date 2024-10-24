@@ -74,21 +74,21 @@ gem 'rolify', '3.2.0'
 gem 'foreigner', '1.4.2'
 
 # Object-based searching. The successor to MetaSearch.
-gem 'ransack'
+gem 'ransack', '1.0.0'
 
 # A Scope & Engine based, clean, powerful, customizable and sophisticated paginator for Rails
 gem 'kaminari', '0.14.1'
 
 
-gem 'protokoll', '2.0.1'
+gem 'protokoll', '0.6.0'
 
 # Dynamic nested forms using jQuery made easy; works with formtastic, simple_form or default forms
 gem "cocoon"
 
 # Gema para generar pdf
-gem 'wicked_pdf'
+gem 'wicked_pdf', '0.9.10'
 
-gem 'wkhtmltopdf-binary'
+gem 'wkhtmltopdf-binary', '0.9.9.3'
 
 # Gema para soft delete
 gem "acts_as_paranoid"
@@ -99,3 +99,6 @@ gem 'eventmachine'
 
 # Fue necesario especificar una versión compatible de esta gema
 gem 'execjs', '2.5.0'
+
+# Added at 2024-10-24 13:33:05 +0000 by root:
+gem "byebug", "~> 10.0", :groups => [:development, :test]

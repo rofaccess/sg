@@ -1,4 +1,5 @@
 class NotaCreditoCompra < ActiveRecord::Base
+	self.skip_time_zone_conversion_for_attributes = [:fecha]
 	has_paper_trail
 	acts_as_paranoid
 

@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20140217165721) do
     t.string   "numero_doc_com",        limit: 15,  default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   create_table "asientos_contable_detalle", force: true do |t|
